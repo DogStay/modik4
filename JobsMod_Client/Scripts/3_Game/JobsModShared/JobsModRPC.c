@@ -55,11 +55,12 @@ class JobsModRejectReason
 	static const int PROTOCOL_MISMATCH = 1;
 	static const int PLAYER_NOT_READY = 2;
 	static const int TOO_FAR = 3;
-	static const int NOT_OWNER = 4;
+	static const int ON_COOLDOWN = 4;
 	static const int NO_ACTIVE_SESSION = 5;
 	static const int SESSION_EXPIRED = 6;
 	static const int RESULT_INCORRECT = 7;
 	static const int ALREADY_BUSY = 8;
+	static const int UNKNOWN_PILE = 9;
 
 	static string GetText(int reason)
 	{
@@ -71,8 +72,8 @@ class JobsModRejectReason
 				return "Сейчас нельзя приступить к работе.";
 			case TOO_FAR:
 				return "Отойдя от точки, работу продолжить нельзя.";
-			case NOT_OWNER:
-				return "Эта рабочая точка закреплена за другим сотрудником.";
+			case ON_COOLDOWN:
+				return "Вы недавно закончили смену. Отдохните перед следующей.";
 			case NO_ACTIVE_SESSION:
 				return "Смена не найдена. Начните работу заново.";
 			case SESSION_EXPIRED:
@@ -81,6 +82,8 @@ class JobsModRejectReason
 				return "Сортировка не принята: проверьте контейнеры.";
 			case ALREADY_BUSY:
 				return "Вы уже сортируете мусор на другой точке.";
+			case UNKNOWN_PILE:
+				return "Эта куча не является рабочей точкой.";
 		}
 
 		return "Запрос отклонён.";

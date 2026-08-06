@@ -38,6 +38,16 @@ class CfgMods
 
 		class defs
 		{
+			// JSON data classes and the JsonFileLoader wrapper live in 3_Game on
+			// purpose: instantiating the generic loader from 4_World has been
+			// observed to fail compilation under a heavy mod load, while the
+			// same call compiles cleanly in its native Game module.
+			class gameScriptModule
+			{
+				value = "";
+				files[] = {"JobsMod_Server/Scripts/3_Game"};
+			};
+
 			// Server core. PlayerBase and ItemBase exist from 4_World onwards,
 			// so every class touching them must live here and not in 3_Game.
 			class worldScriptModule

@@ -8,9 +8,9 @@
 
 modded class MissionServer
 {
-	// Expired sessions are cheap to hold and pointless to scan every frame, so
-	// the sweep runs on a slow timer instead.
-	protected static const float PRUNE_INTERVAL_SECONDS = 30.0;
+	// Sessions and pile respawns are both minute-scale concerns, so the sweep
+	// runs on a slow timer rather than every frame.
+	protected static const float PRUNE_INTERVAL_SECONDS = 15.0;
 
 	protected float m_JobsModPruneTimer;
 
@@ -42,6 +42,10 @@ modded class MissionServer
 		SortingSessionService service = JobsModServerRuntime.GetSessionService();
 		if (service)
 			service.PruneExpired();
+
+		TrashZoneService zones = JobsModServerRuntime.GetZoneService();
+		if (zones)
+			zones.Update();
 	}
 
 	// A disconnecting player's session is dropped at once rather than waiting to

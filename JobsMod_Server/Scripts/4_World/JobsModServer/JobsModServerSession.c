@@ -13,15 +13,17 @@ class JobsModServerSession
 	protected string m_PlayerId;
 	protected string m_ZoneName;
 	protected vector m_PilePosition;
+	protected Object m_Pile;
 	protected int m_StartedAtMs;
 	protected ref array<string> m_Order;
 
-	void JobsModServerSession(int nonce, string playerId, string zoneName, vector pilePosition, array<string> order)
+	void JobsModServerSession(int nonce, string playerId, string zoneName, Object pile, array<string> order)
 	{
 		m_Nonce = nonce;
 		m_PlayerId = playerId;
 		m_ZoneName = zoneName;
-		m_PilePosition = pilePosition;
+		m_Pile = pile;
+		m_PilePosition = pile.GetPosition();
 		m_StartedAtMs = GetGame().GetTime();
 
 		m_Order = new array<string>();
@@ -35,6 +37,11 @@ class JobsModServerSession
 	string GetPlayerId() { return m_PlayerId; }
 	string GetZoneName() { return m_ZoneName; }
 	vector GetPilePosition() { return m_PilePosition; }
+
+	// May be null by submit time: another system can always delete a world
+	// object, so the position captured at grant time is what distance is
+	// checked against, not this reference.
+	Object GetPile() { return m_Pile; }
 	array<string> GetOrder() { return m_Order; }
 
 	int GetElapsedSeconds()

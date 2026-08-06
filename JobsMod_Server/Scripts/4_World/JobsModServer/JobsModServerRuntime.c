@@ -11,6 +11,8 @@
 
 class JobsModServerRuntime
 {
+	protected static ref JobsModConfig s_Config;
+	protected static ref TrashZoneService s_ZoneService;
 	protected static ref SortingSessionService s_SessionService;
 	protected static bool s_Started;
 
@@ -34,7 +36,22 @@ class JobsModServerRuntime
 			return;
 		}
 
-		s_SessionService = new SortingSessionService();
+		// Config first: the services are built from it and there is nothing
+		// sensible for them to do without zones.
+		s_Config = new JobsModConfig();
+		if (!s_Config.Load())
+		{
+			JobsLog.Error("SERVER: конфигурация не загружена. Запуск прерван.");
+			s_Config = null;
+			return;
+		}
+
+		JobsLog.s_DebugEnabled = s_Config.IsDebugLogging();
+
+		s_ZoneService = new TrashZoneService(s_Config);
+		s_ZoneService.SpawnAll();
+
+		s_SessionService = new SortingSessionService(s_Config, s_ZoneService);
 		JobsModTrashActionBridge.GetOnSortRequested().Insert(OnSortRequested);
 
 		s_Started = true;
@@ -48,7 +65,13 @@ class JobsModServerRuntime
 			return;
 
 		JobsModTrashActionBridge.GetOnSortRequested().Remove(OnSortRequested);
+
+		if (s_ZoneService)
+			s_ZoneService.DeleteAll();
+
 		s_SessionService = null;
+		s_ZoneService = null;
+		s_Config = null;
 		s_Started = false;
 
 		JobsLog.Info("SERVER: JobsMod остановлен.");
@@ -62,6 +85,11 @@ class JobsModServerRuntime
 	static SortingSessionService GetSessionService()
 	{
 		return s_SessionService;
+	}
+
+	static TrashZoneService GetZoneService()
+	{
+		return s_ZoneService;
 	}
 
 	// Subscribed to the client PBO's bridge, so the action never names a server

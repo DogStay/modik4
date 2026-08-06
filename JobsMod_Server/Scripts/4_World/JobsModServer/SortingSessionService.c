@@ -37,10 +37,18 @@ class SortingSessionService
 	protected static const string REWARD_CLASS = "JobsMod_Money";
 
 	protected ref map<string, ref JobsModServerSession> m_Sessions;
+	// Last time each player finished a shift, so the cooldown survives them
+	// closing the menu, changing piles or dying.
+	protected ref map<string, int> m_LastFinishedMs;
+	protected ref JobsModConfig m_Config;
+	protected TrashZoneService m_Zones;
 
-	void SortingSessionService()
+	void SortingSessionService(JobsModConfig config, TrashZoneService zones)
 	{
+		m_Config = config;
+		m_Zones = zones;
 		m_Sessions = new map<string, ref JobsModServerSession>();
+		m_LastFinishedMs = new map<string, int>();
 	}
 
 	// =====================================================================
@@ -60,6 +68,24 @@ class SortingSessionService
 		if (!IsPlayerReady(player))
 		{
 			Reject(player, identity, JobsModRejectReason.PLAYER_NOT_READY);
+			return;
+		}
+
+		// Only piles this server placed count. Anything else with the same class
+		// name -- spawned by an admin tool or another mod -- is not a work point
+		// and must not be a source of pay.
+		if (!m_Zones.IsManagedPile(pile))
+		{
+			Reject(player, identity, JobsModRejectReason.UNKNOWN_PILE);
+			return;
+		}
+
+		int cooldownLeft = GetCooldownRemaining(playerId);
+		if (cooldownLeft > 0)
+		{
+			JobsLog.Debug("SERVER/JANITOR: игроку '" + identity.GetName() + "' осталось "
+				+ cooldownLeft.ToString() + " с кулдауна.");
+			Reject(player, identity, JobsModRejectReason.ON_COOLDOWN);
 			return;
 		}
 
@@ -85,10 +111,10 @@ class SortingSessionService
 		}
 
 		array<string> order = BuildShuffledOrder();
-		string zoneName = ResolveZoneName(pile);
+		string zoneName = m_Zones.GetZoneName(pile);
 
 		JobsModServerSession session = new JobsModServerSession(
-			GenerateNonce(), playerId, zoneName, pile.GetPosition(), order);
+			GenerateNonce(), playerId, zoneName, pile, order);
 
 		m_Sessions.Set(playerId, session);
 
@@ -171,6 +197,12 @@ class SortingSessionService
 		}
 
 		m_Sessions.Remove(playerId);
+		m_LastFinishedMs.Set(playerId, GetGame().GetTime());
+
+		// The heap has been worked: take it out of the world before paying, so a
+		// failure to pay can never leave a pile that is still workable.
+		m_Zones.ConsumePile(session.GetPile());
+
 		GrantReward(player, identity, request.param4);
 	}
 
@@ -219,6 +251,24 @@ class SortingSessionService
 	{
 		if (m_Sessions.Contains(playerId))
 			m_Sessions.Remove(playerId);
+	}
+
+	// Seconds still owed before this player may start another shift.
+	protected int GetCooldownRemaining(string playerId)
+	{
+		int cooldown = m_Config.GetPlayerCooldownSeconds();
+		if (cooldown <= 0)
+			return 0;
+
+		int last;
+		if (!m_LastFinishedMs.Find(playerId, last))
+			return 0;
+
+		int elapsed = (GetGame().GetTime() - last) / 1000;
+		if (elapsed >= cooldown)
+			return 0;
+
+		return cooldown - elapsed;
 	}
 
 	int GetActiveCount()
@@ -335,14 +385,5 @@ class SortingSessionService
 		}
 
 		return parts;
-	}
-
-	protected string ResolveZoneName(Object pile)
-	{
-		// Zones are not configurable yet, so the label is derived from where the
-		// pile actually stands. This keeps the header honest instead of showing
-		// a hard-coded name that may not match the location.
-		vector position = pile.GetPosition();
-		return "X " + Math.Round(position[0]).ToString() + " / Z " + Math.Round(position[2]).ToString();
 	}
 }
