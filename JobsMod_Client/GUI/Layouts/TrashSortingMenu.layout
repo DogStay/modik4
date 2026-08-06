@@ -1,0 +1,1712 @@
+PanelWidgetClass Root {
+ position 0 0
+ size 1 1
+ color 0 0 0 0
+ hexactpos 0
+ vexactpos 0
+ hexactsize 0
+ vexactsize 0
+ {
+  PanelWidgetClass DarkOverlay {
+   position 0 0
+   size 1 1
+   color 0.86 0.023529 0.027451 0.019608
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+  }
+  PanelWidgetClass MainPanel {
+   position 0.166667 0.148148
+   size 0.666667 0.703704
+   color 1 0.219608 0.239216 0.219608
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   {
+    PanelWidgetClass MainPanelBg {
+     position 0.000781 0.001316
+     size 0.998437 0.997368
+     color 1 0.086275 0.094118 0.101961
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     ignorepointer 1
+    }
+    PanelWidgetClass HeaderPanel {
+     position 0 0
+     size 1 0.110526
+     color 1 0.109804 0.117647 0.109804
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     {
+      TextWidgetClass TitleText {
+       font "gui/fonts/metron-bold14"
+       "text color" 1 0.929412 0.937255 0.917647
+       "text valign" center
+       position 0.021875 0.166667
+       size 0.484375 0.380952
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      TextWidgetClass ZoneText {
+       font "gui/fonts/etelkatextpro22"
+       "text color" 1 0.45098 0.47451 0.443137
+       "text valign" center
+       position 0.021875 0.571429
+       size 0.484375 0.285714
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      TextWidgetClass ProgressText {
+       font "gui/fonts/metron-bold14"
+       "text color" 1 0.643137 0.662745 0.631373
+       "text valign" center
+       "text halign" right
+       position 0.570312 0.166667
+       size 0.296875 0.285714
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      PanelWidgetClass ProgressPip0 {
+       position 0.659375 0.571429
+       size 0.020313 0.071429
+       color 1 0.188235 0.207843 0.184314
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      PanelWidgetClass ProgressPip1 {
+       position 0.682813 0.571429
+       size 0.020313 0.071429
+       color 1 0.188235 0.207843 0.184314
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      PanelWidgetClass ProgressPip2 {
+       position 0.70625 0.571429
+       size 0.020313 0.071429
+       color 1 0.188235 0.207843 0.184314
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      PanelWidgetClass ProgressPip3 {
+       position 0.729688 0.571429
+       size 0.020313 0.071429
+       color 1 0.188235 0.207843 0.184314
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      PanelWidgetClass ProgressPip4 {
+       position 0.753125 0.571429
+       size 0.020313 0.071429
+       color 1 0.188235 0.207843 0.184314
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      PanelWidgetClass ProgressPip5 {
+       position 0.776563 0.571429
+       size 0.020313 0.071429
+       color 1 0.188235 0.207843 0.184314
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      PanelWidgetClass ProgressPip6 {
+       position 0.8 0.571429
+       size 0.020313 0.071429
+       color 1 0.188235 0.207843 0.184314
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      PanelWidgetClass ProgressPip7 {
+       position 0.823438 0.571429
+       size 0.020313 0.071429
+       color 1 0.188235 0.207843 0.184314
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      PanelWidgetClass ProgressPip8 {
+       position 0.846875 0.571429
+       size 0.020313 0.071429
+       color 1 0.188235 0.207843 0.184314
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      PanelWidgetClass CloseButtonFrame {
+       position 0.898438 0.357143
+       size 0.092188 0.428571
+       color 1 0.32549 0.352941 0.313725
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       {
+        PanelWidgetClass CloseButtonFrameBg {
+         position 0.008475 0.027778
+         size 0.983051 0.944444
+         color 1 0.160784 0.176471 0.156863
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        TextWidgetClass CloseButtonText {
+         font "gui/fonts/metron-bold14"
+         "text color" 1 0.929412 0.937255 0.917647
+         "text valign" center
+         "text halign" center
+         position 0 0
+         size 1 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+        ButtonWidgetClass CloseButton {
+         position 0 0
+         size 1 1
+         color 0 0 0 0
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+        }
+       }
+      }
+     }
+    }
+    PanelWidgetClass InstructionPanel {
+     position 0 0.110526
+     size 1 0.073684
+     color 1 0.07451 0.082353 0.07451
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     {
+      TextWidgetClass InstructionText {
+       font "gui/fonts/etelkatextpro22"
+       "text color" 1 0.643137 0.662745 0.631373
+       "text valign" center
+       position 0.021875 0.178571
+       size 0.5625 0.642857
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      TextWidgetClass HintText {
+       font "gui/fonts/etelkatextpro22"
+       "text color" 1 0.45098 0.47451 0.443137
+       "text valign" center
+       "text halign" right
+       position 0.59375 0.178571
+       size 0.384375 0.642857
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+     }
+    }
+    PanelWidgetClass WorkArea {
+     position 0 0.184211
+     size 0.6875 0.734211
+     color 1 0.113725 0.12549 0.121569
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     {
+      TextWidgetClass WorkAreaTitle {
+       font "gui/fonts/metron-bold14"
+       "text color" 1 0.45098 0.47451 0.443137
+       "text valign" center
+       position 0.025 0.021505
+       size 0.454545 0.039427
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      PanelWidgetClass TrashGrid {
+       position 0.025 0.071685
+       size 0.95 0.878136
+       color 0 0 0 0
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       {
+        PanelWidgetClass TrashCard0 {
+         position 0 0
+         size 0.324163 0.316327
+         color 1 0.219608 0.239216 0.219608
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         {
+          PanelWidgetClass TrashCard0Bg {
+           position 0.00369 0.006452
+           size 0.99262 0.987097
+           color 1 0.07451 0.082353 0.07451
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          PanelWidgetClass TrashPreviewHost0 {
+           position 0.280443 0.090323
+           size 0.442804 0.541935
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          TextWidgetClass TrashFallback0 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.45098 0.47451 0.443137
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.258065
+           size 0.940959 0.206452
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           visible 0
+           "exact text" 1
+          }
+          TextWidgetClass TrashName0 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.643137 0.662745 0.631373
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.696774
+           size 0.940959 0.219355
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           "exact text" 1
+          }
+          ButtonWidgetClass TrashItem0 {
+           position 0 0
+           size 1 1
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+        PanelWidgetClass TrashCard1 {
+         position 0.338517 0
+         size 0.324163 0.316327
+         color 1 0.219608 0.239216 0.219608
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         {
+          PanelWidgetClass TrashCard1Bg {
+           position 0.00369 0.006452
+           size 0.99262 0.987097
+           color 1 0.07451 0.082353 0.07451
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          PanelWidgetClass TrashPreviewHost1 {
+           position 0.280443 0.090323
+           size 0.442804 0.541935
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          TextWidgetClass TrashFallback1 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.45098 0.47451 0.443137
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.258065
+           size 0.940959 0.206452
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           visible 0
+           "exact text" 1
+          }
+          TextWidgetClass TrashName1 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.643137 0.662745 0.631373
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.696774
+           size 0.940959 0.219355
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           "exact text" 1
+          }
+          ButtonWidgetClass TrashItem1 {
+           position 0 0
+           size 1 1
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+        PanelWidgetClass TrashCard2 {
+         position 0.677033 0
+         size 0.324163 0.316327
+         color 1 0.219608 0.239216 0.219608
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         {
+          PanelWidgetClass TrashCard2Bg {
+           position 0.00369 0.006452
+           size 0.99262 0.987097
+           color 1 0.07451 0.082353 0.07451
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          PanelWidgetClass TrashPreviewHost2 {
+           position 0.280443 0.090323
+           size 0.442804 0.541935
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          TextWidgetClass TrashFallback2 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.45098 0.47451 0.443137
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.258065
+           size 0.940959 0.206452
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           visible 0
+           "exact text" 1
+          }
+          TextWidgetClass TrashName2 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.643137 0.662745 0.631373
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.696774
+           size 0.940959 0.219355
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           "exact text" 1
+          }
+          ButtonWidgetClass TrashItem2 {
+           position 0 0
+           size 1 1
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+        PanelWidgetClass TrashCard3 {
+         position 0 0.340816
+         size 0.324163 0.316327
+         color 1 0.219608 0.239216 0.219608
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         {
+          PanelWidgetClass TrashCard3Bg {
+           position 0.00369 0.006452
+           size 0.99262 0.987097
+           color 1 0.07451 0.082353 0.07451
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          PanelWidgetClass TrashPreviewHost3 {
+           position 0.280443 0.090323
+           size 0.442804 0.541935
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          TextWidgetClass TrashFallback3 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.45098 0.47451 0.443137
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.258065
+           size 0.940959 0.206452
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           visible 0
+           "exact text" 1
+          }
+          TextWidgetClass TrashName3 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.643137 0.662745 0.631373
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.696774
+           size 0.940959 0.219355
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           "exact text" 1
+          }
+          ButtonWidgetClass TrashItem3 {
+           position 0 0
+           size 1 1
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+        PanelWidgetClass TrashCard4 {
+         position 0.338517 0.340816
+         size 0.324163 0.316327
+         color 1 0.219608 0.239216 0.219608
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         {
+          PanelWidgetClass TrashCard4Bg {
+           position 0.00369 0.006452
+           size 0.99262 0.987097
+           color 1 0.07451 0.082353 0.07451
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          PanelWidgetClass TrashPreviewHost4 {
+           position 0.280443 0.090323
+           size 0.442804 0.541935
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          TextWidgetClass TrashFallback4 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.45098 0.47451 0.443137
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.258065
+           size 0.940959 0.206452
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           visible 0
+           "exact text" 1
+          }
+          TextWidgetClass TrashName4 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.643137 0.662745 0.631373
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.696774
+           size 0.940959 0.219355
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           "exact text" 1
+          }
+          ButtonWidgetClass TrashItem4 {
+           position 0 0
+           size 1 1
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+        PanelWidgetClass TrashCard5 {
+         position 0.677033 0.340816
+         size 0.324163 0.316327
+         color 1 0.219608 0.239216 0.219608
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         {
+          PanelWidgetClass TrashCard5Bg {
+           position 0.00369 0.006452
+           size 0.99262 0.987097
+           color 1 0.07451 0.082353 0.07451
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          PanelWidgetClass TrashPreviewHost5 {
+           position 0.280443 0.090323
+           size 0.442804 0.541935
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          TextWidgetClass TrashFallback5 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.45098 0.47451 0.443137
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.258065
+           size 0.940959 0.206452
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           visible 0
+           "exact text" 1
+          }
+          TextWidgetClass TrashName5 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.643137 0.662745 0.631373
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.696774
+           size 0.940959 0.219355
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           "exact text" 1
+          }
+          ButtonWidgetClass TrashItem5 {
+           position 0 0
+           size 1 1
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+        PanelWidgetClass TrashCard6 {
+         position 0 0.681633
+         size 0.324163 0.316327
+         color 1 0.219608 0.239216 0.219608
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         {
+          PanelWidgetClass TrashCard6Bg {
+           position 0.00369 0.006452
+           size 0.99262 0.987097
+           color 1 0.07451 0.082353 0.07451
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          PanelWidgetClass TrashPreviewHost6 {
+           position 0.280443 0.090323
+           size 0.442804 0.541935
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          TextWidgetClass TrashFallback6 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.45098 0.47451 0.443137
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.258065
+           size 0.940959 0.206452
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           visible 0
+           "exact text" 1
+          }
+          TextWidgetClass TrashName6 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.643137 0.662745 0.631373
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.696774
+           size 0.940959 0.219355
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           "exact text" 1
+          }
+          ButtonWidgetClass TrashItem6 {
+           position 0 0
+           size 1 1
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+        PanelWidgetClass TrashCard7 {
+         position 0.338517 0.681633
+         size 0.324163 0.316327
+         color 1 0.219608 0.239216 0.219608
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         {
+          PanelWidgetClass TrashCard7Bg {
+           position 0.00369 0.006452
+           size 0.99262 0.987097
+           color 1 0.07451 0.082353 0.07451
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          PanelWidgetClass TrashPreviewHost7 {
+           position 0.280443 0.090323
+           size 0.442804 0.541935
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          TextWidgetClass TrashFallback7 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.45098 0.47451 0.443137
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.258065
+           size 0.940959 0.206452
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           visible 0
+           "exact text" 1
+          }
+          TextWidgetClass TrashName7 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.643137 0.662745 0.631373
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.696774
+           size 0.940959 0.219355
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           "exact text" 1
+          }
+          ButtonWidgetClass TrashItem7 {
+           position 0 0
+           size 1 1
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+        PanelWidgetClass TrashCard8 {
+         position 0.677033 0.681633
+         size 0.324163 0.316327
+         color 1 0.219608 0.239216 0.219608
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         {
+          PanelWidgetClass TrashCard8Bg {
+           position 0.00369 0.006452
+           size 0.99262 0.987097
+           color 1 0.07451 0.082353 0.07451
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          PanelWidgetClass TrashPreviewHost8 {
+           position 0.280443 0.090323
+           size 0.442804 0.541935
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+          }
+          TextWidgetClass TrashFallback8 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.45098 0.47451 0.443137
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.258065
+           size 0.940959 0.206452
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           visible 0
+           "exact text" 1
+          }
+          TextWidgetClass TrashName8 {
+           font "gui/fonts/etelkatextpro22"
+           "text color" 1 0.643137 0.662745 0.631373
+           "text valign" center
+           "text halign" center
+           position 0.02952 0.696774
+           size 0.940959 0.219355
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           ignorepointer 1
+           "exact text" 1
+          }
+          ButtonWidgetClass TrashItem8 {
+           position 0 0
+           size 1 1
+           color 0 0 0 0
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+    PanelWidgetClass BinArea {
+     position 0.6875 0.184211
+     size 0.3125 0.734211
+     color 1 0.12549 0.141176 0.101961
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     {
+      TextWidgetClass BinAreaTitle {
+       font "gui/fonts/metron-bold14"
+       "text color" 1 0.45098 0.47451 0.443137
+       "text valign" center
+       position 0.055 0.021505
+       size 0.75 0.039427
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      PanelWidgetClass BinWood {
+       position 0.055 0.071685
+       size 0.89 0.286738
+       color 1 0.219608 0.239216 0.219608
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       {
+        PanelWidgetClass BinWoodBg {
+         position 0.002809 0.00625
+         size 0.994382 0.9875
+         color 1 0.101961 0.109804 0.098039
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        PanelWidgetClass BinWoodMarker {
+         position 0 0
+         size 1 0.01875
+         color 1 0.462745 0.392157 0.305882
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        PanelWidgetClass BinWoodPreviewHost {
+         position 0.044944 0.2
+         size 0.269663 0.6
+         color 0 0 0 0
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        TextWidgetClass BinWoodFallback {
+         font "gui/fonts/etelkatextpro22"
+         "text color" 1 0.45098 0.47451 0.443137
+         "text valign" center
+         "text halign" center
+         position 0.044944 0.4
+         size 0.269663 0.2
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         visible 0
+         "exact text" 1
+        }
+        TextWidgetClass BinWoodLabel {
+         font "gui/fonts/metron-bold14"
+         "text color" 1 0.929412 0.937255 0.917647
+         "text valign" center
+         position 0.359551 0.175
+         size 0.589888 0.1875
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+        TextWidgetClass BinWoodCounter {
+         font "gui/fonts/etelkatextpro22"
+         "text color" 1 0.45098 0.47451 0.443137
+         "text valign" center
+         position 0.359551 0.4
+         size 0.589888 0.15
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+        TextWidgetClass BinWoodStatus {
+         font "gui/fonts/etelkatextpro22"
+         "text color" 1 0.45098 0.47451 0.443137
+         "text valign" center
+         position 0.359551 0.6
+         size 0.589888 0.1375
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+       }
+      }
+      PanelWidgetClass BinPlastic {
+       position 0.055 0.379928
+       size 0.89 0.286738
+       color 1 0.219608 0.239216 0.219608
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       {
+        PanelWidgetClass BinPlasticBg {
+         position 0.002809 0.00625
+         size 0.994382 0.9875
+         color 1 0.101961 0.109804 0.098039
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        PanelWidgetClass BinPlasticMarker {
+         position 0 0
+         size 1 0.01875
+         color 1 0.337255 0.411765 0.470588
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        PanelWidgetClass BinPlasticPreviewHost {
+         position 0.044944 0.2
+         size 0.269663 0.6
+         color 0 0 0 0
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        TextWidgetClass BinPlasticFallback {
+         font "gui/fonts/etelkatextpro22"
+         "text color" 1 0.45098 0.47451 0.443137
+         "text valign" center
+         "text halign" center
+         position 0.044944 0.4
+         size 0.269663 0.2
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         visible 0
+         "exact text" 1
+        }
+        TextWidgetClass BinPlasticLabel {
+         font "gui/fonts/metron-bold14"
+         "text color" 1 0.929412 0.937255 0.917647
+         "text valign" center
+         position 0.359551 0.175
+         size 0.589888 0.1875
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+        TextWidgetClass BinPlasticCounter {
+         font "gui/fonts/etelkatextpro22"
+         "text color" 1 0.45098 0.47451 0.443137
+         "text valign" center
+         position 0.359551 0.4
+         size 0.589888 0.15
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+        TextWidgetClass BinPlasticStatus {
+         font "gui/fonts/etelkatextpro22"
+         "text color" 1 0.45098 0.47451 0.443137
+         "text valign" center
+         position 0.359551 0.6
+         size 0.589888 0.1375
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+       }
+      }
+      PanelWidgetClass BinMetal {
+       position 0.055 0.688172
+       size 0.89 0.286738
+       color 1 0.219608 0.239216 0.219608
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       {
+        PanelWidgetClass BinMetalBg {
+         position 0.002809 0.00625
+         size 0.994382 0.9875
+         color 1 0.101961 0.109804 0.098039
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        PanelWidgetClass BinMetalMarker {
+         position 0 0
+         size 1 0.01875
+         color 1 0.4 0.419608 0.407843
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        PanelWidgetClass BinMetalPreviewHost {
+         position 0.044944 0.2
+         size 0.269663 0.6
+         color 0 0 0 0
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        TextWidgetClass BinMetalFallback {
+         font "gui/fonts/etelkatextpro22"
+         "text color" 1 0.45098 0.47451 0.443137
+         "text valign" center
+         "text halign" center
+         position 0.044944 0.4
+         size 0.269663 0.2
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         visible 0
+         "exact text" 1
+        }
+        TextWidgetClass BinMetalLabel {
+         font "gui/fonts/metron-bold14"
+         "text color" 1 0.929412 0.937255 0.917647
+         "text valign" center
+         position 0.359551 0.175
+         size 0.589888 0.1875
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+        TextWidgetClass BinMetalCounter {
+         font "gui/fonts/etelkatextpro22"
+         "text color" 1 0.45098 0.47451 0.443137
+         "text valign" center
+         position 0.359551 0.4
+         size 0.589888 0.15
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+        TextWidgetClass BinMetalStatus {
+         font "gui/fonts/etelkatextpro22"
+         "text color" 1 0.45098 0.47451 0.443137
+         "text valign" center
+         position 0.359551 0.6
+         size 0.589888 0.1375
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+       }
+      }
+     }
+    }
+    PanelWidgetClass FooterPanel {
+     position 0 0.918421
+     size 1 0.081579
+     color 1 0.094118 0.101961 0.094118
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     {
+      TextWidgetClass TaskText {
+       font "gui/fonts/etelkatextpro22"
+       "text color" 1 0.643137 0.662745 0.631373
+       "text valign" center
+       position 0.021875 0.322581
+       size 0.328125 0.387097
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      TextWidgetClass SortedText {
+       font "gui/fonts/etelkatextpro22"
+       "text color" 1 0.643137 0.662745 0.631373
+       "text valign" center
+       "text halign" center
+       position 0.390625 0.322581
+       size 0.234375 0.387097
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      TextWidgetClass RemainingText {
+       font "gui/fonts/etelkatextpro22"
+       "text color" 1 0.45098 0.47451 0.443137
+       "text valign" center
+       "text halign" center
+       position 0.640625 0.322581
+       size 0.15625 0.387097
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      PanelWidgetClass CancelButtonFrame {
+       position 0.80625 0.209677
+       size 0.171875 0.580645
+       color 1 0.32549 0.352941 0.313725
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       {
+        PanelWidgetClass CancelButtonFrameBg {
+         position 0.004545 0.027778
+         size 0.990909 0.944444
+         color 1 0.160784 0.176471 0.156863
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        TextWidgetClass CancelButtonText {
+         font "gui/fonts/metron-bold14"
+         "text color" 1 0.643137 0.662745 0.631373
+         "text valign" center
+         "text halign" center
+         position 0 0
+         size 1 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+        ButtonWidgetClass CancelButton {
+         position 0 0
+         size 1 1
+         color 0 0 0 0
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+  PanelWidgetClass ToastPanel {
+   position 0.390625 0.196296
+   size 0.21875 0.059259
+   color 1 0.32549 0.352941 0.313725
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   visible 0
+   {
+    PanelWidgetClass ToastPanelBg {
+     position 0.002381 0.015625
+     size 0.995238 0.96875
+     color 1 0.07451 0.082353 0.07451
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     ignorepointer 1
+    }
+    TextWidgetClass ToastTitle {
+     font "gui/fonts/metron-bold14"
+     "text color" 1 0.639216 0.721569 0.466667
+     "text valign" center
+     "text halign" center
+     position 0 0.1875
+     size 1 0.40625
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     ignorepointer 1
+     "exact text" 1
+    }
+    TextWidgetClass ToastSub {
+     font "gui/fonts/etelkatextpro22"
+     "text color" 1 0.643137 0.662745 0.631373
+     "text valign" center
+     "text halign" center
+     position 0 0.59375
+     size 1 0.34375
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     ignorepointer 1
+     "exact text" 1
+    }
+   }
+  }
+  PanelWidgetClass ResultLayer {
+   position 0 0
+   size 1 1
+   color 0 0 0 0
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   visible 0
+   {
+    PanelWidgetClass ResultDim {
+     position 0 0
+     size 1 1
+     color 0.82 0.023529 0.027451 0.019608
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+    }
+    PanelWidgetClass ResultPanel {
+     position 0.354167 0.333333
+     size 0.291667 0.333333
+     color 1 0.32549 0.352941 0.313725
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     {
+      PanelWidgetClass ResultPanelBg {
+       position 0.001786 0.002778
+       size 0.996429 0.994444
+       color 1 0.086275 0.094118 0.101961
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      TextWidgetClass ResultTitle {
+       font "gui/fonts/metron-bold14"
+       "text color" 1 0.929412 0.937255 0.917647
+       "text valign" center
+       position 0.057143 0.111111
+       size 0.885714 0.111111
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      PanelWidgetClass ResultRule {
+       position 0.057143 0.255556
+       size 0.885714 0.002778
+       color 1 0.219608 0.239216 0.219608
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      TextWidgetClass ResultBody {
+       font "gui/fonts/etelkatextpro22"
+       "text color" 1 0.643137 0.662745 0.631373
+       "text valign" center
+       position 0.057143 0.294444
+       size 0.885714 0.144444
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      TextWidgetClass ResultScore {
+       font "gui/fonts/metron-bold14"
+       "text color" 1 0.639216 0.721569 0.466667
+       "text valign" center
+       position 0.057143 0.461111
+       size 0.885714 0.216667
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      PanelWidgetClass FinishButtonFrame {
+       position 0.057143 0.727778
+       size 0.885714 0.127778
+       color 1 0.639216 0.721569 0.466667
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       {
+        PanelWidgetClass FinishButtonFrameBg {
+         position 0.002016 0.021739
+         size 0.995968 0.956522
+         color 1 0.160784 0.176471 0.156863
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        TextWidgetClass FinishButtonText {
+         font "gui/fonts/metron-bold14"
+         "text color" 1 0.639216 0.721569 0.466667
+         "text valign" center
+         "text halign" center
+         position 0 0
+         size 1 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+        ButtonWidgetClass FinishButton {
+         position 0 0
+         size 1 1
+         color 0 0 0 0
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+  PanelWidgetClass ConfirmLayer {
+   position 0 0
+   size 1 1
+   color 0 0 0 0
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   visible 0
+   {
+    PanelWidgetClass ConfirmDim {
+     position 0 0
+     size 1 1
+     color 0.78 0.023529 0.027451 0.019608
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+    }
+    PanelWidgetClass ConfirmPanel {
+     position 0.364583 0.407407
+     size 0.270833 0.185185
+     color 1 0.32549 0.352941 0.313725
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     {
+      PanelWidgetClass ConfirmPanelBg {
+       position 0.001923 0.005
+       size 0.996154 0.99
+       color 1 0.086275 0.094118 0.101961
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+      TextWidgetClass ConfirmTitle {
+       font "gui/fonts/metron-bold14"
+       "text color" 1 0.929412 0.937255 0.917647
+       "text valign" center
+       position 0.065385 0.17
+       size 0.869231 0.17
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      TextWidgetClass ConfirmBody {
+       font "gui/fonts/etelkatextpro22"
+       "text color" 1 0.643137 0.662745 0.631373
+       "text valign" center
+       position 0.065385 0.38
+       size 0.869231 0.24
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+       "exact text" 1
+      }
+      PanelWidgetClass ConfirmYesFrame {
+       position 0.065385 0.69
+       size 0.423077 0.21
+       color 1 0.662745 0.364706 0.364706
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       {
+        PanelWidgetClass ConfirmYesFrameBg {
+         position 0.004545 0.02381
+         size 0.990909 0.952381
+         color 1 0.160784 0.176471 0.156863
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        TextWidgetClass ConfirmYesText {
+         font "gui/fonts/metron-bold14"
+         "text color" 1 0.662745 0.364706 0.364706
+         "text valign" center
+         "text halign" center
+         position 0 0
+         size 1 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+        ButtonWidgetClass ConfirmYes {
+         position 0 0
+         size 1 1
+         color 0 0 0 0
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+        }
+       }
+      }
+      PanelWidgetClass ConfirmNoFrame {
+       position 0.511538 0.69
+       size 0.423077 0.21
+       color 1 0.32549 0.352941 0.313725
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       {
+        PanelWidgetClass ConfirmNoFrameBg {
+         position 0.004545 0.02381
+         size 0.990909 0.952381
+         color 1 0.160784 0.176471 0.156863
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+        }
+        TextWidgetClass ConfirmNoText {
+         font "gui/fonts/metron-bold14"
+         "text color" 1 0.929412 0.937255 0.917647
+         "text valign" center
+         "text halign" center
+         position 0 0
+         size 1 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         ignorepointer 1
+         "exact text" 1
+        }
+        ButtonWidgetClass ConfirmNo {
+         position 0 0
+         size 1 1
+         color 0 0 0 0
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+  PanelWidgetClass DragGhost {
+   position 0 0
+   size 0.078125 0.111111
+   color 1 0.639216 0.721569 0.466667
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   visible 0
+   {
+    PanelWidgetClass DragGhostBg {
+     position 0.006667 0.008333
+     size 0.986667 0.983333
+     color 1 0.07451 0.082353 0.07451
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     ignorepointer 1
+    }
+    PanelWidgetClass DragGhostPreviewHost {
+     position 0 0
+     size 1 1
+     color 0 0 0 0
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     ignorepointer 1
+    }
+    TextWidgetClass DragGhostFallback {
+     font "gui/fonts/etelkatextpro22"
+     "text color" 1 0.45098 0.47451 0.443137
+     "text valign" center
+     "text halign" center
+     position 0 0.366667
+     size 1 0.266667
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     ignorepointer 1
+     visible 0
+     "exact text" 1
+    }
+   }
+  }
+ }
+}
