@@ -16,8 +16,10 @@ class JobsModRPC
 	static const int PROTOCOL_VERSION = 1;
 
 	// --- Client -> Server ---
-	// Player interacted with a trash pile and wants to start sorting.
-	static const int REQUEST_SORTING_START = BASE + 1;
+	// Starting a session has no message of its own: ActionSortTrash already
+	// runs its OnExecuteServer half on the server, so the request travels
+	// through the engine's own action pipeline instead of a second channel.
+	//
 	// Player finished the minigame; payload carries the produced bin sequence.
 	static const int REQUEST_SORTING_SUBMIT = BASE + 2;
 	// Player closed the menu without finishing.

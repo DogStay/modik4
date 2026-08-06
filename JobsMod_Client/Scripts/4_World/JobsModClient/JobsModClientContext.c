@@ -109,22 +109,6 @@ class JobsModClientContext
 	// =====================================================================
 	// Outgoing
 	// =====================================================================
-	static void SendSortingStart()
-	{
-		PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
-		if (!player)
-			return;
-
-		GetGame().RPCSingleParam(
-			player,
-			JobsModRPC.REQUEST_SORTING_START,
-			new Param1<int>(JobsModRPC.PROTOCOL_VERSION),
-			true,
-			null);
-
-		JobsLog.Debug("CLIENT/RPC: запрошено начало сортировки.");
-	}
-
 	static void SendSortingSubmit(int nonce, array<string> sequence, int mistakes)
 	{
 		PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
