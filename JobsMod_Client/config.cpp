@@ -11,7 +11,7 @@ class CfgPatches
 {
 	class JobsMod_Client
 	{
-		units[] = {"JobsMod_TrashPile", "JobsMod_Money"};
+		units[] = {"JobsMod_TrashPile", "JobsMod_CargoBox", "JobsMod_Money"};
 		weapons[] = {};
 		requiredVersion = 0.1;
 		requiredAddons[] =
@@ -37,7 +37,7 @@ class CfgMods
 		credits = "";
 		author = "";
 		authorID = "0";
-		version = "2.0.0";
+		version = "2.1.0";
 		extra = 0;
 		type = "mod";
 		dependencies[] = {"Game", "World", "Mission"};
@@ -89,6 +89,24 @@ class CfgVehicles
 		displayName = "Куча мусора";
 		descriptionShort = "Рабочая точка уборки. Доступна сотруднику, взявшему смену.";
 		weight = 12000;
+		itemSize[] = {10, 10};
+		itemsCargoSize[] = {0, 0};
+		rotationFlags = 1;
+	};
+
+	// Freight for the loader job. Inherits WoodenCrate because that is a vanilla
+	// item the engine already carries in both hands with the heavy-item stance —
+	// which is exactly the "carrying a generator" look the job is meant to have,
+	// with no animation work of our own.
+	//
+	// Its cargo space is removed on purpose: the box is freight to be moved, not
+	// a container players could use to smuggle loot across the map.
+	class JobsMod_CargoBox: WoodenCrate
+	{
+		scope = 2;
+		displayName = "Грузовой ящик";
+		descriptionShort = "Груз для переноски на склад. Ставится на землю в зоне разгрузки.";
+		weight = 20000;
 		itemSize[] = {10, 10};
 		itemsCargoSize[] = {0, 0};
 		rotationFlags = 1;

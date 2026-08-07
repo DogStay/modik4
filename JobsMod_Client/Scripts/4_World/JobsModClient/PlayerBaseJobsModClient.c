@@ -1,7 +1,7 @@
 // PlayerBaseJobsModClient.c
 //
 // Client-side receiver for the mod's server-to-client messages, and the place
-// the sorting action is registered.
+// the mod's user actions are registered.
 //
 // This file lives in the client PBO, which the server also loads, so the
 // handler explicitly refuses to run its client half on a dedicated server.
@@ -12,6 +12,7 @@ modded class PlayerBase
 	{
 		super.SetActions(InputActionMap);
 		AddAction(ActionSortTrash, InputActionMap);
+		AddAction(ActionTalkToNpc, InputActionMap);
 	}
 
 	override void OnRPC(PlayerIdentity sender, int rpc_type, ParamsReadContext ctx)
@@ -20,7 +21,7 @@ modded class PlayerBase
 
 		// Ignore everything outside the mod's own id block, so vanilla traffic
 		// is never touched and an unrelated id can never reach the parser below.
-		if (rpc_type < JobsModRPC.BASE || rpc_type > JobsModRPC.BASE + 100)
+		if (rpc_type < JobsModRPC.BASE || rpc_type > JobsModRPC.BASE + JobsModRPC.ID_RANGE)
 			return;
 
 		// On a listen server both halves run in one process; on a dedicated
@@ -34,7 +35,7 @@ modded class PlayerBase
 			return;
 		}
 
-		if (rpc_type == JobsModRPC.NOTIFY_SORTING_REJECTED)
+		if (rpc_type == JobsModRPC.NOTIFY_REJECTED)
 		{
 			JobsModClientContext.HandleRejected(ctx);
 			return;
@@ -43,6 +44,30 @@ modded class PlayerBase
 		if (rpc_type == JobsModRPC.NOTIFY_SORTING_ACCEPTED)
 		{
 			JobsModClientContext.HandleAccepted(ctx);
+			return;
+		}
+
+		if (rpc_type == JobsModRPC.NOTIFY_JOB_MENU)
+		{
+			JobsModClientContext.HandleJobMenu(ctx);
+			return;
+		}
+
+		if (rpc_type == JobsModRPC.NOTIFY_JOB_STATE)
+		{
+			JobsModClientContext.HandleJobState(ctx);
+			return;
+		}
+
+		if (rpc_type == JobsModRPC.NOTIFY_JOB_MESSAGE)
+		{
+			JobsModClientContext.HandleJobMessage(ctx);
+			return;
+		}
+
+		if (rpc_type == JobsModRPC.NOTIFY_NPC_DIRECTORY)
+		{
+			JobsModClientContext.HandleNpcDirectory(ctx);
 			return;
 		}
 	}

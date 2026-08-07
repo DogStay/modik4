@@ -12,6 +12,15 @@ class JobsModClientContext
 	protected static ref JobsModSortingSession s_PendingSession;
 	protected static bool s_MenuOpen;
 
+	// The job this player is holding, as last reported by the server. The HUD
+	// reads it every frame; nothing else writes it.
+	protected static ref JobsModJobView s_JobView;
+
+	// The offer list of the NPC currently being talked to. Lives only between
+	// the server's answer and the menu closing.
+	protected static ref JobsModNpcOffer s_PendingOffer;
+	protected static bool s_NpcMenuOpen;
+
 	// =====================================================================
 	// Incoming: session granted by the server
 	// =====================================================================
@@ -42,7 +51,7 @@ class JobsModClientContext
 		Param1<int> data = new Param1<int>(0);
 		if (!ctx.Read(data))
 		{
-			JobsLog.Error("CLIENT/RPC: не удалось прочитать NOTIFY_SORTING_REJECTED.");
+			JobsLog.Error("CLIENT/RPC: не удалось прочитать NOTIFY_REJECTED.");
 			return;
 		}
 
@@ -61,13 +70,181 @@ class JobsModClientContext
 		}
 
 		s_PendingSession = null;
-		JobsLog.Info("CLIENT/JANITOR: сервер принял смену.");
-		NotificationSystem.AddNotificationExtended(6.0, "СМЕНА ЗАВЕРШЕНА", data.param1);
+		JobsLog.Info("CLIENT/JANITOR: сервер принял кучу.");
+		NotificationSystem.AddNotificationExtended(6.0, "КУЧА РАЗОБРАНА", data.param1);
+	}
+
+	// =====================================================================
+	// Incoming: NPC directory
+	//
+	// Read strictly in the order the server wrote it: a count, then that many
+	// entries. A short read leaves the directory as it was rather than half
+	// filled, so the talk action never starts pointing at nothing.
+	// =====================================================================
+	static void HandleNpcDirectory(ParamsReadContext ctx)
+	{
+		Param1<int> header = new Param1<int>(0);
+		if (!ctx.Read(header))
+		{
+			JobsLog.Error("CLIENT/RPC: не удалось прочитать NOTIFY_NPC_DIRECTORY.");
+			return;
+		}
+
+		JobsModNpcDirectory.Clear();
+
+		for (int i = 0; i < header.param1; i++)
+		{
+			Param2<string, vector> entry = new Param2<string, vector>("", vector.Zero);
+			if (!ctx.Read(entry))
+			{
+				JobsLog.Error("CLIENT/RPC: справочник NPC оборван на записи " + i.ToString() + ".");
+				return;
+			}
+
+			JobsModNpcDirectory.Add(entry.param1, entry.param2);
+		}
+
+		JobsLog.Debug("CLIENT/JOBS: получено NPC: " + JobsModNpcDirectory.GetCount().ToString() + ".");
+	}
+
+	// =====================================================================
+	// Incoming: the NPC's offer list
+	// =====================================================================
+	static void HandleJobMenu(ParamsReadContext ctx)
+	{
+		Param4<string, string, string, int> header = new Param4<string, string, string, int>("", "", "", 0);
+		if (!ctx.Read(header))
+		{
+			JobsLog.Error("CLIENT/RPC: не удалось прочитать заголовок NOTIFY_JOB_MENU.");
+			return;
+		}
+
+		Param4<int, int, string, int> held = new Param4<int, int, string, int>(0, 0, "", 0);
+		if (!ctx.Read(held))
+		{
+			JobsLog.Error("CLIENT/RPC: не удалось прочитать состояние работы в NOTIFY_JOB_MENU.");
+			return;
+		}
+
+		JobsModNpcOffer offer = new JobsModNpcOffer();
+		offer.m_NpcId = header.param1;
+		offer.m_NpcName = header.param2;
+		offer.m_NpcDescription = header.param3;
+		offer.m_HandInAvailable = held.param1 != 0;
+		offer.m_AssignmentId = held.param2;
+		offer.m_HeldJobName = held.param3;
+		offer.m_HeldStatus = held.param4;
+
+		for (int i = 0; i < header.param4; i++)
+		{
+			Param4<string, string, string, string> text = new Param4<string, string, string, string>("", "", "", "");
+			Param4<int, int, int, int> numbers = new Param4<int, int, int, int>(0, 0, 0, 0);
+
+			if (!ctx.Read(text) || !ctx.Read(numbers))
+			{
+				JobsLog.Error("CLIENT/RPC: список работ оборван на записи " + i.ToString() + ".");
+				return;
+			}
+
+			offer.m_Offers.Insert(new JobsModJobOffer(
+				text.param1, text.param2, text.param3, text.param4,
+				numbers.param1, numbers.param2, numbers.param3, numbers.param4));
+		}
+
+		s_PendingOffer = offer;
+		OpenNpcMenu();
+	}
+
+	// =====================================================================
+	// Incoming: the job this player holds
+	// =====================================================================
+	static void HandleJobState(ParamsReadContext ctx)
+	{
+		Param4<int, int, int, int> numbers = new Param4<int, int, int, int>(0, 0, 0, 0);
+		Param4<string, string, string, string> text = new Param4<string, string, string, string>("", "", "", "");
+
+		if (!ctx.Read(numbers) || !ctx.Read(text))
+		{
+			JobsLog.Error("CLIENT/RPC: не удалось прочитать NOTIFY_JOB_STATE.");
+			return;
+		}
+
+		JobsModJobView view = new JobsModJobView();
+		view.m_Status = numbers.param1;
+		view.m_Progress = numbers.param2;
+		view.m_Required = numbers.param3;
+		view.m_AssignmentId = numbers.param4;
+		view.m_JobName = text.param1;
+		view.m_ZoneName = text.param2;
+		view.m_NpcName = text.param3;
+		view.m_Hint = text.param4;
+
+		s_JobView = view;
+
+		// The open NPC menu was drawn from a state that has just changed —
+		// taking a job, or handing one in. Closing it is both the honest thing
+		// to show and what the player expects after pressing the button.
+		if (s_NpcMenuOpen)
+			CloseNpcMenu();
+
+		JobsLog.Debug("CLIENT/JOBS: состояние работы: статус=" + view.m_Status.ToString()
+			+ ", прогресс=" + view.m_Progress.ToString() + "/" + view.m_Required.ToString() + ".");
+	}
+
+	static void HandleJobMessage(ParamsReadContext ctx)
+	{
+		Param2<string, string> data = new Param2<string, string>("", "");
+		if (!ctx.Read(data))
+		{
+			JobsLog.Error("CLIENT/RPC: не удалось прочитать NOTIFY_JOB_MESSAGE.");
+			return;
+		}
+
+		NotificationSystem.AddNotificationExtended(6.0, data.param1, data.param2);
+	}
+
+	// The HUD asks for this every frame, so it must always answer with something
+	// drawable rather than null.
+	static JobsModJobView GetJobView()
+	{
+		if (!s_JobView)
+			s_JobView = new JobsModJobView();
+
+		return s_JobView;
+	}
+
+	static JobsModNpcOffer ConsumePendingOffer()
+	{
+		return s_PendingOffer;
 	}
 
 	// =====================================================================
 	// Menu lifecycle
+	//
+	// The menu classes live in 5_Mission and this file is compiled with 4_World,
+	// which is earlier — so naming them here is not possible. The mission
+	// subscribes to these invokers during its own init and does the opening;
+	// this file only ever says which menu and when.
 	// =====================================================================
+	protected static ref ScriptInvoker s_OnOpenMenu;
+	protected static ref ScriptInvoker s_OnCloseMenu;
+
+	static ScriptInvoker GetOnOpenMenu()
+	{
+		if (!s_OnOpenMenu)
+			s_OnOpenMenu = new ScriptInvoker();
+
+		return s_OnOpenMenu;
+	}
+
+	static ScriptInvoker GetOnCloseMenu()
+	{
+		if (!s_OnCloseMenu)
+			s_OnCloseMenu = new ScriptInvoker();
+
+		return s_OnCloseMenu;
+	}
+
 	protected static void OpenSortingMenu()
 	{
 		if (s_MenuOpen)
@@ -76,27 +253,45 @@ class JobsModClientContext
 			return;
 		}
 
-		UIManager manager = GetGame().GetUIManager();
-		if (!manager)
-		{
-			JobsLog.Error("CLIENT/UI: UIManager недоступен.");
-			return;
-		}
-
-		TrashSortingMenu menu = TrashSortingMenu.Cast(manager.EnterScriptedMenu(JobsModMenuIds.TRASH_SORTING, null));
-		if (!menu)
-		{
-			JobsLog.Error("CLIENT/UI: меню сортировки не создано.");
-			return;
-		}
-
 		s_MenuOpen = true;
+		GetOnOpenMenu().Invoke(JobsModMenuIds.TRASH_SORTING);
 	}
 
 	// Called by the menu itself from OnHide, whatever closed it.
 	static void OnSortingMenuClosed()
 	{
 		s_MenuOpen = false;
+	}
+
+	protected static void OpenNpcMenu()
+	{
+		if (s_NpcMenuOpen)
+			return;
+
+		s_NpcMenuOpen = true;
+		GetOnOpenMenu().Invoke(JobsModMenuIds.NPC_JOBS);
+	}
+
+	protected static void CloseNpcMenu()
+	{
+		GetOnCloseMenu().Invoke(JobsModMenuIds.NPC_JOBS);
+	}
+
+	static void OnNpcMenuClosed()
+	{
+		s_NpcMenuOpen = false;
+		s_PendingOffer = null;
+	}
+
+	// The mission reports back when a menu could not be created, so a failed
+	// open does not leave the flag stuck and block every later attempt.
+	static void OnMenuOpenFailed(int menuId)
+	{
+		if (menuId == JobsModMenuIds.TRASH_SORTING)
+			s_MenuOpen = false;
+
+		if (menuId == JobsModMenuIds.NPC_JOBS)
+			s_NpcMenuOpen = false;
 	}
 
 	// The mission passes the session in while the menu is being constructed,
@@ -149,5 +344,53 @@ class JobsModClientContext
 
 		s_PendingSession = null;
 		JobsLog.Debug("CLIENT/RPC: сортировка прервана; nonce=" + nonce.ToString() + ".");
+	}
+
+	static void SendJobAccept(string npcId, string jobId)
+	{
+		PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
+		if (!player)
+			return;
+
+		GetGame().RPCSingleParam(
+			player,
+			JobsModRPC.REQUEST_JOB_ACCEPT,
+			new Param3<int, string, string>(JobsModRPC.PROTOCOL_VERSION, npcId, jobId),
+			true,
+			null);
+
+		JobsLog.Debug("CLIENT/RPC: запрос на работу '" + jobId + "' у NPC '" + npcId + "'.");
+	}
+
+	static void SendJobComplete(string npcId, int assignmentId)
+	{
+		PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
+		if (!player)
+			return;
+
+		GetGame().RPCSingleParam(
+			player,
+			JobsModRPC.REQUEST_JOB_COMPLETE,
+			new Param3<int, string, int>(JobsModRPC.PROTOCOL_VERSION, npcId, assignmentId),
+			true,
+			null);
+
+		JobsLog.Debug("CLIENT/RPC: сдача работы " + assignmentId.ToString() + " NPC '" + npcId + "'.");
+	}
+
+	static void SendJobAbandon(int assignmentId)
+	{
+		PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
+		if (!player)
+			return;
+
+		GetGame().RPCSingleParam(
+			player,
+			JobsModRPC.REQUEST_JOB_ABANDON,
+			new Param2<int, int>(JobsModRPC.PROTOCOL_VERSION, assignmentId),
+			true,
+			null);
+
+		JobsLog.Debug("CLIENT/RPC: отказ от работы " + assignmentId.ToString() + ".");
 	}
 }

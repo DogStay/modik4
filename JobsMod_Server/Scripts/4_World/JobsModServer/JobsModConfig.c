@@ -1,215 +1,793 @@
 // JobsModConfig.c
 //
-// Reads the server config from the profile folder, writing a working default
-// the first time so an admin has a real file to edit rather than a blank page.
+// Reads the server config out of $profile:JobsMod and hands the rest of the mod
+// a checked, cross-referenced picture of it.
 //
-// An existing file is never overwritten — an admin's edits outrank our
-// defaults, even when a value looks wrong. Values that cannot work are clamped
-// at load and the correction is logged, so the mod keeps running instead of
-// refusing to start over a typo.
+// Rules this file follows:
+//
+//   * An existing file is never overwritten. An admin's edits outrank our
+//     defaults even when a value looks wrong.
+//   * A single broken entry costs that entry, not the server. A pile pointing at
+//     a zone that does not exist is dropped with a line in the log; the other
+//     piles still spawn.
+//   * Everything that is dropped or corrected says so in the log, with the id
+//     that caused it. Silence would leave an admin staring at a world where
+//     half their config did not happen.
+//
+// First run is decided by settings.json alone. If it is missing, the whole
+// default tree is written; if it is there, whatever else exists is what gets
+// loaded — so deleting an NPC file really removes that NPC instead of having it
+// reappear on the next restart.
 
 class JobsModConfig
 {
-	static const string CONFIG_DIR = "$profile:JobsMod";
-	static const string CONFIG_FILE = "$profile:JobsMod/janitor.json";
+	static const string ROOT_DIR = "$profile:JobsMod";
+	static const string DIR_NPC = ROOT_DIR + "/NPC";
+	static const string DIR_JOBS = ROOT_DIR + "/Jobs";
+	static const string DIR_LOADER_AREAS = ROOT_DIR + "/LoaderAreas";
+	static const string DIR_PILE_POINTS = ROOT_DIR + "/PilePoints";
+	static const string DIR_ZONES = ROOT_DIR + "/Zones";
 
-	protected static const int DEFAULT_PLAYER_COOLDOWN = 120;
-	protected static const int DEFAULT_PILE_RESPAWN = 300;
-	protected static const float MIN_ZONE_RADIUS = 3.0;
-	protected static const int MAX_PILES_PER_ZONE = 20;
+	static const string FILE_SETTINGS = ROOT_DIR + "/settings.json";
+	static const string FILE_ZONES = DIR_ZONES + "/zones.json";
 
-	protected int m_PlayerCooldownSeconds;
-	protected int m_PileRespawnSeconds;
-	protected bool m_DebugLogging;
-	protected ref array<ref JobsModZoneJson> m_Zones;
+	protected static const int MIN_PILE_RESPAWN = 10;
+	protected static const int MIN_ASSIGNMENT_TIMEOUT = 60;
+	protected static const float MIN_AREA_RADIUS = 3.0;
+	protected static const int MAX_CARGOS_PER_JOB = 60;
+	protected static const int MAX_PILES_PER_JOB = 30;
+
+	protected ref JobsModSettingsJson m_Settings;
+	protected ref map<string, ref JobsModZoneJson> m_Zones;
+	protected ref map<string, ref JobsModLoaderAreaJson> m_LoaderAreas;
+	protected ref map<string, ref JobsModJobJson> m_Jobs;
+	protected ref map<string, ref JobsModNpcJson> m_Npcs;
+	protected ref array<ref JobsModPilePointJson> m_PilePoints;
+
+	// False once a write has failed: the mod keeps running on what it has, and
+	// says once that nothing an admin edits will survive a restart.
+	protected bool m_ProfileWritable;
 
 	void JobsModConfig()
 	{
-		m_PlayerCooldownSeconds = DEFAULT_PLAYER_COOLDOWN;
-		m_PileRespawnSeconds = DEFAULT_PILE_RESPAWN;
-		m_DebugLogging = false;
-		m_Zones = new array<ref JobsModZoneJson>();
+		m_Settings = JobsModConfigDefaults.BuildSettings();
+		m_Zones = new map<string, ref JobsModZoneJson>();
+		m_LoaderAreas = new map<string, ref JobsModLoaderAreaJson>();
+		m_Jobs = new map<string, ref JobsModJobJson>();
+		m_Npcs = new map<string, ref JobsModNpcJson>();
+		m_PilePoints = new array<ref JobsModPilePointJson>();
+		m_ProfileWritable = true;
 	}
 
-	int GetPlayerCooldownSeconds() { return m_PlayerCooldownSeconds; }
-	int GetPileRespawnSeconds() { return m_PileRespawnSeconds; }
-	bool IsDebugLogging() { return m_DebugLogging; }
-	array<ref JobsModZoneJson> GetZones() { return m_Zones; }
+	// =====================================================================
+	// Accessors
+	// =====================================================================
+	int GetPileRespawnSeconds() { return m_Settings.pile_respawn_seconds; }
+	int GetAssignmentTimeoutSeconds() { return m_Settings.assignment_timeout_seconds; }
+	bool IsDebugLogging() { return m_Settings.debug_logging; }
 
+	array<ref JobsModPilePointJson> GetPilePoints() { return m_PilePoints; }
+	map<string, ref JobsModNpcJson> GetNpcs() { return m_Npcs; }
+	map<string, ref JobsModJobJson> GetJobs() { return m_Jobs; }
+
+	string GetZoneName(string zoneId)
+	{
+		JobsModZoneJson zone;
+		if (m_Zones.Find(zoneId, zone) && zone)
+			return zone.name;
+
+		return zoneId;
+	}
+
+	JobsModJobJson GetJob(string jobId)
+	{
+		JobsModJobJson job;
+		if (m_Jobs.Find(jobId, job))
+			return job;
+
+		return null;
+	}
+
+	JobsModNpcJson GetNpc(string npcId)
+	{
+		JobsModNpcJson npc;
+		if (m_Npcs.Find(npcId, npc))
+			return npc;
+
+		return null;
+	}
+
+	JobsModLoaderAreaJson GetLoaderArea(string areaId)
+	{
+		JobsModLoaderAreaJson area;
+		if (m_LoaderAreas.Find(areaId, area))
+			return area;
+
+		return null;
+	}
+
+	// =====================================================================
+	// Loading
+	// =====================================================================
+	// Returns false only when the config is unusable as a whole. Individual bad
+	// entries are dropped instead, so one typo cannot take the server down.
 	bool Load()
 	{
-		MakeDirectory(CONFIG_DIR);
+		EnsureDirectories();
 
-		if (!FileExist(CONFIG_FILE))
+		if (!FileExist(FILE_SETTINGS))
 		{
-			JobsLog.Info("SERVER/CONFIG: " + CONFIG_FILE + " не найден, создаётся файл с настройками по умолчанию.");
-
-			// Being unable to write is almost always a launch problem, not a mod
-			// problem: no -profiles= parameter, or a read-only profile folder.
-			// Refusing to start would leave an admin with a mod that does nothing
-			// and one line explaining why, so run on in-memory defaults instead
-			// and say plainly that edits will not persist.
-			if (!WriteDefaults())
-			{
-				JobsLog.Error("SERVER/CONFIG: записать " + CONFIG_FILE + " не удалось.");
-				JobsLog.Error("SERVER/CONFIG: проверьте параметр запуска -profiles= и права на запись в эту папку.");
-				JobsLog.Warning("SERVER/CONFIG: мод работает на встроенных настройках; правки конфига сохраняться не будут.");
-				ApplyBuiltInDefaults();
-				return true;
-			}
+			JobsLog.Info("SERVER/CONFIG: " + ROOT_DIR + " пуст, создаётся конфигурация по умолчанию.");
+			WriteDefaults();
 		}
 
-		JobsModConfigJson data;
-		string error;
+		LoadSettings();
+		LoadZones();
+		LoadPilePoints();
+		LoadLoaderAreas();
+		LoadJobs();
+		LoadNpcs();
 
-		// A file that exists but does not parse is an admin's edit gone wrong.
-		// Silently replacing it with defaults would move their zones without
-		// telling them, so this is the one case that does stop the mod.
-		if (!JobsModJsonFileIO.LoadConfig(CONFIG_FILE, data, error) || !data)
+		// A profile folder we could not write to leaves the entity folders empty
+		// no matter what we intended to put there. Running on the built-in tree
+		// gives a playable server; the write failure was already reported with
+		// the -profiles= hint that explains it.
+		if (!m_ProfileWritable && (m_Jobs.Count() == 0 || m_Npcs.Count() == 0))
+			ApplyBuiltInDefaults();
+
+		Report();
+
+		if (m_Jobs.Count() == 0)
 		{
-			JobsLog.Error("SERVER/CONFIG: не удалось разобрать " + CONFIG_FILE + " (" + error + ").");
-			JobsLog.Error("SERVER/CONFIG: исправьте синтаксис JSON или удалите файл, чтобы он создался заново.");
+			JobsLog.Error("SERVER/CONFIG: не осталось ни одной корректной работы — выдавать нечего.");
 			return false;
 		}
 
-		Adopt(data);
+		if (m_Npcs.Count() == 0)
+		{
+			JobsLog.Error("SERVER/CONFIG: не осталось ни одного корректного NPC — работу выдавать некому.");
+			return false;
+		}
+
 		return true;
 	}
 
-	// The same values WriteDefaults would have saved, applied straight to the
-	// live config so a non-writable profile folder still gives a playable mod.
-	protected void ApplyBuiltInDefaults()
+	protected void EnsureDirectories()
 	{
-		Adopt(BuildDefaults());
+		// The root has to exist before the engine will create anything under it,
+		// so the order here is not cosmetic.
+		MakeDirectory(ROOT_DIR);
+		MakeDirectory(DIR_NPC);
+		MakeDirectory(DIR_JOBS);
+		MakeDirectory(DIR_LOADER_AREAS);
+		MakeDirectory(DIR_PILE_POINTS);
+		MakeDirectory(DIR_ZONES);
 	}
 
-	// Copies the parsed file into the live config, correcting anything that
-	// cannot work. Each correction is logged with the value that caused it.
-	protected void Adopt(JobsModConfigJson data)
+	// The same tree WriteDefaults would have saved, applied straight to the live
+	// config. Every entry still goes through the ordinary accept checks, so the
+	// built-in path cannot accidentally allow something the file path rejects.
+	protected void ApplyBuiltInDefaults()
 	{
-		m_PlayerCooldownSeconds = data.player_cooldown_seconds;
-		if (m_PlayerCooldownSeconds < 0)
-		{
-			JobsLog.Warning("SERVER/CONFIG: player_cooldown_seconds отрицательный, принят 0.");
-			m_PlayerCooldownSeconds = 0;
-		}
+		JobsLog.Warning("SERVER/CONFIG: конфигурация с диска пуста — применяются встроенные настройки.");
 
-		m_PileRespawnSeconds = data.pile_respawn_seconds;
-		if (m_PileRespawnSeconds < 1)
-		{
-			JobsLog.Warning("SERVER/CONFIG: pile_respawn_seconds меньше 1, принято " + DEFAULT_PILE_RESPAWN.ToString() + ".");
-			m_PileRespawnSeconds = DEFAULT_PILE_RESPAWN;
-		}
-
-		m_DebugLogging = data.debug_logging;
-
+		m_Settings = JobsModConfigDefaults.BuildSettings();
 		m_Zones.Clear();
+		m_PilePoints.Clear();
+		m_LoaderAreas.Clear();
+		m_Jobs.Clear();
+		m_Npcs.Clear();
 
-		if (!data.zones || data.zones.Count() == 0)
+		JobsModZoneListJson zones = JobsModConfigDefaults.BuildZones();
+		int i;
+		for (i = 0; i < zones.zones.Count(); i++)
+			m_Zones.Set(zones.zones.Get(i).id, zones.zones.Get(i));
+
+		array<ref JobsModPilePointJson> points = JobsModConfigDefaults.BuildPilePoints();
+		for (i = 0; i < points.Count(); i++)
+			m_PilePoints.Insert(points.Get(i));
+
+		array<ref JobsModLoaderAreaJson> areas = JobsModConfigDefaults.BuildLoaderAreas();
+		for (i = 0; i < areas.Count(); i++)
+			m_LoaderAreas.Set(areas.Get(i).id, areas.Get(i));
+
+		array<ref JobsModJobJson> jobs = JobsModConfigDefaults.BuildJobs();
+		for (i = 0; i < jobs.Count(); i++)
 		{
-			JobsLog.Warning("SERVER/CONFIG: в конфиге нет ни одной зоны — кучи мусора не появятся.");
+			if (AcceptJob(jobs.Get(i)))
+				m_Jobs.Set(jobs.Get(i).id, jobs.Get(i));
+		}
+
+		array<ref JobsModNpcJson> npcs = JobsModConfigDefaults.BuildNpcs();
+		for (i = 0; i < npcs.Count(); i++)
+		{
+			if (AcceptNpc(npcs.Get(i)))
+				m_Npcs.Set(npcs.Get(i).id, npcs.Get(i));
+		}
+	}
+
+	protected void WriteDefaults()
+	{
+		if (!m_ProfileWritable)
+			return;
+
+		WriteSettings(JobsModConfigDefaults.BuildSettings());
+		WriteZones(JobsModConfigDefaults.BuildZones());
+
+		array<ref JobsModPilePointJson> points = JobsModConfigDefaults.BuildPilePoints();
+		int i;
+		for (i = 0; i < points.Count(); i++)
+			WritePilePoint(points.Get(i));
+
+		array<ref JobsModLoaderAreaJson> areas = JobsModConfigDefaults.BuildLoaderAreas();
+		for (i = 0; i < areas.Count(); i++)
+			WriteLoaderArea(areas.Get(i));
+
+		array<ref JobsModJobJson> jobs = JobsModConfigDefaults.BuildJobs();
+		for (i = 0; i < jobs.Count(); i++)
+			WriteJob(jobs.Get(i));
+
+		array<ref JobsModNpcJson> npcs = JobsModConfigDefaults.BuildNpcs();
+		for (i = 0; i < npcs.Count(); i++)
+			WriteNpc(npcs.Get(i));
+
+		if (m_ProfileWritable)
+		{
+			JobsLog.Info("SERVER/CONFIG: конфигурация по умолчанию создана в " + ROOT_DIR + ".");
+			JobsLog.Info("SERVER/CONFIG: координаты рассчитаны на Chernarus — на другой карте отредактируйте их.");
+		}
+	}
+
+	// ---------------------------------------------------------------------
+	// settings.json
+	// ---------------------------------------------------------------------
+	protected void LoadSettings()
+	{
+		JobsModSettingsJson loaded;
+		string error;
+
+		if (!FileExist(FILE_SETTINGS) || !JobsModJsonFileIO.LoadSettings(FILE_SETTINGS, loaded, error) || !loaded)
+		{
+			JobsLog.Warning("SERVER/CONFIG: settings.json не прочитан (" + error + "), приняты встроенные значения.");
+			m_Settings = JobsModConfigDefaults.BuildSettings();
 			return;
 		}
 
-		for (int i = 0; i < data.zones.Count(); i++)
+		m_Settings = loaded;
+
+		if (m_Settings.pile_respawn_seconds < MIN_PILE_RESPAWN)
 		{
-			JobsModZoneJson zone = data.zones.Get(i);
-			if (!zone)
+			JobsLog.Warning("SERVER/CONFIG: pile_respawn_seconds слишком мал, принято " + MIN_PILE_RESPAWN.ToString() + ".");
+			m_Settings.pile_respawn_seconds = MIN_PILE_RESPAWN;
+		}
+
+		if (m_Settings.assignment_timeout_seconds < MIN_ASSIGNMENT_TIMEOUT)
+		{
+			JobsLog.Warning("SERVER/CONFIG: assignment_timeout_seconds слишком мал, принято "
+				+ MIN_ASSIGNMENT_TIMEOUT.ToString() + ".");
+			m_Settings.assignment_timeout_seconds = MIN_ASSIGNMENT_TIMEOUT;
+		}
+	}
+
+	protected void WriteSettings(JobsModSettingsJson settings)
+	{
+		string error;
+		if (JobsModJsonFileIO.SaveSettings(FILE_SETTINGS, settings, error))
+			return;
+
+		ReportWriteFailure(FILE_SETTINGS, error);
+	}
+
+	// ---------------------------------------------------------------------
+	// Zones/zones.json
+	// ---------------------------------------------------------------------
+	protected void LoadZones()
+	{
+		JobsModZoneListJson list;
+		string error;
+
+		if (!FileExist(FILE_ZONES) || !JobsModJsonFileIO.LoadZoneList(FILE_ZONES, list, error) || !list || !list.zones)
+		{
+			JobsLog.Warning("SERVER/CONFIG: zones.json не прочитан (" + error + "), приняты встроенные зоны.");
+			list = JobsModConfigDefaults.BuildZones();
+		}
+
+		for (int i = 0; i < list.zones.Count(); i++)
+		{
+			JobsModZoneJson zone = list.zones.Get(i);
+			if (!zone || zone.id == "")
+			{
+				JobsLog.Warning("SERVER/CONFIG: зона #" + i.ToString() + " без id пропущена.");
 				continue;
+			}
 
 			if (zone.name == "")
+				zone.name = zone.id;
+
+			if (m_Zones.Contains(zone.id))
 			{
-				JobsLog.Warning("SERVER/CONFIG: зона #" + i.ToString() + " без имени пропущена.");
+				JobsLog.Warning("SERVER/CONFIG: зона '" + zone.id + "' объявлена дважды, вторая пропущена.");
 				continue;
 			}
 
-			if (zone.piles < 1)
-			{
-				JobsLog.Warning("SERVER/CONFIG: зона '" + zone.name + "' с piles<1 пропущена.");
-				continue;
-			}
-
-			if (zone.piles > MAX_PILES_PER_ZONE)
-			{
-				JobsLog.Warning("SERVER/CONFIG: зона '" + zone.name + "' запрашивает " + zone.piles.ToString()
-					+ " куч, ограничено до " + MAX_PILES_PER_ZONE.ToString() + ".");
-				zone.piles = MAX_PILES_PER_ZONE;
-			}
-
-			// A radius under a few metres would stack every pile on one spot.
-			if (zone.radius < MIN_ZONE_RADIUS)
-			{
-				JobsLog.Warning("SERVER/CONFIG: радиус зоны '" + zone.name + "' слишком мал, принят "
-					+ MIN_ZONE_RADIUS.ToString() + ".");
-				zone.radius = MIN_ZONE_RADIUS;
-			}
-
-			m_Zones.Insert(zone);
-		}
-
-		JobsLog.Info("SERVER/CONFIG: принято зон: " + m_Zones.Count().ToString()
-			+ "; кулдаун игрока " + m_PlayerCooldownSeconds.ToString()
-			+ " с; респавн кучи " + m_PileRespawnSeconds.ToString() + " с.");
-
-		// Printing the coordinates back is the fastest way to spot a config
-		// meant for another map: the numbers either match where you stand or
-		// they do not.
-		for (int z = 0; z < m_Zones.Count(); z++)
-		{
-			JobsModZoneJson accepted = m_Zones.Get(z);
-			JobsLog.Info("SERVER/CONFIG:   зона '" + accepted.name + "' X " + accepted.x.ToString()
-				+ " / Z " + accepted.z.ToString() + ", радиус " + accepted.radius.ToString()
-				+ ", куч " + accepted.piles.ToString() + ".");
+			m_Zones.Set(zone.id, zone);
 		}
 	}
 
-	// The shipped defaults point at Chernarus towns. On any other map they will
-	// be in the wrong place, which is why the startup log always reports where
-	// piles were actually spawned.
-	//
-	// Built in one place so the file written on first run and the fallback used
-	// when writing fails can never describe different worlds.
-	protected JobsModConfigJson BuildDefaults()
+	protected void WriteZones(JobsModZoneListJson list)
 	{
-		JobsModConfigJson data = new JobsModConfigJson();
-		data.player_cooldown_seconds = DEFAULT_PLAYER_COOLDOWN;
-		data.pile_respawn_seconds = DEFAULT_PILE_RESPAWN;
-		// Debug is on out of the box: the first thing anyone does with a fresh
-		// install is find out whether it works at all.
-		data.debug_logging = true;
-		data.zones = new array<ref JobsModZoneJson>();
-
-		data.zones.Insert(MakeZone("Черногорск, площадь", 6600.0, 2500.0, 30.0, 2));
-		data.zones.Insert(MakeZone("Электрозаводск, набережная", 10400.0, 2200.0, 30.0, 2));
-		data.zones.Insert(MakeZone("Березино, порт", 12000.0, 9000.0, 30.0, 2));
-
-		return data;
-	}
-
-	protected bool WriteDefaults()
-	{
-		JobsModConfigJson data = BuildDefaults();
-
 		string error;
-		if (!JobsModJsonFileIO.SaveConfig(CONFIG_FILE, data, error))
+		if (JobsModJsonFileIO.SaveZoneList(FILE_ZONES, list, error))
+			return;
+
+		ReportWriteFailure(FILE_ZONES, error);
+	}
+
+	// ---------------------------------------------------------------------
+	// PilePoints/*.json
+	// ---------------------------------------------------------------------
+	protected void LoadPilePoints()
+	{
+		array<string> files;
+		JobsModJsonFileIO.ListJsonFiles(DIR_PILE_POINTS, files);
+
+		for (int i = 0; i < files.Count(); i++)
 		{
-			JobsLog.Error("SERVER/CONFIG: не удалось записать " + CONFIG_FILE + " (" + error + ").");
+			string fileName = files.Get(i);
+			string path = DIR_PILE_POINTS + "/" + fileName;
+
+			JobsModPilePointJson point;
+			string error;
+
+			if (!JobsModJsonFileIO.LoadPilePoint(path, point, error) || !point)
+			{
+				JobsLog.Error("SERVER/CONFIG: " + path + " не разобран (" + error + "), файл пропущен.");
+				continue;
+			}
+
+			if (!CheckId(point.id, fileName, path))
+				continue;
+
+			if (!m_Zones.Contains(point.zone_id))
+			{
+				JobsLog.Warning("SERVER/CONFIG: точка '" + point.id + "' ссылается на неизвестную зону '"
+					+ point.zone_id + "', пропущена.");
+				continue;
+			}
+
+			if (point.x == 0 && point.z == 0)
+			{
+				JobsLog.Warning("SERVER/CONFIG: точка '" + point.id + "' стоит в начале координат, пропущена.");
+				continue;
+			}
+
+			m_PilePoints.Insert(point);
+		}
+	}
+
+	protected void WritePilePoint(JobsModPilePointJson point)
+	{
+		string path = DIR_PILE_POINTS + "/" + point.id + ".json";
+		string error;
+		if (JobsModJsonFileIO.SavePilePoint(path, point, error))
+			return;
+
+		ReportWriteFailure(path, error);
+	}
+
+	// ---------------------------------------------------------------------
+	// LoaderAreas/*.json
+	// ---------------------------------------------------------------------
+	protected void LoadLoaderAreas()
+	{
+		array<string> files;
+		JobsModJsonFileIO.ListJsonFiles(DIR_LOADER_AREAS, files);
+
+		for (int i = 0; i < files.Count(); i++)
+		{
+			string fileName = files.Get(i);
+			string path = DIR_LOADER_AREAS + "/" + fileName;
+
+			JobsModLoaderAreaJson area;
+			string error;
+
+			if (!JobsModJsonFileIO.LoadLoaderArea(path, area, error) || !area)
+			{
+				JobsLog.Error("SERVER/CONFIG: " + path + " не разобран (" + error + "), файл пропущен.");
+				continue;
+			}
+
+			if (!CheckId(area.id, fileName, path))
+				continue;
+
+			if (!area.source || !area.destination)
+			{
+				JobsLog.Warning("SERVER/CONFIG: у маршрута '" + area.id + "' нет source или destination, пропущен.");
+				continue;
+			}
+
+			ClampRadius(area.source, area.id, "source");
+			ClampRadius(area.destination, area.id, "destination");
+
+			// Overlapping circles would let a box count as delivered where it
+			// was picked up, and the job would finish itself.
+			float gap = Distance2D(area.source.x, area.source.z, area.destination.x, area.destination.z);
+			if (gap < area.source.radius + area.destination.radius)
+			{
+				JobsLog.Warning("SERVER/CONFIG: у маршрута '" + area.id
+					+ "' зоны погрузки и разгрузки пересекаются — груз будет засчитываться сразу.");
+			}
+
+			if (m_LoaderAreas.Contains(area.id))
+			{
+				JobsLog.Warning("SERVER/CONFIG: маршрут '" + area.id + "' объявлен дважды, второй пропущен.");
+				continue;
+			}
+
+			m_LoaderAreas.Set(area.id, area);
+		}
+	}
+
+	protected void ClampRadius(JobsModAreaJson area, string ownerId, string label)
+	{
+		if (area.radius >= MIN_AREA_RADIUS)
+			return;
+
+		JobsLog.Warning("SERVER/CONFIG: радиус " + label + " маршрута '" + ownerId + "' слишком мал, принят "
+			+ MIN_AREA_RADIUS.ToString() + ".");
+		area.radius = MIN_AREA_RADIUS;
+	}
+
+	protected void WriteLoaderArea(JobsModLoaderAreaJson area)
+	{
+		string path = DIR_LOADER_AREAS + "/" + area.id + ".json";
+		string error;
+		if (JobsModJsonFileIO.SaveLoaderArea(path, area, error))
+			return;
+
+		ReportWriteFailure(path, error);
+	}
+
+	// ---------------------------------------------------------------------
+	// Jobs/*.json
+	// ---------------------------------------------------------------------
+	protected void LoadJobs()
+	{
+		array<string> files;
+		JobsModJsonFileIO.ListJsonFiles(DIR_JOBS, files);
+
+		for (int i = 0; i < files.Count(); i++)
+		{
+			string fileName = files.Get(i);
+			string path = DIR_JOBS + "/" + fileName;
+
+			JobsModJobJson job;
+			string error;
+
+			if (!JobsModJsonFileIO.LoadJob(path, job, error) || !job)
+			{
+				JobsLog.Error("SERVER/CONFIG: " + path + " не разобран (" + error + "), файл пропущен.");
+				continue;
+			}
+
+			if (!CheckId(job.id, fileName, path))
+				continue;
+
+			if (m_Jobs.Contains(job.id))
+			{
+				JobsLog.Warning("SERVER/CONFIG: работа '" + job.id + "' объявлена дважды, вторая пропущена.");
+				continue;
+			}
+
+			if (!AcceptJob(job))
+				continue;
+
+			m_Jobs.Set(job.id, job);
+		}
+	}
+
+	// Everything a job needs to be runnable is checked here rather than at the
+	// moment a player takes it: a broken job that only fails in front of a
+	// player is a bug report, a broken job that fails at startup is a log line.
+	protected bool AcceptJob(JobsModJobJson job)
+	{
+		if (job.name == "")
+			job.name = job.id;
+
+		int type = JobsModJobType.FromText(job.type);
+		if (type == JobsModJobType.UNKNOWN)
+		{
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' неизвестный type='" + job.type
+				+ "'; допустимо '" + JobsModJobType.TEXT_SORTING + "' или '" + JobsModJobType.TEXT_LOADING + "'.");
 			return false;
 		}
 
-		JobsLog.Info("SERVER/CONFIG: создан " + CONFIG_FILE
-			+ ". Координаты рассчитаны на Chernarus — на другой карте отредактируйте зоны.");
+		if (!m_Zones.Contains(job.zone_id))
+		{
+			JobsLog.Warning("SERVER/CONFIG: работа '" + job.id + "' ссылается на неизвестную зону '"
+				+ job.zone_id + "', пропущена.");
+			return false;
+		}
+
+		if (job.reward < 0)
+		{
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' отрицательная награда, принят 0.");
+			job.reward = 0;
+		}
+
+		if (job.cooldown_seconds < 0)
+			job.cooldown_seconds = 0;
+
+		if (type == JobsModJobType.SORTING)
+			return AcceptSortingJob(job);
+
+		return AcceptLoadingJob(job);
+	}
+
+	protected bool AcceptSortingJob(JobsModJobJson job)
+	{
+		if (job.piles_required < 1)
+		{
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' piles_required < 1, пропущена.");
+			return false;
+		}
+
+		if (job.piles_required > MAX_PILES_PER_JOB)
+		{
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' piles_required ограничено до "
+				+ MAX_PILES_PER_JOB.ToString() + ".");
+			job.piles_required = MAX_PILES_PER_JOB;
+		}
+
+		// Sorting the same pile twice is impossible: a worked pile is removed
+		// until it respawns. Asking for more piles than the zone has would leave
+		// the player waiting on respawns with nothing on the HUD to explain it.
+		int available = CountPilePointsInZone(job.zone_id);
+		if (available < job.piles_required)
+		{
+			JobsLog.Warning("SERVER/CONFIG: работе '" + job.id + "' нужно " + job.piles_required.ToString()
+				+ " куч, а в зоне '" + job.zone_id + "' их " + available.ToString()
+				+ " — игроку придётся ждать респавна.");
+		}
+
 		return true;
 	}
 
-	protected JobsModZoneJson MakeZone(string name, float x, float z, float radius, int piles)
+	protected bool AcceptLoadingJob(JobsModJobJson job)
 	{
-		JobsModZoneJson zone = new JobsModZoneJson();
-		zone.name = name;
-		zone.x = x;
-		zone.z = z;
-		zone.radius = radius;
-		zone.piles = piles;
-		return zone;
+		if (!m_LoaderAreas.Contains(job.loader_area_id))
+		{
+			JobsLog.Warning("SERVER/CONFIG: работа '" + job.id + "' ссылается на неизвестный маршрут '"
+				+ job.loader_area_id + "', пропущена.");
+			return false;
+		}
+
+		if (job.cargos_required < 1)
+		{
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' cargos_required < 1, пропущена.");
+			return false;
+		}
+
+		if (job.cargos_required > MAX_CARGOS_PER_JOB)
+		{
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' cargos_required ограничено до "
+				+ MAX_CARGOS_PER_JOB.ToString() + ".");
+			job.cargos_required = MAX_CARGOS_PER_JOB;
+		}
+
+		if (job.cargo_class == "")
+		{
+			job.cargo_class = "JobsMod_CargoBox";
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' не задан cargo_class, принят JobsMod_CargoBox.");
+		}
+
+		return true;
+	}
+
+	protected int CountPilePointsInZone(string zoneId)
+	{
+		int count = 0;
+
+		for (int i = 0; i < m_PilePoints.Count(); i++)
+		{
+			if (m_PilePoints.Get(i).zone_id == zoneId)
+				count++;
+		}
+
+		return count;
+	}
+
+	protected void WriteJob(JobsModJobJson job)
+	{
+		string path = DIR_JOBS + "/" + job.id + ".json";
+		string error;
+		if (JobsModJsonFileIO.SaveJob(path, job, error))
+			return;
+
+		ReportWriteFailure(path, error);
+	}
+
+	// ---------------------------------------------------------------------
+	// NPC/*.json
+	// ---------------------------------------------------------------------
+	protected void LoadNpcs()
+	{
+		array<string> files;
+		JobsModJsonFileIO.ListJsonFiles(DIR_NPC, files);
+
+		for (int i = 0; i < files.Count(); i++)
+		{
+			string fileName = files.Get(i);
+			string path = DIR_NPC + "/" + fileName;
+
+			JobsModNpcJson npc;
+			string error;
+
+			if (!JobsModJsonFileIO.LoadNpc(path, npc, error) || !npc)
+			{
+				JobsLog.Error("SERVER/CONFIG: " + path + " не разобран (" + error + "), файл пропущен.");
+				continue;
+			}
+
+			if (!CheckId(npc.id, fileName, path))
+				continue;
+
+			if (m_Npcs.Contains(npc.id))
+			{
+				JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' объявлен дважды, второй пропущен.");
+				continue;
+			}
+
+			if (!AcceptNpc(npc))
+				continue;
+
+			m_Npcs.Set(npc.id, npc);
+		}
+	}
+
+	protected bool AcceptNpc(JobsModNpcJson npc)
+	{
+		if (npc.name == "")
+			npc.name = npc.id;
+
+		if (npc.player_class == "")
+		{
+			JobsLog.Warning("SERVER/CONFIG: у NPC '" + npc.id + "' не задан player_class, пропущен.");
+			return false;
+		}
+
+		if (!npc.position || (npc.position.x == 0 && npc.position.z == 0))
+		{
+			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' стоит в начале координат, пропущен.");
+			return false;
+		}
+
+		if (!npc.clothing)
+			npc.clothing = new array<string>();
+
+		if (!npc.jobs || npc.jobs.Count() == 0)
+		{
+			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' не выдаёт ни одной работы, пропущен.");
+			return false;
+		}
+
+		// A reference to a job that was dropped earlier is removed here, so the
+		// menu can never offer a job that cannot be created.
+		for (int i = npc.jobs.Count() - 1; i >= 0; i--)
+		{
+			string jobId = npc.jobs.Get(i);
+			if (m_Jobs.Contains(jobId))
+				continue;
+
+			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' ссылается на неизвестную работу '"
+				+ jobId + "', ссылка убрана.");
+			npc.jobs.Remove(i);
+		}
+
+		if (npc.jobs.Count() == 0)
+		{
+			JobsLog.Warning("SERVER/CONFIG: у NPC '" + npc.id + "' не осталось корректных работ, пропущен.");
+			return false;
+		}
+
+		if (npc.jobs.Count() > JobsModRPC.MAX_JOBS_PER_NPC)
+		{
+			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' выдаёт больше "
+				+ JobsModRPC.MAX_JOBS_PER_NPC.ToString() + " работ, лишние не поместятся в меню и убраны.");
+
+			while (npc.jobs.Count() > JobsModRPC.MAX_JOBS_PER_NPC)
+				npc.jobs.Remove(npc.jobs.Count() - 1);
+		}
+
+		return true;
+	}
+
+	protected void WriteNpc(JobsModNpcJson npc)
+	{
+		string path = DIR_NPC + "/" + npc.id + ".json";
+		string error;
+		if (JobsModJsonFileIO.SaveNpc(path, npc, error))
+			return;
+
+		ReportWriteFailure(path, error);
+	}
+
+	// =====================================================================
+	// Helpers
+	// =====================================================================
+	// The file name is the id an admin reads in the folder listing; the id field
+	// is what every reference in the config uses. When they disagree, one of the
+	// two is a lie, and it is worth one line to say which file it is.
+	protected bool CheckId(string id, string fileName, string path)
+	{
+		if (id == "")
+		{
+			JobsLog.Warning("SERVER/CONFIG: " + path + " без поля id, файл пропущен.");
+			return false;
+		}
+
+		if (fileName != id + ".json")
+		{
+			JobsLog.Warning("SERVER/CONFIG: имя файла " + fileName + " не совпадает с id '" + id
+				+ "'. Загружен id из файла.");
+		}
+
+		return true;
+	}
+
+	protected void ReportWriteFailure(string path, string error)
+	{
+		if (m_ProfileWritable)
+		{
+			JobsLog.Error("SERVER/CONFIG: записать " + path + " не удалось (" + error + ").");
+			JobsLog.Error("SERVER/CONFIG: проверьте параметр запуска -profiles= и права на запись в эту папку.");
+			JobsLog.Warning("SERVER/CONFIG: мод работает на встроенных настройках; правки конфига сохраняться не будут.");
+		}
+
+		m_ProfileWritable = false;
+	}
+
+	protected float Distance2D(float ax, float az, float bx, float bz)
+	{
+		float dx = ax - bx;
+		float dz = az - bz;
+		return Math.Sqrt(dx * dx + dz * dz);
+	}
+
+	// Printing everything back is the fastest way to spot a config meant for
+	// another map or an entry that quietly failed to load.
+	protected void Report()
+	{
+		JobsLog.Info("SERVER/CONFIG: зон " + m_Zones.Count().ToString()
+			+ ", точек мусора " + m_PilePoints.Count().ToString()
+			+ ", маршрутов " + m_LoaderAreas.Count().ToString()
+			+ ", работ " + m_Jobs.Count().ToString()
+			+ ", NPC " + m_Npcs.Count().ToString() + ".");
+
+		JobsLog.Info("SERVER/CONFIG: респавн кучи " + m_Settings.pile_respawn_seconds.ToString()
+			+ " с; срок работы " + m_Settings.assignment_timeout_seconds.ToString() + " с.");
+
+		int i;
+		for (i = 0; i < m_PilePoints.Count(); i++)
+		{
+			JobsModPilePointJson point = m_PilePoints.Get(i);
+			JobsLog.Info("SERVER/CONFIG:   куча '" + point.id + "' в зоне '" + point.zone_id
+				+ "' на X " + point.x.ToString() + " / Z " + point.z.ToString() + ".");
+		}
+
+		for (i = 0; i < m_Jobs.Count(); i++)
+		{
+			JobsModJobJson job = m_Jobs.GetElement(i);
+			JobsLog.Info("SERVER/CONFIG:   работа '" + job.id + "' (" + job.type + ") в зоне '" + job.zone_id
+				+ "', награда " + job.reward.ToString() + ", кулдаун " + job.cooldown_seconds.ToString() + " с.");
+		}
+
+		for (i = 0; i < m_Npcs.Count(); i++)
+		{
+			JobsModNpcJson npc = m_Npcs.GetElement(i);
+			JobsLog.Info("SERVER/CONFIG:   NPC '" + npc.id + "' (" + npc.name + ") на X "
+				+ npc.position.x.ToString() + " / Z " + npc.position.z.ToString()
+				+ ", работ " + npc.jobs.Count().ToString() + ".");
+		}
 	}
 }

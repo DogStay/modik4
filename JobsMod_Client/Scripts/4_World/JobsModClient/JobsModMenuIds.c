@@ -7,4 +7,5 @@
 class JobsModMenuIds
 {
 	static const int TRASH_SORTING = 31740;
+	static const int NPC_JOBS = 31741;
 }

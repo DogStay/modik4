@@ -25,6 +25,10 @@
 //   min time   - a human cannot sort nine items instantly; catches automation
 //   distance   - the player must still be at the pile, not across the map
 //   sequence   - catches a malformed or tampered client
+//
+// The minigame pays nothing by itself. A sorted pile is one step of the job an
+// NPC handed out, and the money is paid once, by that NPC, when the whole job is
+// signed off — so there is no second economy running alongside the jobs.
 // =========================================================================
 
 class SortingSessionService
@@ -33,22 +37,17 @@ class SortingSessionService
 	// submission below it did not come from someone playing the minigame.
 	protected static const int MIN_PLAY_SECONDS = 5;
 
-	protected static const int REWARD_QUANTITY = 25;
-	protected static const string REWARD_CLASS = "JobsMod_Money";
-
 	protected ref map<string, ref JobsModServerSession> m_Sessions;
-	// Last time each player finished a shift, so the cooldown survives them
-	// closing the menu, changing piles or dying.
-	protected ref map<string, int> m_LastFinishedMs;
 	protected ref JobsModConfig m_Config;
 	protected TrashZoneService m_Zones;
+	protected JobsModJobService m_Jobs;
 
-	void SortingSessionService(JobsModConfig config, TrashZoneService zones)
+	void SortingSessionService(JobsModConfig config, TrashZoneService zones, JobsModJobService jobs)
 	{
 		m_Config = config;
 		m_Zones = zones;
+		m_Jobs = jobs;
 		m_Sessions = new map<string, ref JobsModServerSession>();
-		m_LastFinishedMs = new map<string, int>();
 	}
 
 	// =====================================================================
@@ -80,12 +79,20 @@ class SortingSessionService
 			return;
 		}
 
-		int cooldownLeft = GetCooldownRemaining(playerId);
-		if (cooldownLeft > 0)
+		// Sorting is not a thing you can do on your own: it is one step of a job
+		// an NPC handed out, and the pile has to belong to that job's zone. That
+		// keeps the NPC as the single way into the work, and it is what stops a
+		// player from farming piles all over the map on one assignment.
+		JobsModAssignment assignment = m_Jobs.GetAssignment(playerId);
+		if (!assignment || assignment.GetType() != JobsModJobType.SORTING || !assignment.IsActive())
 		{
-			JobsLog.Debug("SERVER/JANITOR: игроку '" + identity.GetName() + "' осталось "
-				+ cooldownLeft.ToString() + " с кулдауна.");
-			Reject(player, identity, JobsModRejectReason.ON_COOLDOWN);
+			Reject(player, identity, JobsModRejectReason.NO_ACTIVE_JOB);
+			return;
+		}
+
+		if (m_Zones.GetZoneId(pile) != assignment.GetZoneId())
+		{
+			Reject(player, identity, JobsModRejectReason.WRONG_ZONE);
 			return;
 		}
 
@@ -196,14 +203,39 @@ class SortingSessionService
 			return;
 		}
 
-		m_Sessions.Remove(playerId);
-		m_LastFinishedMs.Set(playerId, GetGame().GetTime());
+		// The assignment is re-read here rather than trusted from the grant: the
+		// player may have abandoned the job, or it may have timed out, in the
+		// minute they spent in the menu.
+		JobsModAssignment assignment = m_Jobs.GetAssignment(playerId);
+		if (!assignment || assignment.GetType() != JobsModJobType.SORTING || !assignment.IsActive())
+		{
+			m_Sessions.Remove(playerId);
+			Reject(player, identity, JobsModRejectReason.NO_ACTIVE_JOB);
+			return;
+		}
 
-		// The heap has been worked: take it out of the world before paying, so a
-		// failure to pay can never leave a pile that is still workable.
+		m_Sessions.Remove(playerId);
+
+		// The heap has been worked: take it out of the world before crediting it,
+		// so a failure downstream can never leave a pile that is still workable.
 		m_Zones.ConsumePile(session.GetPile());
 
-		GrantReward(player, identity, request.param4);
+		string message = "Куча разобрана.";
+		if (request.param4 > 0)
+			message = message + " Ошибок: " + request.param4.ToString() + ".";
+
+		GetGame().RPCSingleParam(
+			player,
+			JobsModRPC.NOTIFY_SORTING_ACCEPTED,
+			new Param1<string>(message),
+			true,
+			identity);
+
+		m_Jobs.ReportSortedPile(player, identity, assignment);
+
+		JobsLog.Info("SERVER/JANITOR: куча принята; игрок='" + identity.GetName()
+			+ "', ошибок=" + request.param4.ToString()
+			+ ", прогресс " + assignment.GetProgress().ToString() + "/" + assignment.GetRequired().ToString() + ".");
 	}
 
 	void HandleAbort(PlayerBase player, PlayerIdentity identity, ParamsReadContext ctx)
@@ -253,68 +285,9 @@ class SortingSessionService
 			m_Sessions.Remove(playerId);
 	}
 
-	// Seconds still owed before this player may start another shift.
-	protected int GetCooldownRemaining(string playerId)
-	{
-		int cooldown = m_Config.GetPlayerCooldownSeconds();
-		if (cooldown <= 0)
-			return 0;
-
-		int last;
-		if (!m_LastFinishedMs.Find(playerId, last))
-			return 0;
-
-		int elapsed = (GetGame().GetTime() - last) / 1000;
-		if (elapsed >= cooldown)
-			return 0;
-
-		return cooldown - elapsed;
-	}
-
 	int GetActiveCount()
 	{
 		return m_Sessions.Count();
-	}
-
-	// =====================================================================
-	// Reward
-	// =====================================================================
-	protected void GrantReward(PlayerBase player, PlayerIdentity identity, int mistakes)
-	{
-		EntityAI reward = player.GetInventory().CreateInInventory(REWARD_CLASS);
-
-		// A full inventory must not swallow the pay: fall back to the ground at
-		// the player's feet rather than silently dropping the reward.
-		if (!reward)
-		{
-			Object spawned = GetGame().CreateObjectEx(REWARD_CLASS, player.GetPosition(), ECE_PLACE_ON_SURFACE);
-			reward = EntityAI.Cast(spawned);
-		}
-
-		if (reward)
-		{
-			ItemBase rewardItem = ItemBase.Cast(reward);
-			if (rewardItem)
-				rewardItem.SetQuantity(REWARD_QUANTITY);
-		}
-		else
-		{
-			JobsLog.Error("SERVER/JANITOR: награду '" + REWARD_CLASS + "' выдать не удалось.");
-		}
-
-		string message = "Смена принята. Начислено: " + REWARD_QUANTITY.ToString() + ".";
-		if (mistakes > 0)
-			message = message + " Ошибок за смену: " + mistakes.ToString() + ".";
-
-		GetGame().RPCSingleParam(
-			player,
-			JobsModRPC.NOTIFY_SORTING_ACCEPTED,
-			new Param1<string>(message),
-			true,
-			identity);
-
-		JobsLog.Info("SERVER/JANITOR: смена принята; игрок='" + identity.GetName()
-			+ "', ошибок=" + mistakes.ToString() + ".");
 	}
 
 	// =====================================================================
@@ -324,7 +297,7 @@ class SortingSessionService
 	{
 		GetGame().RPCSingleParam(
 			player,
-			JobsModRPC.NOTIFY_SORTING_REJECTED,
+			JobsModRPC.NOTIFY_REJECTED,
 			new Param1<int>(reason),
 			true,
 			identity);

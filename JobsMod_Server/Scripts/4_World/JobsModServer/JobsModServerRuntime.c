@@ -12,6 +12,9 @@
 class JobsModServerRuntime
 {
 	protected static ref JobsModConfig s_Config;
+	protected static ref JobsModNpcService s_NpcService;
+	protected static ref JobsModLoaderService s_LoaderService;
+	protected static ref JobsModJobService s_JobService;
 	protected static ref TrashZoneService s_ZoneService;
 	protected static ref SortingSessionService s_SessionService;
 	protected static bool s_Started;
@@ -21,8 +24,8 @@ class JobsModServerRuntime
 		if (!GetGame().IsServer())
 			return;
 
-		// A second Start would build a second service, leaving the first one's
-		// sessions unreachable but still counted against players.
+		// A second Start would build a second set of services, leaving the first
+		// one's assignments unreachable but still counted against players.
 		if (s_Started)
 		{
 			JobsLog.Warning("SERVER: повторный запуск отклонён — службы уже работают.");
@@ -36,8 +39,8 @@ class JobsModServerRuntime
 			return;
 		}
 
-		// Config first: the services are built from it and there is nothing
-		// sensible for them to do without zones.
+		// Config first: every service is built from it and there is nothing
+		// sensible for any of them to do without it.
 		s_Config = new JobsModConfig();
 		if (!s_Config.Load())
 		{
@@ -48,11 +51,24 @@ class JobsModServerRuntime
 
 		JobsLog.s_DebugEnabled = s_Config.IsDebugLogging();
 
+		s_NpcService = new JobsModNpcService(s_Config);
+		s_NpcService.SpawnAll();
+
 		s_ZoneService = new TrashZoneService(s_Config);
 		s_ZoneService.SpawnAll();
 
-		s_SessionService = new SortingSessionService(s_Config, s_ZoneService);
+		// The loader and the job service need each other: the job service asks
+		// for freight when a job starts, and the loader reports deliveries back.
+		// The loader is built first without the reference and given it once the
+		// job service exists, so neither has to be half-constructed.
+		s_LoaderService = new JobsModLoaderService(s_Config);
+		s_JobService = new JobsModJobService(s_Config, s_NpcService, s_LoaderService);
+		s_LoaderService.SetJobService(s_JobService);
+
+		s_SessionService = new SortingSessionService(s_Config, s_ZoneService, s_JobService);
+
 		JobsModTrashActionBridge.GetOnSortRequested().Insert(OnSortRequested);
+		JobsModNpcActionBridge.GetOnTalkRequested().Insert(OnTalkRequested);
 
 		s_Started = true;
 		JobsLog.Info("SERVER: JobsMod запущен. Build: " + JobsModBuildInfo.BUILD
@@ -65,12 +81,19 @@ class JobsModServerRuntime
 			return;
 
 		JobsModTrashActionBridge.GetOnSortRequested().Remove(OnSortRequested);
+		JobsModNpcActionBridge.GetOnTalkRequested().Remove(OnTalkRequested);
 
 		if (s_ZoneService)
 			s_ZoneService.DeleteAll();
 
+		if (s_NpcService)
+			s_NpcService.DeleteAll();
+
 		s_SessionService = null;
+		s_JobService = null;
+		s_LoaderService = null;
 		s_ZoneService = null;
+		s_NpcService = null;
 		s_Config = null;
 		s_Started = false;
 
@@ -92,13 +115,36 @@ class JobsModServerRuntime
 		return s_ZoneService;
 	}
 
-	// Subscribed to the client PBO's bridge, so the action never names a server
-	// type. Static because ScriptInvoker outlives no instance here.
+	static JobsModNpcService GetNpcService()
+	{
+		return s_NpcService;
+	}
+
+	static JobsModJobService GetJobService()
+	{
+		return s_JobService;
+	}
+
+	static JobsModLoaderService GetLoaderService()
+	{
+		return s_LoaderService;
+	}
+
+	// Subscribed to the client PBO's bridges, so neither action ever names a
+	// server type. Static because a ScriptInvoker outlives no instance here.
 	protected static void OnSortRequested(PlayerBase player, Object pile)
 	{
 		if (!s_SessionService)
 			return;
 
 		s_SessionService.HandleSortRequested(player, pile);
+	}
+
+	protected static void OnTalkRequested(PlayerBase player, Object npc)
+	{
+		if (!s_JobService)
+			return;
+
+		s_JobService.HandleTalk(player, npc);
 	}
 }

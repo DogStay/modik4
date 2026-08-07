@@ -12,36 +12,56 @@ modded class PlayerBase
 	{
 		super.OnRPC(sender, rpc_type, ctx);
 
-		if (rpc_type < JobsModRPC.BASE || rpc_type > JobsModRPC.BASE + 100)
+		if (rpc_type < JobsModRPC.BASE || rpc_type > JobsModRPC.BASE + JobsModRPC.ID_RANGE)
 			return;
 
 		if (!GetGame().IsServer())
 			return;
 
-		// sender is attached by the engine, not by the client. Every check below
-		// is made against it, never against anything read from the payload.
+		// sender is attached by the engine, not by the client. Every check made
+		// downstream is against it, never against anything read from the payload.
 		if (!sender)
 		{
 			JobsLog.Warning("SERVER/RPC: запрос без identity отброшен; rpc=" + rpc_type.ToString() + ".");
 			return;
 		}
 
-		SortingSessionService service = JobsModServerRuntime.GetSessionService();
-		if (!service)
+		if (!JobsModServerRuntime.IsStarted())
 		{
 			JobsLog.Error("SERVER/RPC: службы не запущены; rpc=" + rpc_type.ToString() + ".");
 			return;
 		}
 
+		SortingSessionService sessions = JobsModServerRuntime.GetSessionService();
+		JobsModJobService jobs = JobsModServerRuntime.GetJobService();
+
 		if (rpc_type == JobsModRPC.REQUEST_SORTING_SUBMIT)
 		{
-			service.HandleSubmit(this, sender, ctx);
+			sessions.HandleSubmit(this, sender, ctx);
 			return;
 		}
 
 		if (rpc_type == JobsModRPC.REQUEST_SORTING_ABORT)
 		{
-			service.HandleAbort(this, sender, ctx);
+			sessions.HandleAbort(this, sender, ctx);
+			return;
+		}
+
+		if (rpc_type == JobsModRPC.REQUEST_JOB_ACCEPT)
+		{
+			jobs.HandleAccept(this, sender, ctx);
+			return;
+		}
+
+		if (rpc_type == JobsModRPC.REQUEST_JOB_COMPLETE)
+		{
+			jobs.HandleComplete(this, sender, ctx);
+			return;
+		}
+
+		if (rpc_type == JobsModRPC.REQUEST_JOB_ABANDON)
+		{
+			jobs.HandleAbandon(this, sender, ctx);
 			return;
 		}
 	}

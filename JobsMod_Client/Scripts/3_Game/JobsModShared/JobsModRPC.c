@@ -13,25 +13,45 @@ class JobsModRPC
 	// Base offset chosen high enough to stay clear of vanilla RPC ids.
 	static const int BASE = 24500;
 
-	static const int PROTOCOL_VERSION = 1;
+	// 1 -> 2: NPC job assignment and the loader job were added.
+	static const int PROTOCOL_VERSION = 2;
+
+	// Every id below must stay inside [BASE, BASE + ID_RANGE]; both OnRPC
+	// handlers use that window to ignore traffic that is not ours.
+	static const int ID_RANGE = 100;
 
 	// --- Client -> Server ---
-	// Starting a session has no message of its own: ActionSortTrash already
-	// runs its OnExecuteServer half on the server, so the request travels
-	// through the engine's own action pipeline instead of a second channel.
+	// Starting a sorting session has no message of its own: ActionSortTrash
+	// already runs its OnExecuteServer half on the server, so the request
+	// travels through the engine's own action pipeline. Talking to an NPC works
+	// the same way through ActionTalkToNpc.
 	//
 	// Player finished the minigame; payload carries the produced bin sequence.
 	static const int REQUEST_SORTING_SUBMIT = BASE + 2;
-	// Player closed the menu without finishing.
+	// Player closed the minigame menu without finishing.
 	static const int REQUEST_SORTING_ABORT = BASE + 3;
+	// Player picked a job in the NPC menu.
+	static const int REQUEST_JOB_ACCEPT = BASE + 4;
+	// Player asked the NPC to sign off a finished job and pay.
+	static const int REQUEST_JOB_COMPLETE = BASE + 5;
+	// Player gave up on the job they are holding.
+	static const int REQUEST_JOB_ABANDON = BASE + 6;
 
 	// --- Server -> Client ---
-	// Session granted; payload carries nonce, zone name and the shuffled order.
+	// Sorting session granted; carries nonce, zone name and the shuffled order.
 	static const int NOTIFY_SORTING_SESSION = BASE + 50;
-	// Session refused; payload carries a JobsModRejectReason value.
-	static const int NOTIFY_SORTING_REJECTED = BASE + 51;
-	// Submitted result accepted; the job is done and the reward was paid.
+	// A request was refused; carries a JobsModRejectReason value.
+	static const int NOTIFY_REJECTED = BASE + 51;
+	// Sorted pile accepted.
 	static const int NOTIFY_SORTING_ACCEPTED = BASE + 52;
+	// The offer list of the NPC the player is standing at; opens the NPC menu.
+	static const int NOTIFY_JOB_MENU = BASE + 53;
+	// Current job of this player, or "no job"; drives the HUD.
+	static const int NOTIFY_JOB_STATE = BASE + 54;
+	// A free-text notification (job taken, paid, abandoned).
+	static const int NOTIFY_JOB_MESSAGE = BASE + 55;
+	// Where the NPCs stand, so the client can offer the talk action on them.
+	static const int NOTIFY_NPC_DIRECTORY = BASE + 56;
 
 	// Separator between item ids inside the packed order/sequence strings.
 	// A comma is safe here because no catalog id may contain one — the catalog
@@ -39,12 +59,65 @@ class JobsModRPC
 	static const string FIELD_SEPARATOR = ",";
 
 	// A player must stand this close (metres) to the trash pile both when the
-	// session starts and when the result is submitted.
+	// sorting session starts and when the result is submitted.
 	static const float INTERACTION_DISTANCE = 4.0;
 
-	// A granted session expires after this many seconds. It bounds how long a
-	// stale nonce stays usable if the client never answers.
+	// How close a player must stand to an NPC to talk to it and to hand a job in.
+	static const float NPC_INTERACTION_DISTANCE = 3.0;
+
+	// A granted sorting session expires after this many seconds. It bounds how
+	// long a stale nonce stays usable if the client never answers.
 	static const int SESSION_TIMEOUT_SECONDS = 600;
+
+	// Upper bound on how many offers one NPC menu may carry. The layout has a
+	// fixed number of rows, and the server must never promise more than it can
+	// draw.
+	static const int MAX_JOBS_PER_NPC = 6;
+}
+
+// What kind of work a job definition describes. The string form is what an
+// admin writes in the job JSON; the int form is what the code branches on.
+class JobsModJobType
+{
+	static const int UNKNOWN = 0;
+	static const int SORTING = 1;
+	static const int LOADING = 2;
+
+	static const string TEXT_SORTING = "sorting";
+	static const string TEXT_LOADING = "loading";
+
+	static int FromText(string text)
+	{
+		if (text == TEXT_SORTING)
+			return SORTING;
+
+		if (text == TEXT_LOADING)
+			return LOADING;
+
+		return UNKNOWN;
+	}
+}
+
+// Why one offer in an NPC menu can or cannot be taken. Decided by the server
+// and sent as a number, so the client never has to reason about cooldowns or
+// about what job the player is holding.
+class JobsModOfferState
+{
+	static const int AVAILABLE = 0;
+	static const int ON_COOLDOWN = 1;
+	static const int BLOCKED_BY_OTHER = 2;
+	static const int HELD = 3;
+}
+
+// Lifecycle of one accepted job, as far as the client needs to know.
+class JobsModJobStatus
+{
+	// No job held: the HUD hides itself.
+	static const int NONE = 0;
+	// Work in progress.
+	static const int ACTIVE = 1;
+	// Everything done; the player has to walk back to the NPC to be paid.
+	static const int READY_TO_HAND_IN = 2;
 }
 
 // Why a request was refused. The client maps these to readable text; the raw
@@ -61,6 +134,14 @@ class JobsModRejectReason
 	static const int RESULT_INCORRECT = 7;
 	static const int ALREADY_BUSY = 8;
 	static const int UNKNOWN_PILE = 9;
+	static const int UNKNOWN_NPC = 10;
+	static const int UNKNOWN_JOB = 11;
+	static const int NPC_DOES_NOT_OFFER = 12;
+	static const int NO_ACTIVE_JOB = 13;
+	static const int JOB_ALREADY_HELD = 14;
+	static const int JOB_NOT_FINISHED = 15;
+	static const int WRONG_ZONE = 16;
+	static const int WRONG_NPC = 17;
 
 	static string GetText(int reason)
 	{
@@ -73,7 +154,7 @@ class JobsModRejectReason
 			case TOO_FAR:
 				return "Отойдя от точки, работу продолжить нельзя.";
 			case ON_COOLDOWN:
-				return "Вы недавно закончили смену. Отдохните перед следующей.";
+				return "Вы недавно закончили эту работу. Приходите позже.";
 			case NO_ACTIVE_SESSION:
 				return "Смена не найдена. Начните работу заново.";
 			case SESSION_EXPIRED:
@@ -84,6 +165,22 @@ class JobsModRejectReason
 				return "Вы уже сортируете мусор на другой точке.";
 			case UNKNOWN_PILE:
 				return "Эта куча не является рабочей точкой.";
+			case UNKNOWN_NPC:
+				return "Этот человек не выдаёт работу.";
+			case UNKNOWN_JOB:
+				return "Такой работы больше нет.";
+			case NPC_DOES_NOT_OFFER:
+				return "Этот человек такую работу не выдаёт.";
+			case NO_ACTIVE_JOB:
+				return "Сначала возьмите работу у нанимателя.";
+			case JOB_ALREADY_HELD:
+				return "Вы уже взяли работу. Сначала закончите её.";
+			case JOB_NOT_FINISHED:
+				return "Работа ещё не выполнена.";
+			case WRONG_ZONE:
+				return "Это место не относится к вашей работе.";
+			case WRONG_NPC:
+				return "Сдавать работу нужно тому, кто её выдал.";
 		}
 
 		return "Запрос отклонён.";
