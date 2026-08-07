@@ -63,14 +63,14 @@ class JobsModJobHud
 			m_Root.Unlink();
 	}
 
-	void Update(float timeslice)
+	void Update(float timeslice, bool visible)
 	{
 		if (!m_Root)
 			return;
 
 		JobsModJobView view = JobsModClientContext.GetJobView();
 
-		if (!view.HasJob() || !IsHudVisible())
+		if (!view.HasJob() || !visible)
 		{
 			m_Root.Show(false);
 			return;
@@ -130,9 +130,10 @@ class JobsModJobHud
 		m_LastStatus = view.m_Status;
 	}
 
-	// The panel belongs to the game world, not on top of the inventory, the map
-	// or one of the mod's own menus.
-	protected bool IsHudVisible()
+	// The panel and the world marker both belong to the game world, not on top of
+	// the inventory, the map or one of the mod's own menus. One rule, asked once
+	// per frame, so the two can never disagree about it.
+	static bool IsGameplayVisible()
 	{
 		UIManager manager = GetGame().GetUIManager();
 		if (manager && manager.IsMenuOpen(JobsModMenuIds.NPC_JOBS))

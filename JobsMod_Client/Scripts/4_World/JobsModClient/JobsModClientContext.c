@@ -162,8 +162,9 @@ class JobsModClientContext
 	{
 		Param4<int, int, int, int> numbers = new Param4<int, int, int, int>(0, 0, 0, 0);
 		Param4<string, string, string, string> text = new Param4<string, string, string, string>("", "", "", "");
+		Param2<string, int> extra = new Param2<string, int>("", 0);
 
-		if (!ctx.Read(numbers) || !ctx.Read(text))
+		if (!ctx.Read(numbers) || !ctx.Read(text) || !ctx.Read(extra))
 		{
 			JobsLog.Error("CLIENT/RPC: не удалось прочитать NOTIFY_JOB_STATE.");
 			return;
@@ -178,6 +179,21 @@ class JobsModClientContext
 		view.m_ZoneName = text.param2;
 		view.m_NpcName = text.param3;
 		view.m_Hint = text.param4;
+		view.m_CargoClass = extra.param1;
+
+		// A truncated marker list leaves the previous state untouched rather
+		// than installing a job with nowhere to go.
+		for (int i = 0; i < extra.param2; i++)
+		{
+			Param3<int, string, vector> marker = new Param3<int, string, vector>(0, "", vector.Zero);
+			if (!ctx.Read(marker))
+			{
+				JobsLog.Error("CLIENT/RPC: список меток оборван на записи " + i.ToString() + ".");
+				return;
+			}
+
+			view.m_Markers.Insert(new JobsModMarker(marker.param1, marker.param2, marker.param3));
+		}
 
 		s_JobView = view;
 

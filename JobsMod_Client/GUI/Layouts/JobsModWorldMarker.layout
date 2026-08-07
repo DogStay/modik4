@@ -1,0 +1,84 @@
+PanelWidgetClass MarkerRoot {
+ position 0 0
+ size 1 1
+ color 0 0 0 0
+ hexactpos 0
+ vexactpos 0
+ hexactsize 0
+ vexactsize 0
+ ignorepointer 1
+ {
+  PanelWidgetClass MarkerGroup {
+   position 0.45 0.45
+   size 0.1 0.075
+   color 0 0 0 0
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   ignorepointer 1
+   {
+    PanelWidgetClass MarkerPipOuter {
+     position 0.44 0.02
+     size 0.12 0.16
+     color 1 0.639216 0.721569 0.466667
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     ignorepointer 1
+     {
+      PanelWidgetClass MarkerPipInner {
+       position 0.22 0.2
+       size 0.56 0.6
+       color 1 0.086275 0.094118 0.101961
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       ignorepointer 1
+      }
+     }
+    }
+    PanelWidgetClass MarkerStem {
+     position 0.495 0.18
+     size 0.01 0.16
+     color 1 0.639216 0.721569 0.466667
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     ignorepointer 1
+    }
+    TextWidgetClass MarkerLabel {
+     font "gui/fonts/metron-bold14"
+     "text color" 1 0.929412 0.937255 0.917647
+     "text valign" center
+     "text halign" center
+     position 0 0.36
+     size 1 0.3
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     ignorepointer 1
+     "exact text" 1
+    }
+    TextWidgetClass MarkerDistance {
+     font "gui/fonts/metron-bold14"
+     "text color" 1 0.639216 0.721569 0.466667
+     "text valign" center
+     "text halign" center
+     position 0 0.66
+     size 1 0.3
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     ignorepointer 1
+     "exact text" 1
+    }
+   }
+  }
+ }
+}

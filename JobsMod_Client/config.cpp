@@ -99,17 +99,33 @@ class CfgVehicles
 	// which is exactly the "carrying a generator" look the job is meant to have,
 	// with no animation work of our own.
 	//
-	// Its cargo space is removed on purpose: the box is freight to be moved, not
-	// a container players could use to smuggle loot across the map.
+	// The box must live in one of two places and nowhere else: on the ground, or
+	// in the player's hands. Three settings enforce that, and it is worth being
+	// explicit about which does what:
+	//
+	//   itemSize     20x20 is larger than any cargo grid in the game, so the fit
+	//                check fails everywhere — backpack, vest, tent, car, barrel.
+	//                This is what makes "hands only" true rather than merely
+	//                inconvenient, and it costs no script class to enforce.
+	//   itemsCargoSize
+	//                no cargo of its own: freight to be moved, not a container
+	//                players could use to smuggle loot across the map.
+	//   weight       60 kg. Loaded like that a player cannot sprint and their
+	//                stamina drains at once, which is the whole point of the job
+	//                being carried rather than driven.
+	//   itemBehaviour
+	//                2 = heavy: two-handed carry stance, no running with it.
 	class JobsMod_CargoBox: WoodenCrate
 	{
 		scope = 2;
 		displayName = "Грузовой ящик";
-		descriptionShort = "Груз для переноски на склад. Ставится на землю в зоне разгрузки.";
-		weight = 20000;
-		itemSize[] = {10, 10};
+		descriptionShort = "Тяжёлый груз. Носится только в руках. Ставится на землю в зоне разгрузки.";
+		weight = 60000;
+		itemSize[] = {20, 20};
 		itemsCargoSize[] = {0, 0};
+		itemBehaviour = 2;
 		rotationFlags = 1;
+		canBeSplit = 0;
 	};
 
 	// Payment token handed out by the server on job completion.

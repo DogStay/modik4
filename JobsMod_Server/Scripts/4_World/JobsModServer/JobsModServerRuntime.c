@@ -62,7 +62,7 @@ class JobsModServerRuntime
 		// The loader is built first without the reference and given it once the
 		// job service exists, so neither has to be half-constructed.
 		s_LoaderService = new JobsModLoaderService(s_Config);
-		s_JobService = new JobsModJobService(s_Config, s_NpcService, s_LoaderService);
+		s_JobService = new JobsModJobService(s_Config, s_NpcService, s_LoaderService, s_ZoneService);
 		s_LoaderService.SetJobService(s_JobService);
 
 		s_SessionService = new SortingSessionService(s_Config, s_ZoneService, s_JobService);

@@ -16,6 +16,7 @@
 modded class MissionGameplay
 {
 	protected ref JobsModJobHud m_JobsModHud;
+	protected ref JobsModWorldMarker m_JobsModMarker;
 
 	override void OnInit()
 	{
@@ -26,6 +27,9 @@ modded class MissionGameplay
 
 		if (!m_JobsModHud)
 			m_JobsModHud = new JobsModJobHud();
+
+		if (!m_JobsModMarker)
+			m_JobsModMarker = new JobsModWorldMarker();
 	}
 
 	override void OnMissionFinish()
@@ -34,6 +38,7 @@ modded class MissionGameplay
 		JobsModClientContext.GetOnCloseMenu().Remove(JobsModCloseMenu);
 
 		m_JobsModHud = null;
+		m_JobsModMarker = null;
 
 		super.OnMissionFinish();
 	}
@@ -42,8 +47,15 @@ modded class MissionGameplay
 	{
 		super.OnUpdate(timeslice);
 
+		// Asked once and handed to both, so the panel and the world marker can
+		// never end up showing at different moments.
+		bool visible = JobsModJobHud.IsGameplayVisible();
+
 		if (m_JobsModHud)
-			m_JobsModHud.Update(timeslice);
+			m_JobsModHud.Update(timeslice, visible);
+
+		if (m_JobsModMarker)
+			m_JobsModMarker.Update(visible);
 	}
 
 	override UIScriptedMenu CreateScriptedMenu(int id)

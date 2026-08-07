@@ -26,6 +26,7 @@ class JobsModJobService
 	protected ref JobsModConfig m_Config;
 	protected JobsModNpcService m_Npcs;
 	protected JobsModLoaderService m_Loader;
+	protected TrashZoneService m_Zones;
 
 	// One assignment per player, keyed by identity id.
 	protected ref map<string, ref JobsModAssignment> m_Assignments;
@@ -34,11 +35,12 @@ class JobsModJobService
 
 	protected int m_NextAssignmentId;
 
-	void JobsModJobService(JobsModConfig config, JobsModNpcService npcs, JobsModLoaderService loader)
+	void JobsModJobService(JobsModConfig config, JobsModNpcService npcs, JobsModLoaderService loader, TrashZoneService zones)
 	{
 		m_Config = config;
 		m_Npcs = npcs;
 		m_Loader = loader;
+		m_Zones = zones;
 		m_Assignments = new map<string, ref JobsModAssignment>();
 		m_CooldownUntilMs = new map<string, int>();
 		m_NextAssignmentId = Math.RandomInt(1000, 100000);
@@ -548,6 +550,9 @@ class JobsModJobService
 		string zoneName = "";
 		string npcName = "";
 		string hint = "";
+		string cargoClass = "";
+
+		array<ref Param> markers = new array<ref Param>();
 
 		if (assignment)
 		{
@@ -559,7 +564,10 @@ class JobsModJobService
 
 			JobsModJobJson job = m_Config.GetJob(assignment.GetJobId());
 			if (job)
+			{
 				jobName = job.name;
+				cargoClass = job.cargo_class;
+			}
 
 			JobsModNpcJson npc = m_Config.GetNpc(assignment.GetNpcId());
 			if (npc)
@@ -571,13 +579,60 @@ class JobsModJobService
 				hint = "Отнесите ящики в зону разгрузки.";
 			else
 				hint = "Разберите мусор в зоне: " + zoneName + ".";
+
+			CollectMarkers(assignment, npcName, markers);
 		}
 
 		array<ref Param> message = new array<ref Param>();
 		message.Insert(new Param4<int, int, int, int>(status, progress, required, assignmentId));
 		message.Insert(new Param4<string, string, string, string>(jobName, zoneName, npcName, hint));
+		message.Insert(new Param2<string, int>(cargoClass, markers.Count()));
+
+		for (int i = 0; i < markers.Count(); i++)
+			message.Insert(markers.Get(i));
 
 		GetGame().RPC(player, JobsModRPC.NOTIFY_JOB_STATE, message, true, identity);
+	}
+
+	// Where the player has to go, sent with every state update because the
+	// client has no way to know any of it: piles, yards and employers all live
+	// in a config only the server ever reads.
+	//
+	// Everything relevant is sent at once and the client picks. That is what
+	// keeps the marker correct between messages — sorting one pile does not
+	// require a fresh list to point at the next one, and picking up a box does
+	// not require a round trip to start pointing at the drop-off.
+	protected void CollectMarkers(JobsModAssignment assignment, string npcName, out array<ref Param> markers)
+	{
+		// Once the work is done the only thing left is the walk back, so the
+		// employer replaces the work points rather than joining them.
+		if (assignment.IsFinished())
+		{
+			PlayerBase npcEntity = m_Npcs.GetNpcEntity(assignment.GetNpcId());
+			if (npcEntity)
+				markers.Insert(new Param3<int, string, vector>(JobsModMarkerKind.EMPLOYER, npcName, npcEntity.GetPosition()));
+
+			return;
+		}
+
+		if (assignment.GetType() == JobsModJobType.LOADING)
+		{
+			JobsModLoaderAreaJson area = m_Config.GetLoaderArea(assignment.GetLoaderAreaId());
+			if (!area)
+				return;
+
+			markers.Insert(new Param3<int, string, vector>(
+				JobsModMarkerKind.SOURCE, "Погрузка", Vector(area.source.x, 0, area.source.z)));
+			markers.Insert(new Param3<int, string, vector>(
+				JobsModMarkerKind.DESTINATION, "Разгрузка", Vector(area.destination.x, 0, area.destination.z)));
+			return;
+		}
+
+		array<vector> piles = new array<vector>();
+		m_Zones.CollectStandingPiles(assignment.GetZoneId(), piles);
+
+		for (int i = 0; i < piles.Count(); i++)
+			markers.Insert(new Param3<int, string, vector>(JobsModMarkerKind.TARGET, "Мусор", piles.Get(i)));
 	}
 
 	protected void SendMessage(PlayerBase player, PlayerIdentity identity, string title, string text)

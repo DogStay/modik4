@@ -123,6 +123,21 @@ class TrashZoneService
 		return m_Config.GetZoneName(record.m_Point.zone_id);
 	}
 
+	// Where the piles of one zone are standing right now. A pile that has been
+	// worked and is waiting to respawn is not in the list, so a marker built
+	// from it can never point at an empty spot.
+	void CollectStandingPiles(string zoneId, out array<vector> positions)
+	{
+		for (int i = 0; i < m_Piles.Count(); i++)
+		{
+			JobsModPileRecord record = m_Piles.Get(i);
+			if (!record.m_Pile || record.m_Point.zone_id != zoneId)
+				continue;
+
+			positions.Insert(record.m_Pile.GetPosition());
+		}
+	}
+
 	// Called once a pile has been sorted and accepted. Deletes it and books its
 	// return, so the same heap cannot be worked twice.
 	void ConsumePile(Object pile)

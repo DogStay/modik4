@@ -79,6 +79,23 @@ class JobsModNpcOffer
 	}
 }
 
+// One place in the world worth running to. Positions come from the server —
+// the client has no idea where a pile or a loading yard is otherwise, since
+// none of that is in a config it ever downloads.
+class JobsModMarker
+{
+	int m_Kind;
+	string m_Label;
+	vector m_Position;
+
+	void JobsModMarker(int kind, string label, vector position)
+	{
+		m_Kind = kind;
+		m_Label = label;
+		m_Position = position;
+	}
+}
+
 // The job the player is holding, as the HUD draws it.
 class JobsModJobView
 {
@@ -91,9 +108,17 @@ class JobsModJobView
 	string m_NpcName;
 	string m_Hint;
 
+	// Class name of this job's freight, so the marker can tell "go and fetch a
+	// box" from "carry this one to the yard" by looking at the player's hands.
+	// Empty for jobs that have no freight.
+	string m_CargoClass;
+
+	ref array<ref JobsModMarker> m_Markers;
+
 	void JobsModJobView()
 	{
 		m_Status = JobsModJobStatus.NONE;
+		m_Markers = new array<ref JobsModMarker>();
 	}
 
 	bool HasJob()
@@ -111,5 +136,45 @@ class JobsModJobView
 		float done = m_Progress;
 		float total = m_Required;
 		return Math.Clamp(done / total, 0.0, 1.0);
+	}
+
+	// Which of the points the server sent the player should be running to right
+	// now. Relevance is decided first and distance only breaks the tie: the
+	// loading yard may well be closer than the unloading yard while you are
+	// carrying a box, and pointing at it would be worse than pointing nowhere.
+	JobsModMarker PickMarker(vector playerPosition, bool carryingCargo)
+	{
+		int wanted = JobsModMarkerKind.TARGET;
+
+		if (m_Status == JobsModJobStatus.READY_TO_HAND_IN)
+		{
+			wanted = JobsModMarkerKind.EMPLOYER;
+		}
+		else if (m_CargoClass != "")
+		{
+			if (carryingCargo)
+				wanted = JobsModMarkerKind.DESTINATION;
+			else
+				wanted = JobsModMarkerKind.SOURCE;
+		}
+
+		JobsModMarker best = null;
+		float bestDistance = 0;
+
+		for (int i = 0; i < m_Markers.Count(); i++)
+		{
+			JobsModMarker marker = m_Markers.Get(i);
+			if (marker.m_Kind != wanted)
+				continue;
+
+			float distance = vector.Distance(playerPosition, marker.m_Position);
+			if (best && distance >= bestDistance)
+				continue;
+
+			best = marker;
+			bestDistance = distance;
+		}
+
+		return best;
 	}
 }

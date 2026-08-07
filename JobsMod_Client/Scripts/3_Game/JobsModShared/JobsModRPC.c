@@ -98,6 +98,21 @@ class JobsModJobType
 	}
 }
 
+// What a world marker points at. The client uses this to pick which of the
+// points the server sent is the one to draw right now — the yard you load at
+// and the yard you unload at are both relevant, but never at the same moment.
+class JobsModMarkerKind
+{
+	// A place to work: a trash pile.
+	static const int TARGET = 0;
+	// Where the freight is picked up.
+	static const int SOURCE = 1;
+	// Where the freight has to end up.
+	static const int DESTINATION = 2;
+	// The employer, once the job is done and only the pay is left.
+	static const int EMPLOYER = 3;
+}
+
 // Why one offer in an NPC menu can or cannot be taken. Decided by the server
 // and sent as a number, so the client never has to reason about cooldowns or
 // about what job the player is holding.
