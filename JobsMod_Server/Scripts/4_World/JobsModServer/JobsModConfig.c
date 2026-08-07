@@ -44,21 +44,43 @@ class JobsModConfig
 		{
 			JobsLog.Info("SERVER/CONFIG: " + CONFIG_FILE + " не найден, создаётся файл с настройками по умолчанию.");
 
+			// Being unable to write is almost always a launch problem, not a mod
+			// problem: no -profiles= parameter, or a read-only profile folder.
+			// Refusing to start would leave an admin with a mod that does nothing
+			// and one line explaining why, so run on in-memory defaults instead
+			// and say plainly that edits will not persist.
 			if (!WriteDefaults())
-				return false;
+			{
+				JobsLog.Error("SERVER/CONFIG: записать " + CONFIG_FILE + " не удалось.");
+				JobsLog.Error("SERVER/CONFIG: проверьте параметр запуска -profiles= и права на запись в эту папку.");
+				JobsLog.Warning("SERVER/CONFIG: мод работает на встроенных настройках; правки конфига сохраняться не будут.");
+				ApplyBuiltInDefaults();
+				return true;
+			}
 		}
 
 		JobsModConfigJson data;
 		string error;
 
+		// A file that exists but does not parse is an admin's edit gone wrong.
+		// Silently replacing it with defaults would move their zones without
+		// telling them, so this is the one case that does stop the mod.
 		if (!JobsModJsonFileIO.LoadConfig(CONFIG_FILE, data, error) || !data)
 		{
-			JobsLog.Error("SERVER/CONFIG: не удалось прочитать " + CONFIG_FILE + " (" + error + ").");
+			JobsLog.Error("SERVER/CONFIG: не удалось разобрать " + CONFIG_FILE + " (" + error + ").");
+			JobsLog.Error("SERVER/CONFIG: исправьте синтаксис JSON или удалите файл, чтобы он создался заново.");
 			return false;
 		}
 
 		Adopt(data);
 		return true;
+	}
+
+	// The same values WriteDefaults would have saved, applied straight to the
+	// live config so a non-writable profile folder still gives a playable mod.
+	protected void ApplyBuiltInDefaults()
+	{
+		Adopt(BuildDefaults());
 	}
 
 	// Copies the parsed file into the live config, correcting anything that
@@ -128,22 +150,45 @@ class JobsModConfig
 		JobsLog.Info("SERVER/CONFIG: принято зон: " + m_Zones.Count().ToString()
 			+ "; кулдаун игрока " + m_PlayerCooldownSeconds.ToString()
 			+ " с; респавн кучи " + m_PileRespawnSeconds.ToString() + " с.");
+
+		// Printing the coordinates back is the fastest way to spot a config
+		// meant for another map: the numbers either match where you stand or
+		// they do not.
+		for (int z = 0; z < m_Zones.Count(); z++)
+		{
+			JobsModZoneJson accepted = m_Zones.Get(z);
+			JobsLog.Info("SERVER/CONFIG:   зона '" + accepted.name + "' X " + accepted.x.ToString()
+				+ " / Z " + accepted.z.ToString() + ", радиус " + accepted.radius.ToString()
+				+ ", куч " + accepted.piles.ToString() + ".");
+		}
 	}
 
 	// The shipped defaults point at Chernarus towns. On any other map they will
 	// be in the wrong place, which is why the startup log always reports where
 	// piles were actually spawned.
-	protected bool WriteDefaults()
+	//
+	// Built in one place so the file written on first run and the fallback used
+	// when writing fails can never describe different worlds.
+	protected JobsModConfigJson BuildDefaults()
 	{
 		JobsModConfigJson data = new JobsModConfigJson();
 		data.player_cooldown_seconds = DEFAULT_PLAYER_COOLDOWN;
 		data.pile_respawn_seconds = DEFAULT_PILE_RESPAWN;
-		data.debug_logging = false;
+		// Debug is on out of the box: the first thing anyone does with a fresh
+		// install is find out whether it works at all.
+		data.debug_logging = true;
 		data.zones = new array<ref JobsModZoneJson>();
 
 		data.zones.Insert(MakeZone("Черногорск, площадь", 6600.0, 2500.0, 30.0, 2));
 		data.zones.Insert(MakeZone("Электрозаводск, набережная", 10400.0, 2200.0, 30.0, 2));
 		data.zones.Insert(MakeZone("Березино, порт", 12000.0, 9000.0, 30.0, 2));
+
+		return data;
+	}
+
+	protected bool WriteDefaults()
+	{
+		JobsModConfigJson data = BuildDefaults();
 
 		string error;
 		if (!JobsModJsonFileIO.SaveConfig(CONFIG_FILE, data, error))
