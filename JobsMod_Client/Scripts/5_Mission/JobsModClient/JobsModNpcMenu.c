@@ -191,7 +191,10 @@ class JobsModNpcMenu extends UIScriptedMenu
 	// =====================================================================
 	protected void Draw()
 	{
-		if (!m_Offer || !m_NpcNameText)
+		// Bound widgets are checked alongside the data: BindWidgets only reports
+		// a broken layout, and drawing into it afterwards would turn a missing
+		// widget into a null access instead of the log line it already is.
+		if (!m_Offer || !m_NpcNameText || !m_NpcDescText || !m_HandInPanel || !m_AbandonPanel || !m_CloseText)
 		{
 			JobsLog.Error("CLIENT/UI: меню найма открыто без данных, закрывается.");
 			Close();
@@ -222,7 +225,7 @@ class JobsModNpcMenu extends UIScriptedMenu
 	protected void DrawRow(int index)
 	{
 		Widget frame = m_RowFrames.Get(index);
-		if (!frame)
+		if (!frame || !m_RowNames.Get(index) || !m_RowDescs.Get(index) || !m_RowStatuses.Get(index))
 			return;
 
 		if (index >= m_Offer.m_Offers.Count())

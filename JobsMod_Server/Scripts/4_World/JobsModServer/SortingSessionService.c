@@ -214,11 +214,16 @@ class SortingSessionService
 			return;
 		}
 
+		// Read out of the session before it is dropped. The map holds the only
+		// strong reference to it, so removing the entry destroys the session and
+		// leaves this local pointing at nothing.
+		Object workedPile = session.GetPile();
+
 		m_Sessions.Remove(playerId);
 
 		// The heap has been worked: take it out of the world before crediting it,
 		// so a failure downstream can never leave a pile that is still workable.
-		m_Zones.ConsumePile(session.GetPile());
+		m_Zones.ConsumePile(workedPile);
 
 		string message = "Куча разобрана.";
 		if (request.param4 > 0)

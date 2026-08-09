@@ -81,16 +81,16 @@ class JobsModLoaderService
 			spawned++;
 		}
 
-		if (spawned < job.cargos_required)
-		{
-			JobsLog.Warning("SERVER/LOADER: создано " + spawned.ToString() + " из "
-				+ job.cargos_required.ToString() + " ящиков для '" + job.id + "'.");
-		}
-
 		// Fewer boxes than the job asks for would make it impossible to finish,
-		// so an assignment that could not be fully stocked is refused outright.
+		// so an assignment that could not be fully stocked is refused outright
+		// rather than handed to a player who would work it down to nine of ten
+		// and then have nothing left to carry.
 		if (spawned < job.cargos_required)
 		{
+			JobsLog.Error("SERVER/LOADER: создано " + spawned.ToString() + " из "
+				+ job.cargos_required.ToString() + " ящиков для '" + job.id
+				+ "' — работа не выдана. Увеличьте радиус зоны погрузки или уменьшите cargos_required.");
+
 			assignment.DeleteAllCargo();
 			return false;
 		}

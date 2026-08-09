@@ -353,8 +353,13 @@ class JobsModJobService
 		if (!assignment || assignment.GetId() != request.param2)
 			return;
 
+		// Read out before ending it. The map holds the only strong reference, so
+		// dropping it there destroys the assignment and leaves this local
+		// pointing at nothing.
+		string jobId = assignment.GetJobId();
+
 		EndAssignment(player, identity, assignment, "Работа брошена.");
-		JobsLog.Info("SERVER/JOBS: '" + identity.GetName() + "' отказался от работы '" + assignment.GetJobId() + "'.");
+		JobsLog.Info("SERVER/JOBS: '" + identity.GetName() + "' отказался от работы '" + jobId + "'.");
 	}
 
 	// =====================================================================
@@ -407,6 +412,10 @@ class JobsModJobService
 	// Ends the assignment and cleans up everything it put in the world. Used by
 	// hand-in, abandon, disconnect and timeout alike, so no path can forget the
 	// freight.
+	//
+	// The caller's reference to the assignment is dead once this returns: the
+	// map held the only strong one. Anything still needed from it has to be read
+	// out first.
 	protected void EndAssignment(PlayerBase player, PlayerIdentity identity, JobsModAssignment assignment, string note)
 	{
 		assignment.DeleteAllCargo();

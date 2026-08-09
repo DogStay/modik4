@@ -176,14 +176,13 @@ class JobsModNpcService
 	// Upkeep
 	// =====================================================================
 	// An NPC that is gone — deleted by an admin tool, or lost with the chunk it
-	// stood in — is put back. Nothing else here is periodic: they do not move
-	// and, being invulnerable, they do not die.
+	// stood in — is put back. Nothing else here is periodic: they do not move.
 	void Update()
 	{
 		for (int i = 0; i < m_Records.Count(); i++)
 		{
 			JobsModNpcRecord record = m_Records.Get(i);
-			if (record.m_Entity && record.m_Entity.IsAlive())
+			if (!NeedsRespawn(record))
 				continue;
 
 			if (record.m_Entity)
@@ -195,6 +194,25 @@ class JobsModNpcService
 			if (Respawn(record))
 				JobsLog.Warning("SERVER/NPC: NPC '" + record.m_Id + "' пропал и создан заново.");
 		}
+	}
+
+	// A deleted entity nulls this reference by itself, and that is the only
+	// signal used for an invulnerable NPC.
+	//
+	// IsAlive() is deliberately not consulted for those: if a freshly spawned
+	// survivor ever failed that test, an invulnerable NPC would be torn down and
+	// rebuilt every fifteen seconds forever, and the failure would look like the
+	// mod flickering NPCs rather than like a bad test. A mortal NPC can actually
+	// die, so there the check is both meaningful and self-limiting.
+	protected bool NeedsRespawn(JobsModNpcRecord record)
+	{
+		if (!record.m_Entity)
+			return true;
+
+		if (record.m_Definition.invulnerable)
+			return false;
+
+		return !record.m_Entity.IsAlive();
 	}
 
 	void DeleteAll()
