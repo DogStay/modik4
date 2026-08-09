@@ -146,9 +146,7 @@ class JobsModWorldMarker
 			y = 1.0 - EDGE_MARGIN_Y;
 		}
 
-		bool inside = !behind
-			&& x >= EDGE_MARGIN_X && x <= 1.0 - EDGE_MARGIN_X
-			&& y >= EDGE_MARGIN_Y && y <= 1.0 - EDGE_MARGIN_Y;
+		bool inside = !behind && x >= EDGE_MARGIN_X && x <= 1.0 - EDGE_MARGIN_X && y >= EDGE_MARGIN_Y && y <= 1.0 - EDGE_MARGIN_Y;
 
 		x = Math.Clamp(x, EDGE_MARGIN_X, 1.0 - EDGE_MARGIN_X);
 		y = Math.Clamp(y, EDGE_MARGIN_Y, 1.0 - EDGE_MARGIN_Y);
