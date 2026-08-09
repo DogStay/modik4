@@ -75,44 +75,6 @@ class JobsModClientContext
 	}
 
 	// =====================================================================
-	// Incoming: NPC directory
-	//
-	// Read strictly in the order the server wrote it: a count, then that many
-	// entries. A short read leaves the directory as it was rather than half
-	// filled, so the talk action never starts pointing at nothing.
-	// =====================================================================
-	static void HandleNpcDirectory(ParamsReadContext ctx)
-	{
-		Param1<int> header = new Param1<int>(0);
-		if (!ctx.Read(header))
-		{
-			JobsLog.Error("CLIENT/RPC: не удалось прочитать NOTIFY_NPC_DIRECTORY.");
-			return;
-		}
-
-		JobsModNpcDirectory.Clear();
-
-		for (int i = 0; i < header.param1; i++)
-		{
-			Param2<string, vector> entry = new Param2<string, vector>("", vector.Zero);
-			if (!ctx.Read(entry))
-			{
-				JobsLog.Error("CLIENT/RPC: справочник NPC оборван на записи " + i.ToString() + ".");
-				return;
-			}
-
-			JobsModNpcDirectory.Add(entry.param1, entry.param2);
-		}
-
-		// Info rather than Debug: debug output is switched on from the server
-		// config, which the client never reads, so a Debug line here is dropped
-		// on every client and the directory — the thing that decides whether the
-		// talk action is offered at all — becomes impossible to diagnose. It
-		// costs one line per connect.
-		JobsLog.Info("CLIENT/JOBS: получено NPC: " + JobsModNpcDirectory.GetCount().ToString() + ".");
-	}
-
-	// =====================================================================
 	// Incoming: the NPC's offer list
 	// =====================================================================
 	static void HandleJobMenu(ParamsReadContext ctx)

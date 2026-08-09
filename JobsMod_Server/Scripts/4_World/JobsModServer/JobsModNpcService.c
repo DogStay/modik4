@@ -90,6 +90,11 @@ class JobsModNpcService
 		entity.SetPosition(position);
 		entity.SetOrientation(Vector(definition.rotation, 0, 0));
 
+		// What makes the talk action appear on this survivor and on no other.
+		// Set before anything can be interrupted by a failed piece of clothing,
+		// so a half-dressed NPC is still an NPC.
+		entity.JobsModSetNpc(true);
+
 		if (definition.invulnerable)
 			entity.SetAllowDamage(false);
 
@@ -227,38 +232,5 @@ class JobsModNpcService
 
 		m_Records.Clear();
 		JobsLog.Info("SERVER/NPC: все NPC удалены.");
-	}
-
-	// =====================================================================
-	// Client directory
-	// =====================================================================
-	// The client cannot tell an employer from any other survivor: which ones are
-	// NPCs lives in a server-only config. It is told where they stand so it can
-	// offer the talk action on them; that is presentation only, and the server
-	// still resolves the object itself when the action fires.
-	void SendDirectory(PlayerBase player, PlayerIdentity identity)
-	{
-		if (!player || !identity)
-			return;
-
-		array<ref Param> message = new array<ref Param>();
-		array<ref Param> entries = new array<ref Param>();
-
-		for (int i = 0; i < m_Records.Count(); i++)
-		{
-			JobsModNpcRecord record = m_Records.Get(i);
-			if (!record.m_Entity)
-				continue;
-
-			entries.Insert(new Param2<string, vector>(record.m_Definition.name, record.m_Entity.GetPosition()));
-		}
-
-		message.Insert(new Param1<int>(entries.Count()));
-
-		for (int e = 0; e < entries.Count(); e++)
-			message.Insert(entries.Get(e));
-
-		GetGame().RPC(player, JobsModRPC.NOTIFY_NPC_DIRECTORY, message, true, identity);
-		JobsLog.Debug("SERVER/NPC: справочник из " + entries.Count().ToString() + " NPC отправлен '" + identity.GetName() + "'.");
 	}
 }

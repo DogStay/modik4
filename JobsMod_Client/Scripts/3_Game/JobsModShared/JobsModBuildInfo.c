@@ -11,5 +11,5 @@ class JobsModBuildInfo
 	// tied to config.cpp and stays put; this one is free-form on purpose, so the
 	// startup line answers "is the running build actually the one I just
 	// deployed?" without guessing from line numbers in a compile error.
-	static const string BUILD = "2.3.0-courier-b7";
+	static const string BUILD = "2.3.0-courier-b8";
 }

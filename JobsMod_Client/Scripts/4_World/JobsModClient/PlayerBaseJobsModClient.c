@@ -8,6 +8,38 @@
 
 modded class PlayerBase
 {
+	// True on the mod's employers, and replicated with the entity.
+	//
+	// A client cannot tell an employer from any other survivor: which classes
+	// are NPCs lives in a server-only config that clients never download. That
+	// leaves two ways to tell them, and only one of them holds up. Announcing it
+	// on the side — a directory of coordinates sent once after connect — has to
+	// arrive, has to arrive after the player entity exists, has to survive a
+	// reconnect, and has to still match the NPC's position afterwards; when any
+	// of that fails the action simply never appears, with nothing logged. A
+	// synchronised flag travels with the entity, so it is right as soon as the
+	// client can see the NPC at all, and there is no window where it is not.
+	protected bool m_JobsModIsNpc;
+
+	void PlayerBase()
+	{
+		RegisterNetSyncVariableBool("m_JobsModIsNpc");
+	}
+
+	// Server side only. Clients receive the value through synchronisation and
+	// never set it; a client that lies to itself here gains a menu entry the
+	// server rejects, which is what it was already free to do.
+	void JobsModSetNpc(bool value)
+	{
+		m_JobsModIsNpc = value;
+		SetSynchDirty();
+	}
+
+	bool JobsModIsNpc()
+	{
+		return m_JobsModIsNpc;
+	}
+
 	override void SetActions(out TInputActionMap InputActionMap)
 	{
 		super.SetActions(InputActionMap);
@@ -62,12 +94,6 @@ modded class PlayerBase
 		if (rpc_type == JobsModRPC.NOTIFY_JOB_MESSAGE)
 		{
 			JobsModClientContext.HandleJobMessage(ctx);
-			return;
-		}
-
-		if (rpc_type == JobsModRPC.NOTIFY_NPC_DIRECTORY)
-		{
-			JobsModClientContext.HandleNpcDirectory(ctx);
 			return;
 		}
 	}

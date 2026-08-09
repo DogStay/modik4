@@ -42,21 +42,19 @@ class ActionTalkToNpc extends ActionInteractBase
 	}
 
 	// On the client this decides whether the entry shows up at all; on the
-	// server it only narrows the object down to a human before handing it over.
+	// server it only narrows the object down to an employer before handing it
+	// over. Both sides now ask the same question of the same replicated flag, so
+	// there is no client-only branch left to disagree about.
 	protected Object ResolveNpc(PlayerBase player, ActionTarget target)
 	{
 		if (!target)
 			return null;
 
-		Man other = Man.Cast(target.GetObject());
+		PlayerBase other = PlayerBase.Cast(target.GetObject());
 		if (!other || other == player)
 			return null;
 
-		// The directory is a client-side thing: a dedicated server never receives
-		// one, and checking it there would block the very action the client
-		// legitimately started. The server does not need it either — the object
-		// is resolved against the real NPC registry before anything is granted.
-		if (!GetGame().IsDedicatedServer() && !JobsModNpcDirectory.IsNpcAt(other.GetPosition()))
+		if (!other.JobsModIsNpc())
 			return null;
 
 		return other;

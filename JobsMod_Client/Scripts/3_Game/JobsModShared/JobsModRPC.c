@@ -17,7 +17,10 @@ class JobsModRPC
 	// 2 -> 3: the courier job was added; NOTIFY_JOB_STATE now carries the job
 	//         type, because the client can no longer tell what to point the
 	//         marker at from the freight class alone.
-	static const int PROTOCOL_VERSION = 3;
+	// 3 -> 4: NOTIFY_NPC_DIRECTORY is gone. Which survivors are employers now
+	//         rides on the entities as a synchronised flag, so there is nothing
+	//         left to send, to time, or to lose.
+	static const int PROTOCOL_VERSION = 4;
 
 	// Every id below must stay inside [BASE, BASE + ID_RANGE]; both OnRPC
 	// handlers use that window to ignore traffic that is not ours.
@@ -53,8 +56,9 @@ class JobsModRPC
 	static const int NOTIFY_JOB_STATE = BASE + 54;
 	// A free-text notification (job taken, paid, abandoned).
 	static const int NOTIFY_JOB_MESSAGE = BASE + 55;
-	// Where the NPCs stand, so the client can offer the talk action on them.
-	static const int NOTIFY_NPC_DIRECTORY = BASE + 56;
+	// BASE + 56 was NOTIFY_NPC_DIRECTORY; retired in protocol 4 and left unused
+	// rather than recycled, so a stale client cannot have an old directory read
+	// as whatever takes the number next.
 
 	// Separator between item ids inside the packed order/sequence strings.
 	// A comma is safe here because no catalog id may contain one — the catalog

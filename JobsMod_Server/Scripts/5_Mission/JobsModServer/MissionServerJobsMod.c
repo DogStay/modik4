@@ -16,10 +16,10 @@ modded class MissionServer
 	// share the slower timer.
 	protected static const float UPKEEP_INTERVAL_SECONDS = 15.0;
 
-	// How long after a player joins their NPC directory is sent. Sending it in
-	// the connect callback itself is too early: the client is still building the
+	// How long after a player joins their job state is sent. Sending it in the
+	// connect callback itself is too early: the client is still building the
 	// world and has nowhere to put it yet.
-	protected static const int DIRECTORY_DELAY_MS = 5000;
+	protected static const int WELCOME_DELAY_MS = 5000;
 
 	protected float m_JobsModLoaderTimer;
 	protected float m_JobsModUpkeepTimer;
@@ -76,7 +76,7 @@ modded class MissionServer
 			return;
 
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(
-			JobsModSendDirectory, DIRECTORY_DELAY_MS, false, player);
+			JobsModSendWelcome, WELCOME_DELAY_MS, false, player);
 	}
 
 	// A disconnecting player's session and job are dropped at once rather than
@@ -96,15 +96,14 @@ modded class MissionServer
 
 	// Deferred from InvokeOnConnect. The player may have dropped in between, so
 	// everything is re-checked rather than assumed.
-	void JobsModSendDirectory(PlayerBase player)
+	void JobsModSendWelcome(PlayerBase player)
 	{
 		if (!JobsModServerRuntime.IsStarted() || !player || !player.GetIdentity())
 			return;
 
-		JobsModServerRuntime.GetNpcService().SendDirectory(player, player.GetIdentity());
-
-		// Also tells the HUD there is no job yet, which is what clears it after
-		// a reconnect.
+		// Tells the HUD there is no job yet, which is what clears it after a
+		// reconnect. Which survivors are employers needs no message: that rides
+		// on the entities themselves.
 		JobsModServerRuntime.GetJobService().SendState(player, player.GetIdentity());
 	}
 }
