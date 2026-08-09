@@ -10,6 +10,77 @@
 
 ---
 
+## 0. Где искать первоисточник
+
+**Порядок приоритета.** Реальный код проекта → RPT / script.log / crash log →
+`DayZ-Script-Diff` → Bohemia Community Wiki → `DayZ-Samples` → сторонние моды
+(только как пример).
+
+| Источник | Для чего |
+|---|---|
+| [DayZ-Script-Diff](https://github.com/BohemiaInteractive/DayZ-Script-Diff) | **Главный.** Реальный ванильный код: `PlayerBase`, actions, `ActionCondition`, `CCTMan`, `UIScriptedMenu`, `MissionGameplay`, RPC, инвентарь |
+| [Modding Basics](https://community.bohemia.net/wiki/DayZ:Modding_Basics) | структура мода, PBO, Workbench, подключение, клиент/сервер |
+| [Modding Structure](https://community.bohemia.net/wiki/DayZ:Modding_Structure) | `CfgPatches`, `CfgMods`, `requiredAddons`, порядок компиляции, «класс вообще не загружается» |
+| [Enforce Script Syntax](https://community.bohemia.net/wiki/DayZ:Enforce_Script_Syntax) | ошибки компиляции, `override`, `ref`, `array`, `map`, `modded class` |
+| [DayZ-Samples](https://github.com/BohemiaInteractive/DayZ-Samples) | примеры `config.cpp`, custom items, inputs |
+| [DayZ-Misc](https://github.com/BohemiaInteractive/DayZ-Misc) | модели, proxies, ресурсы Object Builder |
+
+**Как читать DayZ-Script-Diff.** Ветка — `main`, **пути в нижнем регистре**.
+Это не мелочь: `.../4_World/Entities/ManBase/PlayerBase.c` даёт 404, а рабочий
+адрес выглядит так:
+
+```
+https://raw.githubusercontent.com/BohemiaInteractive/DayZ-Script-Diff/main/scripts/4_world/entities/manbase/playerbase.c
+https://raw.githubusercontent.com/BohemiaInteractive/DayZ-Script-Diff/main/scripts/4_world/classes/useractionscomponent/actions/interact/actionpullbodyfromtransport.c
+```
+
+**Порядок разбора любой ошибки.** Точный лог → точный файл и строка → тот же
+класс/метод в DayZ-Script-Diff → как это сделано в ванили → `config.cpp` и
+модуль (`3_Game`/`4_World`/`5_Mission`) → граница клиент/сервер → и только
+после этого править код.
+
+### 0.1 Две action-map у `PlayerBase`: цель-объект и цель-выживший
+
+**[Подтверждено: DayZ-Script-Diff, `scripts/4_world/entities/manbase/playerbase.c`]**
+
+Действие, нацеленное на **другого `PlayerBase`**, регистрируется не там же, где
+действие по объекту мира. У `PlayerBase` две карты, и DayZ выбирает между ними
+по типу цели:
+
+```csharp
+void SetActions(out TInputActionMap InputActionMap)             // цель — объект мира
+void SetActionsRemoteTarget(out TInputActionMap InputActionMap) // цель — выживший
+```
+
+Ванильное содержимое второй карты:
+
+```csharp
+void SetActionsRemoteTarget(out TInputActionMap InputActionMap)
+{
+	AddAction(ActionCPR, InputActionMap);
+	AddAction(ActionUncoverHeadTarget, InputActionMap);
+	AddAction(ActionUngagTarget, InputActionMap);
+	AddAction(ActionPullBodyFromTransport, InputActionMap);
+	AddAction(ActionCheckPulseTarget, InputActionMap);
+}
+```
+
+Действие для NPC-выжившего, положенное в `SetActions`, **не появится никогда** —
+эту карту для такой цели не опрашивают, и `ActionCondition` даже не вызовется.
+Симптом обманчив: действие просто отсутствует, будто не проходит условие.
+
+Обе карты принимают и interact-, и continuous-действия:
+`ActionPullBodyFromTransport` — это `ActionInteractBase`, и он лежит в
+remote-target карте.
+
+**Диагностический признак.** Если на цели-выжившем появляется ванильное
+«Проверить пульс», но не появляется своё, — цепочка прицеливания, дистанция и
+`CCTMan` исправны, а своё действие лежит не в той карте.
+`ActionCheckPulseTarget` находится ровно в `SetActionsRemoteTarget`, поэтому его
+наличие на цели — прямое доказательство, что эта карта работает.
+
+---
+
 ## 1. Enforce Script (синтаксис)
 
 ### 1.1 Базовый синтаксис классов и наследование
