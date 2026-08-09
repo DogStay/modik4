@@ -175,7 +175,9 @@ class JobsModMessengerService
 			if (!player || !player.GetIdentity() || !player.GetInventory())
 				continue;
 
-			EntityAI owned = FindOwnedParcel(player);
+			// Not named 'owned': that is an Enforce keyword and the declaration
+			// will not parse.
+			EntityAI ownedParcel = FindOwnedParcel(player);
 
 			array<EntityAI> carried = new array<EntityAI>();
 			if (!player.GetInventory().EnumerateInventory(InventoryTraversalType.PREORDER, carried))
@@ -185,7 +187,7 @@ class JobsModMessengerService
 			{
 				EntityAI item = carried.Get(c);
 
-				if (!item || item == owned)
+				if (!item || item == ownedParcel)
 					continue;
 
 				if (!item.IsInherited(JobsMod_Parcel))
