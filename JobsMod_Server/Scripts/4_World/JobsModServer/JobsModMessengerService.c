@@ -63,8 +63,8 @@ class JobsModMessengerService
 		EntityAI parcel = player.GetInventory().CreateInInventory(job.package_class);
 		if (!parcel)
 		{
-			JobsLog.Debug("SERVER/COURIER: пакет '" + job.package_class
-				+ "' не помещён в инвентарь — нет места или неверный класс.");
+			JobsLog.Debug("SERVER/COURIER: пакет '" + job.package_class +
+				"' не помещён в инвентарь — нет места или неверный класс.");
 			return false;
 		}
 
@@ -143,8 +143,8 @@ class JobsModMessengerService
 			if (HasParcel(player, assignment))
 				continue;
 
-			JobsLog.Info("SERVER/COURIER: пакет задания " + assignment.GetId().ToString()
-				+ " потерян, работа закрыта.");
+			JobsLog.Info("SERVER/COURIER: пакет задания " + assignment.GetId().ToString() +
+				" потерян, работа закрыта.");
 
 			// The assignment is destroyed by this call and must not be touched
 			// again; the loop moves on to the next index and never does.
@@ -194,8 +194,8 @@ class JobsModMessengerService
 					continue;
 
 				GetGame().ObjectDelete(item);
-				JobsLog.Warning("SERVER/COURIER: у игрока '" + player.GetIdentity().GetName()
-					+ "' найден пакет без задания, удалён.");
+				JobsLog.Warning("SERVER/COURIER: у игрока '" + player.GetIdentity().GetName() +
+					"' найден пакет без задания, удалён.");
 			}
 		}
 	}

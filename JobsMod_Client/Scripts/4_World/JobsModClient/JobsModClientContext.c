@@ -204,8 +204,8 @@ class JobsModClientContext
 		if (s_NpcMenuOpen)
 			CloseNpcMenu();
 
-		JobsLog.Debug("CLIENT/JOBS: состояние работы: статус=" + view.m_Status.ToString()
-			+ ", прогресс=" + view.m_Progress.ToString() + "/" + view.m_Required.ToString() + ".");
+		JobsLog.Debug("CLIENT/JOBS: состояние работы: статус=" + view.m_Status.ToString() +
+			", прогресс=" + view.m_Progress.ToString() + "/" + view.m_Required.ToString() + ".");
 	}
 
 	static void HandleJobMessage(ParamsReadContext ctx)

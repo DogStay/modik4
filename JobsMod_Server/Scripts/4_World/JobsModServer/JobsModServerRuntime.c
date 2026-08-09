@@ -75,8 +75,8 @@ class JobsModServerRuntime
 		JobsModNpcActionBridge.GetOnTalkRequested().Insert(OnTalkRequested);
 
 		s_Started = true;
-		JobsLog.Info("SERVER: JobsMod запущен. Build: " + JobsModBuildInfo.BUILD
-			+ "; protocol=" + JobsModRPC.PROTOCOL_VERSION.ToString() + ".");
+		JobsLog.Info("SERVER: JobsMod запущен. Build: " + JobsModBuildInfo.BUILD +
+			"; protocol=" + JobsModRPC.PROTOCOL_VERSION.ToString() + ".");
 	}
 
 	static void Stop()
