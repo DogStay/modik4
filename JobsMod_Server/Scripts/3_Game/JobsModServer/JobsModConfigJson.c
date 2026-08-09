@@ -96,7 +96,7 @@ class JobsModJobJson
 	string name;
 	string description;
 
-	// "sorting" or "loading" — see JobsModJobType.
+	// "sorting", "loading" or "messenger" — see JobsModJobType.
 	string type;
 
 	string zone_id;
@@ -116,6 +116,19 @@ class JobsModJobJson
 	string loader_area_id;
 	int cargos_required;
 	string cargo_class;
+
+	// Messenger jobs only: who the parcel is for, and what the parcel is.
+	//
+	// target_npc_id is the second person in the job. They do not have to offer
+	// any work of their own — being named here is what puts them in the config
+	// at all — and they are the one that takes the parcel and pays, not the
+	// employer who handed it out.
+	//
+	// package_class is written out in full like cargo_class, but with a caveat:
+	// only JobsMod_Parcel and classes inheriting from it refuse to be dropped.
+	// Any other item works and is simply droppable.
+	string target_npc_id;
+	string package_class;
 }
 
 // An employer standing in the world.

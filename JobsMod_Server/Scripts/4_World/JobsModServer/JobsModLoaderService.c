@@ -170,7 +170,7 @@ class JobsModLoaderService
 		if (!area)
 			return;
 
-		PlayerBase player = FindPlayer(assignment.GetPlayerId());
+		PlayerBase player = m_Jobs.FindPlayerById(assignment.GetPlayerId());
 		if (!player || !player.GetIdentity())
 			return;
 
@@ -216,23 +216,5 @@ class JobsModLoaderService
 		float dx = position[0] - area.x;
 		float dz = position[2] - area.z;
 		return (dx * dx + dz * dz) <= (area.radius * area.radius);
-	}
-
-	protected PlayerBase FindPlayer(string playerId)
-	{
-		array<Man> players = new array<Man>();
-		GetGame().GetPlayers(players);
-
-		for (int i = 0; i < players.Count(); i++)
-		{
-			PlayerBase player = PlayerBase.Cast(players.Get(i));
-			if (!player || !player.GetIdentity())
-				continue;
-
-			if (player.GetIdentity().GetId() == playerId)
-				return player;
-		}
-
-		return null;
 	}
 }

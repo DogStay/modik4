@@ -37,6 +37,10 @@ class JobsModConfig
 	protected static const int MAX_CARGOS_PER_JOB = 60;
 	protected static const int MAX_PILES_PER_JOB = 30;
 
+	// The only parcel class that refuses to be dropped. A job that names
+	// nothing gets this one rather than a droppable substitute.
+	protected static const string DEFAULT_PACKAGE_CLASS = "JobsMod_Parcel";
+
 	protected ref JobsModSettingsJson m_Settings;
 	protected ref map<string, ref JobsModZoneJson> m_Zones;
 	protected ref map<string, ref JobsModLoaderAreaJson> m_LoaderAreas;
@@ -127,6 +131,7 @@ class JobsModConfig
 		LoadLoaderAreas();
 		LoadJobs();
 		LoadNpcs();
+		ResolveCrossReferences();
 
 		// A profile folder we could not write to leaves the entity folders empty
 		// no matter what we intended to put there. Running on the built-in tree
@@ -204,6 +209,8 @@ class JobsModConfig
 			if (AcceptNpc(npcs.Get(i)))
 				m_Npcs.Set(npcs.Get(i).id, npcs.Get(i));
 		}
+
+		ResolveCrossReferences();
 	}
 
 	protected void WriteDefaults()
@@ -498,7 +505,8 @@ class JobsModConfig
 		if (type == JobsModJobType.UNKNOWN)
 		{
 			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' неизвестный type='" + job.type
-				+ "'; допустимо '" + JobsModJobType.TEXT_SORTING + "' или '" + JobsModJobType.TEXT_LOADING + "'.");
+				+ "'; допустимо '" + JobsModJobType.TEXT_SORTING + "', '" + JobsModJobType.TEXT_LOADING
+				+ "' или '" + JobsModJobType.TEXT_MESSENGER + "'.");
 			return false;
 		}
 
@@ -521,7 +529,33 @@ class JobsModConfig
 		if (type == JobsModJobType.SORTING)
 			return AcceptSortingJob(job);
 
+		if (type == JobsModJobType.MESSENGER)
+			return AcceptMessengerJob(job);
+
 		return AcceptLoadingJob(job);
+	}
+
+	// Whether the recipient actually exists cannot be answered here: NPCs are
+	// loaded after jobs, because an NPC's offer list is checked against the
+	// jobs. The reference the other way round is settled in
+	// ResolveCrossReferences once both halves are in.
+	protected bool AcceptMessengerJob(JobsModJobJson job)
+	{
+		if (job.target_npc_id == "")
+		{
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id
+				+ "' не задан target_npc_id — некому вручить пакет, пропущена.");
+			return false;
+		}
+
+		if (job.package_class == "")
+		{
+			job.package_class = DEFAULT_PACKAGE_CLASS;
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' не задан package_class, принят "
+				+ DEFAULT_PACKAGE_CLASS + ".");
+		}
+
+		return true;
 	}
 
 	protected bool AcceptSortingJob(JobsModJobJson job)
@@ -645,6 +679,10 @@ class JobsModConfig
 		}
 	}
 
+	// Only the NPC's own fields are judged here. Its offer list is left alone:
+	// an NPC that hands out nothing is still a legitimate part of the config if
+	// some courier job names it as the recipient, and whether that is the case
+	// is not knowable until every job has been read.
 	protected bool AcceptNpc(JobsModNpcJson npc)
 	{
 		if (npc.name == "")
@@ -665,39 +703,8 @@ class JobsModConfig
 		if (!npc.clothing)
 			npc.clothing = new array<string>();
 
-		if (!npc.jobs || npc.jobs.Count() == 0)
-		{
-			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' не выдаёт ни одной работы, пропущен.");
-			return false;
-		}
-
-		// A reference to a job that was dropped earlier is removed here, so the
-		// menu can never offer a job that cannot be created.
-		for (int i = npc.jobs.Count() - 1; i >= 0; i--)
-		{
-			string jobId = npc.jobs.Get(i);
-			if (m_Jobs.Contains(jobId))
-				continue;
-
-			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' ссылается на неизвестную работу '"
-				+ jobId + "', ссылка убрана.");
-			npc.jobs.Remove(i);
-		}
-
-		if (npc.jobs.Count() == 0)
-		{
-			JobsLog.Warning("SERVER/CONFIG: у NPC '" + npc.id + "' не осталось корректных работ, пропущен.");
-			return false;
-		}
-
-		if (npc.jobs.Count() > JobsModRPC.MAX_JOBS_PER_NPC)
-		{
-			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' выдаёт больше "
-				+ JobsModRPC.MAX_JOBS_PER_NPC.ToString() + " работ, лишние не поместятся в меню и убраны.");
-
-			while (npc.jobs.Count() > JobsModRPC.MAX_JOBS_PER_NPC)
-				npc.jobs.Remove(npc.jobs.Count() - 1);
-		}
+		if (!npc.jobs)
+			npc.jobs = new array<string>();
 
 		return true;
 	}
@@ -710,6 +717,130 @@ class JobsModConfig
 			return;
 
 		ReportWriteFailure(path, error);
+	}
+
+	// =====================================================================
+	// Cross-references
+	// =====================================================================
+	// Jobs point at NPCs and NPCs point at jobs, so neither can be fully judged
+	// while the other is still being read. Everything that needs both sides is
+	// settled here, in one pass, after both folders are in.
+	//
+	// The order matters and is not arbitrary: jobs are dropped first, then the
+	// offer lists are cleaned against what survived, and only then is an NPC
+	// judged on whether it has anything left to do. Doing it the other way
+	// round would keep an employer whose only job had just been thrown out.
+	protected void ResolveCrossReferences()
+	{
+		DropMessengerJobsWithoutRecipient();
+		CleanOfferLists();
+		DropIdleNpcs();
+	}
+
+	// A parcel addressed to somebody who is not in the world cannot be handed
+	// over, so the job would be taken and then never finish.
+	protected void DropMessengerJobsWithoutRecipient()
+	{
+		array<string> orphans = new array<string>();
+
+		int i;
+		for (i = 0; i < m_Jobs.Count(); i++)
+		{
+			JobsModJobJson job = m_Jobs.GetElement(i);
+			if (JobsModJobType.FromText(job.type) != JobsModJobType.MESSENGER)
+				continue;
+
+			if (m_Npcs.Contains(job.target_npc_id))
+				continue;
+
+			JobsLog.Warning("SERVER/CONFIG: работа '" + job.id + "' адресована неизвестному NPC '"
+				+ job.target_npc_id + "', пропущена.");
+			orphans.Insert(job.id);
+		}
+
+		for (i = 0; i < orphans.Count(); i++)
+			m_Jobs.Remove(orphans.Get(i));
+	}
+
+	protected void CleanOfferLists()
+	{
+		for (int i = 0; i < m_Npcs.Count(); i++)
+		{
+			JobsModNpcJson npc = m_Npcs.GetElement(i);
+
+			for (int j = npc.jobs.Count() - 1; j >= 0; j--)
+			{
+				string jobId = npc.jobs.Get(j);
+				JobsModJobJson job = GetJob(jobId);
+
+				// A reference to a job that never loaded, or that was dropped
+				// above. Removing it is what keeps the menu from ever offering
+				// something that cannot be created.
+				if (!job)
+				{
+					JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' ссылается на неизвестную работу '"
+						+ jobId + "', ссылка убрана.");
+					npc.jobs.Remove(j);
+					continue;
+				}
+
+				// An employer handing out a parcel addressed to himself is a
+				// job that completes where it started. That is a typo in the
+				// config every time, not a design.
+				if (JobsModJobType.FromText(job.type) == JobsModJobType.MESSENGER && job.target_npc_id == npc.id)
+				{
+					JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' выдаёт работу '" + jobId
+						+ "', адресованную самому себе — ссылка убрана.");
+					npc.jobs.Remove(j);
+				}
+			}
+
+			if (npc.jobs.Count() <= JobsModRPC.MAX_JOBS_PER_NPC)
+				continue;
+
+			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' выдаёт больше "
+				+ JobsModRPC.MAX_JOBS_PER_NPC.ToString() + " работ, лишние не поместятся в меню и убраны.");
+
+			while (npc.jobs.Count() > JobsModRPC.MAX_JOBS_PER_NPC)
+				npc.jobs.Remove(npc.jobs.Count() - 1);
+		}
+	}
+
+	// An NPC earns its place by handing work out or by receiving a parcel.
+	// One that does neither is a survivor standing in a field that the mod
+	// would otherwise keep respawning forever.
+	protected void DropIdleNpcs()
+	{
+		array<string> idle = new array<string>();
+
+		int i;
+		for (i = 0; i < m_Npcs.Count(); i++)
+		{
+			JobsModNpcJson npc = m_Npcs.GetElement(i);
+
+			if (npc.jobs.Count() > 0 || IsMessengerRecipient(npc.id))
+				continue;
+
+			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id
+				+ "' не выдаёт работ и не принимает посылок, пропущен.");
+			idle.Insert(npc.id);
+		}
+
+		for (i = 0; i < idle.Count(); i++)
+			m_Npcs.Remove(idle.Get(i));
+	}
+
+	protected bool IsMessengerRecipient(string npcId)
+	{
+		for (int i = 0; i < m_Jobs.Count(); i++)
+		{
+			JobsModJobJson job = m_Jobs.GetElement(i);
+
+			if (JobsModJobType.FromText(job.type) == JobsModJobType.MESSENGER && job.target_npc_id == npcId)
+				return true;
+		}
+
+		return false;
 	}
 
 	// =====================================================================
@@ -778,16 +909,29 @@ class JobsModConfig
 		for (i = 0; i < m_Jobs.Count(); i++)
 		{
 			JobsModJobJson job = m_Jobs.GetElement(i);
+
+			// The recipient is the half of a courier job that is easiest to get
+			// wrong and impossible to see in the world, so it is printed.
+			string addressed = "";
+			if (JobsModJobType.FromText(job.type) == JobsModJobType.MESSENGER)
+				addressed = ", получатель '" + job.target_npc_id + "', пакет '" + job.package_class + "'";
+
 			JobsLog.Info("SERVER/CONFIG:   работа '" + job.id + "' (" + job.type + ") в зоне '" + job.zone_id
-				+ "', награда " + job.reward.ToString() + ", кулдаун " + job.cooldown_seconds.ToString() + " с.");
+				+ "', награда " + job.reward.ToString() + ", кулдаун " + job.cooldown_seconds.ToString()
+				+ " с" + addressed + ".");
 		}
 
 		for (i = 0; i < m_Npcs.Count(); i++)
 		{
 			JobsModNpcJson npc = m_Npcs.GetElement(i);
+
+			string receives = "";
+			if (IsMessengerRecipient(npc.id))
+				receives = ", принимает посылки";
+
 			JobsLog.Info("SERVER/CONFIG:   NPC '" + npc.id + "' (" + npc.name + ") на X "
 				+ npc.position.x.ToString() + " / Z " + npc.position.z.ToString()
-				+ ", работ " + npc.jobs.Count().ToString() + ".");
+				+ ", работ " + npc.jobs.Count().ToString() + receives + ".");
 		}
 	}
 }

@@ -100,6 +100,7 @@ class JobsModMarker
 class JobsModJobView
 {
 	int m_Status;
+	int m_Type;
 	int m_Progress;
 	int m_Required;
 	int m_AssignmentId;
@@ -118,6 +119,7 @@ class JobsModJobView
 	void JobsModJobView()
 	{
 		m_Status = JobsModJobStatus.NONE;
+		m_Type = JobsModJobType.UNKNOWN;
 		m_Markers = new array<ref JobsModMarker>();
 	}
 
@@ -149,6 +151,14 @@ class JobsModJobView
 		if (m_Status == JobsModJobStatus.READY_TO_HAND_IN)
 		{
 			wanted = JobsModMarkerKind.EMPLOYER;
+		}
+		else if (m_Type == JobsModJobType.MESSENGER)
+		{
+			// A courier is given the parcel when the job starts and cannot put
+			// it down, so there is never a moment where anywhere but the
+			// recipient is the answer. Asking what is in their hands would only
+			// find the parcel is not there — it is in a pocket.
+			wanted = JobsModMarkerKind.DESTINATION;
 		}
 		else if (m_CargoClass != "")
 		{

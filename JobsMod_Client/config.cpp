@@ -11,7 +11,7 @@ class CfgPatches
 {
 	class JobsMod_Client
 	{
-		units[] = {"JobsMod_TrashPile", "JobsMod_CargoBox", "JobsMod_Money"};
+		units[] = {"JobsMod_TrashPile", "JobsMod_CargoBox", "JobsMod_Parcel", "JobsMod_Money"};
 		weapons[] = {};
 		requiredVersion = 0.1;
 		requiredAddons[] =
@@ -37,7 +37,7 @@ class CfgMods
 		credits = "";
 		author = "";
 		authorID = "0";
-		version = "2.1.0";
+		version = "2.2.0";
 		extra = 0;
 		type = "mod";
 		dependencies[] = {"Game", "World", "Mission"};
@@ -72,9 +72,10 @@ class CfgMods
 // ---------------------------------------------------------------------------
 // Items
 //
-// Both classes inherit vanilla parents instead of shipping their own .p3d:
+// Every class here inherits a vanilla parent instead of shipping its own .p3d:
 // the mod carries no models, so a hand-written model path would point at a
-// file that does not exist and creating the item would fail at runtime.
+// file that does not exist and creating the item would fail at runtime. What
+// each one is called and what it does is ours; what it looks like is borrowed.
 // ---------------------------------------------------------------------------
 class CfgVehicles
 {
@@ -126,6 +127,39 @@ class CfgVehicles
 		itemBehaviour = 2;
 		rotationFlags = 1;
 		canBeSplit = 0;
+	};
+
+	// The courier's parcel. Handed out by the server when the job is taken and
+	// deleted the moment it ends, however it ends.
+	//
+	// Everything that makes it undroppable is in the script class of the same
+	// name, not here: inventory rules are not expressible in a config, and the
+	// item has to refuse a drag rather than merely be awkward to carry. The
+	// config's only job is to make it small and light — it is papers in an
+	// envelope, and a courier who cannot run is a loader.
+	//
+	// The parent is a vanilla item because the mod ships no models of its own;
+	// this is a placeholder look, and a server that wants a different one sets
+	// package_class in the job to any item class it likes. Only JobsMod_Parcel
+	// and its descendants carry the inventory rules, though, so anything else
+	// is droppable and relies on the server sweep alone.
+	//
+	// The script class of the same name extends ItemBase rather than whatever
+	// the parent's does, which is deliberate: it takes the model and drops the
+	// behaviour. A parcel is not something to swallow.
+	class JobsMod_Parcel: VitaminBottle
+	{
+		scope = 2;
+		displayName = "Опечатанный пакет";
+		descriptionShort = "Курьерское отправление. Вскрывать и передавать третьим лицам запрещено.";
+		weight = 300;
+		itemSize[] = {2, 2};
+		rotationFlags = 1;
+		canBeSplit = 0;
+		varQuantityInit = 1;
+		varQuantityMin = 0;
+		varQuantityMax = 1;
+		varQuantityDestroyOnMin = 0;
 	};
 
 	// Payment token handed out by the server on job completion.

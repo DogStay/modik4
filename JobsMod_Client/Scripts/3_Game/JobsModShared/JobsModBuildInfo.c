@@ -6,6 +6,6 @@
 
 class JobsModBuildInfo
 {
-	static const string VERSION = "2.1.0";
-	static const string BUILD = "2.1.0-jobs";
+	static const string VERSION = "2.2.0";
+	static const string BUILD = "2.2.0-courier";
 }

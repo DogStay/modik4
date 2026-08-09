@@ -1,7 +1,7 @@
 // JobsModConfigDefaults.c
 //
-// The configuration a fresh install starts from: two employers, two jobs, three
-// trash points and one freight route.
+// The configuration a fresh install starts from: three employers and one
+// recipient, three jobs, three trash points and one freight route.
 //
 // It is written to disk on first run so an admin edits a real, working file
 // instead of a blank page, and the same values are used in memory when the
@@ -20,11 +20,14 @@ class JobsModConfigDefaults
 
 	static const string JOB_SORTER = "job_trash_sorter";
 	static const string JOB_LOADER = "job_cargo_loader";
+	static const string JOB_MESSENGER = "job_courier";
 
 	static const string AREA_ELEKTRO = "loader_area_01";
 
 	static const string NPC_SORTER = "npc_sorter_01";
 	static const string NPC_LOADER = "npc_loader_01";
+	static const string NPC_DISPATCHER = "npc_dispatcher_01";
+	static const string NPC_RECIPIENT = "npc_recipient_01";
 
 	static JobsModSettingsJson BuildSettings()
 	{
@@ -93,6 +96,24 @@ class JobsModConfigDefaults
 		loader.cargo_class = "JobsMod_CargoBox";
 		jobs.Insert(loader);
 
+		// The zone of a courier job is where it ends, not where it starts: it is
+		// what the HUD names, and the only place the player has to get to.
+		//
+		// Half an hour of cooldown against roughly four kilometres of walking is
+		// the intended shape of this job — a long errand you do once in a while,
+		// not a loop to farm.
+		JobsModJobJson courier = new JobsModJobJson();
+		courier.id = JOB_MESSENGER;
+		courier.name = "Посыльный";
+		courier.description = "Доставьте опечатанный пакет в Электрозаводск. Пакет не выложить и не открыть.";
+		courier.type = JobsModJobType.TEXT_MESSENGER;
+		courier.zone_id = ZONE_ELEKTRO;
+		courier.reward = 250;
+		courier.cooldown_seconds = 1800;
+		courier.target_npc_id = NPC_RECIPIENT;
+		courier.package_class = "JobsMod_Parcel";
+		jobs.Insert(courier);
+
 		return jobs;
 	}
 
@@ -131,6 +152,40 @@ class JobsModConfigDefaults
 		loader.jobs = new array<string>();
 		loader.jobs.Insert(JOB_LOADER);
 		npcs.Insert(loader);
+
+		JobsModNpcJson dispatcher = new JobsModNpcJson();
+		dispatcher.id = NPC_DISPATCHER;
+		dispatcher.name = "Марина";
+		dispatcher.description = "Отправляю бумаги по побережью. Нужен человек с ногами.";
+		dispatcher.position = MakeVector(6644.0, 0.0, 2544.0);
+		dispatcher.rotation = 270.0;
+		dispatcher.player_class = "SurvivorF_Judy";
+		dispatcher.invulnerable = true;
+		dispatcher.clothing = new array<string>();
+		dispatcher.clothing.Insert("RaincoatJacket_Yellow");
+		dispatcher.clothing.Insert("CanvasPants_Beige");
+		dispatcher.clothing.Insert("AthleticShoes_Black");
+		dispatcher.jobs = new array<string>();
+		dispatcher.jobs.Insert(JOB_MESSENGER);
+		npcs.Insert(dispatcher);
+
+		// Hands out nothing at all: this one exists to be walked to. An empty
+		// jobs list is legal precisely because a courier job names him, and the
+		// config drops him again the day that job goes away.
+		JobsModNpcJson recipient = new JobsModNpcJson();
+		recipient.id = NPC_RECIPIENT;
+		recipient.name = "Гриша";
+		recipient.description = "Жду посылку от Марины. Больше ничего не жду.";
+		recipient.position = MakeVector(10484.0, 0.0, 2264.0);
+		recipient.rotation = 90.0;
+		recipient.player_class = "SurvivorM_Denis";
+		recipient.invulnerable = true;
+		recipient.clothing = new array<string>();
+		recipient.clothing.Insert("Hoodie_Blue");
+		recipient.clothing.Insert("Jeans_Black");
+		recipient.clothing.Insert("WorkingBoots_Brown");
+		recipient.jobs = new array<string>();
+		npcs.Insert(recipient);
 
 		return npcs;
 	}

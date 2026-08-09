@@ -60,6 +60,12 @@ modded class MissionServer
 		JobsModServerRuntime.GetJobService().Update();
 		JobsModServerRuntime.GetZoneService().Update();
 		JobsModServerRuntime.GetNpcService().Update();
+
+		// Parcels are reconciled on the slow timer because nothing about a
+		// courier job is time-critical: the delivery happens through a menu,
+		// not by walking into a circle, so a stray parcel costs nothing for the
+		// few seconds it survives.
+		JobsModServerRuntime.GetMessengerService().Update();
 	}
 
 	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity)

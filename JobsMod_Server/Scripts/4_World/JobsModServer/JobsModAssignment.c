@@ -13,7 +13,18 @@ class JobsModAssignment
 {
 	protected int m_Id;
 	protected string m_PlayerId;
+
+	// Who handed the job out. Kept as provenance, not as routing: where the
+	// player has to walk is m_HandInNpcId below, and for a courier the two are
+	// different people.
 	protected string m_NpcId;
+
+	// Who signs the job off. The same person that handed it out for every job
+	// but the courier's, where the parcel is taken — and paid for — by the NPC
+	// it is addressed to. Resolved once here so no code downstream has to ask
+	// what kind of job it is before it knows where the player has to walk.
+	protected string m_HandInNpcId;
+
 	protected string m_JobId;
 	protected int m_Type;
 	protected string m_ZoneId;
@@ -39,8 +50,14 @@ class JobsModAssignment
 		m_ZoneId = job.zone_id;
 		m_LoaderAreaId = job.loader_area_id;
 
+		m_HandInNpcId = npcId;
+		if (m_Type == JobsModJobType.MESSENGER)
+			m_HandInNpcId = job.target_npc_id;
+
 		if (m_Type == JobsModJobType.LOADING)
 			m_Required = job.cargos_required;
+		else if (m_Type == JobsModJobType.MESSENGER)
+			m_Required = 1;
 		else
 			m_Required = job.piles_required;
 
@@ -53,6 +70,7 @@ class JobsModAssignment
 	int GetId() { return m_Id; }
 	string GetPlayerId() { return m_PlayerId; }
 	string GetNpcId() { return m_NpcId; }
+	string GetHandInNpcId() { return m_HandInNpcId; }
 	string GetJobId() { return m_JobId; }
 	int GetType() { return m_Type; }
 	string GetZoneId() { return m_ZoneId; }
@@ -95,6 +113,18 @@ class JobsModAssignment
 	void TrackCargo(EntityAI cargo)
 	{
 		m_Cargo.Insert(cargo);
+	}
+
+	// The courier's parcel. It is kept in the same list the freight is, and for
+	// the same reason: whatever ends this assignment deletes that list, so
+	// there is no path that can end a courier job and leave the parcel in an
+	// inventory. A courier assignment has exactly one entry in it.
+	EntityAI GetParcel()
+	{
+		if (m_Cargo.Count() == 0)
+			return null;
+
+		return m_Cargo.Get(0);
 	}
 
 	bool OwnsCargo(EntityAI cargo)

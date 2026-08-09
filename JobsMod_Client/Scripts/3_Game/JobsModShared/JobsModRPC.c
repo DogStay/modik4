@@ -14,7 +14,10 @@ class JobsModRPC
 	static const int BASE = 24500;
 
 	// 1 -> 2: NPC job assignment and the loader job were added.
-	static const int PROTOCOL_VERSION = 2;
+	// 2 -> 3: the courier job was added; NOTIFY_JOB_STATE now carries the job
+	//         type, because the client can no longer tell what to point the
+	//         marker at from the freight class alone.
+	static const int PROTOCOL_VERSION = 3;
 
 	// Every id below must stay inside [BASE, BASE + ID_RANGE]; both OnRPC
 	// handlers use that window to ignore traffic that is not ours.
@@ -82,9 +85,13 @@ class JobsModJobType
 	static const int UNKNOWN = 0;
 	static const int SORTING = 1;
 	static const int LOADING = 2;
+	// Carry one sealed parcel from the employer to a second NPC, who is the one
+	// that takes it and pays. The only job with two people in it.
+	static const int MESSENGER = 3;
 
 	static const string TEXT_SORTING = "sorting";
 	static const string TEXT_LOADING = "loading";
+	static const string TEXT_MESSENGER = "messenger";
 
 	static int FromText(string text)
 	{
@@ -93,6 +100,9 @@ class JobsModJobType
 
 		if (text == TEXT_LOADING)
 			return LOADING;
+
+		if (text == TEXT_MESSENGER)
+			return MESSENGER;
 
 		return UNKNOWN;
 	}
@@ -107,7 +117,8 @@ class JobsModMarkerKind
 	static const int TARGET = 0;
 	// Where the freight is picked up.
 	static const int SOURCE = 1;
-	// Where the freight has to end up.
+	// Where what you are carrying has to end up: the unloading yard for the
+	// loader, the recipient for the courier.
 	static const int DESTINATION = 2;
 	// The employer, once the job is done and only the pay is left.
 	static const int EMPLOYER = 3;
@@ -157,6 +168,8 @@ class JobsModRejectReason
 	static const int JOB_NOT_FINISHED = 15;
 	static const int WRONG_ZONE = 16;
 	static const int WRONG_NPC = 17;
+	static const int PARCEL_MISSING = 18;
+	static const int NO_INVENTORY_SPACE = 19;
 
 	static string GetText(int reason)
 	{
@@ -195,7 +208,11 @@ class JobsModRejectReason
 			case WRONG_ZONE:
 				return "Это место не относится к вашей работе.";
 			case WRONG_NPC:
-				return "Сдавать работу нужно тому, кто её выдал.";
+				return "Эту работу принимает другой человек.";
+			case PARCEL_MISSING:
+				return "Пакета при вас нет. Работа не выполнена.";
+			case NO_INVENTORY_SPACE:
+				return "Освободите место в инвентаре под пакет.";
 		}
 
 		return "Запрос отклонён.";

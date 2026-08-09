@@ -26,6 +26,7 @@ class JobsModJobService
 	protected ref JobsModConfig m_Config;
 	protected JobsModNpcService m_Npcs;
 	protected JobsModLoaderService m_Loader;
+	protected JobsModMessengerService m_Messenger;
 	protected TrashZoneService m_Zones;
 
 	// One assignment per player, keyed by identity id.
@@ -35,11 +36,13 @@ class JobsModJobService
 
 	protected int m_NextAssignmentId;
 
-	void JobsModJobService(JobsModConfig config, JobsModNpcService npcs, JobsModLoaderService loader, TrashZoneService zones)
+	void JobsModJobService(JobsModConfig config, JobsModNpcService npcs, JobsModLoaderService loader,
+		JobsModMessengerService messenger, TrashZoneService zones)
 	{
 		m_Config = config;
 		m_Npcs = npcs;
 		m_Loader = loader;
+		m_Messenger = messenger;
 		m_Zones = zones;
 		m_Assignments = new map<string, ref JobsModAssignment>();
 		m_CooldownUntilMs = new map<string, int>();
@@ -144,8 +147,9 @@ class JobsModJobService
 				job.reward, required, cooldown, availability));
 		}
 
-		// The hand-in button belongs to the NPC that issued the job, so it is
-		// only offered here when this is that NPC and the work is done.
+		// The hand-in button belongs to whoever signs the job off — the employer
+		// for most jobs, the addressee for a courier's — so it is only offered
+		// here when this is that person and the work is actually done.
 		int handInAvailable = 0;
 		int assignmentId = 0;
 		string heldJobName = "";
@@ -160,7 +164,7 @@ class JobsModJobService
 			if (heldJob)
 				heldJobName = heldJob.name;
 
-			if (held.IsFinished() && held.GetNpcId() == npcId)
+			if (held.GetHandInNpcId() == npcId && IsHandInAllowed(held))
 				handInAvailable = 1;
 		}
 
@@ -261,6 +265,20 @@ class JobsModJobService
 			}
 		}
 
+		// Same reasoning for the parcel, with one difference that matters: it
+		// can fail simply because the player is carrying too much. That is not
+		// a broken config, so the refusal has to say what it actually is —
+		// otherwise the player is told the job does not exist while standing in
+		// front of the person offering it.
+		if (assignment.GetType() == JobsModJobType.MESSENGER)
+		{
+			if (!m_Messenger.GiveParcel(player, assignment, job))
+			{
+				Reject(player, identity, JobsModRejectReason.NO_INVENTORY_SPACE);
+				return;
+			}
+		}
+
 		m_Assignments.Set(playerId, assignment);
 
 		SendState(player, identity);
@@ -305,21 +323,32 @@ class JobsModJobService
 			return;
 		}
 
-		if (!assignment.IsFinished())
+		if (!IsHandInAllowed(assignment))
 		{
 			Reject(player, identity, JobsModRejectReason.JOB_NOT_FINISHED);
 			return;
 		}
 
-		if (assignment.GetNpcId() != request.param2)
+		if (assignment.GetHandInNpcId() != request.param2)
 		{
 			Reject(player, identity, JobsModRejectReason.WRONG_NPC);
 			return;
 		}
 
-		if (!m_Npcs.IsPlayerAtNpc(player, assignment.GetNpcId()))
+		if (!m_Npcs.IsPlayerAtNpc(player, assignment.GetHandInNpcId()))
 		{
 			Reject(player, identity, JobsModRejectReason.TOO_FAR);
+			return;
+		}
+
+		// The parcel is the delivery, so it is checked here and not earlier:
+		// the player may have been carrying it a second ago and lost it to a
+		// mod, a container or a death that has not been swept up yet. Paying
+		// for a delivery that did not arrive is the one thing this job must not
+		// do.
+		if (assignment.GetType() == JobsModJobType.MESSENGER && !m_Messenger.HasParcel(player, assignment))
+		{
+			Reject(player, identity, JobsModRejectReason.PARCEL_MISSING);
 			return;
 		}
 
@@ -335,12 +364,21 @@ class JobsModJobService
 			return;
 		}
 
+		// Read out before ending it: the map holds the only strong reference to
+		// the assignment, so it is gone by the time the log line is built.
+		string issuedBy = assignment.GetNpcId();
+		string signedBy = assignment.GetHandInNpcId();
+
 		GrantReward(player, identity, job);
 		StartCooldown(playerId, job);
 		EndAssignment(player, identity, assignment, "");
 
+		// Both ends are logged because a courier job has two of them, and which
+		// pair of NPCs a delivery actually ran between is the first thing worth
+		// knowing when a route looks wrong.
 		JobsLog.Info("SERVER/JOBS: работа '" + job.id + "' принята у '" + identity.GetName()
-			+ "'; выплачено " + job.reward.ToString() + ".");
+			+ "'; выдал '" + issuedBy + "', принял '" + signedBy
+			+ "', выплачено " + job.reward.ToString() + ".");
 	}
 
 	void HandleAbandon(PlayerBase player, PlayerIdentity identity, ParamsReadContext ctx)
@@ -398,8 +436,8 @@ class JobsModJobService
 		if (!finished)
 			return;
 
-		JobsModNpcJson npc = m_Config.GetNpc(assignment.GetNpcId());
-		string npcName = assignment.GetNpcId();
+		JobsModNpcJson npc = m_Config.GetNpc(assignment.GetHandInNpcId());
+		string npcName = assignment.GetHandInNpcId();
 		if (npc)
 			npcName = npc.name;
 
@@ -430,6 +468,38 @@ class JobsModJobService
 		}
 	}
 
+	// Whether the job can be signed off right now.
+	//
+	// For work that is counted — piles, boxes — the count has to be complete,
+	// and the count is what turns the assignment finished. A courier is not
+	// counted: arriving with the parcel is the whole job, so the hand-in is the
+	// delivery rather than a receipt for one, and the checks that matter
+	// (the right person, the parcel still in hand) are made by the caller.
+	protected bool IsHandInAllowed(JobsModAssignment assignment)
+	{
+		if (assignment.GetType() == JobsModJobType.MESSENGER)
+			return assignment.IsActive();
+
+		return assignment.IsFinished();
+	}
+
+	// Ends an assignment that cannot be completed any more, with no pay and no
+	// cooldown: nothing was earned, and nothing was farmed either, so making
+	// the player wait before trying again would only punish them for it.
+	//
+	// The assignment is destroyed by this call — see EndAssignment.
+	void FailAssignment(PlayerBase player, JobsModAssignment assignment, string note)
+	{
+		if (!assignment)
+			return;
+
+		PlayerIdentity identity = null;
+		if (player)
+			identity = player.GetIdentity();
+
+		EndAssignment(player, identity, assignment, note);
+	}
+
 	// A disconnecting player's job is dropped at once. Keeping it would leave
 	// their freight standing in the world for anyone to find, and reconnecting
 	// would run into their own stale assignment.
@@ -442,6 +512,32 @@ class JobsModJobService
 		assignment.DeleteAllCargo();
 		m_Assignments.Remove(playerId);
 		JobsLog.Debug("SERVER/JOBS: задание игрока " + playerId + " снято при выходе.");
+	}
+
+	// Dying ends the job, whatever kind it was.
+	//
+	// It has to, for the courier: the parcel would otherwise be lying in a body
+	// for anyone to loot, and the job it belonged to would still be open for a
+	// player who is about to respawn on the coast without it. The other jobs
+	// are ended for the same reason a disconnect ends them — a corpse is not
+	// going to finish carrying the boxes.
+	//
+	// The player object still exists at this point and is told, so the HUD
+	// clears instead of following them to the respawn screen.
+	void HandlePlayerDeath(PlayerBase player)
+	{
+		if (!player || !player.GetIdentity())
+			return;
+
+		JobsModAssignment assignment = GetAssignment(player.GetIdentity().GetId());
+		if (!assignment)
+			return;
+
+		string jobId = assignment.GetJobId();
+
+		EndAssignment(player, player.GetIdentity(), assignment, "Вы погибли. Работа закрыта.");
+		JobsLog.Info("SERVER/JOBS: работа '" + jobId + "' закрыта смертью игрока '"
+			+ player.GetIdentity().GetName() + "'.");
 	}
 
 	// Drops jobs nobody is coming back to, so neither the map nor the world
@@ -552,6 +648,7 @@ class JobsModJobService
 		JobsModAssignment assignment = GetAssignment(identity.GetId());
 
 		int status = JobsModJobStatus.NONE;
+		int type = JobsModJobType.UNKNOWN;
 		int progress = 0;
 		int required = 0;
 		int assignmentId = 0;
@@ -566,6 +663,7 @@ class JobsModJobService
 		if (assignment)
 		{
 			status = assignment.GetStatus();
+			type = assignment.GetType();
 			progress = assignment.GetProgress();
 			required = assignment.GetRequired();
 			assignmentId = assignment.GetId();
@@ -578,11 +676,17 @@ class JobsModJobService
 				cargoClass = job.cargo_class;
 			}
 
-			JobsModNpcJson npc = m_Config.GetNpc(assignment.GetNpcId());
+			// The person the player has to walk to, which for a courier is the
+			// addressee and not the employer. Every line below reads better for
+			// it: there is never a moment in any job where the name of somebody
+			// the player is not going to see is the useful one.
+			JobsModNpcJson npc = m_Config.GetNpc(assignment.GetHandInNpcId());
 			if (npc)
 				npcName = npc.name;
 
-			if (assignment.IsFinished())
+			if (assignment.GetType() == JobsModJobType.MESSENGER)
+				hint = "Доставьте пакет: " + npcName + " (" + zoneName + ").";
+			else if (assignment.IsFinished())
 				hint = "Вернитесь к нанимателю: " + npcName + ".";
 			else if (assignment.GetType() == JobsModJobType.LOADING)
 				hint = "Отнесите ящики в зону разгрузки.";
@@ -595,7 +699,7 @@ class JobsModJobService
 		array<ref Param> message = new array<ref Param>();
 		message.Insert(new Param4<int, int, int, int>(status, progress, required, assignmentId));
 		message.Insert(new Param4<string, string, string, string>(jobName, zoneName, npcName, hint));
-		message.Insert(new Param2<string, int>(cargoClass, markers.Count()));
+		message.Insert(new Param3<string, int, int>(cargoClass, type, markers.Count()));
 
 		for (int i = 0; i < markers.Count(); i++)
 			message.Insert(markers.Get(i));
@@ -617,9 +721,22 @@ class JobsModJobService
 		// employer replaces the work points rather than joining them.
 		if (assignment.IsFinished())
 		{
-			PlayerBase npcEntity = m_Npcs.GetNpcEntity(assignment.GetNpcId());
+			PlayerBase npcEntity = m_Npcs.GetNpcEntity(assignment.GetHandInNpcId());
 			if (npcEntity)
 				markers.Insert(new Param3<int, string, vector>(JobsModMarkerKind.EMPLOYER, npcName, npcEntity.GetPosition()));
+
+			return;
+		}
+
+		// A courier has one place to be from the moment the job starts, and the
+		// addressee's real position is sent rather than a configured point: an
+		// NPC that had to be respawned is not necessarily standing where the
+		// config says any more, and the marker has to point at the person.
+		if (assignment.GetType() == JobsModJobType.MESSENGER)
+		{
+			PlayerBase recipient = m_Npcs.GetNpcEntity(assignment.GetHandInNpcId());
+			if (recipient)
+				markers.Insert(new Param3<int, string, vector>(JobsModMarkerKind.DESTINATION, npcName, recipient.GetPosition()));
 
 			return;
 		}
@@ -674,7 +791,10 @@ class JobsModJobService
 		return player.IsAlive() && !player.IsUnconscious() && !player.IsRestrained();
 	}
 
-	protected PlayerBase FindPlayerById(string playerId)
+	// Public because the loader and the courier both have to go from an
+	// assignment back to the player working it, and one lookup is better than
+	// three copies of it.
+	PlayerBase FindPlayerById(string playerId)
 	{
 		array<Man> players = new array<Man>();
 		GetGame().GetPlayers(players);

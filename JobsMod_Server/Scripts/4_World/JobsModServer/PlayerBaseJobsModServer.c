@@ -8,6 +8,28 @@
 
 modded class PlayerBase
 {
+	// Dying ends whatever job was being worked, and takes the courier's parcel
+	// with it.
+	//
+	// Without this the parcel stays in the body: lootable by anyone who walks
+	// past, and still counted as the assignment's, so the sweep would not touch
+	// it either. The other job types are ended here for the same reason a
+	// disconnect ends them — nothing is going to be carried anywhere now.
+	//
+	// The sorting session is dropped too. It is keyed to a pile the player is
+	// no longer standing at, and leaving it open would block them from starting
+	// a new one after they respawn.
+	override void EEKilled(Object killer)
+	{
+		super.EEKilled(killer);
+
+		if (!GetGame().IsServer() || !JobsModServerRuntime.IsStarted() || !GetIdentity())
+			return;
+
+		JobsModServerRuntime.GetSessionService().DropPlayer(GetIdentity().GetId());
+		JobsModServerRuntime.GetJobService().HandlePlayerDeath(this);
+	}
+
 	override void OnRPC(PlayerIdentity sender, int rpc_type, ParamsReadContext ctx)
 	{
 		super.OnRPC(sender, rpc_type, ctx);

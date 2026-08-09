@@ -14,6 +14,7 @@ class JobsModServerRuntime
 	protected static ref JobsModConfig s_Config;
 	protected static ref JobsModNpcService s_NpcService;
 	protected static ref JobsModLoaderService s_LoaderService;
+	protected static ref JobsModMessengerService s_MessengerService;
 	protected static ref JobsModJobService s_JobService;
 	protected static ref TrashZoneService s_ZoneService;
 	protected static ref SortingSessionService s_SessionService;
@@ -57,13 +58,16 @@ class JobsModServerRuntime
 		s_ZoneService = new TrashZoneService(s_Config);
 		s_ZoneService.SpawnAll();
 
-		// The loader and the job service need each other: the job service asks
-		// for freight when a job starts, and the loader reports deliveries back.
-		// The loader is built first without the reference and given it once the
-		// job service exists, so neither has to be half-constructed.
+		// The loader, the courier and the job service all need each other: the
+		// job service asks for freight and parcels when a job starts, and both
+		// report back into it. The two are built first without the reference
+		// and given it once the job service exists, so none of the three has to
+		// be half-constructed.
 		s_LoaderService = new JobsModLoaderService(s_Config);
-		s_JobService = new JobsModJobService(s_Config, s_NpcService, s_LoaderService, s_ZoneService);
+		s_MessengerService = new JobsModMessengerService(s_Config);
+		s_JobService = new JobsModJobService(s_Config, s_NpcService, s_LoaderService, s_MessengerService, s_ZoneService);
 		s_LoaderService.SetJobService(s_JobService);
+		s_MessengerService.SetJobService(s_JobService);
 
 		s_SessionService = new SortingSessionService(s_Config, s_ZoneService, s_JobService);
 
@@ -91,6 +95,7 @@ class JobsModServerRuntime
 
 		s_SessionService = null;
 		s_JobService = null;
+		s_MessengerService = null;
 		s_LoaderService = null;
 		s_ZoneService = null;
 		s_NpcService = null;
@@ -128,6 +133,11 @@ class JobsModServerRuntime
 	static JobsModLoaderService GetLoaderService()
 	{
 		return s_LoaderService;
+	}
+
+	static JobsModMessengerService GetMessengerService()
+	{
+		return s_MessengerService;
 	}
 
 	// Subscribed to the client PBO's bridges, so neither action ever names a
