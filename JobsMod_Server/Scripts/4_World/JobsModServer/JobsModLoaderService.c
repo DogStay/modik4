@@ -54,12 +54,16 @@ class JobsModLoaderService
 			return false;
 		}
 
+		// Read once rather than per box: the config stores the circle as text an
+		// admin pasted, and turning it back into numbers inside the loop would
+		// be parsing the same string ten times over.
+		vector source = area.GetSource();
 		int spawned = 0;
 
 		for (int i = 0; i < job.cargos_required; i++)
 		{
 			vector position;
-			if (!FindPlacement(area.source, assignment, position))
+			if (!FindPlacement(source, area.source_radius, assignment, position))
 			{
 				JobsLog.Warning("SERVER/LOADER: не нашлось места для ящика в зоне погрузки '" + area.id + "'.");
 				continue;
@@ -100,15 +104,15 @@ class JobsModLoaderService
 		return true;
 	}
 
-	protected bool FindPlacement(JobsModAreaJson area, JobsModAssignment assignment, out vector position)
+	protected bool FindPlacement(vector centre, float radius, JobsModAssignment assignment, out vector position)
 	{
 		for (int attempt = 0; attempt < PLACEMENT_ATTEMPTS; attempt++)
 		{
 			float angle = Math.RandomFloat(0.0, Math.PI2);
-			float distance = Math.RandomFloat(0.0, area.radius);
+			float distance = Math.RandomFloat(0.0, radius);
 
-			float x = area.x + Math.Cos(angle) * distance;
-			float z = area.z + Math.Sin(angle) * distance;
+			float x = centre[0] + Math.Cos(angle) * distance;
+			float z = centre[2] + Math.Sin(angle) * distance;
 			vector candidate = Vector(x, GetGame().SurfaceY(x, z), z);
 
 			if (IsClearOfOtherCargo(candidate, assignment))
@@ -174,6 +178,7 @@ class JobsModLoaderService
 		if (!player || !player.GetIdentity())
 			return;
 
+		vector destination = area.GetDestination();
 		array<EntityAI> cargo = assignment.GetCargo();
 
 		// Walked backwards because a delivered box is removed from this list.
@@ -193,7 +198,7 @@ class JobsModLoaderService
 			if (box.GetHierarchyParent())
 				continue;
 
-			if (!IsInsideArea(box.GetPosition(), area.destination))
+			if (!IsInsideArea(box.GetPosition(), destination, area.destination_radius))
 				continue;
 
 			assignment.ForgetCargo(box);
@@ -211,10 +216,10 @@ class JobsModLoaderService
 
 	// Height is ignored: the yard is a circle on the map, and a box on a ramp or
 	// a pier inside it has still arrived.
-	bool IsInsideArea(vector position, JobsModAreaJson area)
+	bool IsInsideArea(vector position, vector centre, float radius)
 	{
-		float dx = position[0] - area.x;
-		float dz = position[2] - area.z;
-		return (dx * dx + dz * dz) <= (area.radius * area.radius);
+		float dx = position[0] - centre[0];
+		float dz = position[2] - centre[2];
+		return (dx * dx + dz * dz) <= (radius * radius);
 	}
 }

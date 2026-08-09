@@ -1,42 +1,87 @@
 // JobsModConfigJson.c
 //
-// Plain data classes mirroring the on-disk server config. They carry no logic:
-// JsonFileLoader fills the fields by name, so a field rename here silently
-// changes the config format and must be treated as a breaking change.
+// Plain data classes mirroring the on-disk server config. They carry no logic
+// beyond reading their own coordinate strings: JsonFileLoader fills the fields
+// by name, so a field rename here silently changes the config format and must be
+// treated as a breaking change.
 //
-// The config is a tree of small files rather than one big document:
+// The config is three things, and the split follows how often each is edited:
 //
-//   $profile:JobsMod/settings.json          global switches
-//   $profile:JobsMod/Zones/zones.json       the list of regions
-//   $profile:JobsMod/PilePoints/<id>.json   one file per trash pile
-//   $profile:JobsMod/LoaderAreas/<id>.json  one file per freight route
-//   $profile:JobsMod/Jobs/<id>.json         one file per job
-//   $profile:JobsMod/NPC/<id>.json          one file per employer
+//   $profile:JobsMod/settings.json     the world: switches, zones, trash points
+//                                      and freight routes, all in one file
+//   $profile:JobsMod/Jobs/<id>.json    one file per job
+//   $profile:JobsMod/NPC/<id>.json     one file per employer
 //
-// Everything in the per-entity folders is found by scanning for *.json, so an
-// admin adds an NPC by dropping in a file and removes one by deleting it. The
-// "id" field inside the file is what the rest of the config refers to; the file
-// name is expected to match it and a mismatch is reported at load.
+// Jobs and NPCs are the two things an admin adds and removes as separate
+// decisions, so they stay one file each: dropping a file in adds an NPC,
+// deleting it removes them, and the file name is the id everything else refers
+// to. Everything a job or an NPC merely points at — a zone, a trash point, a
+// freight route — is a line in the settings file, because those are edited
+// together and a folder of three-line files is more to manage than it is worth.
+//
+// Positions are written as one string rather than as x/y/z fields, in whatever
+// shape #position printed them. See JobsModCoords for what is accepted.
 
-// A point in the world. Height is loaded but treated as advisory: a value of 0
-// or below means "put it on the terrain", which is what a config copied from a
-// map without heights needs.
-class JobsModVectorJson
+// One region. It carries no geometry at all: it exists to tie trash points,
+// jobs and freight routes together and to give the player a name to read on the
+// HUD.
+class JobsModZoneJson
 {
-	float x;
-	float y;
-	float z;
+	string id;
+	string name;
 }
 
-// A circle on the map, used for the freight pick-up and drop-off areas.
-class JobsModAreaJson
+// An exact spot for one trash pile. Exact rather than random: a pile rolled
+// inside a radius eventually lands inside a wall or under a floor, and nobody
+// can work it. The admin walks to the spot, reads the coordinates and pastes
+// them once.
+class JobsModPilePointJson
 {
-	float x;
-	float z;
-	float radius;
+	string id;
+	string zone_id;
+	string name;
+
+	// "6600 300 2500". A height of 0 means "put it on the terrain".
+	string position;
+
+	vector GetPosition()
+	{
+		vector parsed;
+		JobsModCoords.Parse(position, parsed);
+		return parsed;
+	}
 }
 
-// Global switches. Everything that is per-job lives in the job file instead.
+// A freight route: a circle where the boxes appear and a circle they have to end
+// up in.
+class JobsModLoaderAreaJson
+{
+	string id;
+	string name;
+	string zone_id;
+
+	string source;
+	float source_radius;
+
+	string destination;
+	float destination_radius;
+
+	vector GetSource()
+	{
+		vector parsed;
+		JobsModCoords.Parse(source, parsed);
+		return parsed;
+	}
+
+	vector GetDestination()
+	{
+		vector parsed;
+		JobsModCoords.Parse(destination, parsed);
+		return parsed;
+	}
+}
+
+// settings.json in full: the switches plus everything jobs and NPCs point at.
 class JobsModSettingsJson
 {
 	// Seconds before a sorted pile comes back at its own point.
@@ -48,45 +93,10 @@ class JobsModSettingsJson
 	int assignment_timeout_seconds;
 
 	bool debug_logging;
-}
 
-// A region. It carries no geometry at all: it exists to tie piles, jobs and
-// freight routes together and to give the player a name to read on the HUD.
-class JobsModZoneJson
-{
-	string id;
-	string name;
-}
-
-// zones.json holds the whole list, because zones are one line each and a folder
-// of one-line files would be more to manage than it is worth.
-class JobsModZoneListJson
-{
 	ref array<ref JobsModZoneJson> zones;
-}
-
-// An exact spot for one trash pile. Exact rather than random: a pile rolled
-// inside a radius eventually lands inside a wall or under a floor, and nobody
-// can work it. The admin walks to the spot, reads the coordinates and writes
-// them down once.
-class JobsModPilePointJson
-{
-	string id;
-	string zone_id;
-	string name;
-	float x;
-	float y;
-	float z;
-}
-
-// A freight route: where the boxes appear and where they have to end up.
-class JobsModLoaderAreaJson
-{
-	string id;
-	string name;
-	string zone_id;
-	ref JobsModAreaJson source;
-	ref JobsModAreaJson destination;
+	ref array<ref JobsModPilePointJson> pile_points;
+	ref array<ref JobsModLoaderAreaJson> loader_areas;
 }
 
 // One job an NPC can hand out.
@@ -138,7 +148,8 @@ class JobsModNpcJson
 	string name;
 	string description;
 
-	ref JobsModVectorJson position;
+	// "6620 300 2520". A height of 0 means "stand on the terrain".
+	string position;
 
 	// Compass heading in degrees the NPC faces.
 	float rotation;
@@ -154,6 +165,14 @@ class JobsModNpcJson
 	// whatever the admin writes is what gets created.
 	ref array<string> clothing;
 
-	// Ids of the jobs this NPC hands out.
+	// Ids of the jobs this NPC hands out. May be empty, but only for an NPC that
+	// some messenger job names as its recipient.
 	ref array<string> jobs;
+
+	vector GetPosition()
+	{
+		vector parsed;
+		JobsModCoords.Parse(position, parsed);
+		return parsed;
+	}
 }

@@ -11,6 +11,10 @@
 // The coordinates are Chernarus. On any other map they are simply wrong, which
 // is why the startup log always prints where the piles and NPCs actually ended
 // up — the numbers either match where you stand or they do not.
+//
+// Positions are written as strings in the same shape the config reads back, so
+// the first thing an admin sees in the file is the format they are meant to
+// paste #position output into.
 
 class JobsModConfigDefaults
 {
@@ -29,43 +33,33 @@ class JobsModConfigDefaults
 	static const string NPC_DISPATCHER = "npc_dispatcher_01";
 	static const string NPC_RECIPIENT = "npc_recipient_01";
 
+	// settings.json in full: the switches and everything jobs and NPCs point at.
 	static JobsModSettingsJson BuildSettings()
 	{
 		JobsModSettingsJson settings = new JobsModSettingsJson();
+
 		settings.pile_respawn_seconds = 300;
 		settings.assignment_timeout_seconds = 3600;
 		// On out of the box: the first thing anyone does with a fresh install is
 		// find out whether it works at all.
 		settings.debug_logging = true;
+
+		settings.zones = new array<ref JobsModZoneJson>();
+		settings.zones.Insert(MakeZone(ZONE_CHERNO, "Черногорск"));
+		settings.zones.Insert(MakeZone(ZONE_ELEKTRO, "Электрозаводск"));
+		settings.zones.Insert(MakeZone(ZONE_BEREZINO, "Березино"));
+
+		settings.pile_points = new array<ref JobsModPilePointJson>();
+		settings.pile_points.Insert(MakePilePoint("pile_01", ZONE_CHERNO, "Куча у площади", "6600 0 2500"));
+		settings.pile_points.Insert(MakePilePoint("pile_02", ZONE_CHERNO, "Куча у здания", "6650 0 2550"));
+		settings.pile_points.Insert(MakePilePoint("pile_03", ZONE_CHERNO, "Куча у дороги", "6560 0 2460"));
+
+		settings.loader_areas = new array<ref JobsModLoaderAreaJson>();
+		settings.loader_areas.Insert(MakeLoaderArea(AREA_ELEKTRO, "Склад Электрозаводска", ZONE_ELEKTRO,
+			"10400 0 2200", 12.0,
+			"10500 0 2300", 10.0));
+
 		return settings;
-	}
-
-	static JobsModZoneListJson BuildZones()
-	{
-		JobsModZoneListJson list = new JobsModZoneListJson();
-		list.zones = new array<ref JobsModZoneJson>();
-		list.zones.Insert(MakeZone(ZONE_CHERNO, "Черногорск"));
-		list.zones.Insert(MakeZone(ZONE_ELEKTRO, "Электрозаводск"));
-		list.zones.Insert(MakeZone(ZONE_BEREZINO, "Березино"));
-		return list;
-	}
-
-	static array<ref JobsModPilePointJson> BuildPilePoints()
-	{
-		array<ref JobsModPilePointJson> points = new array<ref JobsModPilePointJson>();
-		points.Insert(MakePilePoint("pile_01", ZONE_CHERNO, "Куча у площади", 6600.0, 0.0, 2500.0));
-		points.Insert(MakePilePoint("pile_02", ZONE_CHERNO, "Куча у здания", 6650.0, 0.0, 2550.0));
-		points.Insert(MakePilePoint("pile_03", ZONE_CHERNO, "Куча у дороги", 6560.0, 0.0, 2460.0));
-		return points;
-	}
-
-	static array<ref JobsModLoaderAreaJson> BuildLoaderAreas()
-	{
-		array<ref JobsModLoaderAreaJson> areas = new array<ref JobsModLoaderAreaJson>();
-		areas.Insert(MakeLoaderArea(AREA_ELEKTRO, "Склад Электрозаводска", ZONE_ELEKTRO,
-			10400.0, 2200.0, 12.0,
-			10500.0, 2300.0, 10.0));
-		return areas;
 	}
 
 	static array<ref JobsModJobJson> BuildJobs()
@@ -125,7 +119,7 @@ class JobsModConfigDefaults
 		sorter.id = NPC_SORTER;
 		sorter.name = "Иван";
 		sorter.description = "Нанимаю на уборку. Плачу за разобранный мусор.";
-		sorter.position = MakeVector(6620.0, 0.0, 2520.0);
+		sorter.position = "6620 0 2520";
 		sorter.rotation = 45.0;
 		sorter.player_class = "SurvivorM_Mirek";
 		sorter.invulnerable = true;
@@ -141,7 +135,7 @@ class JobsModConfigDefaults
 		loader.id = NPC_LOADER;
 		loader.name = "Пётр";
 		loader.description = "Нужны руки на складе. Ящики сами себя не перенесут.";
-		loader.position = MakeVector(10420.0, 0.0, 2220.0);
+		loader.position = "10420 0 2220";
 		loader.rotation = 180.0;
 		loader.player_class = "SurvivorM_Boris";
 		loader.invulnerable = true;
@@ -157,7 +151,7 @@ class JobsModConfigDefaults
 		dispatcher.id = NPC_DISPATCHER;
 		dispatcher.name = "Марина";
 		dispatcher.description = "Отправляю бумаги по побережью. Нужен человек с ногами.";
-		dispatcher.position = MakeVector(6644.0, 0.0, 2544.0);
+		dispatcher.position = "6644 0 2544";
 		dispatcher.rotation = 270.0;
 		dispatcher.player_class = "SurvivorF_Judy";
 		dispatcher.invulnerable = true;
@@ -176,7 +170,7 @@ class JobsModConfigDefaults
 		recipient.id = NPC_RECIPIENT;
 		recipient.name = "Гриша";
 		recipient.description = "Жду посылку от Марины. Больше ничего не жду.";
-		recipient.position = MakeVector(10484.0, 0.0, 2264.0);
+		recipient.position = "10484 0 2264";
 		recipient.rotation = 90.0;
 		recipient.player_class = "SurvivorM_Denis";
 		recipient.invulnerable = true;
@@ -198,47 +192,29 @@ class JobsModConfigDefaults
 		return zone;
 	}
 
-	protected static JobsModPilePointJson MakePilePoint(string id, string zoneId, string name, float x, float y, float z)
+	protected static JobsModPilePointJson MakePilePoint(string id, string zoneId, string name, string position)
 	{
 		JobsModPilePointJson point = new JobsModPilePointJson();
 		point.id = id;
 		point.zone_id = zoneId;
 		point.name = name;
-		point.x = x;
-		point.y = y;
-		point.z = z;
+		point.position = position;
 		return point;
 	}
 
 	protected static JobsModLoaderAreaJson MakeLoaderArea(
 		string id, string name, string zoneId,
-		float sourceX, float sourceZ, float sourceRadius,
-		float destX, float destZ, float destRadius)
+		string source, float sourceRadius,
+		string destination, float destinationRadius)
 	{
 		JobsModLoaderAreaJson area = new JobsModLoaderAreaJson();
 		area.id = id;
 		area.name = name;
 		area.zone_id = zoneId;
-		area.source = MakeArea(sourceX, sourceZ, sourceRadius);
-		area.destination = MakeArea(destX, destZ, destRadius);
+		area.source = source;
+		area.source_radius = sourceRadius;
+		area.destination = destination;
+		area.destination_radius = destinationRadius;
 		return area;
-	}
-
-	protected static JobsModAreaJson MakeArea(float x, float z, float radius)
-	{
-		JobsModAreaJson area = new JobsModAreaJson();
-		area.x = x;
-		area.z = z;
-		area.radius = radius;
-		return area;
-	}
-
-	protected static JobsModVectorJson MakeVector(float x, float y, float z)
-	{
-		JobsModVectorJson position = new JobsModVectorJson();
-		position.x = x;
-		position.y = y;
-		position.z = z;
-		return position;
 	}
 }

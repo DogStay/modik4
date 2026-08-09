@@ -747,10 +747,17 @@ class JobsModJobService
 			if (!area)
 				return;
 
+			// Height is dropped on purpose: the config carries a circle on the
+			// map, and the client looks the ground up under it. Sending the
+			// height an admin happened to paste would float the marker at
+			// whatever altitude they were standing at.
+			vector source = area.GetSource();
+			vector destination = area.GetDestination();
+
 			markers.Insert(new Param3<int, string, vector>(
-				JobsModMarkerKind.SOURCE, "Погрузка", Vector(area.source.x, 0, area.source.z)));
+				JobsModMarkerKind.SOURCE, "Погрузка", Vector(source[0], 0, source[2])));
 			markers.Insert(new Param3<int, string, vector>(
-				JobsModMarkerKind.DESTINATION, "Разгрузка", Vector(area.destination.x, 0, area.destination.z)));
+				JobsModMarkerKind.DESTINATION, "Разгрузка", Vector(destination[0], 0, destination[2])));
 			return;
 		}
 

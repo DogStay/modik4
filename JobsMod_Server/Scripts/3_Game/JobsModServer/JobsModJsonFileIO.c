@@ -23,36 +23,6 @@ class JobsModJsonFileIO
 		return JsonFileLoader<JobsModSettingsJson>.SaveFile(filename, data, errorMessage);
 	}
 
-	static bool LoadZoneList(string filename, out JobsModZoneListJson data, out string errorMessage)
-	{
-		return JsonFileLoader<JobsModZoneListJson>.LoadFile(filename, data, errorMessage);
-	}
-
-	static bool SaveZoneList(string filename, JobsModZoneListJson data, out string errorMessage)
-	{
-		return JsonFileLoader<JobsModZoneListJson>.SaveFile(filename, data, errorMessage);
-	}
-
-	static bool LoadPilePoint(string filename, out JobsModPilePointJson data, out string errorMessage)
-	{
-		return JsonFileLoader<JobsModPilePointJson>.LoadFile(filename, data, errorMessage);
-	}
-
-	static bool SavePilePoint(string filename, JobsModPilePointJson data, out string errorMessage)
-	{
-		return JsonFileLoader<JobsModPilePointJson>.SaveFile(filename, data, errorMessage);
-	}
-
-	static bool LoadLoaderArea(string filename, out JobsModLoaderAreaJson data, out string errorMessage)
-	{
-		return JsonFileLoader<JobsModLoaderAreaJson>.LoadFile(filename, data, errorMessage);
-	}
-
-	static bool SaveLoaderArea(string filename, JobsModLoaderAreaJson data, out string errorMessage)
-	{
-		return JsonFileLoader<JobsModLoaderAreaJson>.SaveFile(filename, data, errorMessage);
-	}
-
 	static bool LoadJob(string filename, out JobsModJobJson data, out string errorMessage)
 	{
 		return JsonFileLoader<JobsModJobJson>.LoadFile(filename, data, errorMessage);

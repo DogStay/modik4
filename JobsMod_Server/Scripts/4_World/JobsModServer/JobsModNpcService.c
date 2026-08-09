@@ -65,7 +65,7 @@ class JobsModNpcService
 	{
 		JobsModNpcJson definition = record.m_Definition;
 
-		vector position = Vector(definition.position.x, definition.position.y, definition.position.z);
+		vector position = definition.GetPosition();
 
 		// A height at or below zero means the config was written without one.
 		// Snapping to the terrain is the only sane reading of that: a survivor

@@ -73,7 +73,7 @@ class TrashZoneService
 	protected bool Place(JobsModPileRecord record)
 	{
 		JobsModPilePointJson point = record.m_Point;
-		vector position = Vector(point.x, point.y, point.z);
+		vector position = point.GetPosition();
 
 		// A height at or below zero means the config carries no height, which is
 		// the common case: the admin reads x and z off the map and leaves y at
