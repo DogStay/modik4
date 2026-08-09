@@ -104,7 +104,12 @@ class JobsModClientContext
 			JobsModNpcDirectory.Add(entry.param1, entry.param2);
 		}
 
-		JobsLog.Debug("CLIENT/JOBS: получено NPC: " + JobsModNpcDirectory.GetCount().ToString() + ".");
+		// Info rather than Debug: debug output is switched on from the server
+		// config, which the client never reads, so a Debug line here is dropped
+		// on every client and the directory — the thing that decides whether the
+		// talk action is offered at all — becomes impossible to diagnose. It
+		// costs one line per connect.
+		JobsLog.Info("CLIENT/JOBS: получено NPC: " + JobsModNpcDirectory.GetCount().ToString() + ".");
 	}
 
 	// =====================================================================
