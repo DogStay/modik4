@@ -81,6 +81,12 @@ class TrashZoneService
 		if (position[1] <= 0)
 			position[1] = GetGame().SurfaceY(position[0], position[2]);
 
+		// Below sea level means the water or past the map edge — normally
+		// coordinates carried over from another map. The pile is created and
+		// counted as created, but nobody can work it.
+		if (position[1] < 0)
+			JobsLog.Warning("SERVER/ZONES: куча '" + point.id + "' встала ниже уровня моря (y=" + position[1].ToString() + ") — до неё не добраться; координаты, скорее всего, от другой карты.");
+
 		Object pile = GetGame().CreateObjectEx(PILE_CLASS, position, ECE_PLACE_ON_SURFACE);
 		if (!pile)
 		{
