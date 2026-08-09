@@ -91,16 +91,13 @@ class JobsModLoaderService
 		// and then have nothing left to carry.
 		if (spawned < job.cargos_required)
 		{
-			JobsLog.Error("SERVER/LOADER: создано " + spawned.ToString() + " из " +
-				job.cargos_required.ToString() + " ящиков для '" + job.id +
-				"' — работа не выдана. Увеличьте радиус зоны погрузки или уменьшите cargos_required.");
+			JobsLog.Error("SERVER/LOADER: создано " + spawned.ToString() + " из " + job.cargos_required.ToString() + " ящиков для '" + job.id + "' — работа не выдана. Увеличьте радиус зоны погрузки или уменьшите cargos_required.");
 
 			assignment.DeleteAllCargo();
 			return false;
 		}
 
-		JobsLog.Debug("SERVER/LOADER: создано ящиков: " + spawned.ToString() +
-			" для задания " + assignment.GetId().ToString() + ".");
+		JobsLog.Debug("SERVER/LOADER: создано ящиков: " + spawned.ToString() + " для задания " + assignment.GetId().ToString() + ".");
 		return true;
 	}
 
@@ -206,8 +203,7 @@ class JobsModLoaderService
 
 			bool finished = m_Jobs.ReportDeliveredCargo(player, player.GetIdentity(), assignment);
 
-			JobsLog.Debug("SERVER/LOADER: ящик сдан; задание " + assignment.GetId().ToString() +
-				", прогресс " + assignment.GetProgress().ToString() + "/" + assignment.GetRequired().ToString() + ".");
+			JobsLog.Debug("SERVER/LOADER: ящик сдан; задание " + assignment.GetId().ToString() + ", прогресс " + assignment.GetProgress().ToString() + "/" + assignment.GetRequired().ToString() + ".");
 
 			if (finished)
 				return;

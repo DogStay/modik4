@@ -63,8 +63,7 @@ class TrashZoneService
 				spawned++;
 		}
 
-		JobsLog.Info("SERVER/ZONES: создано куч мусора: " + spawned.ToString() +
-			" из " + m_Piles.Count().ToString() + " точек.");
+		JobsLog.Info("SERVER/ZONES: создано куч мусора: " + spawned.ToString() + " из " + m_Piles.Count().ToString() + " точек.");
 
 		if (spawned == 0 && m_Piles.Count() > 0)
 			JobsLog.Error("SERVER/ZONES: ни одной кучи не создано — проверьте координаты точек для текущей карты.");
@@ -150,8 +149,7 @@ class TrashZoneService
 		record.m_Pile.Delete();
 		record.m_Pile = null;
 
-		JobsLog.Debug("SERVER/ZONES: куча '" + record.m_Point.id + "' отработана, вернётся через " +
-			m_Config.GetPileRespawnSeconds().ToString() + " с.");
+		JobsLog.Debug("SERVER/ZONES: куча '" + record.m_Point.id + "' отработана, вернётся через " + m_Config.GetPileRespawnSeconds().ToString() + " с.");
 	}
 
 	// =====================================================================

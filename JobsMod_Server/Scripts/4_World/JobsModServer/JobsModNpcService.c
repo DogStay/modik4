@@ -83,8 +83,7 @@ class JobsModNpcService
 			if (created)
 				GetGame().ObjectDelete(created);
 
-			JobsLog.Error("SERVER/NPC: класс '" + definition.player_class + "' для NPC '" + definition.id +
-				"' не создан или не является персонажем.");
+			JobsLog.Error("SERVER/NPC: класс '" + definition.player_class + "' для NPC '" + definition.id + "' не создан или не является персонажем.");
 			return false;
 		}
 
@@ -115,8 +114,7 @@ class JobsModNpcService
 			EntityAI piece = entity.GetInventory().CreateInInventory(className);
 			if (!piece)
 			{
-				JobsLog.Warning("SERVER/NPC: NPC '" + definition.id + "' не удалось надеть '" + className +
-					"' — проверьте имя класса.");
+				JobsLog.Warning("SERVER/NPC: NPC '" + definition.id + "' не удалось надеть '" + className + "' — проверьте имя класса.");
 			}
 		}
 	}
@@ -261,7 +259,6 @@ class JobsModNpcService
 			message.Insert(entries.Get(e));
 
 		GetGame().RPC(player, JobsModRPC.NOTIFY_NPC_DIRECTORY, message, true, identity);
-		JobsLog.Debug("SERVER/NPC: справочник из " + entries.Count().ToString() + " NPC отправлен '" +
-			identity.GetName() + "'.");
+		JobsLog.Debug("SERVER/NPC: справочник из " + entries.Count().ToString() + " NPC отправлен '" + identity.GetName() + "'.");
 	}
 }

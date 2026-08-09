@@ -264,8 +264,7 @@ class JobsModConfig
 
 		if (m_Settings.assignment_timeout_seconds < MIN_ASSIGNMENT_TIMEOUT)
 		{
-			JobsLog.Warning("SERVER/CONFIG: assignment_timeout_seconds слишком мал, принято " +
-				MIN_ASSIGNMENT_TIMEOUT.ToString() + ".");
+			JobsLog.Warning("SERVER/CONFIG: assignment_timeout_seconds слишком мал, принято " + MIN_ASSIGNMENT_TIMEOUT.ToString() + ".");
 			m_Settings.assignment_timeout_seconds = MIN_ASSIGNMENT_TIMEOUT;
 		}
 
@@ -303,10 +302,8 @@ class JobsModConfig
 			return;
 
 		JobsLog.Error("SERVER/CONFIG: в settings.json нет ни одной зоны.");
-		JobsLog.Error("SERVER/CONFIG: с версии 2.3 зоны, точки мусора и маршруты лежат в settings.json," +
-			" а не в папках Zones/ PilePoints/ LoaderAreas/, и координаты пишутся строкой «X Y Z».");
-		JobsLog.Error("SERVER/CONFIG: перенесите их в settings.json — или удалите его," +
-			" и мод создаст файл нового формата заново.");
+		JobsLog.Error("SERVER/CONFIG: с версии 2.3 зоны, точки мусора и маршруты лежат в settings.json, а не в папках Zones/ PilePoints/ LoaderAreas/, и координаты пишутся строкой «X Y Z».");
+		JobsLog.Error("SERVER/CONFIG: перенесите их в settings.json — или удалите его, и мод создаст файл нового формата заново.");
 	}
 
 	protected void AcceptZones()
@@ -348,16 +345,14 @@ class JobsModConfig
 
 			if (!m_Zones.Contains(point.zone_id))
 			{
-				JobsLog.Warning("SERVER/CONFIG: точка '" + point.id + "' ссылается на неизвестную зону '" +
-					point.zone_id + "', пропущена.");
+				JobsLog.Warning("SERVER/CONFIG: точка '" + point.id + "' ссылается на неизвестную зону '" + point.zone_id + "', пропущена.");
 				continue;
 			}
 
 			vector position;
 			if (!JobsModCoords.Parse(point.position, position))
 			{
-				JobsLog.Warning("SERVER/CONFIG: у точки '" + point.id + "' не разобрана position='" +
-					point.position + "', пропущена. Ожидается «X Y Z», например «6600 0 2500».");
+				JobsLog.Warning("SERVER/CONFIG: у точки '" + point.id + "' не разобрана position='" + point.position + "', пропущена. Ожидается «X Y Z», например «6600 0 2500».");
 				continue;
 			}
 
@@ -394,8 +389,7 @@ class JobsModConfig
 
 			if (!JobsModCoords.Parse(area.source, source) || !JobsModCoords.Parse(area.destination, destination))
 			{
-				JobsLog.Warning("SERVER/CONFIG: у маршрута '" + area.id +
-					"' не разобраны source/destination, пропущен. Ожидается «X Y Z» в каждом.");
+				JobsLog.Warning("SERVER/CONFIG: у маршрута '" + area.id + "' не разобраны source/destination, пропущен. Ожидается «X Y Z» в каждом.");
 				continue;
 			}
 
@@ -406,8 +400,7 @@ class JobsModConfig
 			// was picked up, and the job would finish itself.
 			if (Distance2D(source, destination) < area.source_radius + area.destination_radius)
 			{
-				JobsLog.Warning("SERVER/CONFIG: у маршрута '" + area.id +
-					"' зоны погрузки и разгрузки пересекаются — груз будет засчитываться сразу.");
+				JobsLog.Warning("SERVER/CONFIG: у маршрута '" + area.id + "' зоны погрузки и разгрузки пересекаются — груз будет засчитываться сразу.");
 			}
 
 			m_LoaderAreas.Set(area.id, area);
@@ -421,8 +414,7 @@ class JobsModConfig
 			if (area.source_radius >= MIN_AREA_RADIUS)
 				return;
 
-			JobsLog.Warning("SERVER/CONFIG: source_radius маршрута '" + area.id + "' слишком мал, принят " +
-				MIN_AREA_RADIUS.ToString() + ".");
+			JobsLog.Warning("SERVER/CONFIG: source_radius маршрута '" + area.id + "' слишком мал, принят " + MIN_AREA_RADIUS.ToString() + ".");
 			area.source_radius = MIN_AREA_RADIUS;
 			return;
 		}
@@ -430,8 +422,7 @@ class JobsModConfig
 		if (area.destination_radius >= MIN_AREA_RADIUS)
 			return;
 
-		JobsLog.Warning("SERVER/CONFIG: destination_radius маршрута '" + area.id + "' слишком мал, принят " +
-			MIN_AREA_RADIUS.ToString() + ".");
+		JobsLog.Warning("SERVER/CONFIG: destination_radius маршрута '" + area.id + "' слишком мал, принят " + MIN_AREA_RADIUS.ToString() + ".");
 		area.destination_radius = MIN_AREA_RADIUS;
 	}
 
@@ -493,16 +484,13 @@ class JobsModConfig
 		int type = JobsModJobType.FromText(job.type);
 		if (type == JobsModJobType.UNKNOWN)
 		{
-			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' неизвестный type='" + job.type +
-				"'; допустимо '" + JobsModJobType.TEXT_SORTING + "', '" + JobsModJobType.TEXT_LOADING +
-				"' или '" + JobsModJobType.TEXT_MESSENGER + "'.");
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' неизвестный type='" + job.type + "'; допустимо '" + JobsModJobType.TEXT_SORTING + "', '" + JobsModJobType.TEXT_LOADING + "' или '" + JobsModJobType.TEXT_MESSENGER + "'.");
 			return false;
 		}
 
 		if (!m_Zones.Contains(job.zone_id))
 		{
-			JobsLog.Warning("SERVER/CONFIG: работа '" + job.id + "' ссылается на неизвестную зону '" +
-				job.zone_id + "', пропущена.");
+			JobsLog.Warning("SERVER/CONFIG: работа '" + job.id + "' ссылается на неизвестную зону '" + job.zone_id + "', пропущена.");
 			return false;
 		}
 
@@ -532,16 +520,14 @@ class JobsModConfig
 	{
 		if (job.target_npc_id == "")
 		{
-			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id +
-				"' не задан target_npc_id — некому вручить пакет, пропущена.");
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' не задан target_npc_id — некому вручить пакет, пропущена.");
 			return false;
 		}
 
 		if (job.package_class == "")
 		{
 			job.package_class = DEFAULT_PACKAGE_CLASS;
-			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' не задан package_class, принят " +
-				DEFAULT_PACKAGE_CLASS + ".");
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' не задан package_class, принят " + DEFAULT_PACKAGE_CLASS + ".");
 		}
 
 		return true;
@@ -557,8 +543,7 @@ class JobsModConfig
 
 		if (job.piles_required > MAX_PILES_PER_JOB)
 		{
-			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' piles_required ограничено до " +
-				MAX_PILES_PER_JOB.ToString() + ".");
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' piles_required ограничено до " + MAX_PILES_PER_JOB.ToString() + ".");
 			job.piles_required = MAX_PILES_PER_JOB;
 		}
 
@@ -568,9 +553,7 @@ class JobsModConfig
 		int available = CountPilePointsInZone(job.zone_id);
 		if (available < job.piles_required)
 		{
-			JobsLog.Warning("SERVER/CONFIG: работе '" + job.id + "' нужно " + job.piles_required.ToString() +
-				" куч, а в зоне '" + job.zone_id + "' их " + available.ToString() +
-				" — игроку придётся ждать респавна.");
+			JobsLog.Warning("SERVER/CONFIG: работе '" + job.id + "' нужно " + job.piles_required.ToString() + " куч, а в зоне '" + job.zone_id + "' их " + available.ToString() + " — игроку придётся ждать респавна.");
 		}
 
 		return true;
@@ -580,8 +563,7 @@ class JobsModConfig
 	{
 		if (!m_LoaderAreas.Contains(job.loader_area_id))
 		{
-			JobsLog.Warning("SERVER/CONFIG: работа '" + job.id + "' ссылается на неизвестный маршрут '" +
-				job.loader_area_id + "', пропущена.");
+			JobsLog.Warning("SERVER/CONFIG: работа '" + job.id + "' ссылается на неизвестный маршрут '" + job.loader_area_id + "', пропущена.");
 			return false;
 		}
 
@@ -593,8 +575,7 @@ class JobsModConfig
 
 		if (job.cargos_required > MAX_CARGOS_PER_JOB)
 		{
-			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' cargos_required ограничено до " +
-				MAX_CARGOS_PER_JOB.ToString() + ".");
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' cargos_required ограничено до " + MAX_CARGOS_PER_JOB.ToString() + ".");
 			job.cargos_required = MAX_CARGOS_PER_JOB;
 		}
 
@@ -686,8 +667,7 @@ class JobsModConfig
 		vector position;
 		if (!JobsModCoords.Parse(npc.position, position))
 		{
-			JobsLog.Warning("SERVER/CONFIG: у NPC '" + npc.id + "' не разобрана position='" + npc.position +
-				"', пропущен. Ожидается «X Y Z», например «6620 0 2520».");
+			JobsLog.Warning("SERVER/CONFIG: у NPC '" + npc.id + "' не разобрана position='" + npc.position + "', пропущен. Ожидается «X Y Z», например «6620 0 2520».");
 			return false;
 		}
 
@@ -750,8 +730,7 @@ class JobsModConfig
 			if (m_Npcs.Contains(job.target_npc_id))
 				continue;
 
-			JobsLog.Warning("SERVER/CONFIG: работа '" + job.id + "' адресована неизвестному NPC '" +
-				job.target_npc_id + "', пропущена.");
+			JobsLog.Warning("SERVER/CONFIG: работа '" + job.id + "' адресована неизвестному NPC '" + job.target_npc_id + "', пропущена.");
 			orphans.Insert(job.id);
 		}
 
@@ -775,8 +754,7 @@ class JobsModConfig
 				// something that cannot be created.
 				if (!job)
 				{
-					JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' ссылается на неизвестную работу '" +
-						jobId + "', ссылка убрана.");
+					JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' ссылается на неизвестную работу '" + jobId + "', ссылка убрана.");
 					npc.jobs.Remove(j);
 					continue;
 				}
@@ -786,8 +764,7 @@ class JobsModConfig
 				// config every time, not a design.
 				if (JobsModJobType.FromText(job.type) == JobsModJobType.MESSENGER && job.target_npc_id == npc.id)
 				{
-					JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' выдаёт работу '" + jobId +
-						"', адресованную самому себе — ссылка убрана.");
+					JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' выдаёт работу '" + jobId + "', адресованную самому себе — ссылка убрана.");
 					npc.jobs.Remove(j);
 				}
 			}
@@ -795,8 +772,7 @@ class JobsModConfig
 			if (npc.jobs.Count() <= JobsModRPC.MAX_JOBS_PER_NPC)
 				continue;
 
-			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' выдаёт больше " +
-				JobsModRPC.MAX_JOBS_PER_NPC.ToString() + " работ, лишние не поместятся в меню и убраны.");
+			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' выдаёт больше " + JobsModRPC.MAX_JOBS_PER_NPC.ToString() + " работ, лишние не поместятся в меню и убраны.");
 
 			while (npc.jobs.Count() > JobsModRPC.MAX_JOBS_PER_NPC)
 				npc.jobs.Remove(npc.jobs.Count() - 1);
@@ -818,8 +794,7 @@ class JobsModConfig
 			if (npc.jobs.Count() > 0 || IsMessengerRecipient(npc.id))
 				continue;
 
-			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id +
-				"' не выдаёт работ и не принимает посылок, пропущен.");
+			JobsLog.Warning("SERVER/CONFIG: NPC '" + npc.id + "' не выдаёт работ и не принимает посылок, пропущен.");
 			idle.Insert(npc.id);
 		}
 
@@ -856,8 +831,7 @@ class JobsModConfig
 
 		if (fileName != id + ".json")
 		{
-			JobsLog.Warning("SERVER/CONFIG: имя файла " + fileName + " не совпадает с id '" + id +
-				"'. Загружен id из файла.");
+			JobsLog.Warning("SERVER/CONFIG: имя файла " + fileName + " не совпадает с id '" + id + "'. Загружен id из файла.");
 		}
 
 		return true;
@@ -888,14 +862,9 @@ class JobsModConfig
 	// another map or an entry that quietly failed to load.
 	protected void Report()
 	{
-		JobsLog.Info("SERVER/CONFIG: зон " + m_Zones.Count().ToString() +
-			", точек мусора " + m_PilePoints.Count().ToString() +
-			", маршрутов " + m_LoaderAreas.Count().ToString() +
-			", работ " + m_Jobs.Count().ToString() +
-			", NPC " + m_Npcs.Count().ToString() + ".");
+		JobsLog.Info("SERVER/CONFIG: зон " + m_Zones.Count().ToString() + ", точек мусора " + m_PilePoints.Count().ToString() + ", маршрутов " + m_LoaderAreas.Count().ToString() + ", работ " + m_Jobs.Count().ToString() + ", NPC " + m_Npcs.Count().ToString() + ".");
 
-		JobsLog.Info("SERVER/CONFIG: респавн кучи " + m_Settings.pile_respawn_seconds.ToString() +
-			" с; срок работы " + m_Settings.assignment_timeout_seconds.ToString() + " с.");
+		JobsLog.Info("SERVER/CONFIG: респавн кучи " + m_Settings.pile_respawn_seconds.ToString() + " с; срок работы " + m_Settings.assignment_timeout_seconds.ToString() + " с.");
 
 		int i;
 		vector position;
@@ -904,8 +873,7 @@ class JobsModConfig
 		{
 			JobsModPilePointJson point = m_PilePoints.Get(i);
 			position = point.GetPosition();
-			JobsLog.Info("SERVER/CONFIG:   куча '" + point.id + "' в зоне '" + point.zone_id +
-				"' на " + position.ToString() + ".");
+			JobsLog.Info("SERVER/CONFIG:   куча '" + point.id + "' в зоне '" + point.zone_id + "' на " + position.ToString() + ".");
 		}
 
 		vector source;
@@ -917,10 +885,7 @@ class JobsModConfig
 			source = area.GetSource();
 			destination = area.GetDestination();
 
-			JobsLog.Info("SERVER/CONFIG:   маршрут '" + area.id + "': погрузка " + source.ToString() +
-				" r" + area.source_radius.ToString() +
-				", разгрузка " + destination.ToString() +
-				" r" + area.destination_radius.ToString() + ".");
+			JobsLog.Info("SERVER/CONFIG:   маршрут '" + area.id + "': погрузка " + source.ToString() + " r" + area.source_radius.ToString() + ", разгрузка " + destination.ToString() + " r" + area.destination_radius.ToString() + ".");
 		}
 
 		for (i = 0; i < m_Jobs.Count(); i++)
@@ -933,9 +898,7 @@ class JobsModConfig
 			if (JobsModJobType.FromText(job.type) == JobsModJobType.MESSENGER)
 				addressed = ", получатель '" + job.target_npc_id + "', пакет '" + job.package_class + "'";
 
-			JobsLog.Info("SERVER/CONFIG:   работа '" + job.id + "' (" + job.type + ") в зоне '" + job.zone_id +
-				"', награда " + job.reward.ToString() + ", кулдаун " + job.cooldown_seconds.ToString() +
-				" с" + addressed + ".");
+			JobsLog.Info("SERVER/CONFIG:   работа '" + job.id + "' (" + job.type + ") в зоне '" + job.zone_id + "', награда " + job.reward.ToString() + ", кулдаун " + job.cooldown_seconds.ToString() + " с" + addressed + ".");
 		}
 
 		for (i = 0; i < m_Npcs.Count(); i++)
@@ -947,9 +910,7 @@ class JobsModConfig
 			if (IsMessengerRecipient(npc.id))
 				receives = ", принимает посылки";
 
-			JobsLog.Info("SERVER/CONFIG:   NPC '" + npc.id + "' (" + npc.name + ") на " +
-				position.ToString() +
-				", работ " + npc.jobs.Count().ToString() + receives + ".");
+			JobsLog.Info("SERVER/CONFIG:   NPC '" + npc.id + "' (" + npc.name + ") на " + position.ToString() + ", работ " + npc.jobs.Count().ToString() + receives + ".");
 		}
 	}
 }

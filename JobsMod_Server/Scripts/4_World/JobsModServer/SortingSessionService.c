@@ -132,8 +132,7 @@ class SortingSessionService
 			true,
 			identity);
 
-		JobsLog.Info("SERVER/JANITOR: смена выдана; игрок='" + identity.GetName() +
-			"', зона='" + zoneName + "', nonce=" + session.GetNonce().ToString() + ".");
+		JobsLog.Info("SERVER/JANITOR: смена выдана; игрок='" + identity.GetName() + "', зона='" + zoneName + "', nonce=" + session.GetNonce().ToString() + ".");
 	}
 
 	// =====================================================================
@@ -184,8 +183,7 @@ class SortingSessionService
 
 		if (session.GetElapsedSeconds() < MIN_PLAY_SECONDS)
 		{
-			JobsLog.Warning("SERVER/JANITOR: подозрительно быстрая сдача от '" + identity.GetName() +
-				"' (" + session.GetElapsedSeconds().ToString() + " с), отклонено.");
+			JobsLog.Warning("SERVER/JANITOR: подозрительно быстрая сдача от '" + identity.GetName() + "' (" + session.GetElapsedSeconds().ToString() + " с), отклонено.");
 			Reject(player, identity, JobsModRejectReason.RESULT_INCORRECT);
 			return;
 		}
@@ -238,9 +236,7 @@ class SortingSessionService
 
 		m_Jobs.ReportSortedPile(player, identity, assignment);
 
-		JobsLog.Info("SERVER/JANITOR: куча принята; игрок='" + identity.GetName() +
-			"', ошибок=" + request.param4.ToString() +
-			", прогресс " + assignment.GetProgress().ToString() + "/" + assignment.GetRequired().ToString() + ".");
+		JobsLog.Info("SERVER/JANITOR: куча принята; игрок='" + identity.GetName() + "', ошибок=" + request.param4.ToString() + ", прогресс " + assignment.GetProgress().ToString() + "/" + assignment.GetRequired().ToString() + ".");
 	}
 
 	void HandleAbort(PlayerBase player, PlayerIdentity identity, ParamsReadContext ctx)

@@ -284,8 +284,7 @@ class JobsModJobService
 		SendState(player, identity);
 		SendMessage(player, identity, "РАБОТА ПРИНЯТА", job.name + ". " + job.description);
 
-		JobsLog.Info("SERVER/JOBS: работа '" + jobId + "' выдана игроку '" + identity.GetName() +
-			"' от NPC '" + npcId + "'; id=" + assignment.GetId().ToString() + ".");
+		JobsLog.Info("SERVER/JOBS: работа '" + jobId + "' выдана игроку '" + identity.GetName() + "' от NPC '" + npcId + "'; id=" + assignment.GetId().ToString() + ".");
 	}
 
 	// =====================================================================
@@ -358,8 +357,7 @@ class JobsModJobService
 			// The job was edited out of the config while it was being worked.
 			// Closing it out is the only honest option; refusing would leave the
 			// player stuck holding an assignment nothing can finish.
-			JobsLog.Warning("SERVER/JOBS: работа '" + assignment.GetJobId() +
-				"' исчезла из конфига, задание закрыто без оплаты.");
+			JobsLog.Warning("SERVER/JOBS: работа '" + assignment.GetJobId() + "' исчезла из конфига, задание закрыто без оплаты.");
 			EndAssignment(player, identity, assignment, "");
 			return;
 		}
@@ -376,9 +374,7 @@ class JobsModJobService
 		// Both ends are logged because a courier job has two of them, and which
 		// pair of NPCs a delivery actually ran between is the first thing worth
 		// knowing when a route looks wrong.
-		JobsLog.Info("SERVER/JOBS: работа '" + job.id + "' принята у '" + identity.GetName() +
-			"'; выдал '" + issuedBy + "', принял '" + signedBy +
-			"', выплачено " + job.reward.ToString() + ".");
+		JobsLog.Info("SERVER/JOBS: работа '" + job.id + "' принята у '" + identity.GetName() + "'; выдал '" + issuedBy + "', принял '" + signedBy + "', выплачено " + job.reward.ToString() + ".");
 	}
 
 	void HandleAbandon(PlayerBase player, PlayerIdentity identity, ParamsReadContext ctx)
@@ -536,8 +532,7 @@ class JobsModJobService
 		string jobId = assignment.GetJobId();
 
 		EndAssignment(player, player.GetIdentity(), assignment, "Вы погибли. Работа закрыта.");
-		JobsLog.Info("SERVER/JOBS: работа '" + jobId + "' закрыта смертью игрока '" +
-			player.GetIdentity().GetName() + "'.");
+		JobsLog.Info("SERVER/JOBS: работа '" + jobId + "' закрыта смертью игрока '" + player.GetIdentity().GetName() + "'.");
 	}
 
 	// Drops jobs nobody is coming back to, so neither the map nor the world
