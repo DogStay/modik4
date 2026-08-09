@@ -45,6 +45,12 @@ modded class PlayerBase
 		super.SetActions(InputActionMap);
 		AddAction(ActionSortTrash, InputActionMap);
 		AddAction(ActionTalkToNpc, InputActionMap);
+
+		// Printed once per player init, on whichever side is running this code.
+		// It is the only direct evidence that this PBO is loaded at all: without
+		// it, every conclusion about why an action does not appear is a guess
+		// about whether the class even exists on that machine.
+		JobsLog.Info("ACTIONS: действия мода зарегистрированы; build=" + JobsModBuildInfo.BUILD + ".");
 	}
 
 	override void OnRPC(PlayerIdentity sender, int rpc_type, ParamsReadContext ctx)
