@@ -40,17 +40,32 @@ modded class PlayerBase
 		return m_JobsModIsNpc;
 	}
 
+	// Actions aimed at objects in the world. The trash pile is one, so sorting
+	// belongs here — and only sorting.
 	override void SetActions(out TInputActionMap InputActionMap)
 	{
 		super.SetActions(InputActionMap);
 		AddAction(ActionSortTrash, InputActionMap);
-		AddAction(ActionTalkToNpc, InputActionMap);
 
 		// Printed once per player init, on whichever side is running this code.
 		// It is the only direct evidence that this PBO is loaded at all: without
 		// it, every conclusion about why an action does not appear is a guess
 		// about whether the class even exists on that machine.
-		JobsLog.Info("ACTIONS: действия мода зарегистрированы; build=" + JobsModBuildInfo.BUILD + ".");
+		JobsLog.Info("ACTIONS: действия по объектам зарегистрированы; build=" + JobsModBuildInfo.BUILD + ".");
+	}
+
+	// Actions aimed at another PlayerBase come from this map and not from
+	// SetActions — DayZ gathers them separately once the target is a survivor.
+	// The employers are ordinary survivor entities, so the talk action is only
+	// ever offered if it is registered here. Vanilla's own target actions
+	// (check pulse, bandage, CPR) live in this map for the same reason, which is
+	// why check pulse appeared on an NPC while this one never did.
+	override void SetActionsRemoteTarget(out TInputActionMap InputActionMap)
+	{
+		super.SetActionsRemoteTarget(InputActionMap);
+		AddAction(ActionTalkToNpc, InputActionMap);
+
+		JobsLog.Info("ACTIONS: действия по выжившим зарегистрированы; build=" + JobsModBuildInfo.BUILD + ".");
 	}
 
 	override void OnRPC(PlayerIdentity sender, int rpc_type, ParamsReadContext ctx)
