@@ -136,16 +136,26 @@ class JobsModJobHud
 	static bool IsGameplayVisible()
 	{
 		UIManager manager = GetGame().GetUIManager();
-		if (manager && manager.IsMenuOpen(JobsModMenuIds.NPC_JOBS))
+		if (!manager)
 			return false;
 
-		if (manager && manager.IsMenuOpen(JobsModMenuIds.TRASH_SORTING))
+		if (manager.IsMenuOpen(JobsModMenuIds.NPC_JOBS))
+			return false;
+
+		if (manager.IsMenuOpen(JobsModMenuIds.TRASH_SORTING))
+			return false;
+
+		// The vanilla inventory is asked about through the same UIManager as the
+		// mod's own menus. IsInventoryOpen() is on MissionGameplay, not on
+		// Mission, and casting for one boolean would tie the HUD to a mission
+		// class it otherwise never names.
+		if (manager.IsMenuOpen(MENU_INVENTORY))
 			return false;
 
 		Mission mission = GetGame().GetMission();
 		if (!mission)
 			return false;
 
-		return !mission.IsPaused() && !mission.IsInventoryOpen();
+		return !mission.IsPaused();
 	}
 }
