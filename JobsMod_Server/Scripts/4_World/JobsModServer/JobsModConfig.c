@@ -42,6 +42,8 @@ class JobsModConfig
 	protected static const int MIN_PILE_RESPAWN = 10;
 	protected static const int MIN_ASSIGNMENT_TIMEOUT = 60;
 	protected static const float MIN_AREA_RADIUS = 3.0;
+	// Below this a guard shift is over before the player has walked to the post.
+	protected static const int MIN_GUARD_SECONDS = 30;
 	protected static const int MAX_CARGOS_PER_JOB = 60;
 	protected static const int MAX_PILES_PER_JOB = 30;
 
@@ -56,6 +58,7 @@ class JobsModConfig
 	// questions of, and only entries that passed their checks are in them.
 	protected ref map<string, ref JobsModZoneJson> m_Zones;
 	protected ref map<string, ref JobsModLoaderAreaJson> m_LoaderAreas;
+	protected ref map<string, ref JobsModGuardPostJson> m_GuardPosts;
 	protected ref array<ref JobsModPilePointJson> m_PilePoints;
 
 	protected ref map<string, ref JobsModJobJson> m_Jobs;
@@ -70,6 +73,7 @@ class JobsModConfig
 		m_Settings = JobsModConfigDefaults.BuildSettings();
 		m_Zones = new map<string, ref JobsModZoneJson>();
 		m_LoaderAreas = new map<string, ref JobsModLoaderAreaJson>();
+		m_GuardPosts = new map<string, ref JobsModGuardPostJson>();
 		m_PilePoints = new array<ref JobsModPilePointJson>();
 		m_Jobs = new map<string, ref JobsModJobJson>();
 		m_Npcs = new map<string, ref JobsModNpcJson>();
@@ -110,6 +114,15 @@ class JobsModConfig
 		JobsModNpcJson npc;
 		if (m_Npcs.Find(npcId, npc))
 			return npc;
+
+		return null;
+	}
+
+	JobsModGuardPostJson GetGuardPost(string postId)
+	{
+		JobsModGuardPostJson post;
+		if (m_GuardPosts.Find(postId, post))
+			return post;
 
 		return null;
 	}
@@ -255,6 +268,7 @@ class JobsModConfig
 		m_Zones.Clear();
 		m_PilePoints.Clear();
 		m_LoaderAreas.Clear();
+		m_GuardPosts.Clear();
 
 		if (m_Settings.pile_respawn_seconds < MIN_PILE_RESPAWN)
 		{
@@ -279,10 +293,14 @@ class JobsModConfig
 		if (!m_Settings.loader_areas)
 			m_Settings.loader_areas = new array<ref JobsModLoaderAreaJson>();
 
+		if (!m_Settings.guard_posts)
+			m_Settings.guard_posts = new array<ref JobsModGuardPostJson>();
+
 		// Zones first: the other two are checked against them.
 		AcceptZones();
 		AcceptPilePoints();
 		AcceptLoaderAreas();
+		AcceptGuardPosts();
 
 		WarnAboutOldLayout();
 	}
@@ -407,6 +425,46 @@ class JobsModConfig
 		}
 	}
 
+	protected void AcceptGuardPosts()
+	{
+		for (int i = 0; i < m_Settings.guard_posts.Count(); i++)
+		{
+			JobsModGuardPostJson post = m_Settings.guard_posts.Get(i);
+
+			if (!post || post.id == "")
+			{
+				JobsLog.Warning("SERVER/CONFIG: пост охраны #" + i.ToString() + " без id пропущен.");
+				continue;
+			}
+
+			if (m_GuardPosts.Contains(post.id))
+			{
+				JobsLog.Warning("SERVER/CONFIG: пост охраны '" + post.id + "' объявлен дважды, второй пропущен.");
+				continue;
+			}
+
+			vector centre;
+			if (!JobsModCoords.Parse(post.position, centre))
+			{
+				JobsLog.Warning("SERVER/CONFIG: у поста '" + post.id + "' не разобрана position='" + post.position + "', пропущен. Ожидается «X Y Z».");
+				continue;
+			}
+
+			// A post the player cannot stand still inside would stop the clock
+			// every time they shifted their feet.
+			if (post.radius < MIN_AREA_RADIUS)
+			{
+				JobsLog.Warning("SERVER/CONFIG: радиус поста '" + post.id + "' слишком мал, принят " + MIN_AREA_RADIUS.ToString() + ".");
+				post.radius = MIN_AREA_RADIUS;
+			}
+
+			if (post.zone_id != "" && !m_Zones.Contains(post.zone_id))
+				JobsLog.Warning("SERVER/CONFIG: пост '" + post.id + "' ссылается на неизвестную зону '" + post.zone_id + "'.");
+
+			m_GuardPosts.Set(post.id, post);
+		}
+	}
+
 	protected void ClampRadius(JobsModLoaderAreaJson area, bool isSource)
 	{
 		if (isSource)
@@ -484,7 +542,7 @@ class JobsModConfig
 		int type = JobsModJobType.FromText(job.type);
 		if (type == JobsModJobType.UNKNOWN)
 		{
-			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' неизвестный type='" + job.type + "'; допустимо '" + JobsModJobType.TEXT_SORTING + "', '" + JobsModJobType.TEXT_LOADING + "' или '" + JobsModJobType.TEXT_MESSENGER + "'.");
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' неизвестный type='" + job.type + "'; допустимо '" + JobsModJobType.TEXT_SORTING + "', '" + JobsModJobType.TEXT_LOADING + "', '" + JobsModJobType.TEXT_MESSENGER + "' или '" + JobsModJobType.TEXT_GUARD + "'.");
 			return false;
 		}
 
@@ -508,6 +566,9 @@ class JobsModConfig
 
 		if (type == JobsModJobType.MESSENGER)
 			return AcceptMessengerJob(job);
+
+		if (type == JobsModJobType.GUARD)
+			return AcceptGuardJob(job);
 
 		return AcceptLoadingJob(job);
 	}
@@ -543,6 +604,29 @@ class JobsModConfig
 			job.piles_required = 1;
 		}
 
+		return true;
+	}
+
+	protected bool AcceptGuardJob(JobsModJobJson job)
+	{
+		if (!m_GuardPosts.Contains(job.guard_post_id))
+		{
+			JobsLog.Warning("SERVER/CONFIG: работа '" + job.id + "' ссылается на неизвестный пост '" + job.guard_post_id + "', пропущена.");
+			return false;
+		}
+
+		if (job.guard_seconds < MIN_GUARD_SECONDS)
+		{
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' guard_seconds меньше " + MIN_GUARD_SECONDS.ToString() + ", принято " + MIN_GUARD_SECONDS.ToString() + ".");
+			job.guard_seconds = MIN_GUARD_SECONDS;
+		}
+
+		if (!job.equipment)
+			job.equipment = new array<string>();
+
+		// The shift is the required amount, counted in seconds, so the HUD and
+		// every progress check work the same way they do for every other job.
+		job.piles_required = job.guard_seconds;
 		return true;
 	}
 

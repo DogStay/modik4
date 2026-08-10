@@ -81,6 +81,25 @@ class JobsModLoaderAreaJson
 	}
 }
 
+// A post a guard has to hold. A circle, like a freight yard: the player counts
+// as on duty while inside it and the clock stops the moment they step out.
+class JobsModGuardPostJson
+{
+	string id;
+	string name;
+	string zone_id;
+
+	string position;
+	float radius;
+
+	vector GetPosition()
+	{
+		vector parsed;
+		JobsModCoords.Parse(position, parsed);
+		return parsed;
+	}
+}
+
 // settings.json in full: the switches plus everything jobs and NPCs point at.
 class JobsModSettingsJson
 {
@@ -97,6 +116,7 @@ class JobsModSettingsJson
 	ref array<ref JobsModZoneJson> zones;
 	ref array<ref JobsModPilePointJson> pile_points;
 	ref array<ref JobsModLoaderAreaJson> loader_areas;
+	ref array<ref JobsModGuardPostJson> guard_posts;
 }
 
 // One job an NPC can hand out.
@@ -139,6 +159,16 @@ class JobsModJobJson
 	// Any other item works and is simply droppable.
 	string target_npc_id;
 	string package_class;
+
+	// Guard jobs only: which post to hold, for how long, and what the employer
+	// hands over for the shift.
+	//
+	// The kit belongs to the contract, not to the player: it is tracked with
+	// the assignment and taken back when the job ends by any route, so a
+	// player cannot take the same job repeatedly to collect batons.
+	string guard_post_id;
+	int guard_seconds;
+	ref array<string> equipment;
 }
 
 // An employer standing in the world.

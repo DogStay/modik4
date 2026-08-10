@@ -28,6 +28,7 @@ class JobsModJobService
 	protected JobsModLoaderService m_Loader;
 	protected JobsModMessengerService m_Messenger;
 	protected TrashZoneService m_Zones;
+	protected JobsModGuardService m_Guard;
 
 	// One assignment per player, keyed by identity id.
 	protected ref map<string, ref JobsModAssignment> m_Assignments;
@@ -37,8 +38,9 @@ class JobsModJobService
 	protected int m_NextAssignmentId;
 
 	void JobsModJobService(JobsModConfig config, JobsModNpcService npcs, JobsModLoaderService loader,
-		JobsModMessengerService messenger, TrashZoneService zones)
+		JobsModMessengerService messenger, TrashZoneService zones, JobsModGuardService guard)
 	{
+		m_Guard = guard;
 		m_Config = config;
 		m_Npcs = npcs;
 		m_Loader = loader;
@@ -267,6 +269,17 @@ class JobsModJobService
 		if (assignment.GetType() == JobsModJobType.MESSENGER)
 		{
 			if (!m_Messenger.GiveParcel(player, assignment, job))
+			{
+				Reject(player, identity, JobsModRejectReason.NO_INVENTORY_SPACE);
+				return;
+			}
+		}
+
+		// The kit is what the guard contract is: refusing the job when none of
+		// it fits is better than sending someone to stand a shift unequipped.
+		if (assignment.GetType() == JobsModJobType.GUARD)
+		{
+			if (!m_Guard.IssueKit(player, assignment, job))
 			{
 				Reject(player, identity, JobsModRejectReason.NO_INVENTORY_SPACE);
 				return;
@@ -527,6 +540,11 @@ class JobsModJobService
 	// grows without bound over a long uptime.
 	void Update()
 	{
+		// Before the expiry sweep: a shift that just finished must not be taken
+		// off the player in the same tick for running out of time.
+		if (m_Guard)
+			m_Guard.Update(m_Assignments);
+
 		int timeout = m_Config.GetAssignmentTimeoutSeconds();
 		array<string> stale = new array<string>();
 
@@ -551,6 +569,23 @@ class JobsModJobService
 			EndAssignment(player, identity, expired, "Срок выполнения истёк.");
 			JobsLog.Info("SERVER/JOBS: просроченное задание снято; игрок=" + playerId + ".");
 		}
+	}
+
+	// Seconds are what the job counts in, but "1200" tells a player nothing.
+	// Kept to integer arithmetic: a float through ToString() prints six decimals.
+	protected string FormatRemaining(JobsModAssignment assignment)
+	{
+		int left = assignment.GetRequired() - assignment.GetProgress();
+		if (left < 0)
+			left = 0;
+
+		if (left >= 60)
+		{
+			int minutes = left / 60;
+			return "осталось " + minutes.ToString() + " мин";
+		}
+
+		return "осталось " + left.ToString() + " с";
 	}
 
 	int GetActiveCount()
@@ -673,6 +708,8 @@ class JobsModJobService
 				hint = "Вернитесь к нанимателю: " + npcName + ".";
 			else if (assignment.GetType() == JobsModJobType.LOADING)
 				hint = "Отнесите ящики в зону разгрузки.";
+			else if (assignment.GetType() == JobsModJobType.GUARD)
+				hint = "Оставайтесь на посту: " + FormatRemaining(assignment) + ".";
 			else
 				hint = "Разберите мусор в зоне: " + zoneName + ".";
 
@@ -709,6 +746,23 @@ class JobsModJobService
 				markers.Insert(new Param3<int, string, vector>(JobsModMarkerKind.EMPLOYER, npcName, npcEntity.GetPosition()));
 
 			return;
+		}
+
+		// A guard has one place to be for the whole shift, and it is a configured
+		// circle rather than a person, so the centre is what the marker gets.
+		if (assignment.GetType() == JobsModJobType.GUARD)
+		{
+			JobsModJobJson guardJob = m_Config.GetJob(assignment.GetJobId());
+			if (guardJob)
+			{
+				JobsModGuardPostJson post = m_Config.GetGuardPost(guardJob.guard_post_id);
+				if (post)
+				{
+					vector centre = post.GetPosition();
+					markers.Insert(new Param3<int, string, vector>(
+						JobsModMarkerKind.DESTINATION, post.name, Vector(centre[0], 0, centre[2])));
+				}
+			}
 		}
 
 		// A courier has one place to be from the moment the job starts, and the
@@ -751,7 +805,10 @@ class JobsModJobService
 			markers.Insert(new Param3<int, string, vector>(JobsModMarkerKind.TARGET, "Мусор", piles.Get(i)));
 	}
 
-	protected void SendMessage(PlayerBase player, PlayerIdentity identity, string title, string text)
+	// Public because the guard service announces the end of a shift, which is
+	// the one moment a job finishes without the player having done anything the
+	// job service could have witnessed.
+	void SendMessage(PlayerBase player, PlayerIdentity identity, string title, string text)
 	{
 		GetGame().RPCSingleParam(
 			player,

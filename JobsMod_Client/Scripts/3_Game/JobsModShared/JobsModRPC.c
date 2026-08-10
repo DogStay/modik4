@@ -79,10 +79,14 @@ class JobsModJobType
 	// Carry one sealed parcel from the employer to a second NPC, who is the one
 	// that takes it and pays. The only job with two people in it.
 	static const int MESSENGER = 3;
+	// Hold a post for a set time. The only job measured in seconds rather than
+	// in things done, and the only one where standing still is the work.
+	static const int GUARD = 4;
 
 	static const string TEXT_SORTING = "sorting";
 	static const string TEXT_LOADING = "loading";
 	static const string TEXT_MESSENGER = "messenger";
+	static const string TEXT_GUARD = "guard";
 
 	static int FromText(string text)
 	{
@@ -94,6 +98,9 @@ class JobsModJobType
 
 		if (text == TEXT_MESSENGER)
 			return MESSENGER;
+
+		if (text == TEXT_GUARD)
+			return GUARD;
 
 		return UNKNOWN;
 	}

@@ -81,6 +81,14 @@ class JobsModLoaderService
 				break;
 			}
 
+			// Stood flat, facing a random way. ECE_PLACE_ON_SURFACE only settles
+			// the box onto the ground; it leaves pitch and roll to whatever the
+			// engine happened to give it, which is why crates kept ending up
+			// resting on an edge or a corner. Zeroing both and varying only the
+			// yaw puts them down the way a person would stack them.
+			cargo.SetOrientation(Vector(Math.RandomFloat(0.0, 360.0), 0.0, 0.0));
+			cargo.SetPosition(position);
+
 			assignment.TrackCargo(cargo);
 			spawned++;
 		}

@@ -15,6 +15,7 @@ class JobsModServerRuntime
 	protected static ref JobsModNpcService s_NpcService;
 	protected static ref JobsModLoaderService s_LoaderService;
 	protected static ref JobsModMessengerService s_MessengerService;
+	protected static ref JobsModGuardService s_GuardService;
 	protected static ref JobsModJobService s_JobService;
 	protected static ref TrashZoneService s_ZoneService;
 	protected static ref SortingSessionService s_SessionService;
@@ -65,9 +66,11 @@ class JobsModServerRuntime
 		// be half-constructed.
 		s_LoaderService = new JobsModLoaderService(s_Config);
 		s_MessengerService = new JobsModMessengerService(s_Config);
-		s_JobService = new JobsModJobService(s_Config, s_NpcService, s_LoaderService, s_MessengerService, s_ZoneService);
+		s_GuardService = new JobsModGuardService(s_Config);
+		s_JobService = new JobsModJobService(s_Config, s_NpcService, s_LoaderService, s_MessengerService, s_ZoneService, s_GuardService);
 		s_LoaderService.SetJobService(s_JobService);
 		s_MessengerService.SetJobService(s_JobService);
+		s_GuardService.SetJobService(s_JobService);
 
 		s_SessionService = new SortingSessionService(s_Config, s_ZoneService, s_JobService);
 
@@ -95,6 +98,7 @@ class JobsModServerRuntime
 		s_SessionService = null;
 		s_JobService = null;
 		s_MessengerService = null;
+		s_GuardService = null;
 		s_LoaderService = null;
 		s_ZoneService = null;
 		s_NpcService = null;

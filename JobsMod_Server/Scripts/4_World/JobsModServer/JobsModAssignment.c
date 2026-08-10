@@ -85,6 +85,22 @@ class JobsModAssignment
 
 	// Returns true when this step was the last one. Progress never runs past the
 	// requirement, so a duplicate report cannot pay twice.
+	// Guard duty advances in whole seconds at a time rather than one unit per
+	// event, so the step is a parameter. Everything else adds one.
+	bool AddProgressBy(int amount)
+	{
+		if (amount < 1)
+			return false;
+
+		for (int i = 0; i < amount; i++)
+		{
+			if (AddProgress())
+				return true;
+		}
+
+		return false;
+	}
+
 	bool AddProgress()
 	{
 		if (m_Status != JobsModJobStatus.ACTIVE)

@@ -25,8 +25,10 @@ class JobsModConfigDefaults
 	static const string JOB_SORTER = "job_trash_sorter";
 	static const string JOB_LOADER = "job_cargo_loader";
 	static const string JOB_MESSENGER = "job_courier";
+	static const string JOB_GUARD = "job_guard";
 
 	static const string AREA_ELEKTRO = "loader_area_01";
+	static const string POST_ELEKTRO = "guard_post_01";
 
 	static const string NPC_SORTER = "npc_sorter_01";
 	static const string NPC_LOADER = "npc_loader_01";
@@ -59,7 +61,22 @@ class JobsModConfigDefaults
 			"10400 0 2200", 12.0,
 			"10500 0 2300", 10.0));
 
+		settings.guard_posts = new array<ref JobsModGuardPostJson>();
+		settings.guard_posts.Insert(MakeGuardPost(POST_ELEKTRO, "Пост у склада", ZONE_ELEKTRO,
+			"10450 0 2250", 15.0));
+
 		return settings;
+	}
+
+	static JobsModGuardPostJson MakeGuardPost(string id, string name, string zoneId, string position, float radius)
+	{
+		JobsModGuardPostJson post = new JobsModGuardPostJson();
+		post.id = id;
+		post.name = name;
+		post.zone_id = zoneId;
+		post.position = position;
+		post.radius = radius;
+		return post;
 	}
 
 	static array<ref JobsModJobJson> BuildJobs()
@@ -108,6 +125,25 @@ class JobsModConfigDefaults
 		courier.package_class = "JobsMod_Parcel";
 		jobs.Insert(courier);
 
+		// Fifteen minutes of standing still, which is long enough to be a
+		// commitment and short enough to fit in one session. The kit is
+		// deliberately plain vanilla gear: it is taken back when the contract
+		// ends, so nothing here needs to be worth keeping.
+		JobsModJobJson guard = new JobsModJobJson();
+		guard.id = JOB_GUARD;
+		guard.name = "Охранник";
+		guard.description = "Держите пост у склада до конца смены.";
+		guard.type = JobsModJobType.TEXT_GUARD;
+		guard.zone_id = ZONE_ELEKTRO;
+		guard.reward = 200;
+		guard.cooldown_seconds = 900;
+		guard.guard_post_id = POST_ELEKTRO;
+		guard.guard_seconds = 900;
+		guard.equipment = new array<string>();
+		guard.equipment.Insert("PoliceCap");
+		guard.equipment.Insert("BaseballBat");
+		jobs.Insert(guard);
+
 		return jobs;
 	}
 
@@ -145,6 +181,9 @@ class JobsModConfigDefaults
 		loader.clothing.Insert("WorkingBoots_Yellow");
 		loader.jobs = new array<string>();
 		loader.jobs.Insert(JOB_LOADER);
+		// The same foreman hires the guard for the yard he runs, so a fresh
+		// install has both jobs reachable from one person.
+		loader.jobs.Insert(JOB_GUARD);
 		npcs.Insert(loader);
 
 		JobsModNpcJson dispatcher = new JobsModNpcJson();

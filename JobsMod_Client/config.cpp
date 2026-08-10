@@ -122,10 +122,20 @@ class CfgVehicles
 		descriptionShort = "Тяжёлый груз. Носится только в руках. Ставится на землю в зоне разгрузки.";
 		weight = 60000;
 		itemSize[] = {20, 20};
-		itemsCargoSize[] = {0, 0};
 		itemBehaviour = 2;
 		rotationFlags = 1;
 		canBeSplit = 0;
+
+		// WoodenCrate is a container and brings its own cargo grid with it. A
+		// freight box is a thing you carry, not a thing you pack: leaving the
+		// grid in place invites players to stash loot inside one and hand it to
+		// the unloading yard. Zero on both axes removes the slots outright, and
+		// openable = 0 stops the container UI appearing at all.
+		class Cargo
+		{
+			itemsCargoSize[] = {0, 0};
+			openable = 0;
+		};
 	};
 
 	// The courier's parcel. Handed out by the server when the job is taken and
