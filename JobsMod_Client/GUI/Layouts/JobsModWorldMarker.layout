@@ -21,7 +21,7 @@ PanelWidgetClass MarkerRoot {
     PanelWidgetClass MarkerPipOuter {
      position 0.44 0.02
      size 0.12 0.16
-     color 1 0.639216 0.721569 0.466667
+     color 0.639216 0.721569 0.466667 1
      hexactpos 0
      vexactpos 0
      hexactsize 0
@@ -31,7 +31,7 @@ PanelWidgetClass MarkerRoot {
       PanelWidgetClass MarkerPipInner {
        position 0.22 0.2
        size 0.56 0.6
-       color 1 0.086275 0.094118 0.101961
+       color 0.086275 0.094118 0.101961 1
        hexactpos 0
        vexactpos 0
        hexactsize 0
@@ -43,7 +43,7 @@ PanelWidgetClass MarkerRoot {
     PanelWidgetClass MarkerStem {
      position 0.495 0.18
      size 0.01 0.16
-     color 1 0.639216 0.721569 0.466667
+     color 0.639216 0.721569 0.466667 1
      hexactpos 0
      vexactpos 0
      hexactsize 0
@@ -52,7 +52,7 @@ PanelWidgetClass MarkerRoot {
     }
     TextWidgetClass MarkerLabel {
      font "gui/fonts/metron-bold14"
-     "text color" 1 0.929412 0.937255 0.917647
+     "text color" 0.929412 0.937255 0.917647 1
      "text valign" center
      "text halign" center
      position 0 0.36
@@ -66,7 +66,7 @@ PanelWidgetClass MarkerRoot {
     }
     TextWidgetClass MarkerDistance {
      font "gui/fonts/metron-bold14"
-     "text color" 1 0.639216 0.721569 0.466667
+     "text color" 0.639216 0.721569 0.466667 1
      "text valign" center
      "text halign" center
      position 0 0.66

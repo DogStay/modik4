@@ -10,7 +10,7 @@ PanelWidgetClass Root {
   PanelWidgetClass DarkOverlay {
    position 0 0
    size 1 1
-   color 0.858824 0.023529 0.027451 0.019608
+   color 0.023529 0.027451 0.019608 0.858824
    hexactpos 0
    vexactpos 0
    hexactsize 0
@@ -19,7 +19,7 @@ PanelWidgetClass Root {
   PanelWidgetClass MainPanel {
    position 0.32 0.14
    size 0.36 0.72
-   color 1 0.219608 0.239216 0.219608
+   color 0.219608 0.239216 0.219608 1
    hexactpos 0
    vexactpos 0
    hexactsize 0
@@ -28,7 +28,7 @@ PanelWidgetClass Root {
     PanelWidgetClass MainPanelBg {
      position 0.0015 0.001
      size 0.997 0.998
-     color 1 0.086275 0.094118 0.101961
+     color 0.086275 0.094118 0.101961 1
      hexactpos 0
      vexactpos 0
      hexactsize 0
@@ -38,7 +38,7 @@ PanelWidgetClass Root {
     PanelWidgetClass HeaderPanel {
      position 0 0
      size 1 0.135
-     color 1 0.109804 0.117647 0.109804
+     color 0.109804 0.117647 0.109804 1
      hexactpos 0
      vexactpos 0
      hexactsize 0
@@ -46,7 +46,7 @@ PanelWidgetClass Root {
      {
       TextWidgetClass NpcNameText {
        font "gui/fonts/metron-bold14"
-       "text color" 1 0.929412 0.937255 0.917647
+       "text color" 0.929412 0.937255 0.917647 1
        "text valign" center
        position 0.04 0.14
        size 0.92 0.38
@@ -59,7 +59,7 @@ PanelWidgetClass Root {
       }
       TextWidgetClass NpcDescText {
        font "gui/fonts/etelkatextpro22"
-       "text color" 1 0.45098 0.47451 0.443137
+       "text color" 0.45098 0.47451 0.443137 1
        "text valign" center
        position 0.04 0.56
        size 0.92 0.32
@@ -84,7 +84,7 @@ PanelWidgetClass Root {
       PanelWidgetClass JobRow0 {
        position 0.04 0
        size 0.92 0.155
-       color 1 0.219608 0.239216 0.219608
+       color 0.219608 0.239216 0.219608 1
        hexactpos 0
        vexactpos 0
        hexactsize 0
@@ -93,7 +93,7 @@ PanelWidgetClass Root {
         PanelWidgetClass JobRow0Bg {
          position 0.002 0.008
          size 0.996 0.984
-         color 1 0.07451 0.082353 0.07451
+         color 0.07451 0.082353 0.07451 1
          hexactpos 0
          vexactpos 0
          hexactsize 0
@@ -102,7 +102,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow0Name {
          font "gui/fonts/metron-bold14"
-         "text color" 1 0.929412 0.937255 0.917647
+         "text color" 0.929412 0.937255 0.917647 1
          "text valign" center
          position 0.03 0.08
          size 0.94 0.32
@@ -115,7 +115,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow0Desc {
          font "gui/fonts/etelkatextpro22"
-         "text color" 1 0.643137 0.662745 0.631373
+         "text color" 0.643137 0.662745 0.631373 1
          "text valign" center
          position 0.03 0.4
          size 0.94 0.28
@@ -128,7 +128,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow0Status {
          font "gui/fonts/etelkatextpro22"
-         "text color" 1 0.639216 0.721569 0.466667
+         "text color" 0.639216 0.721569 0.466667 1
          "text valign" center
          position 0.03 0.66
          size 0.94 0.28
@@ -153,7 +153,7 @@ PanelWidgetClass Root {
       PanelWidgetClass JobRow1 {
        position 0.04 0.1666
        size 0.92 0.155
-       color 1 0.219608 0.239216 0.219608
+       color 0.219608 0.239216 0.219608 1
        hexactpos 0
        vexactpos 0
        hexactsize 0
@@ -162,7 +162,7 @@ PanelWidgetClass Root {
         PanelWidgetClass JobRow1Bg {
          position 0.002 0.008
          size 0.996 0.984
-         color 1 0.07451 0.082353 0.07451
+         color 0.07451 0.082353 0.07451 1
          hexactpos 0
          vexactpos 0
          hexactsize 0
@@ -171,7 +171,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow1Name {
          font "gui/fonts/metron-bold14"
-         "text color" 1 0.929412 0.937255 0.917647
+         "text color" 0.929412 0.937255 0.917647 1
          "text valign" center
          position 0.03 0.08
          size 0.94 0.32
@@ -184,7 +184,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow1Desc {
          font "gui/fonts/etelkatextpro22"
-         "text color" 1 0.643137 0.662745 0.631373
+         "text color" 0.643137 0.662745 0.631373 1
          "text valign" center
          position 0.03 0.4
          size 0.94 0.28
@@ -197,7 +197,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow1Status {
          font "gui/fonts/etelkatextpro22"
-         "text color" 1 0.639216 0.721569 0.466667
+         "text color" 0.639216 0.721569 0.466667 1
          "text valign" center
          position 0.03 0.66
          size 0.94 0.28
@@ -222,7 +222,7 @@ PanelWidgetClass Root {
       PanelWidgetClass JobRow2 {
        position 0.04 0.3332
        size 0.92 0.155
-       color 1 0.219608 0.239216 0.219608
+       color 0.219608 0.239216 0.219608 1
        hexactpos 0
        vexactpos 0
        hexactsize 0
@@ -231,7 +231,7 @@ PanelWidgetClass Root {
         PanelWidgetClass JobRow2Bg {
          position 0.002 0.008
          size 0.996 0.984
-         color 1 0.07451 0.082353 0.07451
+         color 0.07451 0.082353 0.07451 1
          hexactpos 0
          vexactpos 0
          hexactsize 0
@@ -240,7 +240,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow2Name {
          font "gui/fonts/metron-bold14"
-         "text color" 1 0.929412 0.937255 0.917647
+         "text color" 0.929412 0.937255 0.917647 1
          "text valign" center
          position 0.03 0.08
          size 0.94 0.32
@@ -253,7 +253,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow2Desc {
          font "gui/fonts/etelkatextpro22"
-         "text color" 1 0.643137 0.662745 0.631373
+         "text color" 0.643137 0.662745 0.631373 1
          "text valign" center
          position 0.03 0.4
          size 0.94 0.28
@@ -266,7 +266,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow2Status {
          font "gui/fonts/etelkatextpro22"
-         "text color" 1 0.639216 0.721569 0.466667
+         "text color" 0.639216 0.721569 0.466667 1
          "text valign" center
          position 0.03 0.66
          size 0.94 0.28
@@ -291,7 +291,7 @@ PanelWidgetClass Root {
       PanelWidgetClass JobRow3 {
        position 0.04 0.4998
        size 0.92 0.155
-       color 1 0.219608 0.239216 0.219608
+       color 0.219608 0.239216 0.219608 1
        hexactpos 0
        vexactpos 0
        hexactsize 0
@@ -300,7 +300,7 @@ PanelWidgetClass Root {
         PanelWidgetClass JobRow3Bg {
          position 0.002 0.008
          size 0.996 0.984
-         color 1 0.07451 0.082353 0.07451
+         color 0.07451 0.082353 0.07451 1
          hexactpos 0
          vexactpos 0
          hexactsize 0
@@ -309,7 +309,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow3Name {
          font "gui/fonts/metron-bold14"
-         "text color" 1 0.929412 0.937255 0.917647
+         "text color" 0.929412 0.937255 0.917647 1
          "text valign" center
          position 0.03 0.08
          size 0.94 0.32
@@ -322,7 +322,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow3Desc {
          font "gui/fonts/etelkatextpro22"
-         "text color" 1 0.643137 0.662745 0.631373
+         "text color" 0.643137 0.662745 0.631373 1
          "text valign" center
          position 0.03 0.4
          size 0.94 0.28
@@ -335,7 +335,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow3Status {
          font "gui/fonts/etelkatextpro22"
-         "text color" 1 0.639216 0.721569 0.466667
+         "text color" 0.639216 0.721569 0.466667 1
          "text valign" center
          position 0.03 0.66
          size 0.94 0.28
@@ -360,7 +360,7 @@ PanelWidgetClass Root {
       PanelWidgetClass JobRow4 {
        position 0.04 0.6664
        size 0.92 0.155
-       color 1 0.219608 0.239216 0.219608
+       color 0.219608 0.239216 0.219608 1
        hexactpos 0
        vexactpos 0
        hexactsize 0
@@ -369,7 +369,7 @@ PanelWidgetClass Root {
         PanelWidgetClass JobRow4Bg {
          position 0.002 0.008
          size 0.996 0.984
-         color 1 0.07451 0.082353 0.07451
+         color 0.07451 0.082353 0.07451 1
          hexactpos 0
          vexactpos 0
          hexactsize 0
@@ -378,7 +378,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow4Name {
          font "gui/fonts/metron-bold14"
-         "text color" 1 0.929412 0.937255 0.917647
+         "text color" 0.929412 0.937255 0.917647 1
          "text valign" center
          position 0.03 0.08
          size 0.94 0.32
@@ -391,7 +391,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow4Desc {
          font "gui/fonts/etelkatextpro22"
-         "text color" 1 0.643137 0.662745 0.631373
+         "text color" 0.643137 0.662745 0.631373 1
          "text valign" center
          position 0.03 0.4
          size 0.94 0.28
@@ -404,7 +404,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow4Status {
          font "gui/fonts/etelkatextpro22"
-         "text color" 1 0.639216 0.721569 0.466667
+         "text color" 0.639216 0.721569 0.466667 1
          "text valign" center
          position 0.03 0.66
          size 0.94 0.28
@@ -429,7 +429,7 @@ PanelWidgetClass Root {
       PanelWidgetClass JobRow5 {
        position 0.04 0.833
        size 0.92 0.155
-       color 1 0.219608 0.239216 0.219608
+       color 0.219608 0.239216 0.219608 1
        hexactpos 0
        vexactpos 0
        hexactsize 0
@@ -438,7 +438,7 @@ PanelWidgetClass Root {
         PanelWidgetClass JobRow5Bg {
          position 0.002 0.008
          size 0.996 0.984
-         color 1 0.07451 0.082353 0.07451
+         color 0.07451 0.082353 0.07451 1
          hexactpos 0
          vexactpos 0
          hexactsize 0
@@ -447,7 +447,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow5Name {
          font "gui/fonts/metron-bold14"
-         "text color" 1 0.929412 0.937255 0.917647
+         "text color" 0.929412 0.937255 0.917647 1
          "text valign" center
          position 0.03 0.08
          size 0.94 0.32
@@ -460,7 +460,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow5Desc {
          font "gui/fonts/etelkatextpro22"
-         "text color" 1 0.643137 0.662745 0.631373
+         "text color" 0.643137 0.662745 0.631373 1
          "text valign" center
          position 0.03 0.4
          size 0.94 0.28
@@ -473,7 +473,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow5Status {
          font "gui/fonts/etelkatextpro22"
-         "text color" 1 0.639216 0.721569 0.466667
+         "text color" 0.639216 0.721569 0.466667 1
          "text valign" center
          position 0.03 0.66
          size 0.94 0.28
@@ -500,7 +500,7 @@ PanelWidgetClass Root {
     PanelWidgetClass FooterPanel {
      position 0 0.85
      size 1 0.15
-     color 1 0.094118 0.101961 0.094118
+     color 0.094118 0.101961 0.094118 1
      hexactpos 0
      vexactpos 0
      hexactsize 0
@@ -509,7 +509,7 @@ PanelWidgetClass Root {
       PanelWidgetClass HandInPanel {
        position 0.04 0.1
        size 0.92 0.36
-       color 1 0.160784 0.176471 0.156863
+       color 0.160784 0.176471 0.156863 1
        hexactpos 0
        vexactpos 0
        hexactsize 0
@@ -517,7 +517,7 @@ PanelWidgetClass Root {
        {
         TextWidgetClass HandInText {
          font "gui/fonts/metron-bold14"
-         "text color" 1 0.639216 0.721569 0.466667
+         "text color" 0.639216 0.721569 0.466667 1
          "text valign" center
          "text halign" center
          position 0 0
@@ -543,7 +543,7 @@ PanelWidgetClass Root {
       PanelWidgetClass AbandonPanel {
        position 0.04 0.54
        size 0.44 0.36
-       color 1 0.160784 0.176471 0.156863
+       color 0.160784 0.176471 0.156863 1
        hexactpos 0
        vexactpos 0
        hexactsize 0
@@ -551,7 +551,7 @@ PanelWidgetClass Root {
        {
         TextWidgetClass AbandonText {
          font "gui/fonts/metron-bold14"
-         "text color" 1 0.662745 0.364706 0.364706
+         "text color" 0.662745 0.364706 0.364706 1
          "text valign" center
          "text halign" center
          position 0 0
@@ -577,7 +577,7 @@ PanelWidgetClass Root {
       PanelWidgetClass ClosePanel {
        position 0.52 0.54
        size 0.44 0.36
-       color 1 0.160784 0.176471 0.156863
+       color 0.160784 0.176471 0.156863 1
        hexactpos 0
        vexactpos 0
        hexactsize 0
@@ -585,7 +585,7 @@ PanelWidgetClass Root {
        {
         TextWidgetClass CloseText {
          font "gui/fonts/metron-bold14"
-         "text color" 1 0.643137 0.662745 0.631373
+         "text color" 0.643137 0.662745 0.631373 1
          "text valign" center
          "text halign" center
          position 0 0

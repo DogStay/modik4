@@ -14,9 +14,14 @@ FONT_BODY = "gui/fonts/etelkatextpro22"
 
 
 def rgb(h, a=1.0):
+    # .layout colours are R G B A — alpha LAST. This is the opposite of the
+    # ARGB() script function used at runtime, and the two are easy to confuse:
+    # emitting alpha first here is silent, because a light colour still looks
+    # right (its first and last components are both high) while every dark
+    # panel gets its blue channel read as alpha and vanishes.
     h = h.lstrip('#')
     r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
-    return "%s %s %s %s" % (f(a), f(r / 255.0), f(g / 255.0), f(b / 255.0))
+    return "%s %s %s %s" % (f(r / 255.0), f(g / 255.0), f(b / 255.0), f(a))
 
 
 def f(v):
