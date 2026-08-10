@@ -1139,7 +1139,10 @@ class TrashSortingMenu extends UIScriptedMenu
 			if (m_DoneRemaining <= 0.0)
 			{
 				m_DoneRemaining = 0.0;
-				ShowResult();
+				// The round is over and there is nothing left to decide, so the
+				// result is sent and the window closes on its own. The delay
+				// above is what makes the last item's flash readable first.
+				SubmitResult();
 			}
 		}
 	}

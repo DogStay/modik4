@@ -139,16 +139,16 @@ class JobsModJobHud
 		if (!manager)
 			return false;
 
-		if (manager.IsMenuOpen(JobsModMenuIds.NPC_JOBS))
+		// Any open menu hides the panel, not just the mod's own two. Listing the
+		// ones to hide behind meant every menu nobody thought of — another mod's
+		// window, the map, a trader — kept the HUD floating on top of it. Asking
+		// whether anything at all is open needs no list and cannot fall behind.
+		if (manager.GetMenu())
 			return false;
 
-		if (manager.IsMenuOpen(JobsModMenuIds.TRASH_SORTING))
-			return false;
-
-		// The vanilla inventory is asked about through the same UIManager as the
-		// mod's own menus. IsInventoryOpen() is on MissionGameplay, not on
-		// Mission, and casting for one boolean would tie the HUD to a mission
-		// class it otherwise never names.
+		// The inventory is not a UIMenuPanel and so is not covered above.
+		// IsInventoryOpen() is on MissionGameplay, not on Mission, and casting
+		// for one boolean would tie the HUD to a mission class it never names.
 		if (manager.IsMenuOpen(MENU_INVENTORY))
 			return false;
 

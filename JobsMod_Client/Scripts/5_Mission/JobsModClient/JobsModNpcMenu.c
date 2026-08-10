@@ -5,9 +5,17 @@
 //
 // The menu holds no authority. Every row it draws — including whether a row can
 // be clicked at all — was decided by the server and sent with the offer list.
-// Clicking sends a request and nothing else; the window closes when the server
-// answers with a new job state, not when the button is pressed. That way what
-// the player sees after clicking is always what actually happened.
+// Clicking sends a request and nothing else; the server decides what actually
+// happens and announces it separately.
+//
+// Taking a job is two steps: a click picks a row, and the button below it
+// commits. A list where one click is irreversible punishes a misread, and the
+// rows are close together.
+//
+// Committing closes the window immediately rather than waiting for the server
+// to answer. The wait was there so the player only ever saw a settled state,
+// but a window that sits there after the button is pressed reads as the button
+// having failed, and the outcome arrives as its own notification anyway.
 
 class JobsModNpcMenu extends UIScriptedMenu
 {
@@ -27,6 +35,15 @@ class JobsModNpcMenu extends UIScriptedMenu
 	protected ref array<TextWidget> m_RowDescs;
 	protected ref array<TextWidget> m_RowStatuses;
 	protected ref array<ButtonWidget> m_RowButtons;
+
+	protected Widget m_TakeJobPanel;
+	protected TextWidget m_TakeJobText;
+	protected ButtonWidget m_TakeJobButton;
+
+	// Which row the player has picked, or -1. Clicking a row only selects it:
+	// taking the job is a second, deliberate press on the button below, so a
+	// misclick in the list costs nothing.
+	protected int m_SelectedRow;
 
 	protected Widget m_HandInPanel;
 	protected TextWidget m_HandInText;
@@ -115,6 +132,11 @@ class JobsModNpcMenu extends UIScriptedMenu
 			m_RowButtons.Insert(button);
 		}
 
+		m_TakeJobPanel = layoutRoot.FindAnyWidget("TakeJobPanel");
+		ok = Report(m_TakeJobPanel, "TakeJobPanel") && ok;
+		ok = BindText("TakeJobText", m_TakeJobText) && ok;
+		ok = BindButton("TakeJobButton", m_TakeJobButton) && ok;
+
 		m_HandInPanel = layoutRoot.FindAnyWidget("HandInPanel");
 		ok = Report(m_HandInPanel, "HandInPanel") && ok;
 		ok = BindText("HandInText", m_HandInText) && ok;
@@ -163,6 +185,7 @@ class JobsModNpcMenu extends UIScriptedMenu
 		GetGame().GetUIManager().ShowUICursor(true);
 
 		m_RequestSent = false;
+		m_SelectedRow = -1;
 		Draw();
 	}
 
@@ -194,7 +217,7 @@ class JobsModNpcMenu extends UIScriptedMenu
 		// Bound widgets are checked alongside the data: BindWidgets only reports
 		// a broken layout, and drawing into it afterwards would turn a missing
 		// widget into a null access instead of the log line it already is.
-		if (!m_Offer || !m_NpcNameText || !m_NpcDescText || !m_HandInPanel || !m_AbandonPanel || !m_CloseText)
+		if (!m_Offer || !m_NpcNameText || !m_NpcDescText || !m_TakeJobPanel || !m_HandInPanel || !m_AbandonPanel || !m_CloseText)
 		{
 			JobsLog.Error("CLIENT/UI: меню найма открыто без данных, закрывается.");
 			Close();
@@ -206,6 +229,13 @@ class JobsModNpcMenu extends UIScriptedMenu
 
 		for (int i = 0; i < ROW_COUNT; i++)
 			DrawRow(i);
+
+		// The take button appears only once a row is picked, and names the job it
+		// would take, so the button never acts on something the player cannot see.
+		bool hasSelection = m_SelectedRow >= 0 && m_SelectedRow < m_Offer.m_Offers.Count();
+		m_TakeJobPanel.Show(hasSelection);
+		if (hasSelection)
+			m_TakeJobText.SetText("ВЗЯТЬ РАБОТУ: " + m_Offer.m_Offers.Get(m_SelectedRow).m_Name);
 
 		// Handing in is only ever possible at the employer that issued the job,
 		// so the button is drawn from what the server said about this NPC — not
@@ -247,7 +277,11 @@ class JobsModNpcMenu extends UIScriptedMenu
 		{
 			m_RowNames.Get(index).SetColor(JobsModPalette.TextPrimary());
 			m_RowStatuses.Get(index).SetColor(JobsModPalette.Accent());
-			frame.SetColor(JobsModPalette.BorderBase());
+
+			if (index == m_SelectedRow)
+				frame.SetColor(JobsModPalette.BorderFilled());
+			else
+				frame.SetColor(JobsModPalette.BorderBase());
 		}
 		else
 		{
@@ -277,6 +311,23 @@ class JobsModNpcMenu extends UIScriptedMenu
 		{
 			m_RequestSent = true;
 			JobsModClientContext.SendJobComplete(m_Offer.m_NpcId, m_Offer.m_AssignmentId);
+			// Closed here rather than on the server's answer: the request is on
+			// its way, the reward and the new job state arrive as their own
+			// notification, and leaving the window up until then only reads as
+			// the button not having worked.
+			Close();
+			return true;
+		}
+
+		if (w == m_TakeJobButton && m_SelectedRow >= 0 && m_SelectedRow < m_Offer.m_Offers.Count())
+		{
+			JobsModJobOffer picked = m_Offer.m_Offers.Get(m_SelectedRow);
+			if (!picked.IsSelectable())
+				return true;
+
+			m_RequestSent = true;
+			JobsModClientContext.SendJobAccept(m_Offer.m_NpcId, picked.m_JobId);
+			Close();
 			return true;
 		}
 
@@ -299,8 +350,9 @@ class JobsModNpcMenu extends UIScriptedMenu
 			if (!offer.IsSelectable())
 				return true;
 
-			m_RequestSent = true;
-			JobsModClientContext.SendJobAccept(m_Offer.m_NpcId, offer.m_JobId);
+			// Selection only. Nothing is sent until the button below is pressed.
+			m_SelectedRow = i;
+			Draw();
 			return true;
 		}
 
@@ -317,7 +369,7 @@ class JobsModNpcMenu extends UIScriptedMenu
 			if (w != m_RowButtons.Get(i) || i >= m_Offer.m_Offers.Count())
 				continue;
 
-			if (m_Offer.m_Offers.Get(i).IsSelectable())
+			if (m_Offer.m_Offers.Get(i).IsSelectable() && i != m_SelectedRow)
 				m_RowFrames.Get(i).SetColor(JobsModPalette.BorderBright());
 
 			return true;
@@ -336,7 +388,7 @@ class JobsModNpcMenu extends UIScriptedMenu
 			if (w != m_RowButtons.Get(i) || i >= m_Offer.m_Offers.Count())
 				continue;
 
-			if (m_Offer.m_Offers.Get(i).IsSelectable())
+			if (m_Offer.m_Offers.Get(i).IsSelectable() && i != m_SelectedRow)
 				m_RowFrames.Get(i).SetColor(JobsModPalette.BorderBase());
 
 			return true;
