@@ -31,7 +31,7 @@ PanelWidgetClass MarkerRoot {
      ImageWidgetClass MarkerPipOuterBackground {
       position 0 0
       size 1 1
-      color 1 0.639216 0.721569 0.466667
+      color 0.639216 0.721569 0.466667 1
       image0 "JobsMod_Client/GUI/Textures/UiShell/active_panel.paa"
       mode blend
       "src alpha" 1
@@ -55,7 +55,7 @@ PanelWidgetClass MarkerRoot {
        ImageWidgetClass MarkerPipInnerBackground {
         position 0 0
         size 1 1
-        color 1 0.086275 0.094118 0.101961
+        color 0.086275 0.094118 0.101961 1
         image0 "JobsMod_Client/GUI/Textures/UiShell/active_panel.paa"
         mode blend
         "src alpha" 1
@@ -83,7 +83,7 @@ PanelWidgetClass MarkerRoot {
      ImageWidgetClass MarkerStemBackground {
       position 0 0
       size 1 1
-      color 1 0.639216 0.721569 0.466667
+      color 0.639216 0.721569 0.466667 1
       image0 "JobsMod_Client/GUI/Textures/UiShell/active_panel.paa"
       mode blend
       "src alpha" 1
@@ -98,7 +98,7 @@ PanelWidgetClass MarkerRoot {
     }
     TextWidgetClass MarkerLabel {
      font "gui/fonts/metron-bold14"
-     "text color" 1 0.929412 0.937255 0.917647
+     "text color" 0.929412 0.937255 0.917647 1
      "text valign" center
      "text halign" center
      position 0 0.36
@@ -112,7 +112,7 @@ PanelWidgetClass MarkerRoot {
     }
     TextWidgetClass MarkerDistance {
      font "gui/fonts/metron-bold14"
-     "text color" 1 0.639216 0.721569 0.466667
+     "text color" 0.639216 0.721569 0.466667 1
      "text valign" center
      "text halign" center
      position 0 0.66

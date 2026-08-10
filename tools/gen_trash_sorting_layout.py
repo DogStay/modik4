@@ -14,13 +14,15 @@ FONT_BODY = "gui/fonts/etelkatextpro22"
 
 
 def rgb(h, a=1.0):
-    # .layout colours are A R G B — alpha FIRST, same order as the ARGB()
-    # helper the scripts use. Confirmed against the working 1.10.40 layouts:
-    # a window shadow there is "0.78 0 0 0" and a disabled layer "0 1 1 1",
-    # both of which only make sense with alpha leading.
+    # .layout colours are R G B A — alpha LAST. This is the opposite of the
+    # ARGB() helper the scripts use at runtime, and it is settled by observation,
+    # not inference: with a pure-white texture behind them, panels written
+    # alpha-first rendered RED in game, because a leading 1 was taken as the red
+    # channel. The 1.10.40 reference layouts are authored alpha-first, but their
+    # textures carried the design themselves, so their tint order never showed.
     h = h.lstrip('#')
     r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
-    return "%s %s %s %s" % (f(a), f(r / 255.0), f(g / 255.0), f(b / 255.0))
+    return "%s %s %s %s" % (f(r / 255.0), f(g / 255.0), f(b / 255.0), f(a))
 
 
 def f(v):
