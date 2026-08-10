@@ -85,6 +85,27 @@ class JobsModAssignment
 
 	// Returns true when this step was the last one. Progress never runs past the
 	// requirement, so a duplicate report cannot pay twice.
+	// Collect work is recounted from the inventory rather than accumulated, so
+	// it needs to be able to go down as well as up: goods can be eaten, dropped
+	// or stashed after being gathered. The status follows the number both ways,
+	// which is what stops a player reaching the total once and then handing in
+	// an empty bag.
+	void SetProgressTo(int value)
+	{
+		if (value < 0)
+			value = 0;
+
+		if (value > m_Required)
+			value = m_Required;
+
+		m_Progress = value;
+
+		if (m_Progress >= m_Required)
+			m_Status = JobsModJobStatus.READY_TO_HAND_IN;
+		else
+			m_Status = JobsModJobStatus.ACTIVE;
+	}
+
 	// Guard duty advances in whole seconds at a time rather than one unit per
 	// event, so the step is a parameter. Everything else adds one.
 	bool AddProgressBy(int amount)

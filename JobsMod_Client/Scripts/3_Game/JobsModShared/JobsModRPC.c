@@ -82,11 +82,15 @@ class JobsModJobType
 	// Hold a post for a set time. The only job measured in seconds rather than
 	// in things done, and the only one where standing still is the work.
 	static const int GUARD = 4;
+	// Bring the employer a number of something. The mod spawns nothing for it:
+	// where the goods come from is the player's business.
+	static const int COLLECT = 5;
 
 	static const string TEXT_SORTING = "sorting";
 	static const string TEXT_LOADING = "loading";
 	static const string TEXT_MESSENGER = "messenger";
 	static const string TEXT_GUARD = "guard";
+	static const string TEXT_COLLECT = "collect";
 
 	static int FromText(string text)
 	{
@@ -101,6 +105,9 @@ class JobsModJobType
 
 		if (text == TEXT_GUARD)
 			return GUARD;
+
+		if (text == TEXT_COLLECT)
+			return COLLECT;
 
 		return UNKNOWN;
 	}

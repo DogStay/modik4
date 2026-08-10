@@ -26,6 +26,7 @@ class JobsModConfigDefaults
 	static const string JOB_LOADER = "job_cargo_loader";
 	static const string JOB_MESSENGER = "job_courier";
 	static const string JOB_GUARD = "job_guard";
+	static const string JOB_HUNTER = "job_hunter";
 
 	static const string AREA_ELEKTRO = "loader_area_01";
 	static const string POST_ELEKTRO = "guard_post_01";
@@ -144,6 +145,29 @@ class JobsModConfigDefaults
 		guard.equipment.Insert("BaseballBat");
 		jobs.Insert(guard);
 
+		// The one job the mod supplies nothing for. Where the meat comes from —
+		// hunting, looting, a stash, another player — is deliberately not asked,
+		// which is what makes it the job that pays for what someone was doing
+		// anyway. Several classes so it reads as "meat" and not as one animal.
+		JobsModJobJson hunter = new JobsModJobJson();
+		hunter.id = JOB_HUNTER;
+		hunter.name = "Заготовщик мяса";
+		hunter.description = "Принесите 30 кусков мяса. Откуда — ваше дело.";
+		hunter.type = JobsModJobType.TEXT_COLLECT;
+		hunter.zone_id = ZONE_CHERNO;
+		hunter.reward = 300;
+		hunter.cooldown_seconds = 1200;
+		hunter.collect_required = 30;
+		hunter.collect_label = "30 кусков мяса";
+		hunter.collect_classes = new array<string>();
+		hunter.collect_classes.Insert("DeerSteakMeat");
+		hunter.collect_classes.Insert("PigSteakMeat");
+		hunter.collect_classes.Insert("CowSteakMeat");
+		hunter.collect_classes.Insert("GoatSteakMeat");
+		hunter.collect_classes.Insert("SheepSteakMeat");
+		hunter.collect_classes.Insert("BoarSteakMeat");
+		jobs.Insert(hunter);
+
 		return jobs;
 	}
 
@@ -164,6 +188,7 @@ class JobsModConfigDefaults
 		sorter.clothing.Insert("Jeans_Blue");
 		sorter.clothing.Insert("WorkingBoots_Grey");
 		sorter.jobs = new array<string>();
+		sorter.jobs.Insert(JOB_HUNTER);
 		sorter.jobs.Insert(JOB_SORTER);
 		npcs.Insert(sorter);
 

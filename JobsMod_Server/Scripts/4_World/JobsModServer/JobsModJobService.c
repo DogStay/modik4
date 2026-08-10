@@ -29,6 +29,7 @@ class JobsModJobService
 	protected JobsModMessengerService m_Messenger;
 	protected TrashZoneService m_Zones;
 	protected JobsModGuardService m_Guard;
+	protected JobsModCollectService m_Collect;
 
 	// One assignment per player, keyed by identity id.
 	protected ref map<string, ref JobsModAssignment> m_Assignments;
@@ -38,9 +39,11 @@ class JobsModJobService
 	protected int m_NextAssignmentId;
 
 	void JobsModJobService(JobsModConfig config, JobsModNpcService npcs, JobsModLoaderService loader,
-		JobsModMessengerService messenger, TrashZoneService zones, JobsModGuardService guard)
+		JobsModMessengerService messenger, TrashZoneService zones, JobsModGuardService guard,
+		JobsModCollectService collect)
 	{
 		m_Guard = guard;
+		m_Collect = collect;
 		m_Config = config;
 		m_Npcs = npcs;
 		m_Loader = loader;
@@ -363,6 +366,15 @@ class JobsModJobService
 			return;
 		}
 
+		// The goods are taken here and nowhere earlier. Counting them while the
+		// player walked would let the same thirty steaks satisfy two contracts,
+		// and taking them early would rob anyone who then walked away.
+		if (assignment.GetType() == JobsModJobType.COLLECT && !m_Collect.TakeGoods(player, job))
+		{
+			Reject(player, identity, JobsModRejectReason.JOB_NOT_FINISHED);
+			return;
+		}
+
 		// Read out before ending it: the map holds the only strong reference to
 		// the assignment, so it is gone by the time the log line is built.
 		string issuedBy = assignment.GetNpcId();
@@ -545,6 +557,9 @@ class JobsModJobService
 		if (m_Guard)
 			m_Guard.Update(m_Assignments);
 
+		if (m_Collect)
+			m_Collect.Update(m_Assignments);
+
 		int timeout = m_Config.GetAssignmentTimeoutSeconds();
 		array<string> stale = new array<string>();
 
@@ -569,6 +584,16 @@ class JobsModJobService
 			EndAssignment(player, identity, expired, "Срок выполнения истёк.");
 			JobsLog.Info("SERVER/JOBS: просроченное задание снято; игрок=" + playerId + ".");
 		}
+	}
+
+	// The job stores a class list; the player needs a name.
+	protected string GetCollectLabel(JobsModAssignment assignment)
+	{
+		JobsModJobJson job = m_Config.GetJob(assignment.GetJobId());
+		if (job && job.collect_label != "")
+			return job.collect_label;
+
+		return assignment.GetJobId();
 	}
 
 	// Seconds are what the job counts in, but "1200" tells a player nothing.
@@ -710,6 +735,8 @@ class JobsModJobService
 				hint = "Отнесите ящики в зону разгрузки.";
 			else if (assignment.GetType() == JobsModJobType.GUARD)
 				hint = "Оставайтесь на посту: " + FormatRemaining(assignment) + ".";
+			else if (assignment.GetType() == JobsModJobType.COLLECT)
+				hint = "Соберите: " + GetCollectLabel(assignment) + ".";
 			else
 				hint = "Разберите мусор в зоне: " + zoneName + ".";
 

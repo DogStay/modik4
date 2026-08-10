@@ -44,6 +44,8 @@ class JobsModConfig
 	protected static const float MIN_AREA_RADIUS = 3.0;
 	// Below this a guard shift is over before the player has walked to the post.
 	protected static const int MIN_GUARD_SECONDS = 30;
+	// A contract nobody could carry is a contract nobody can finish.
+	protected static const int MAX_COLLECT_REQUIRED = 200;
 	protected static const int MAX_CARGOS_PER_JOB = 60;
 	protected static const int MAX_PILES_PER_JOB = 30;
 
@@ -542,7 +544,7 @@ class JobsModConfig
 		int type = JobsModJobType.FromText(job.type);
 		if (type == JobsModJobType.UNKNOWN)
 		{
-			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' неизвестный type='" + job.type + "'; допустимо '" + JobsModJobType.TEXT_SORTING + "', '" + JobsModJobType.TEXT_LOADING + "', '" + JobsModJobType.TEXT_MESSENGER + "' или '" + JobsModJobType.TEXT_GUARD + "'.");
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' неизвестный type='" + job.type + "'; допустимо '" + JobsModJobType.TEXT_SORTING + "', '" + JobsModJobType.TEXT_LOADING + "', '" + JobsModJobType.TEXT_MESSENGER + "' или '" + JobsModJobType.TEXT_GUARD + "' или '" + JobsModJobType.TEXT_COLLECT + "'.");
 			return false;
 		}
 
@@ -569,6 +571,9 @@ class JobsModConfig
 
 		if (type == JobsModJobType.GUARD)
 			return AcceptGuardJob(job);
+
+		if (type == JobsModJobType.COLLECT)
+			return AcceptCollectJob(job);
 
 		return AcceptLoadingJob(job);
 	}
@@ -604,6 +609,35 @@ class JobsModConfig
 			job.piles_required = 1;
 		}
 
+		return true;
+	}
+
+	protected bool AcceptCollectJob(JobsModJobJson job)
+	{
+		if (!job.collect_classes || job.collect_classes.Count() == 0)
+		{
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' пустой collect_classes — непонятно, что собирать, пропущена.");
+			return false;
+		}
+
+		if (job.collect_required < 1)
+		{
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' collect_required < 1, пропущена.");
+			return false;
+		}
+
+		if (job.collect_required > MAX_COLLECT_REQUIRED)
+		{
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' collect_required больше " + MAX_COLLECT_REQUIRED.ToString() + ", принято " + MAX_COLLECT_REQUIRED.ToString() + ".");
+			job.collect_required = MAX_COLLECT_REQUIRED;
+		}
+
+		// Without a label the HUD would print a class name at the player, so the
+		// first class is a better default than nothing.
+		if (job.collect_label == "")
+			job.collect_label = job.collect_classes.Get(0);
+
+		job.piles_required = job.collect_required;
 		return true;
 	}
 

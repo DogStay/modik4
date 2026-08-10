@@ -169,6 +169,15 @@ class JobsModJobJson
 	string guard_post_id;
 	int guard_seconds;
 	ref array<string> equipment;
+
+	// Collect jobs only: what counts, how many, and what to call it on screen.
+	//
+	// A list rather than one class so that "any meat" is one contract instead of
+	// one per animal. Counted as whole items — a food item's quantity in DayZ is
+	// its weight in grams, and counting that would read as nine thousand steaks.
+	ref array<string> collect_classes;
+	int collect_required;
+	string collect_label;
 }
 
 // An employer standing in the world.
