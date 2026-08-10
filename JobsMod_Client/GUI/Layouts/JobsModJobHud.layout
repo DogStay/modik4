@@ -11,7 +11,7 @@ PanelWidgetClass HudRoot {
   PanelWidgetClass HudBg {
    position 0.004 0.006
    size 0.992 0.988
-   color 0.086275 0.094118 0.101961 0.898039
+   color 0.086275 0.094118 0.101961 1
    hexactpos 0
    vexactpos 0
    hexactsize 0

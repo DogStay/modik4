@@ -153,7 +153,7 @@ D = 2
 
 # world dim
 widget(D, "PanelWidgetClass", "DarkOverlay", ROOT, (0, 0, W, H),
-       color=rgb("#060705", 0.86), ignore=False)
+       color=rgb("#060705"), ignore=False)
 
 
 def main_panel_body(d, mp):
@@ -314,7 +314,7 @@ bordered(D, "ToastPanel", ROOT, (750, 212, 420, 64), C_B_BRIGHT, C_CARD,
 # ---- result modal ----
 def result_root(d, _ctx):
     widget(d, "PanelWidgetClass", "ResultDim", ROOT, (0, 0, W, H),
-           color=rgb("#060705", 0.82), ignore=False)
+           color=rgb("#060705"), ignore=False)
 
     def result_body(d2, box):
         widget(d2, "TextWidgetClass", "ResultTitle", box, (712, 400, 496, 40),
@@ -349,7 +349,7 @@ widget(D, "PanelWidgetClass", "ResultLayer", ROOT, (0, 0, W, H),
 # ---- confirm modal ----
 def confirm_root(d, _ctx):
     widget(d, "PanelWidgetClass", "ConfirmDim", ROOT, (0, 0, W, H),
-           color=rgb("#060705", 0.78), ignore=False)
+           color=rgb("#060705"), ignore=False)
 
     def confirm_body(d2, box):
         widget(d2, "TextWidgetClass", "ConfirmTitle", box, (734, 474, 452, 34),
