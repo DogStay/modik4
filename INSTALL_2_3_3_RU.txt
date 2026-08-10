@@ -1,0 +1,17 @@
+JobsMod 2.3.3 — установка без смешивания версий
+
+1. Клиентский мод:
+   @JobsMod_Client_2_3_3/Addons/JobsMod_Client.pbo
+   Должен быть в обычном -mod и на сервере, и у игроков.
+
+2. Серверный мод:
+   @JobsMod_Server_2_3_3/Addons/JobsMod_Server.pbo
+   Должен быть только в -serverMod.
+
+3. На сервере удалить старые JobsMod_Client.pbo / JobsMod_Server.pbo из @ServerMods и других папок, чтобы движок не видел одновременно 2.3.1 и 2.3.3.
+
+Ожидаемая схема запуска:
+-mod=...;@JobsMod_Client_2_3_3;...
+-serverMod=@ServerMods;@JobsMod_Server_2_3_3
+
+Серверный CfgPatches 2.3.3 требует JobsMod_Client_2_3_3. Если старый клиентский PBO остался, сервер остановится на понятной missing-addon ошибке вместо компиляции против несовместимого класса.

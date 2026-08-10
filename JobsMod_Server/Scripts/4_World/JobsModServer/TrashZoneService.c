@@ -1,29 +1,15 @@
 // TrashZoneService.c
 //
-// Owns every trash pile in the world: places them, hands them out, takes them
-// away once worked, and brings them back later.
-//
-// Each pile stands on a spot the admin wrote down, not on a spot rolled inside
-// a radius. A rolled spot eventually lands inside a wall, under a floor or on a
-// roof, and the pile that lands there is simply unusable — with nothing in the
-// log to say so, because from the server's side the spawn succeeded. An exact
-// point costs the admin one visit with the coordinates on screen and removes
-// the whole failure mode.
-//
-// Piles exist only because this service made them. A pile the service does not
-// know about is refused, so an object spawned by other means cannot be used to
-// mint rewards.
-//
-// A worked pile is removed rather than left standing on a cooldown. If it
-// stayed, players would keep walking up to a pile that silently refuses them,
-// and the interaction would look broken. Removing it makes the world state and
-// the rules say the same thing.
+// One active physical trash object per zone. Config may contain many candidate
+// points, but only one of them is selected on a server start. The object itself
+// is a random vanilla model from JobsModTrashCatalog and is marked as
+// non-takeable by ItemBaseJobsModTrash.c.
 
 class JobsModPileRecord
 {
 	ref JobsModPilePointJson m_Point;
 	Object m_Pile;
-	int m_RespawnAtMs;   // 0 while the pile is standing
+	int m_RespawnAtMs;
 
 	void JobsModPileRecord(JobsModPilePointJson point)
 	{
@@ -35,7 +21,8 @@ class JobsModPileRecord
 
 class TrashZoneService
 {
-	protected static const string PILE_CLASS = "JobsMod_TrashPile";
+	protected static const string LEGACY_PILE_CLASS = "JobsMod_TrashPile";
+	protected static const float STALE_CLEAN_RADIUS = 2.0;
 
 	protected ref JobsModConfig m_Config;
 	protected ref array<ref JobsModPileRecord> m_Piles;
@@ -46,65 +33,136 @@ class TrashZoneService
 		m_Piles = new array<ref JobsModPileRecord>();
 	}
 
-	// =====================================================================
-	// Spawning
-	// =====================================================================
 	void SpawnAll()
 	{
 		array<ref JobsModPilePointJson> points = m_Config.GetPilePoints();
-		int spawned = 0;
+		array<string> zoneIds = new array<string>();
 
 		for (int i = 0; i < points.Count(); i++)
 		{
 			JobsModPileRecord record = new JobsModPileRecord(points.Get(i));
 			m_Piles.Insert(record);
+			CleanupStaleAtPoint(record.m_Point);
 
-			if (Place(record))
+			string zoneId = record.m_Point.zone_id;
+			if (zoneIds.Find(zoneId) == -1)
+				zoneIds.Insert(zoneId);
+		}
+
+		int spawned = 0;
+		for (i = 0; i < zoneIds.Count(); i++)
+		{
+			JobsModPileRecord selected = PickRandomRecord(zoneIds.Get(i));
+			if (selected && Place(selected))
 				spawned++;
 		}
 
-		JobsLog.Info("SERVER/ZONES: создано куч мусора: " + spawned.ToString() + " из " + m_Piles.Count().ToString() + " точек.");
+		JobsLog.Info("SERVER/ZONES: создано активных предметов мусора: " + spawned.ToString() + "; правило: один предмет на зону.");
 
 		if (spawned == 0 && m_Piles.Count() > 0)
-			JobsLog.Error("SERVER/ZONES: ни одной кучи не создано — проверьте координаты точек для текущей карты.");
+			JobsLog.Error("SERVER/ZONES: ни одного предмета мусора не создано — проверьте координаты и классы каталога.");
+	}
+
+	protected JobsModPileRecord PickRandomRecord(string zoneId)
+	{
+		array<ref JobsModPileRecord> candidates = new array<ref JobsModPileRecord>();
+
+		for (int i = 0; i < m_Piles.Count(); i++)
+		{
+			JobsModPileRecord record = m_Piles.Get(i);
+			if (record.m_Point.zone_id == zoneId)
+				candidates.Insert(record);
+		}
+
+		if (candidates.Count() == 0)
+			return null;
+
+		int index = Math.RandomInt(0, candidates.Count());
+		return candidates.Get(index);
 	}
 
 	protected bool Place(JobsModPileRecord record)
 	{
 		JobsModPilePointJson point = record.m_Point;
-		vector position = point.GetPosition();
+		vector position = ResolvePointPosition(point);
 
-		// A height at or below zero means the config carries no height, which is
-		// the common case: the admin reads x and z off the map and leaves y at
-		// zero. Snapping to the terrain is the right reading of that, and
-		// ECE_PLACE_ON_SURFACE settles the pile onto whatever is actually there.
-		if (position[1] <= 0)
-			position[1] = GetGame().SurfaceY(position[0], position[2]);
-
-		// Below sea level means the water or past the map edge — normally
-		// coordinates carried over from another map. The pile is created and
-		// counted as created, but nobody can work it.
-		if (position[1] < 0)
-			JobsLog.Warning("SERVER/ZONES: куча '" + point.id + "' встала ниже уровня моря (y=" + position[1].ToString() + ") — до неё не добраться; координаты, скорее всего, от другой карты.");
-
-		Object pile = GetGame().CreateObjectEx(PILE_CLASS, position, ECE_PLACE_ON_SURFACE);
-		if (!pile)
+		array<ref JobsModTrashItem> catalog = JobsModTrashCatalog.GetItems();
+		if (!catalog || catalog.Count() == 0)
 		{
-			JobsLog.Error("SERVER/ZONES: не удалось создать '" + PILE_CLASS + "' в точке '" + point.id + "'.");
+			JobsLog.Error("SERVER/ZONES: каталог мусора пуст.");
 			return false;
 		}
 
-		record.m_Pile = pile;
+		int randomIndex = Math.RandomInt(0, catalog.Count());
+		JobsModTrashItem definition = catalog.Get(randomIndex);
+		string className = definition.GetWorldClassName();
+
+		Object created = GetGame().CreateObjectEx(className, position, ECE_PLACE_ON_SURFACE);
+		ItemBase trash = ItemBase.Cast(created);
+		if (!trash)
+		{
+			if (created)
+				created.Delete();
+
+			JobsLog.Error("SERVER/ZONES: не удалось создать предмет мусора '" + className + "' в точке '" + point.id + "'.");
+			return false;
+		}
+
+		trash.JobsModSetWorldTrash(true);
+		record.m_Pile = trash;
 		record.m_RespawnAtMs = 0;
 
-		JobsLog.Debug("SERVER/ZONES: куча '" + point.id + "' создана на " + position.ToString() + ".");
+		JobsLog.Info("SERVER/ZONES: активный мусор '" + definition.GetDisplayName() + "' (" + className + ") создан в точке '" + point.id + "' на " + position.ToString() + ".");
 		return true;
 	}
 
-	// =====================================================================
-	// Lookup and consumption
-	// =====================================================================
-	// True only for a standing pile this service placed.
+	protected vector ResolvePointPosition(JobsModPilePointJson point)
+	{
+		vector position = point.GetPosition();
+		if (position[1] <= 0)
+			position[1] = GetGame().SurfaceY(position[0], position[2]);
+
+		return position;
+	}
+
+	// object sitting exactly on a configured work point. This prevents persistent
+	// world storage from stacking another object on every server restart.
+	protected void CleanupStaleAtPoint(JobsModPilePointJson point)
+	{
+		vector position = ResolvePointPosition(point);
+		array<Object> objects = new array<Object>();
+		array<CargoBase> proxyCargo = new array<CargoBase>();
+		GetGame().GetObjectsAtPosition(position, STALE_CLEAN_RADIUS, objects, proxyCargo);
+
+		int removed = 0;
+		for (int i = 0; i < objects.Count(); i++)
+		{
+			Object object = objects.Get(i);
+			if (!object)
+				continue;
+
+			string type = object.GetType();
+			if (type == LEGACY_PILE_CLASS)
+			{
+				object.Delete();
+				removed++;
+				continue;
+			}
+
+			// The configured work point is reserved for JobsMod. Delete one of our
+			// catalog models there even when a restart restored the vanilla item
+			// without the transient network flag. This prevents stacking forever.
+			if (JobsModTrashCatalog.IsWorldClassName(type))
+			{
+				object.Delete();
+				removed++;
+			}
+		}
+
+		if (removed > 0)
+			JobsLog.Info("SERVER/ZONES: удалено старых JobsMod-объектов в точке '" + point.id + "': " + removed.ToString() + ".");
+	}
+
 	bool IsManagedPile(Object pile)
 	{
 		return FindRecord(pile) != null;
@@ -128,23 +186,21 @@ class TrashZoneService
 		return m_Config.GetZoneName(record.m_Point.zone_id);
 	}
 
-	// Where the piles of one zone are standing right now. A pile that has been
-	// worked and is waiting to respawn is not in the list, so a marker built
-	// from it can never point at an empty spot.
 	void CollectStandingPiles(string zoneId, out array<vector> positions)
 	{
 		for (int i = 0; i < m_Piles.Count(); i++)
 		{
 			JobsModPileRecord record = m_Piles.Get(i);
-			if (!record.m_Pile || record.m_Point.zone_id != zoneId)
+			if (!record.m_Pile)
+				continue;
+
+			if (record.m_Point.zone_id != zoneId)
 				continue;
 
 			positions.Insert(record.m_Pile.GetPosition());
 		}
 	}
 
-	// Called once a pile has been sorted and accepted. Deletes it and books its
-	// return, so the same heap cannot be worked twice.
 	void ConsumePile(Object pile)
 	{
 		JobsModPileRecord record = FindRecord(pile);
@@ -155,12 +211,9 @@ class TrashZoneService
 		record.m_Pile.Delete();
 		record.m_Pile = null;
 
-		JobsLog.Debug("SERVER/ZONES: куча '" + record.m_Point.id + "' отработана, вернётся через " + m_Config.GetPileRespawnSeconds().ToString() + " с.");
+		JobsLog.Debug("SERVER/ZONES: предмет мусора в точке '" + record.m_Point.id + "' отсортирован; новый случайный предмет появится через " + m_Config.GetPileRespawnSeconds().ToString() + " с.");
 	}
 
-	// =====================================================================
-	// Upkeep
-	// =====================================================================
 	void Update()
 	{
 		int now = GetGame().GetTime();
@@ -171,11 +224,14 @@ class TrashZoneService
 			if (record.m_Pile)
 				continue;
 
-			if (record.m_RespawnAtMs == 0 || now < record.m_RespawnAtMs)
+			if (record.m_RespawnAtMs == 0)
+				continue;
+
+			if (now < record.m_RespawnAtMs)
 				continue;
 
 			if (Place(record))
-				JobsLog.Debug("SERVER/ZONES: куча '" + record.m_Point.id + "' восстановлена.");
+				JobsLog.Debug("SERVER/ZONES: новый случайный предмет мусора восстановлен в точке '" + record.m_Point.id + "'.");
 		}
 	}
 
@@ -189,7 +245,7 @@ class TrashZoneService
 		}
 
 		m_Piles.Clear();
-		JobsLog.Info("SERVER/ZONES: все кучи мусора удалены.");
+		JobsLog.Info("SERVER/ZONES: все активные предметы мусора удалены.");
 	}
 
 	int GetStandingCount()

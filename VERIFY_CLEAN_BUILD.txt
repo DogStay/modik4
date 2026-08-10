@@ -1,0 +1,19 @@
+JobsMod clean/no-version verification
+
+Numbered addon markers: 0
+CfgMods version fields: 0
+JobsModBuildInfo: 0
+RPC protocol version field/check: 0
+Numeric build labels inside PBO text: 0
+
+Client patch: JobsMod_Client
+Server patch: JobsMod_Server
+Server requires: DZ_Data, DZ_Scripts, JobsMod_Client
+
+Client PBO entries: 27
+Client PBO size: 180005
+Client SHA256: a72093eedf0f16bca5b48eabf1eda583fab84622220c320e5e7c9e283ee953ea
+
+Server PBO entries: 18
+Server PBO size: 141949
+Server SHA256: 0a429b72e3c87fa930177d103294cdc58748f8ade889399fb61dca2dc82e816d

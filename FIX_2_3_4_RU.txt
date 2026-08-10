@@ -1,0 +1,14 @@
+JobsMod 2.3.4 — исправление Circular addon dependency
+
+Причина:
+В 2.3.3 build-marker JobsMod_Client_2_3_3 находился в том же PBO, что JobsMod_Client,
+и имел requiredAddons[] = {"JobsMod_Client"}.
+DayZ рассматривает такие patch-зависимости внутри одного PBO как цикл.
+
+Исправление:
+- marker переименован в JobsMod_Client_2_3_4;
+- marker теперь зависит только от DZ_Data;
+- основной JobsMod_Client не зависит от marker;
+- JobsMod_Server требует JobsMod_Client и JobsMod_Client_2_3_4;
+- protocol остаётся 4;
+- NPC, actions и single-random-trash механика не изменялись.

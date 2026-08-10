@@ -69,12 +69,12 @@ class JobsModConfigDefaults
 		JobsModJobJson sorter = new JobsModJobJson();
 		sorter.id = JOB_SORTER;
 		sorter.name = "Сортировщик мусора";
-		sorter.description = "Разберите мусор на трёх точках в Черногорске.";
+		sorter.description = "Найдите один предмет мусора в Черногорске и отсортируйте его.";
 		sorter.type = JobsModJobType.TEXT_SORTING;
 		sorter.zone_id = ZONE_CHERNO;
 		sorter.reward = 100;
 		sorter.cooldown_seconds = 300;
-		sorter.piles_required = 3;
+		sorter.piles_required = 1;
 		jobs.Insert(sorter);
 
 		JobsModJobJson loader = new JobsModJobJson();

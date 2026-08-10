@@ -143,16 +143,10 @@ class SortingSessionService
 		if (!GetGame().IsServer() || !player || !identity)
 			return;
 
-		Param4<int, int, string, int> request = new Param4<int, int, string, int>(0, 0, "", 0);
+		Param3<int, string, int> request = new Param3<int, string, int>(0, "", 0);
 		if (!ctx.Read(request))
 		{
 			JobsLog.Warning("SERVER/RPC: не удалось прочитать REQUEST_SORTING_SUBMIT; игрок='" + identity.GetName() + "'.");
-			return;
-		}
-
-		if (request.param1 != JobsModRPC.PROTOCOL_VERSION)
-		{
-			Reject(player, identity, JobsModRejectReason.PROTOCOL_MISMATCH);
 			return;
 		}
 
@@ -167,7 +161,7 @@ class SortingSessionService
 
 		// A mismatched nonce means the submission belongs to a session this
 		// player no longer holds — a replay of an old grant, or a fabricated one.
-		if (session.GetNonce() != request.param2)
+		if (session.GetNonce() != request.param1)
 		{
 			JobsLog.Warning("SERVER/JANITOR: неверный nonce от '" + identity.GetName() + "'.");
 			Reject(player, identity, JobsModRejectReason.NO_ACTIVE_SESSION);
@@ -194,7 +188,7 @@ class SortingSessionService
 			return;
 		}
 
-		array<string> submitted = UnpackBinSequence(request.param3);
+		array<string> submitted = UnpackBinSequence(request.param2);
 		if (!submitted || !session.Matches(submitted))
 		{
 			Reject(player, identity, JobsModRejectReason.RESULT_INCORRECT);
@@ -224,8 +218,8 @@ class SortingSessionService
 		m_Zones.ConsumePile(workedPile);
 
 		string message = "Куча разобрана.";
-		if (request.param4 > 0)
-			message = message + " Ошибок: " + request.param4.ToString() + ".";
+		if (request.param3 > 0)
+			message = message + " Ошибок: " + request.param3.ToString() + ".";
 
 		GetGame().RPCSingleParam(
 			player,
@@ -236,7 +230,7 @@ class SortingSessionService
 
 		m_Jobs.ReportSortedPile(player, identity, assignment);
 
-		JobsLog.Info("SERVER/JANITOR: куча принята; игрок='" + identity.GetName() + "', ошибок=" + request.param4.ToString() + ", прогресс " + assignment.GetProgress().ToString() + "/" + assignment.GetRequired().ToString() + ".");
+		JobsLog.Info("SERVER/JANITOR: куча принята; игрок='" + identity.GetName() + "', ошибок=" + request.param3.ToString() + ", прогресс " + assignment.GetProgress().ToString() + "/" + assignment.GetRequired().ToString() + ".");
 	}
 
 	void HandleAbort(PlayerBase player, PlayerIdentity identity, ParamsReadContext ctx)
@@ -244,8 +238,8 @@ class SortingSessionService
 		if (!GetGame().IsServer() || !identity)
 			return;
 
-		Param2<int, int> request = new Param2<int, int>(0, 0);
-		if (!ctx.Read(request) || request.param1 != JobsModRPC.PROTOCOL_VERSION)
+		Param1<int> request = new Param1<int>(0);
+		if (!ctx.Read(request))
 			return;
 
 		string playerId = identity.GetId();
@@ -253,7 +247,7 @@ class SortingSessionService
 
 		// Only drop the session the client names. Without the nonce check a
 		// stale abort could cancel a session the player has since restarted.
-		if (m_Sessions.Find(playerId, session) && session && session.GetNonce() == request.param2)
+		if (m_Sessions.Find(playerId, session) && session && session.GetNonce() == request.param1)
 		{
 			m_Sessions.Remove(playerId);
 			JobsLog.Info("SERVER/JANITOR: смена прервана игроком '" + identity.GetName() + "'.");

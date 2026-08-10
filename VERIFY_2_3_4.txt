@@ -1,0 +1,13 @@
+JobsMod 2.3.4
+Client marker: JobsMod_Client_2_3_4
+Client marker dependency: DZ_Data
+Client self-dependency: 0
+Server requires JobsMod_Client: yes
+Server requires JobsMod_Client_2_3_4: yes
+Protocol: 4
+Client PBO entries: 28
+Client PBO size: 182184
+Client PBO SHA256: 1ecb44e9373ddee6fa178fac386189b5c03cd7b75b53ea47bd9acd786af54d13
+Server PBO entries: 18
+Server PBO size: 142894
+Server PBO SHA256: da7b6cb2ced56769de3842c1343157138c4f86fc1e52e62cfde3b8df3740a6e2

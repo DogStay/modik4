@@ -1,0 +1,11 @@
+JobsMod 2.3.3 CLIENT/SERVER SYNC FIX
+Client exact patch: JobsMod_Client_2_3_3
+Server requires exact patch: yes
+GetWorldClassName in client source: yes
+JobsModSetWorldTrash in client source: yes
+Client PBO entries: 28
+Client PBO size: 182191
+Client SHA256: 85db976a68cfb418e5619afb1b37b7f70c4f5318eac3bb92297541f878dfcde6
+Server PBO entries: 18
+Server PBO size: 142894
+Server SHA256: d6fd1deb3bc65856cb0da863d03ee192bd7b371f3a87ec0c33f043dbe1458a28

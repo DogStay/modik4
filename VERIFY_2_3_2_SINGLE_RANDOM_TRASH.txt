@@ -1,0 +1,27 @@
+JobsMod 2.3.2 — SINGLE RANDOM TRASH
+
+- one active trash object per zone
+- random vanilla trash model, no WoodenCrate
+- old JobsMod_TrashPile boxes cleaned at configured points on startup
+- spawned item carries synchronized m_JobsModWorldTrash flag
+- IsTakeable=false
+- CanPutIntoHands=false
+- CanPutInCargo=false
+- CanBeSplit=false
+- SetAllowDamage(false)
+- ActionSortTrash accepts only flagged world-trash object
+- sorting job normalized to piles_required=1, including existing jobs.json
+
+World classes:
+  - WoodenPlank
+  - WoodenStick
+  - Firewood
+  - WaterBottle
+  - VitaminBottle
+  - Canteen
+  - SodaCan_Cola
+  - MetalPlate
+  - BakedBeansCan
+
+Client PBO: entries=28, size=181903, sha256=a8051f03b6d87364db10c014b0c5672c8fc1f41243e8137436237dd78e25916b
+Server PBO: entries=18, size=142802, sha256=d4baaa58f5eed9d3a1bb345bb4106d057a490baf06d0f50c7baebefcc1e53954

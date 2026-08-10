@@ -3,24 +3,11 @@
 // The wire contract between client and server. Both sides read these constants
 // from this one file, so an id can never drift apart between the two PBOs.
 //
-// PROTOCOL_VERSION is sent in every client request and checked by the server.
-// Bump it whenever the payload shape of any message below changes: an outdated
-// client is then rejected with a clear reason instead of silently misreading
-// the stream and corrupting a job.
-
 class JobsModRPC
 {
 	// Base offset chosen high enough to stay clear of vanilla RPC ids.
 	static const int BASE = 24500;
 
-	// 1 -> 2: NPC job assignment and the loader job were added.
-	// 2 -> 3: the courier job was added; NOTIFY_JOB_STATE now carries the job
-	//         type, because the client can no longer tell what to point the
-	//         marker at from the freight class alone.
-	// 3 -> 4: NOTIFY_NPC_DIRECTORY is gone. Which survivors are employers now
-	//         rides on the entities as a synchronised flag, so there is nothing
-	//         left to send, to time, or to lose.
-	static const int PROTOCOL_VERSION = 4;
 
 	// Every id below must stay inside [BASE, BASE + ID_RANGE]; both OnRPC
 	// handlers use that window to ignore traffic that is not ours.
@@ -155,7 +142,6 @@ class JobsModJobStatus
 class JobsModRejectReason
 {
 	static const int UNKNOWN = 0;
-	static const int PROTOCOL_MISMATCH = 1;
 	static const int PLAYER_NOT_READY = 2;
 	static const int TOO_FAR = 3;
 	static const int ON_COOLDOWN = 4;
@@ -179,8 +165,6 @@ class JobsModRejectReason
 	{
 		switch (reason)
 		{
-			case PROTOCOL_MISMATCH:
-				return "Версия мода не совпадает с серверной. Обновите мод.";
 			case PLAYER_NOT_READY:
 				return "Сейчас нельзя приступить к работе.";
 			case TOO_FAR:

@@ -1,0 +1,8 @@
+Internal note only. Not part of JobsMod_Client or JobsMod_Server PBO.
+
+Build mark: clean-no-versions
+- no numbered CfgPatches markers;
+- no CfgMods version field;
+- no JobsModBuildInfo;
+- no RPC protocol version field/check;
+- server requires only normal JobsMod_Client.

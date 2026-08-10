@@ -1,20 +1,11 @@
 // ActionSortTrash.c
 //
-// The "sort the trash" interaction offered on a JobsMod_TrashPile.
-//
-// The pile is recognised by its config class name rather than by casting to a
-// script class. The mod ships no script class for the pile, so there is nothing
-// to get wrong about which vanilla base it inherits — and one less class means
-// one less way for the item to lose its container behaviour.
-//
-// The action grants nothing by itself: it only tells the server that this
-// player asked. Distance, ownership and cooldown are re-checked server-side,
-// because a client can drive an action pipeline but cannot be trusted about it.
+// The only useful interaction on a server-spawned JobsMod world-trash item.
+// The physical object may look like a plank, bottle, can or metal plate, but
+// only an ItemBase carrying the synchronized JobsMod flag is accepted.
 
 class ActionSortTrash extends ActionInteractBase
 {
-	protected static const string TRASH_PILE_CLASS = "JobsMod_TrashPile";
-
 	void ActionSortTrash()
 	{
 		m_CommandUID = DayZPlayerConstants.CMD_ACTIONMOD_INTERACTONCE;
@@ -29,36 +20,49 @@ class ActionSortTrash extends ActionInteractBase
 
 	override bool ActionCondition(PlayerBase player, ActionTarget target, ItemBase item)
 	{
-		return ResolvePile(target) != null;
+		return ResolveTrash(target) != null;
 	}
 
 	override void OnExecuteServer(ActionData action_data)
 	{
-		if (!action_data || !action_data.m_Player)
+		if (!action_data)
 			return;
 
-		Object pile = ResolvePile(action_data.m_Target);
-		if (!pile)
+		if (!action_data.m_Player)
 			return;
 
-		JobsModTrashActionBridge.RequestSort(action_data.m_Player, pile);
+		Object trash = ResolveTrash(action_data.m_Target);
+		if (!trash)
+			return;
+
+		JobsModTrashActionBridge.RequestSort(action_data.m_Player, trash);
 	}
 
-	// The cursor may land on the pile itself or on something parented to it,
-	// so both are accepted before giving up.
-	protected Object ResolvePile(ActionTarget target)
+	protected Object ResolveTrash(ActionTarget target)
 	{
 		if (!target)
 			return null;
 
 		Object direct = target.GetObject();
-		if (direct && direct.GetType() == TRASH_PILE_CLASS)
+		if (IsJobsModTrash(direct))
 			return direct;
 
 		Object parent = target.GetParent();
-		if (parent && parent.GetType() == TRASH_PILE_CLASS)
+		if (IsJobsModTrash(parent))
 			return parent;
 
 		return null;
+	}
+
+	protected bool IsJobsModTrash(Object object)
+	{
+		if (!object)
+			return false;
+
+		ItemBase item = ItemBase.Cast(object);
+		if (!item)
+			return false;
+
+		return item.JobsModIsWorldTrash();
 	}
 }

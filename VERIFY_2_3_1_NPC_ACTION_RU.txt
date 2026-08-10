@@ -1,0 +1,13 @@
+IN-GAME VERIFICATION
+
+1. Startup:
+   Look for WORLD/ACTIONS: JobsMod actions зарегистрированы... in script.log/RPT.
+   Look for SERVER/NPC: создано NPC: X из X.
+
+2. Interaction:
+   Stand within 3 m and aim at JobsMod NPC.
+   The action Поговорить о работе must appear.
+
+3. Execution:
+   Activate the action. NPC jobs menu must open.
+   No Null pointer / GetAction / ActionTalkToNpc errors in RPT/script.log.

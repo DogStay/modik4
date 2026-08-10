@@ -1,0 +1,16 @@
+JobsMod 2.3.1 — NPC ACTION COMPLETE FIX
+
+Fixed:
+1. Added ActionConstructorJobsMod.c.
+   Registers ActionSortTrash and ActionTalkToNpc in the global ActionConstructor.
+2. Moved ActionTalkToNpc from PlayerBase.SetActions() to PlayerBase.SetActionsRemoteTarget().
+3. Kept NPC network flag m_JobsModIsNpc and server-side validation unchanged.
+4. Protocol remains 4; no RPC payload changed.
+
+Expected log marker:
+WORLD/ACTIONS: JobsMod actions зарегистрированы: ActionSortTrash, ActionTalkToNpc.
+
+Client PBO SHA256: 2a1ad41c56bcfda681a6ecddea27a78961ba10b8f7311db4159f1d0bbfe8eaf9
+Server PBO SHA256: 2eb1685900ce451ce273c1bbb9405c212ceb98b1650bc6d985fc351272090661
+Max || per line: 5
+Max && per line: 4

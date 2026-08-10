@@ -305,7 +305,7 @@ class JobsModClientContext
 		GetGame().RPCSingleParam(
 			player,
 			JobsModRPC.REQUEST_SORTING_SUBMIT,
-			new Param4<int, int, string, int>(JobsModRPC.PROTOCOL_VERSION, nonce, packed, mistakes),
+			new Param3<int, string, int>(nonce, packed, mistakes),
 			true,
 			null);
 
@@ -321,7 +321,7 @@ class JobsModClientContext
 		GetGame().RPCSingleParam(
 			player,
 			JobsModRPC.REQUEST_SORTING_ABORT,
-			new Param2<int, int>(JobsModRPC.PROTOCOL_VERSION, nonce),
+			new Param1<int>(nonce),
 			true,
 			null);
 
@@ -338,7 +338,7 @@ class JobsModClientContext
 		GetGame().RPCSingleParam(
 			player,
 			JobsModRPC.REQUEST_JOB_ACCEPT,
-			new Param3<int, string, string>(JobsModRPC.PROTOCOL_VERSION, npcId, jobId),
+			new Param2<string, string>(npcId, jobId),
 			true,
 			null);
 
@@ -354,7 +354,7 @@ class JobsModClientContext
 		GetGame().RPCSingleParam(
 			player,
 			JobsModRPC.REQUEST_JOB_COMPLETE,
-			new Param3<int, string, int>(JobsModRPC.PROTOCOL_VERSION, npcId, assignmentId),
+			new Param2<string, int>(npcId, assignmentId),
 			true,
 			null);
 
@@ -370,7 +370,7 @@ class JobsModClientContext
 		GetGame().RPCSingleParam(
 			player,
 			JobsModRPC.REQUEST_JOB_ABANDON,
-			new Param2<int, int>(JobsModRPC.PROTOCOL_VERSION, assignmentId),
+			new Param1<int>(assignmentId),
 			true,
 			null);
 

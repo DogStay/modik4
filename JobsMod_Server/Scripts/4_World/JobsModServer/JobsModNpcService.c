@@ -73,13 +73,6 @@ class JobsModNpcService
 		if (position[1] <= 0)
 			position[1] = GetGame().SurfaceY(position[0], position[2]);
 
-		// A surface below sea level means the point is in the water or past the
-		// map edge, which in practice means coordinates left over from another
-		// map. The NPC spawns, the log says it spawned, and no player can ever
-		// reach it — so it is called out here instead of being found in game.
-		if (position[1] < 0)
-			JobsLog.Warning("SERVER/NPC: NPC '" + definition.id + "' встал ниже уровня моря (y=" + position[1].ToString() + ") — до него не добраться; координаты, скорее всего, от другой карты.");
-
 		// init_ai is what makes a survivor class come up standing and animated
 		// instead of an inert prop, so it is not optional here.
 		Object created = GetGame().CreateObject(definition.player_class, position, false, true, true);

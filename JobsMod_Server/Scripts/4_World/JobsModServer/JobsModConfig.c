@@ -535,25 +535,12 @@ class JobsModConfig
 
 	protected bool AcceptSortingJob(JobsModJobJson job)
 	{
-		if (job.piles_required < 1)
+		// Normalize old jobs.json files automatically so an existing value of 3
+		// cannot leave the player waiting for the single object to respawn.
+		if (job.piles_required != 1)
 		{
-			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' piles_required < 1, пропущена.");
-			return false;
-		}
-
-		if (job.piles_required > MAX_PILES_PER_JOB)
-		{
-			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' piles_required ограничено до " + MAX_PILES_PER_JOB.ToString() + ".");
-			job.piles_required = MAX_PILES_PER_JOB;
-		}
-
-		// Sorting the same pile twice is impossible: a worked pile is removed
-		// until it respawns. Asking for more piles than the zone has would leave
-		// the player waiting on respawns with nothing on the HUD to explain it.
-		int available = CountPilePointsInZone(job.zone_id);
-		if (available < job.piles_required)
-		{
-			JobsLog.Warning("SERVER/CONFIG: работе '" + job.id + "' нужно " + job.piles_required.ToString() + " куч, а в зоне '" + job.zone_id + "' их " + available.ToString() + " — игроку придётся ждать респавна.");
+			JobsLog.Warning("SERVER/CONFIG: у работы '" + job.id + "' piles_required=" + job.piles_required.ToString() + "; для режима одного предмета принято 1.");
+			job.piles_required = 1;
 		}
 
 		return true;

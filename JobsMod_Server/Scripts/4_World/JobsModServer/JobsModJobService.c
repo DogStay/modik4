@@ -186,21 +186,15 @@ class JobsModJobService
 	// =====================================================================
 	void HandleAccept(PlayerBase player, PlayerIdentity identity, ParamsReadContext ctx)
 	{
-		Param3<int, string, string> request = new Param3<int, string, string>(0, "", "");
+		Param2<string, string> request = new Param2<string, string>("", "");
 		if (!ctx.Read(request))
 		{
 			JobsLog.Warning("SERVER/RPC: не удалось прочитать REQUEST_JOB_ACCEPT от '" + identity.GetName() + "'.");
 			return;
 		}
 
-		if (request.param1 != JobsModRPC.PROTOCOL_VERSION)
-		{
-			Reject(player, identity, JobsModRejectReason.PROTOCOL_MISMATCH);
-			return;
-		}
-
-		string npcId = request.param2;
-		string jobId = request.param3;
+		string npcId = request.param1;
+		string jobId = request.param2;
 		string playerId = identity.GetId();
 
 		if (!IsPlayerReady(player))
@@ -292,16 +286,10 @@ class JobsModJobService
 	// =====================================================================
 	void HandleComplete(PlayerBase player, PlayerIdentity identity, ParamsReadContext ctx)
 	{
-		Param3<int, string, int> request = new Param3<int, string, int>(0, "", 0);
+		Param2<string, int> request = new Param2<string, int>("", 0);
 		if (!ctx.Read(request))
 		{
 			JobsLog.Warning("SERVER/RPC: не удалось прочитать REQUEST_JOB_COMPLETE от '" + identity.GetName() + "'.");
-			return;
-		}
-
-		if (request.param1 != JobsModRPC.PROTOCOL_VERSION)
-		{
-			Reject(player, identity, JobsModRejectReason.PROTOCOL_MISMATCH);
 			return;
 		}
 
@@ -316,7 +304,7 @@ class JobsModJobService
 
 		// A stale menu can send an id the player no longer holds. Paying on it
 		// would pay for a job that was already closed.
-		if (assignment.GetId() != request.param3)
+		if (assignment.GetId() != request.param2)
 		{
 			Reject(player, identity, JobsModRejectReason.NO_ACTIVE_JOB);
 			return;
@@ -328,7 +316,7 @@ class JobsModJobService
 			return;
 		}
 
-		if (assignment.GetHandInNpcId() != request.param2)
+		if (assignment.GetHandInNpcId() != request.param1)
 		{
 			Reject(player, identity, JobsModRejectReason.WRONG_NPC);
 			return;
@@ -379,12 +367,12 @@ class JobsModJobService
 
 	void HandleAbandon(PlayerBase player, PlayerIdentity identity, ParamsReadContext ctx)
 	{
-		Param2<int, int> request = new Param2<int, int>(0, 0);
-		if (!ctx.Read(request) || request.param1 != JobsModRPC.PROTOCOL_VERSION)
+		Param1<int> request = new Param1<int>(0);
+		if (!ctx.Read(request))
 			return;
 
 		JobsModAssignment assignment = GetAssignment(identity.GetId());
-		if (!assignment || assignment.GetId() != request.param2)
+		if (!assignment || assignment.GetId() != request.param1)
 			return;
 
 		// Read out before ending it. The map holds the only strong reference, so

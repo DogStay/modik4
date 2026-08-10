@@ -33,19 +33,6 @@ class JobsModServerRuntime
 			return;
 		}
 
-		// Before anything else: the two PBOs must be the same build. They are one
-		// mod but two artifacts, and deploying only one of them is easy to do and
-		// hard to see — the halves then disagree about the protocol and about
-		// which constants exist, and every symptom of that points somewhere else.
-		// Refusing to start is the only honest answer, and it names both builds so
-		// the stale artifact is obvious.
-		if (JobsModBuildInfo.BUILD != JobsModServerBuildInfo.BUILD)
-		{
-			JobsLog.Error("SERVER: разные сборки PBO. JobsMod_Client=" + JobsModBuildInfo.BUILD + ", JobsMod_Server=" + JobsModServerBuildInfo.BUILD + ".");
-			JobsLog.Error("SERVER: обновите оба PBO до одной версии — мод не запущен.");
-			return;
-		}
-
 		string catalogError;
 		if (!JobsModTrashCatalog.Validate(catalogError))
 		{
@@ -88,7 +75,7 @@ class JobsModServerRuntime
 		JobsModNpcActionBridge.GetOnTalkRequested().Insert(OnTalkRequested);
 
 		s_Started = true;
-		JobsLog.Info("SERVER: JobsMod запущен. Build: " + JobsModBuildInfo.BUILD + "; protocol=" + JobsModRPC.PROTOCOL_VERSION.ToString() + ".");
+		JobsLog.Info("SERVER: JobsMod запущен.");
 	}
 
 	static void Stop()

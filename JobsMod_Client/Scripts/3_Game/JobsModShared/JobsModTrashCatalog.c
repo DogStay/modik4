@@ -67,22 +67,23 @@ class JobsModTrashItem
 	string m_Id;
 	string m_BinId;
 	string m_DisplayName;
-	// Vanilla class used to render the card preview in 3D. The mod ships no
-	// textures, so the item picture is a real game model instead of a .paa.
 	string m_PreviewClassName;
+	string m_WorldClassName;
 
-	void JobsModTrashItem(string id, string binId, string displayName, string previewClassName)
+	void JobsModTrashItem(string id, string binId, string displayName, string previewClassName, string worldClassName)
 	{
 		m_Id = id;
 		m_BinId = binId;
 		m_DisplayName = displayName;
 		m_PreviewClassName = previewClassName;
+		m_WorldClassName = worldClassName;
 	}
 
 	string GetId() { return m_Id; }
 	string GetBinId() { return m_BinId; }
 	string GetDisplayName() { return m_DisplayName; }
 	string GetPreviewClassName() { return m_PreviewClassName; }
+	string GetWorldClassName() { return m_WorldClassName; }
 }
 
 class JobsModTrashCatalog
@@ -102,17 +103,20 @@ class JobsModTrashCatalog
 
 		s_Items = new array<ref JobsModTrashItem>();
 
-		s_Items.Insert(new JobsModTrashItem("wood_01", JobsModTrashBin.WOOD, "Обломок доски", "WoodenPlank"));
-		s_Items.Insert(new JobsModTrashItem("wood_02", JobsModTrashBin.WOOD, "Деревянная палка", "WoodenStick"));
-		s_Items.Insert(new JobsModTrashItem("wood_03", JobsModTrashBin.WOOD, "Щепки", "Firewood"));
+		// Preview and world class are intentionally the same vanilla item. The
+		// world service picks one of these at random, so the work point looks like
+		// actual litter instead of a row of WoodenCrate objects.
+		s_Items.Insert(new JobsModTrashItem("wood_01", JobsModTrashBin.WOOD, "Обломок доски", "WoodenPlank", "WoodenPlank"));
+		s_Items.Insert(new JobsModTrashItem("wood_02", JobsModTrashBin.WOOD, "Деревянная палка", "WoodenStick", "WoodenStick"));
+		s_Items.Insert(new JobsModTrashItem("wood_03", JobsModTrashBin.WOOD, "Щепки", "Firewood", "Firewood"));
 
-		s_Items.Insert(new JobsModTrashItem("plastic_01", JobsModTrashBin.PLASTIC, "Пластиковая бутылка", "WaterBottle"));
-		s_Items.Insert(new JobsModTrashItem("plastic_02", JobsModTrashBin.PLASTIC, "Смятый стакан", "Canteen"));
-		s_Items.Insert(new JobsModTrashItem("plastic_03", JobsModTrashBin.PLASTIC, "Пластиковая канистра", "CanisterGasoline"));
+		s_Items.Insert(new JobsModTrashItem("plastic_01", JobsModTrashBin.PLASTIC, "Пластиковая бутылка", "WaterBottle", "WaterBottle"));
+		s_Items.Insert(new JobsModTrashItem("plastic_02", JobsModTrashBin.PLASTIC, "Пластиковый флакон", "VitaminBottle", "VitaminBottle"));
+		s_Items.Insert(new JobsModTrashItem("plastic_03", JobsModTrashBin.PLASTIC, "Смятая фляга", "Canteen", "Canteen"));
 
-		s_Items.Insert(new JobsModTrashItem("metal_01", JobsModTrashBin.METAL, "Жестяная банка", "BakedBeansCan"));
-		s_Items.Insert(new JobsModTrashItem("metal_02", JobsModTrashBin.METAL, "Металлический обломок", "SheetMetal"));
-		s_Items.Insert(new JobsModTrashItem("metal_03", JobsModTrashBin.METAL, "Ржавая деталь", "Pot"));
+		s_Items.Insert(new JobsModTrashItem("metal_01", JobsModTrashBin.METAL, "Жестяная банка", "SodaCan_Cola", "SodaCan_Cola"));
+		s_Items.Insert(new JobsModTrashItem("metal_02", JobsModTrashBin.METAL, "Листовой металл", "MetalPlate", "MetalPlate"));
+		s_Items.Insert(new JobsModTrashItem("metal_03", JobsModTrashBin.METAL, "Консервная банка", "BakedBeansCan", "BakedBeansCan"));
 	}
 
 	static array<ref JobsModTrashItem> GetItems()
@@ -143,6 +147,27 @@ class JobsModTrashCatalog
 			return "";
 
 		return item.GetBinId();
+	}
+
+	// Finds a catalog entry by the vanilla class used for the physical work
+	// object in the world. This is shared by the action and the server service,
+	// so they cannot disagree about which objects count as JobsMod trash.
+	static JobsModTrashItem FindByWorldClassName(string className)
+	{
+		Build();
+
+		for (int i = 0; i < s_Items.Count(); i++)
+		{
+			if (s_Items.Get(i).GetWorldClassName() == className)
+				return s_Items.Get(i);
+		}
+
+		return null;
+	}
+
+	static bool IsWorldClassName(string className)
+	{
+		return FindByWorldClassName(className) != null;
 	}
 
 	// Packs an ordered id list into one transferable string.
