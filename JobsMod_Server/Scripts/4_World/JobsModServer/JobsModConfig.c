@@ -88,6 +88,7 @@ class JobsModConfig
 	int GetPileRespawnSeconds() { return m_Settings.pile_respawn_seconds; }
 	int GetAssignmentTimeoutSeconds() { return m_Settings.assignment_timeout_seconds; }
 	bool IsDebugLogging() { return m_Settings.debug_logging; }
+	string GetRewardClass() { return m_Settings.reward_class; }
 
 	array<ref JobsModPilePointJson> GetPilePoints() { return m_PilePoints; }
 	map<string, ref JobsModNpcJson> GetNpcs() { return m_Npcs; }
@@ -276,6 +277,15 @@ class JobsModConfig
 		{
 			JobsLog.Warning("SERVER/CONFIG: pile_respawn_seconds слишком мал, принято " + MIN_PILE_RESPAWN.ToString() + ".");
 			m_Settings.pile_respawn_seconds = MIN_PILE_RESPAWN;
+		}
+
+		// An older settings.json has no reward_class at all, and paying in an
+		// empty class name spawns nothing. Filling it in is the difference
+		// between "the mod does not pay" and one line in the log.
+		if (m_Settings.reward_class == "")
+		{
+			m_Settings.reward_class = JobsModConfigDefaults.DEFAULT_REWARD_CLASS;
+			JobsLog.Info("SERVER/CONFIG: reward_class не задан, принят '" + m_Settings.reward_class + "'.");
 		}
 
 		if (m_Settings.assignment_timeout_seconds < MIN_ASSIGNMENT_TIMEOUT)
@@ -563,6 +573,8 @@ class JobsModConfig
 		if (job.cooldown_seconds < 0)
 			job.cooldown_seconds = 0;
 
+		EnsureJobLists(job);
+
 		if (type == JobsModJobType.SORTING)
 			return AcceptSortingJob(job);
 
@@ -610,6 +622,18 @@ class JobsModConfig
 		}
 
 		return true;
+	}
+
+	// A job file written before a field existed comes back with a null list, and
+	// every reader below would take that as a missing member rather than as an
+	// empty one. Filled in once, here, so no later check has to ask.
+	protected void EnsureJobLists(JobsModJobJson job)
+	{
+		if (!job.equipment)
+			job.equipment = new array<string>();
+
+		if (!job.collect_classes)
+			job.collect_classes = new array<string>();
 	}
 
 	protected bool AcceptCollectJob(JobsModJobJson job)

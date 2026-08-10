@@ -113,6 +113,11 @@ class JobsModSettingsJson
 
 	bool debug_logging;
 
+	// What a reward is paid in. A setting rather than a constant because the
+	// currency usually belongs to whatever economy mod the server runs, and
+	// hardcoding ours would make the pay useless on any server that has one.
+	string reward_class;
+
 	ref array<ref JobsModZoneJson> zones;
 	ref array<ref JobsModPilePointJson> pile_points;
 	ref array<ref JobsModLoaderAreaJson> loader_areas;

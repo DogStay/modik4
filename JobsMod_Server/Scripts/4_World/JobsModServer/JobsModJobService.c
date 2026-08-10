@@ -21,7 +21,7 @@
 
 class JobsModJobService
 {
-	protected static const string REWARD_CLASS = "JobsMod_Money";
+
 
 	protected ref JobsModConfig m_Config;
 	protected JobsModNpcService m_Npcs;
@@ -626,19 +626,20 @@ class JobsModJobService
 		if (job.reward <= 0)
 			return;
 
-		EntityAI reward = player.GetInventory().CreateInInventory(REWARD_CLASS);
+		string rewardClass = m_Config.GetRewardClass();
+		EntityAI reward = player.GetInventory().CreateInInventory(rewardClass);
 
 		// A full inventory must not swallow the pay: fall back to the ground at
 		// the player's feet rather than silently dropping the reward.
 		if (!reward)
 		{
-			Object spawned = GetGame().CreateObjectEx(REWARD_CLASS, player.GetPosition(), ECE_PLACE_ON_SURFACE);
+			Object spawned = GetGame().CreateObjectEx(rewardClass, player.GetPosition(), ECE_PLACE_ON_SURFACE);
 			reward = EntityAI.Cast(spawned);
 		}
 
 		if (!reward)
 		{
-			JobsLog.Error("SERVER/JOBS: награду '" + REWARD_CLASS + "' выдать не удалось.");
+			JobsLog.Error("SERVER/JOBS: награду '" + rewardClass + "' выдать не удалось — проверьте reward_class в settings.json.");
 			return;
 		}
 

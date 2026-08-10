@@ -31,6 +31,9 @@ class JobsModConfigDefaults
 	static const string AREA_ELEKTRO = "loader_area_01";
 	static const string POST_ELEKTRO = "guard_post_01";
 
+	// The currency a fresh install pays in.
+	static const string DEFAULT_REWARD_CLASS = "MAODev_Money_Dollar1";
+
 	static const string NPC_SORTER = "npc_sorter_01";
 	static const string NPC_LOADER = "npc_loader_01";
 	static const string NPC_DISPATCHER = "npc_dispatcher_01";
@@ -46,6 +49,7 @@ class JobsModConfigDefaults
 		// On out of the box: the first thing anyone does with a fresh install is
 		// find out whether it works at all.
 		settings.debug_logging = true;
+		settings.reward_class = DEFAULT_REWARD_CLASS;
 
 		settings.zones = new array<ref JobsModZoneJson>();
 		settings.zones.Insert(MakeZone(ZONE_CHERNO, "Черногорск"));
@@ -93,6 +97,8 @@ class JobsModConfigDefaults
 		sorter.reward = 100;
 		sorter.cooldown_seconds = 300;
 		sorter.piles_required = 1;
+		sorter.equipment = new array<string>();
+		sorter.collect_classes = new array<string>();
 		jobs.Insert(sorter);
 
 		JobsModJobJson loader = new JobsModJobJson();
@@ -106,6 +112,8 @@ class JobsModConfigDefaults
 		loader.loader_area_id = AREA_ELEKTRO;
 		loader.cargos_required = 5;
 		loader.cargo_class = "JobsMod_CargoBox";
+		loader.equipment = new array<string>();
+		loader.collect_classes = new array<string>();
 		jobs.Insert(loader);
 
 		// The zone of a courier job is where it ends, not where it starts: it is
@@ -124,6 +132,8 @@ class JobsModConfigDefaults
 		courier.cooldown_seconds = 1800;
 		courier.target_npc_id = NPC_RECIPIENT;
 		courier.package_class = "JobsMod_Parcel";
+		courier.equipment = new array<string>();
+		courier.collect_classes = new array<string>();
 		jobs.Insert(courier);
 
 		// Fifteen minutes of standing still, which is long enough to be a
@@ -143,6 +153,7 @@ class JobsModConfigDefaults
 		guard.equipment = new array<string>();
 		guard.equipment.Insert("PoliceCap");
 		guard.equipment.Insert("BaseballBat");
+		guard.collect_classes = new array<string>();
 		jobs.Insert(guard);
 
 		// The one job the mod supplies nothing for. Where the meat comes from —
@@ -166,6 +177,7 @@ class JobsModConfigDefaults
 		hunter.collect_classes.Insert("GoatSteakMeat");
 		hunter.collect_classes.Insert("SheepSteakMeat");
 		hunter.collect_classes.Insert("BoarSteakMeat");
+		hunter.equipment = new array<string>();
 		jobs.Insert(hunter);
 
 		return jobs;
