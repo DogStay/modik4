@@ -17,5 +17,5 @@
 
 class JobsModServerBuildInfo
 {
-	static const string BUILD = "2.3.0-courier-b12";
+	static const string BUILD = "2.3.0-courier-b13";
 }

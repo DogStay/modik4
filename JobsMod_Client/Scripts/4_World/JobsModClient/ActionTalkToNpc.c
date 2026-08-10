@@ -41,10 +41,19 @@ class ActionTalkToNpc extends ActionInteractBase
 		JobsModNpcActionBridge.RequestTalk(action_data.m_Player, npc);
 	}
 
-	// On the client this decides whether the entry shows up at all; on the
-	// server it only narrows the object down to an employer before handing it
-	// over. Both sides now ask the same question of the same replicated flag, so
-	// there is no client-only branch left to disagree about.
+	// Narrows the target down to a survivor other than the player. Whether that
+	// survivor is actually an employer is decided by the server.
+	//
+	// The replicated flag is deliberately not allowed to block the action. It is
+	// the right way to know, but it only knows once entity synchronisation has
+	// delivered it, and when that has not happened the action does not appear
+	// and says nothing — which is the failure that has cost this evening. The
+	// entry is offered on any survivor instead, and JobsModJobService.HandleTalk
+	// resolves the object against the real NPC registry before granting
+	// anything, so pointing it at an ordinary player costs one refused request.
+	//
+	// The flag is still read, only to report itself: if this line stops
+	// appearing, synchronisation works and the check can go back to blocking.
 	protected Object ResolveNpc(PlayerBase player, ActionTarget target)
 	{
 		if (!target)
@@ -55,10 +64,7 @@ class ActionTalkToNpc extends ActionInteractBase
 			return null;
 
 		if (!other.JobsModIsNpc())
-		{
-			Report("наведён выживший, но флаг NPC на нём не выставлен");
-			return null;
-		}
+			Report("флаг NPC на цели не выставлен — действие предложено без него");
 
 		return other;
 	}
