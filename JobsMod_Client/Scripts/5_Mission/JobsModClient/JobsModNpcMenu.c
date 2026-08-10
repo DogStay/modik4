@@ -184,6 +184,13 @@ class JobsModNpcMenu extends UIScriptedMenu
 		GetGame().GetInput().ChangeGameFocus(1);
 		GetGame().GetUIManager().ShowUICursor(true);
 
+		// The panel and the world marker belong to the world, not on top of this
+		// window. Told directly, because the mission update that would otherwise
+		// notice does not reliably run behind an open menu.
+		MissionGameplay mission = MissionGameplay.Cast(GetGame().GetMission());
+		if (mission)
+			mission.JobsModSetMenuOpen(true);
+
 		m_RequestSent = false;
 		m_SelectedRow = -1;
 		Draw();
@@ -195,6 +202,10 @@ class JobsModNpcMenu extends UIScriptedMenu
 
 		GetGame().GetInput().ChangeGameFocus(-1);
 		GetGame().GetUIManager().ShowUICursor(false);
+
+		MissionGameplay mission = MissionGameplay.Cast(GetGame().GetMission());
+		if (mission)
+			mission.JobsModSetMenuOpen(false);
 
 		JobsModClientContext.OnNpcMenuClosed();
 	}

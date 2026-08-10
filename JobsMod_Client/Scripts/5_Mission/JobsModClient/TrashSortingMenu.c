@@ -447,6 +447,13 @@ class TrashSortingMenu extends UIScriptedMenu
 		GetGame().GetInput().ChangeGameFocus(1);
 		GetGame().GetUIManager().ShowUICursor(true);
 
+		// The panel and the world marker belong to the world, not on top of this
+		// window. Told directly, because the mission update that would otherwise
+		// notice does not reliably run behind an open menu.
+		MissionGameplay mission = MissionGameplay.Cast(GetGame().GetMission());
+		if (mission)
+			mission.JobsModSetMenuOpen(true);
+
 		ResetState();
 		BuildPreviews();
 		RefreshAll();
@@ -466,6 +473,10 @@ class TrashSortingMenu extends UIScriptedMenu
 
 		GetGame().GetInput().ChangeGameFocus(-1);
 		GetGame().GetUIManager().ShowUICursor(false);
+
+		MissionGameplay mission = MissionGameplay.Cast(GetGame().GetMission());
+		if (mission)
+			mission.JobsModSetMenuOpen(false);
 
 		// Whatever closed the menu — the finish button, the abort dialog, Escape,
 		// or the player dying — the server must not be left holding an open

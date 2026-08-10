@@ -49,13 +49,36 @@ modded class MissionGameplay
 
 		// Asked once and handed to both, so the panel and the world marker can
 		// never end up showing at different moments.
-		bool visible = JobsModJobHud.IsGameplayVisible();
+		bool visible = !m_JobsModMenuOpen && JobsModJobHud.IsGameplayVisible();
 
 		if (m_JobsModHud)
 			m_JobsModHud.Update(timeslice, visible);
 
 		if (m_JobsModMarker)
 			m_JobsModMarker.Update(visible);
+	}
+
+	// Set by the menus themselves as they open and close, rather than left for
+	// the update above to notice. Asking UIManager whether a menu is open only
+	// helps if this update still runs while one is — and behind a full screen
+	// menu it does not reliably, so the panel simply froze in whatever state it
+	// last had, which is exactly "the HUD does not hide".
+	//
+	// Hiding is therefore done here and now, on the frame the window appears.
+	protected bool m_JobsModMenuOpen;
+
+	void JobsModSetMenuOpen(bool open)
+	{
+		m_JobsModMenuOpen = open;
+
+		if (!open)
+			return;
+
+		if (m_JobsModHud)
+			m_JobsModHud.Update(0.0, false);
+
+		if (m_JobsModMarker)
+			m_JobsModMarker.Update(false);
 	}
 
 	override UIScriptedMenu CreateScriptedMenu(int id)
