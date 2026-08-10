@@ -1,36 +1,82 @@
 PanelWidgetClass HudRoot {
  position 0.012 0.16
  size 0.2 0.13
- color 0.219608 0.239216 0.219608 1
+ color 0 0 0 0
  hexactpos 0
  vexactpos 0
  hexactsize 0
  vexactsize 0
  ignorepointer 1
  {
+ ImageWidgetClass HudRootBackground {
+  position 0 0
+  size 1 1
+  color 1 0.219608 0.239216 0.219608
+  image0 "JobsMod_Client/GUI/Textures/UiShell/instruction_panel.paa"
+  mode blend
+  "src alpha" 1
+  "stretch mode" 1
+  hexactpos 0
+  vexactpos 0
+  hexactsize 0
+  vexactsize 0
+  ignorepointer 1
+ }
   PanelWidgetClass HudBg {
    position 0.004 0.006
    size 0.992 0.988
-   color 0.086275 0.094118 0.101961 1
+   color 0 0 0 0
    hexactpos 0
    vexactpos 0
    hexactsize 0
    vexactsize 0
    ignorepointer 1
+   {
+   ImageWidgetClass HudBgBackground {
+    position 0 0
+    size 1 1
+    color 1 0.086275 0.094118 0.101961
+    image0 "JobsMod_Client/GUI/Textures/UiShell/instruction_panel.paa"
+    mode blend
+    "src alpha" 1
+    "stretch mode" 1
+    hexactpos 0
+    vexactpos 0
+    hexactsize 0
+    vexactsize 0
+    ignorepointer 1
+   }
+   }
   }
   PanelWidgetClass HudAccent {
    position 0.004 0.006
    size 0.016 0.988
-   color 0.639216 0.721569 0.466667 1
+   color 0 0 0 0
    hexactpos 0
    vexactpos 0
    hexactsize 0
    vexactsize 0
    ignorepointer 1
+   {
+   ImageWidgetClass HudAccentBackground {
+    position 0 0
+    size 1 1
+    color 1 0.639216 0.721569 0.466667
+    image0 "JobsMod_Client/GUI/Textures/UiShell/instruction_panel.paa"
+    mode blend
+    "src alpha" 1
+    "stretch mode" 1
+    hexactpos 0
+    vexactpos 0
+    hexactsize 0
+    vexactsize 0
+    ignorepointer 1
+   }
+   }
   }
   TextWidgetClass HudTitle {
    font "gui/fonts/metron-bold14"
-   "text color" 0.929412 0.937255 0.917647 1
+   "text color" 1 0.929412 0.937255 0.917647
    "text valign" center
    position 0.06 0.06
    size 0.9 0.22
@@ -43,7 +89,7 @@ PanelWidgetClass HudRoot {
   }
   TextWidgetClass HudZone {
    font "gui/fonts/etelkatextpro22"
-   "text color" 0.45098 0.47451 0.443137 1
+   "text color" 1 0.45098 0.47451 0.443137
    "text valign" center
    position 0.06 0.28
    size 0.9 0.18
@@ -56,7 +102,7 @@ PanelWidgetClass HudRoot {
   }
   TextWidgetClass HudProgress {
    font "gui/fonts/metron-bold14"
-   "text color" 0.639216 0.721569 0.466667 1
+   "text color" 1 0.639216 0.721569 0.466667
    "text valign" center
    "text halign" right
    position 0.06 0.46
@@ -71,28 +117,58 @@ PanelWidgetClass HudRoot {
   PanelWidgetClass HudBarTrack {
    position 0.06 0.68
    size 0.88 0.07
-   color 0.160784 0.176471 0.156863 1
+   color 0 0 0 0
    hexactpos 0
    vexactpos 0
    hexactsize 0
    vexactsize 0
    ignorepointer 1
    {
+   ImageWidgetClass HudBarTrackBackground {
+    position 0 0
+    size 1 1
+    color 1 0.160784 0.176471 0.156863
+    image0 "JobsMod_Client/GUI/Textures/UiShell/instruction_panel.paa"
+    mode blend
+    "src alpha" 1
+    "stretch mode" 1
+    hexactpos 0
+    vexactpos 0
+    hexactsize 0
+    vexactsize 0
+    ignorepointer 1
+   }
     PanelWidgetClass HudBarFill {
      position 0 0
      size 0 1
-     color 0.639216 0.721569 0.466667 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      ignorepointer 1
+     {
+     ImageWidgetClass HudBarFillBackground {
+      position 0 0
+      size 1 1
+      color 1 0.639216 0.721569 0.466667
+      image0 "JobsMod_Client/GUI/Textures/UiShell/instruction_panel.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
+     }
     }
    }
   }
   TextWidgetClass HudHint {
    font "gui/fonts/etelkatextpro22"
-   "text color" 0.643137 0.662745 0.631373 1
+   "text color" 1 0.643137 0.662745 0.631373
    "text valign" center
    position 0.06 0.77
    size 0.9 0.18

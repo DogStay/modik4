@@ -269,7 +269,7 @@ class TrashSortingMenu extends UIScriptedMenu
 		for (i = 0; i < ITEM_COUNT; i++)
 		{
 			Widget pip;
-			ok = ok && BindWidget("ProgressPip" + i.ToString(), pip);
+			ok = ok && BindWidget("ProgressPip" + i.ToString() + "Background", pip);
 			m_ProgressPips.Insert(pip);
 
 			Widget frame;
@@ -279,8 +279,8 @@ class TrashSortingMenu extends UIScriptedMenu
 			TextWidget name;
 			ButtonWidget button;
 
-			ok = ok && BindWidget("TrashCard" + i.ToString(), frame);
-			ok = ok && BindWidget("TrashCard" + i.ToString() + "Bg", fill);
+			ok = ok && BindWidget("TrashCard" + i.ToString() + "Background", frame);
+			ok = ok && BindWidget("TrashCard" + i.ToString() + "BgBackground", fill);
 			ok = ok && BindWidget("TrashPreviewHost" + i.ToString(), host);
 			ok = ok && BindText("TrashFallback" + i.ToString(), fallback);
 			ok = ok && BindText("TrashName" + i.ToString(), name);
@@ -308,8 +308,8 @@ class TrashSortingMenu extends UIScriptedMenu
 			TextWidget binFallback;
 			Widget binHost;
 
-			ok = ok && BindWidget("Bin" + suffix, binFrame);
-			ok = ok && BindWidget("Bin" + suffix + "Bg", binFill);
+			ok = ok && BindWidget("Bin" + suffix + "Background", binFrame);
+			ok = ok && BindWidget("Bin" + suffix + "BgBackground", binFill);
 			ok = ok && BindText("Bin" + suffix + "Label", binLabel);
 			ok = ok && BindText("Bin" + suffix + "Counter", binCounter);
 			ok = ok && BindText("Bin" + suffix + "Status", binStatus);

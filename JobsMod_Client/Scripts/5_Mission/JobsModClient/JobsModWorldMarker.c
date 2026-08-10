@@ -49,8 +49,8 @@ class JobsModWorldMarker
 		}
 
 		m_Group = m_Root.FindAnyWidget("MarkerGroup");
-		m_PipOuter = m_Root.FindAnyWidget("MarkerPipOuter");
-		m_Stem = m_Root.FindAnyWidget("MarkerStem");
+		m_PipOuter = m_Root.FindAnyWidget("MarkerPipOuterBackground");
+		m_Stem = m_Root.FindAnyWidget("MarkerStemBackground");
 		m_Label = TextWidget.Cast(m_Root.FindAnyWidget("MarkerLabel"));
 		m_Distance = TextWidget.Cast(m_Root.FindAnyWidget("MarkerDistance"));
 

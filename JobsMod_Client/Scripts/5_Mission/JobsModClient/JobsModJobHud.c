@@ -39,8 +39,8 @@ class JobsModJobHud
 			return;
 		}
 
-		m_Accent = m_Root.FindAnyWidget("HudAccent");
-		m_BarFill = m_Root.FindAnyWidget("HudBarFill");
+		m_Accent = m_Root.FindAnyWidget("HudAccentBackground");
+		m_BarFill = m_Root.FindAnyWidget("HudBarFillBackground");
 		m_Title = TextWidget.Cast(m_Root.FindAnyWidget("HudTitle"));
 		m_Zone = TextWidget.Cast(m_Root.FindAnyWidget("HudZone"));
 		m_Progress = TextWidget.Cast(m_Root.FindAnyWidget("HudProgress"));

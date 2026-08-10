@@ -10,43 +10,103 @@ PanelWidgetClass Root {
   PanelWidgetClass DarkOverlay {
    position 0 0
    size 1 1
-   color 0.023529 0.027451 0.019608 1
-   hexactpos 0
-   vexactpos 0
-   hexactsize 0
-   vexactsize 0
-  }
-  PanelWidgetClass MainPanel {
-   position 0.166667 0.148148
-   size 0.666667 0.703704
-   color 0.219608 0.239216 0.219608 1
+   color 0 0 0 0
    hexactpos 0
    vexactpos 0
    hexactsize 0
    vexactsize 0
    {
+   ImageWidgetClass DarkOverlayBackground {
+    position 0 0
+    size 1 1
+    color 1 0.023529 0.027451 0.019608
+    image0 "JobsMod_Client/GUI/Textures/UiShell/dark_overlay.paa"
+    mode blend
+    "src alpha" 1
+    "stretch mode" 1
+    hexactpos 0
+    vexactpos 0
+    hexactsize 0
+    vexactsize 0
+    ignorepointer 1
+   }
+   }
+  }
+  PanelWidgetClass MainPanel {
+   position 0.166667 0.148148
+   size 0.666667 0.703704
+   color 0 0 0 0
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   {
+   ImageWidgetClass MainPanelBackground {
+    position 0 0
+    size 1 1
+    color 1 0.219608 0.239216 0.219608
+    image0 "JobsMod_Client/GUI/Textures/UiShell/main_panel.paa"
+    mode blend
+    "src alpha" 1
+    "stretch mode" 1
+    hexactpos 0
+    vexactpos 0
+    hexactsize 0
+    vexactsize 0
+    ignorepointer 1
+   }
     PanelWidgetClass MainPanelBg {
      position 0.000781 0.001316
      size 0.998437 0.997368
-     color 0.086275 0.094118 0.101961 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      ignorepointer 1
+     {
+     ImageWidgetClass MainPanelBgBackground {
+      position 0 0
+      size 1 1
+      color 1 0.086275 0.094118 0.101961
+      image0 "JobsMod_Client/GUI/Textures/UiShell/main_panel.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
+     }
     }
     PanelWidgetClass HeaderPanel {
      position 0 0
      size 1 0.110526
-     color 0.109804 0.117647 0.109804 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      {
+     ImageWidgetClass HeaderPanelBackground {
+      position 0 0
+      size 1 1
+      color 1 0.109804 0.117647 0.109804
+      image0 "JobsMod_Client/GUI/Textures/UiShell/header.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
       TextWidgetClass TitleText {
        font "gui/fonts/metron-bold14"
-       "text color" 0.929412 0.937255 0.917647 1
+       "text color" 1 0.929412 0.937255 0.917647
        "text valign" center
        position 0.021875 0.166667
        size 0.484375 0.380952
@@ -59,7 +119,7 @@ PanelWidgetClass Root {
       }
       TextWidgetClass ZoneText {
        font "gui/fonts/etelkatextpro22"
-       "text color" 0.45098 0.47451 0.443137 1
+       "text color" 1 0.45098 0.47451 0.443137
        "text valign" center
        position 0.021875 0.571429
        size 0.484375 0.285714
@@ -72,7 +132,7 @@ PanelWidgetClass Root {
       }
       TextWidgetClass ProgressText {
        font "gui/fonts/metron-bold14"
-       "text color" 0.643137 0.662745 0.631373 1
+       "text color" 1 0.643137 0.662745 0.631373
        "text valign" center
        "text halign" right
        position 0.570312 0.166667
@@ -87,115 +147,289 @@ PanelWidgetClass Root {
       PanelWidgetClass ProgressPip0 {
        position 0.659375 0.571429
        size 0.020313 0.071429
-       color 0.188235 0.207843 0.184314 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        ignorepointer 1
+       {
+       ImageWidgetClass ProgressPip0Background {
+        position 0 0
+        size 1 1
+        color 1 0.188235 0.207843 0.184314
+        image0 "JobsMod_Client/GUI/Textures/UiShell/active_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
+       }
       }
       PanelWidgetClass ProgressPip1 {
        position 0.682813 0.571429
        size 0.020313 0.071429
-       color 0.188235 0.207843 0.184314 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        ignorepointer 1
+       {
+       ImageWidgetClass ProgressPip1Background {
+        position 0 0
+        size 1 1
+        color 1 0.188235 0.207843 0.184314
+        image0 "JobsMod_Client/GUI/Textures/UiShell/active_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
+       }
       }
       PanelWidgetClass ProgressPip2 {
        position 0.70625 0.571429
        size 0.020313 0.071429
-       color 0.188235 0.207843 0.184314 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        ignorepointer 1
+       {
+       ImageWidgetClass ProgressPip2Background {
+        position 0 0
+        size 1 1
+        color 1 0.188235 0.207843 0.184314
+        image0 "JobsMod_Client/GUI/Textures/UiShell/active_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
+       }
       }
       PanelWidgetClass ProgressPip3 {
        position 0.729688 0.571429
        size 0.020313 0.071429
-       color 0.188235 0.207843 0.184314 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        ignorepointer 1
+       {
+       ImageWidgetClass ProgressPip3Background {
+        position 0 0
+        size 1 1
+        color 1 0.188235 0.207843 0.184314
+        image0 "JobsMod_Client/GUI/Textures/UiShell/active_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
+       }
       }
       PanelWidgetClass ProgressPip4 {
        position 0.753125 0.571429
        size 0.020313 0.071429
-       color 0.188235 0.207843 0.184314 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        ignorepointer 1
+       {
+       ImageWidgetClass ProgressPip4Background {
+        position 0 0
+        size 1 1
+        color 1 0.188235 0.207843 0.184314
+        image0 "JobsMod_Client/GUI/Textures/UiShell/active_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
+       }
       }
       PanelWidgetClass ProgressPip5 {
        position 0.776563 0.571429
        size 0.020313 0.071429
-       color 0.188235 0.207843 0.184314 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        ignorepointer 1
+       {
+       ImageWidgetClass ProgressPip5Background {
+        position 0 0
+        size 1 1
+        color 1 0.188235 0.207843 0.184314
+        image0 "JobsMod_Client/GUI/Textures/UiShell/active_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
+       }
       }
       PanelWidgetClass ProgressPip6 {
        position 0.8 0.571429
        size 0.020313 0.071429
-       color 0.188235 0.207843 0.184314 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        ignorepointer 1
+       {
+       ImageWidgetClass ProgressPip6Background {
+        position 0 0
+        size 1 1
+        color 1 0.188235 0.207843 0.184314
+        image0 "JobsMod_Client/GUI/Textures/UiShell/active_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
+       }
       }
       PanelWidgetClass ProgressPip7 {
        position 0.823438 0.571429
        size 0.020313 0.071429
-       color 0.188235 0.207843 0.184314 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        ignorepointer 1
+       {
+       ImageWidgetClass ProgressPip7Background {
+        position 0 0
+        size 1 1
+        color 1 0.188235 0.207843 0.184314
+        image0 "JobsMod_Client/GUI/Textures/UiShell/active_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
+       }
       }
       PanelWidgetClass ProgressPip8 {
        position 0.846875 0.571429
        size 0.020313 0.071429
-       color 0.188235 0.207843 0.184314 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        ignorepointer 1
+       {
+       ImageWidgetClass ProgressPip8Background {
+        position 0 0
+        size 1 1
+        color 1 0.188235 0.207843 0.184314
+        image0 "JobsMod_Client/GUI/Textures/UiShell/active_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
+       }
       }
       PanelWidgetClass CloseButtonFrame {
        position 0.898438 0.357143
        size 0.092188 0.428571
-       color 0.32549 0.352941 0.313725 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass CloseButtonFrameBackground {
+        position 0 0
+        size 1 1
+        color 1 0.32549 0.352941 0.313725
+        image0 "JobsMod_Client/GUI/Textures/UiShell/toast_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass CloseButtonFrameBg {
          position 0.008475 0.027778
          size 0.983051 0.944444
-         color 0.160784 0.176471 0.156863 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass CloseButtonFrameBgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.160784 0.176471 0.156863
+          image0 "JobsMod_Client/GUI/Textures/UiShell/toast_panel.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         TextWidgetClass CloseButtonText {
          font "gui/fonts/metron-bold14"
-         "text color" 0.929412 0.937255 0.917647 1
+         "text color" 1 0.929412 0.937255 0.917647
          "text valign" center
          "text halign" center
          position 0 0
@@ -223,15 +457,29 @@ PanelWidgetClass Root {
     PanelWidgetClass InstructionPanel {
      position 0 0.110526
      size 1 0.073684
-     color 0.07451 0.082353 0.07451 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      {
+     ImageWidgetClass InstructionPanelBackground {
+      position 0 0
+      size 1 1
+      color 1 0.07451 0.082353 0.07451
+      image0 "JobsMod_Client/GUI/Textures/UiShell/instruction_panel.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
       TextWidgetClass InstructionText {
        font "gui/fonts/etelkatextpro22"
-       "text color" 0.643137 0.662745 0.631373 1
+       "text color" 1 0.643137 0.662745 0.631373
        "text valign" center
        position 0.021875 0.178571
        size 0.5625 0.642857
@@ -244,7 +492,7 @@ PanelWidgetClass Root {
       }
       TextWidgetClass HintText {
        font "gui/fonts/etelkatextpro22"
-       "text color" 0.45098 0.47451 0.443137 1
+       "text color" 1 0.45098 0.47451 0.443137
        "text valign" center
        "text halign" right
        position 0.59375 0.178571
@@ -261,15 +509,29 @@ PanelWidgetClass Root {
     PanelWidgetClass WorkArea {
      position 0 0.184211
      size 0.6875 0.734211
-     color 0.113725 0.12549 0.121569 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      {
+     ImageWidgetClass WorkAreaBackground {
+      position 0 0
+      size 1 1
+      color 1 0.113725 0.12549 0.121569
+      image0 "JobsMod_Client/GUI/Textures/UiShell/work_area.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
       TextWidgetClass WorkAreaTitle {
        font "gui/fonts/metron-bold14"
-       "text color" 0.45098 0.47451 0.443137 1
+       "text color" 1 0.45098 0.47451 0.443137
        "text valign" center
        position 0.025 0.021505
        size 0.454545 0.039427
@@ -292,21 +554,51 @@ PanelWidgetClass Root {
         PanelWidgetClass TrashCard0 {
          position 0 0
          size 0.324163 0.316327
-         color 0.219608 0.239216 0.219608 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          {
+         ImageWidgetClass TrashCard0Background {
+          position 0 0
+          size 1 1
+          color 1 0.219608 0.239216 0.219608
+          image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
           PanelWidgetClass TrashCard0Bg {
            position 0.00369 0.006452
            size 0.99262 0.987097
-           color 0.07451 0.082353 0.07451 1
+           color 0 0 0 0
            hexactpos 0
            vexactpos 0
            hexactsize 0
            vexactsize 0
            ignorepointer 1
+           {
+           ImageWidgetClass TrashCard0BgBackground {
+            position 0 0
+            size 1 1
+            color 1 0.07451 0.082353 0.07451
+            image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+            mode blend
+            "src alpha" 1
+            "stretch mode" 1
+            hexactpos 0
+            vexactpos 0
+            hexactsize 0
+            vexactsize 0
+            ignorepointer 1
+           }
+           }
           }
           PanelWidgetClass TrashPreviewHost0 {
            position 0.280443 0.090323
@@ -320,7 +612,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashFallback0 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.45098 0.47451 0.443137 1
+           "text color" 1 0.45098 0.47451 0.443137
            "text valign" center
            "text halign" center
            position 0.02952 0.258065
@@ -335,7 +627,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashName0 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.643137 0.662745 0.631373 1
+           "text color" 1 0.643137 0.662745 0.631373
            "text valign" center
            "text halign" center
            position 0.02952 0.696774
@@ -361,21 +653,51 @@ PanelWidgetClass Root {
         PanelWidgetClass TrashCard1 {
          position 0.338517 0
          size 0.324163 0.316327
-         color 0.219608 0.239216 0.219608 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          {
+         ImageWidgetClass TrashCard1Background {
+          position 0 0
+          size 1 1
+          color 1 0.219608 0.239216 0.219608
+          image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
           PanelWidgetClass TrashCard1Bg {
            position 0.00369 0.006452
            size 0.99262 0.987097
-           color 0.07451 0.082353 0.07451 1
+           color 0 0 0 0
            hexactpos 0
            vexactpos 0
            hexactsize 0
            vexactsize 0
            ignorepointer 1
+           {
+           ImageWidgetClass TrashCard1BgBackground {
+            position 0 0
+            size 1 1
+            color 1 0.07451 0.082353 0.07451
+            image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+            mode blend
+            "src alpha" 1
+            "stretch mode" 1
+            hexactpos 0
+            vexactpos 0
+            hexactsize 0
+            vexactsize 0
+            ignorepointer 1
+           }
+           }
           }
           PanelWidgetClass TrashPreviewHost1 {
            position 0.280443 0.090323
@@ -389,7 +711,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashFallback1 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.45098 0.47451 0.443137 1
+           "text color" 1 0.45098 0.47451 0.443137
            "text valign" center
            "text halign" center
            position 0.02952 0.258065
@@ -404,7 +726,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashName1 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.643137 0.662745 0.631373 1
+           "text color" 1 0.643137 0.662745 0.631373
            "text valign" center
            "text halign" center
            position 0.02952 0.696774
@@ -430,21 +752,51 @@ PanelWidgetClass Root {
         PanelWidgetClass TrashCard2 {
          position 0.677033 0
          size 0.324163 0.316327
-         color 0.219608 0.239216 0.219608 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          {
+         ImageWidgetClass TrashCard2Background {
+          position 0 0
+          size 1 1
+          color 1 0.219608 0.239216 0.219608
+          image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
           PanelWidgetClass TrashCard2Bg {
            position 0.00369 0.006452
            size 0.99262 0.987097
-           color 0.07451 0.082353 0.07451 1
+           color 0 0 0 0
            hexactpos 0
            vexactpos 0
            hexactsize 0
            vexactsize 0
            ignorepointer 1
+           {
+           ImageWidgetClass TrashCard2BgBackground {
+            position 0 0
+            size 1 1
+            color 1 0.07451 0.082353 0.07451
+            image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+            mode blend
+            "src alpha" 1
+            "stretch mode" 1
+            hexactpos 0
+            vexactpos 0
+            hexactsize 0
+            vexactsize 0
+            ignorepointer 1
+           }
+           }
           }
           PanelWidgetClass TrashPreviewHost2 {
            position 0.280443 0.090323
@@ -458,7 +810,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashFallback2 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.45098 0.47451 0.443137 1
+           "text color" 1 0.45098 0.47451 0.443137
            "text valign" center
            "text halign" center
            position 0.02952 0.258065
@@ -473,7 +825,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashName2 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.643137 0.662745 0.631373 1
+           "text color" 1 0.643137 0.662745 0.631373
            "text valign" center
            "text halign" center
            position 0.02952 0.696774
@@ -499,21 +851,51 @@ PanelWidgetClass Root {
         PanelWidgetClass TrashCard3 {
          position 0 0.340816
          size 0.324163 0.316327
-         color 0.219608 0.239216 0.219608 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          {
+         ImageWidgetClass TrashCard3Background {
+          position 0 0
+          size 1 1
+          color 1 0.219608 0.239216 0.219608
+          image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
           PanelWidgetClass TrashCard3Bg {
            position 0.00369 0.006452
            size 0.99262 0.987097
-           color 0.07451 0.082353 0.07451 1
+           color 0 0 0 0
            hexactpos 0
            vexactpos 0
            hexactsize 0
            vexactsize 0
            ignorepointer 1
+           {
+           ImageWidgetClass TrashCard3BgBackground {
+            position 0 0
+            size 1 1
+            color 1 0.07451 0.082353 0.07451
+            image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+            mode blend
+            "src alpha" 1
+            "stretch mode" 1
+            hexactpos 0
+            vexactpos 0
+            hexactsize 0
+            vexactsize 0
+            ignorepointer 1
+           }
+           }
           }
           PanelWidgetClass TrashPreviewHost3 {
            position 0.280443 0.090323
@@ -527,7 +909,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashFallback3 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.45098 0.47451 0.443137 1
+           "text color" 1 0.45098 0.47451 0.443137
            "text valign" center
            "text halign" center
            position 0.02952 0.258065
@@ -542,7 +924,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashName3 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.643137 0.662745 0.631373 1
+           "text color" 1 0.643137 0.662745 0.631373
            "text valign" center
            "text halign" center
            position 0.02952 0.696774
@@ -568,21 +950,51 @@ PanelWidgetClass Root {
         PanelWidgetClass TrashCard4 {
          position 0.338517 0.340816
          size 0.324163 0.316327
-         color 0.219608 0.239216 0.219608 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          {
+         ImageWidgetClass TrashCard4Background {
+          position 0 0
+          size 1 1
+          color 1 0.219608 0.239216 0.219608
+          image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
           PanelWidgetClass TrashCard4Bg {
            position 0.00369 0.006452
            size 0.99262 0.987097
-           color 0.07451 0.082353 0.07451 1
+           color 0 0 0 0
            hexactpos 0
            vexactpos 0
            hexactsize 0
            vexactsize 0
            ignorepointer 1
+           {
+           ImageWidgetClass TrashCard4BgBackground {
+            position 0 0
+            size 1 1
+            color 1 0.07451 0.082353 0.07451
+            image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+            mode blend
+            "src alpha" 1
+            "stretch mode" 1
+            hexactpos 0
+            vexactpos 0
+            hexactsize 0
+            vexactsize 0
+            ignorepointer 1
+           }
+           }
           }
           PanelWidgetClass TrashPreviewHost4 {
            position 0.280443 0.090323
@@ -596,7 +1008,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashFallback4 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.45098 0.47451 0.443137 1
+           "text color" 1 0.45098 0.47451 0.443137
            "text valign" center
            "text halign" center
            position 0.02952 0.258065
@@ -611,7 +1023,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashName4 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.643137 0.662745 0.631373 1
+           "text color" 1 0.643137 0.662745 0.631373
            "text valign" center
            "text halign" center
            position 0.02952 0.696774
@@ -637,21 +1049,51 @@ PanelWidgetClass Root {
         PanelWidgetClass TrashCard5 {
          position 0.677033 0.340816
          size 0.324163 0.316327
-         color 0.219608 0.239216 0.219608 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          {
+         ImageWidgetClass TrashCard5Background {
+          position 0 0
+          size 1 1
+          color 1 0.219608 0.239216 0.219608
+          image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
           PanelWidgetClass TrashCard5Bg {
            position 0.00369 0.006452
            size 0.99262 0.987097
-           color 0.07451 0.082353 0.07451 1
+           color 0 0 0 0
            hexactpos 0
            vexactpos 0
            hexactsize 0
            vexactsize 0
            ignorepointer 1
+           {
+           ImageWidgetClass TrashCard5BgBackground {
+            position 0 0
+            size 1 1
+            color 1 0.07451 0.082353 0.07451
+            image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+            mode blend
+            "src alpha" 1
+            "stretch mode" 1
+            hexactpos 0
+            vexactpos 0
+            hexactsize 0
+            vexactsize 0
+            ignorepointer 1
+           }
+           }
           }
           PanelWidgetClass TrashPreviewHost5 {
            position 0.280443 0.090323
@@ -665,7 +1107,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashFallback5 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.45098 0.47451 0.443137 1
+           "text color" 1 0.45098 0.47451 0.443137
            "text valign" center
            "text halign" center
            position 0.02952 0.258065
@@ -680,7 +1122,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashName5 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.643137 0.662745 0.631373 1
+           "text color" 1 0.643137 0.662745 0.631373
            "text valign" center
            "text halign" center
            position 0.02952 0.696774
@@ -706,21 +1148,51 @@ PanelWidgetClass Root {
         PanelWidgetClass TrashCard6 {
          position 0 0.681633
          size 0.324163 0.316327
-         color 0.219608 0.239216 0.219608 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          {
+         ImageWidgetClass TrashCard6Background {
+          position 0 0
+          size 1 1
+          color 1 0.219608 0.239216 0.219608
+          image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
           PanelWidgetClass TrashCard6Bg {
            position 0.00369 0.006452
            size 0.99262 0.987097
-           color 0.07451 0.082353 0.07451 1
+           color 0 0 0 0
            hexactpos 0
            vexactpos 0
            hexactsize 0
            vexactsize 0
            ignorepointer 1
+           {
+           ImageWidgetClass TrashCard6BgBackground {
+            position 0 0
+            size 1 1
+            color 1 0.07451 0.082353 0.07451
+            image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+            mode blend
+            "src alpha" 1
+            "stretch mode" 1
+            hexactpos 0
+            vexactpos 0
+            hexactsize 0
+            vexactsize 0
+            ignorepointer 1
+           }
+           }
           }
           PanelWidgetClass TrashPreviewHost6 {
            position 0.280443 0.090323
@@ -734,7 +1206,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashFallback6 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.45098 0.47451 0.443137 1
+           "text color" 1 0.45098 0.47451 0.443137
            "text valign" center
            "text halign" center
            position 0.02952 0.258065
@@ -749,7 +1221,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashName6 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.643137 0.662745 0.631373 1
+           "text color" 1 0.643137 0.662745 0.631373
            "text valign" center
            "text halign" center
            position 0.02952 0.696774
@@ -775,21 +1247,51 @@ PanelWidgetClass Root {
         PanelWidgetClass TrashCard7 {
          position 0.338517 0.681633
          size 0.324163 0.316327
-         color 0.219608 0.239216 0.219608 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          {
+         ImageWidgetClass TrashCard7Background {
+          position 0 0
+          size 1 1
+          color 1 0.219608 0.239216 0.219608
+          image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
           PanelWidgetClass TrashCard7Bg {
            position 0.00369 0.006452
            size 0.99262 0.987097
-           color 0.07451 0.082353 0.07451 1
+           color 0 0 0 0
            hexactpos 0
            vexactpos 0
            hexactsize 0
            vexactsize 0
            ignorepointer 1
+           {
+           ImageWidgetClass TrashCard7BgBackground {
+            position 0 0
+            size 1 1
+            color 1 0.07451 0.082353 0.07451
+            image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+            mode blend
+            "src alpha" 1
+            "stretch mode" 1
+            hexactpos 0
+            vexactpos 0
+            hexactsize 0
+            vexactsize 0
+            ignorepointer 1
+           }
+           }
           }
           PanelWidgetClass TrashPreviewHost7 {
            position 0.280443 0.090323
@@ -803,7 +1305,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashFallback7 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.45098 0.47451 0.443137 1
+           "text color" 1 0.45098 0.47451 0.443137
            "text valign" center
            "text halign" center
            position 0.02952 0.258065
@@ -818,7 +1320,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashName7 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.643137 0.662745 0.631373 1
+           "text color" 1 0.643137 0.662745 0.631373
            "text valign" center
            "text halign" center
            position 0.02952 0.696774
@@ -844,21 +1346,51 @@ PanelWidgetClass Root {
         PanelWidgetClass TrashCard8 {
          position 0.677033 0.681633
          size 0.324163 0.316327
-         color 0.219608 0.239216 0.219608 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          {
+         ImageWidgetClass TrashCard8Background {
+          position 0 0
+          size 1 1
+          color 1 0.219608 0.239216 0.219608
+          image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
           PanelWidgetClass TrashCard8Bg {
            position 0.00369 0.006452
            size 0.99262 0.987097
-           color 0.07451 0.082353 0.07451 1
+           color 0 0 0 0
            hexactpos 0
            vexactpos 0
            hexactsize 0
            vexactsize 0
            ignorepointer 1
+           {
+           ImageWidgetClass TrashCard8BgBackground {
+            position 0 0
+            size 1 1
+            color 1 0.07451 0.082353 0.07451
+            image0 "JobsMod_Client/GUI/Textures/UiShell/item_slot.paa"
+            mode blend
+            "src alpha" 1
+            "stretch mode" 1
+            hexactpos 0
+            vexactpos 0
+            hexactsize 0
+            vexactsize 0
+            ignorepointer 1
+           }
+           }
           }
           PanelWidgetClass TrashPreviewHost8 {
            position 0.280443 0.090323
@@ -872,7 +1404,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashFallback8 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.45098 0.47451 0.443137 1
+           "text color" 1 0.45098 0.47451 0.443137
            "text valign" center
            "text halign" center
            position 0.02952 0.258065
@@ -887,7 +1419,7 @@ PanelWidgetClass Root {
           }
           TextWidgetClass TrashName8 {
            font "gui/fonts/etelkatextpro22"
-           "text color" 0.643137 0.662745 0.631373 1
+           "text color" 1 0.643137 0.662745 0.631373
            "text valign" center
            "text halign" center
            position 0.02952 0.696774
@@ -917,15 +1449,29 @@ PanelWidgetClass Root {
     PanelWidgetClass BinArea {
      position 0.6875 0.184211
      size 0.3125 0.734211
-     color 0.12549 0.141176 0.101961 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      {
+     ImageWidgetClass BinAreaBackground {
+      position 0 0
+      size 1 1
+      color 1 0.12549 0.141176 0.101961
+      image0 "JobsMod_Client/GUI/Textures/UiShell/bin_area.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
       TextWidgetClass BinAreaTitle {
        font "gui/fonts/metron-bold14"
-       "text color" 0.45098 0.47451 0.443137 1
+       "text color" 1 0.45098 0.47451 0.443137
        "text valign" center
        position 0.055 0.021505
        size 0.75 0.039427
@@ -939,31 +1485,77 @@ PanelWidgetClass Root {
       PanelWidgetClass BinWood {
        position 0.055 0.071685
        size 0.89 0.286738
-       color 0.219608 0.239216 0.219608 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass BinWoodBackground {
+        position 0 0
+        size 1 1
+        color 1 0.219608 0.239216 0.219608
+        image0 "JobsMod_Client/GUI/Textures/UiShell/bin_slot.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass BinWoodBg {
          position 0.002809 0.00625
          size 0.994382 0.9875
-         color 0.101961 0.109804 0.098039 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass BinWoodBgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.101961 0.109804 0.098039
+          image0 "JobsMod_Client/GUI/Textures/UiShell/bin_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         PanelWidgetClass BinWoodMarker {
          position 0 0
          size 1 0.01875
-         color 0.462745 0.392157 0.305882 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass BinWoodMarkerBackground {
+          position 0 0
+          size 1 1
+          color 1 0.462745 0.392157 0.305882
+          image0 "JobsMod_Client/GUI/Textures/UiShell/bin_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         PanelWidgetClass BinWoodPreviewHost {
          position 0.044944 0.2
@@ -977,7 +1569,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass BinWoodFallback {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.45098 0.47451 0.443137 1
+         "text color" 1 0.45098 0.47451 0.443137
          "text valign" center
          "text halign" center
          position 0.044944 0.4
@@ -992,7 +1584,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass BinWoodLabel {
          font "gui/fonts/metron-bold14"
-         "text color" 0.929412 0.937255 0.917647 1
+         "text color" 1 0.929412 0.937255 0.917647
          "text valign" center
          position 0.359551 0.175
          size 0.589888 0.1875
@@ -1005,7 +1597,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass BinWoodCounter {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.45098 0.47451 0.443137 1
+         "text color" 1 0.45098 0.47451 0.443137
          "text valign" center
          position 0.359551 0.4
          size 0.589888 0.15
@@ -1018,7 +1610,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass BinWoodStatus {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.45098 0.47451 0.443137 1
+         "text color" 1 0.45098 0.47451 0.443137
          "text valign" center
          position 0.359551 0.6
          size 0.589888 0.1375
@@ -1034,31 +1626,77 @@ PanelWidgetClass Root {
       PanelWidgetClass BinPlastic {
        position 0.055 0.379928
        size 0.89 0.286738
-       color 0.219608 0.239216 0.219608 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass BinPlasticBackground {
+        position 0 0
+        size 1 1
+        color 1 0.219608 0.239216 0.219608
+        image0 "JobsMod_Client/GUI/Textures/UiShell/bin_slot.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass BinPlasticBg {
          position 0.002809 0.00625
          size 0.994382 0.9875
-         color 0.101961 0.109804 0.098039 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass BinPlasticBgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.101961 0.109804 0.098039
+          image0 "JobsMod_Client/GUI/Textures/UiShell/bin_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         PanelWidgetClass BinPlasticMarker {
          position 0 0
          size 1 0.01875
-         color 0.337255 0.411765 0.470588 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass BinPlasticMarkerBackground {
+          position 0 0
+          size 1 1
+          color 1 0.337255 0.411765 0.470588
+          image0 "JobsMod_Client/GUI/Textures/UiShell/bin_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         PanelWidgetClass BinPlasticPreviewHost {
          position 0.044944 0.2
@@ -1072,7 +1710,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass BinPlasticFallback {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.45098 0.47451 0.443137 1
+         "text color" 1 0.45098 0.47451 0.443137
          "text valign" center
          "text halign" center
          position 0.044944 0.4
@@ -1087,7 +1725,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass BinPlasticLabel {
          font "gui/fonts/metron-bold14"
-         "text color" 0.929412 0.937255 0.917647 1
+         "text color" 1 0.929412 0.937255 0.917647
          "text valign" center
          position 0.359551 0.175
          size 0.589888 0.1875
@@ -1100,7 +1738,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass BinPlasticCounter {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.45098 0.47451 0.443137 1
+         "text color" 1 0.45098 0.47451 0.443137
          "text valign" center
          position 0.359551 0.4
          size 0.589888 0.15
@@ -1113,7 +1751,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass BinPlasticStatus {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.45098 0.47451 0.443137 1
+         "text color" 1 0.45098 0.47451 0.443137
          "text valign" center
          position 0.359551 0.6
          size 0.589888 0.1375
@@ -1129,31 +1767,77 @@ PanelWidgetClass Root {
       PanelWidgetClass BinMetal {
        position 0.055 0.688172
        size 0.89 0.286738
-       color 0.219608 0.239216 0.219608 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass BinMetalBackground {
+        position 0 0
+        size 1 1
+        color 1 0.219608 0.239216 0.219608
+        image0 "JobsMod_Client/GUI/Textures/UiShell/bin_slot.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass BinMetalBg {
          position 0.002809 0.00625
          size 0.994382 0.9875
-         color 0.101961 0.109804 0.098039 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass BinMetalBgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.101961 0.109804 0.098039
+          image0 "JobsMod_Client/GUI/Textures/UiShell/bin_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         PanelWidgetClass BinMetalMarker {
          position 0 0
          size 1 0.01875
-         color 0.4 0.419608 0.407843 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass BinMetalMarkerBackground {
+          position 0 0
+          size 1 1
+          color 1 0.4 0.419608 0.407843
+          image0 "JobsMod_Client/GUI/Textures/UiShell/bin_slot.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         PanelWidgetClass BinMetalPreviewHost {
          position 0.044944 0.2
@@ -1167,7 +1851,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass BinMetalFallback {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.45098 0.47451 0.443137 1
+         "text color" 1 0.45098 0.47451 0.443137
          "text valign" center
          "text halign" center
          position 0.044944 0.4
@@ -1182,7 +1866,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass BinMetalLabel {
          font "gui/fonts/metron-bold14"
-         "text color" 0.929412 0.937255 0.917647 1
+         "text color" 1 0.929412 0.937255 0.917647
          "text valign" center
          position 0.359551 0.175
          size 0.589888 0.1875
@@ -1195,7 +1879,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass BinMetalCounter {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.45098 0.47451 0.443137 1
+         "text color" 1 0.45098 0.47451 0.443137
          "text valign" center
          position 0.359551 0.4
          size 0.589888 0.15
@@ -1208,7 +1892,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass BinMetalStatus {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.45098 0.47451 0.443137 1
+         "text color" 1 0.45098 0.47451 0.443137
          "text valign" center
          position 0.359551 0.6
          size 0.589888 0.1375
@@ -1226,15 +1910,29 @@ PanelWidgetClass Root {
     PanelWidgetClass FooterPanel {
      position 0 0.918421
      size 1 0.081579
-     color 0.094118 0.101961 0.094118 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      {
+     ImageWidgetClass FooterPanelBackground {
+      position 0 0
+      size 1 1
+      color 1 0.094118 0.101961 0.094118
+      image0 "JobsMod_Client/GUI/Textures/UiShell/footer_panel.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
       TextWidgetClass TaskText {
        font "gui/fonts/etelkatextpro22"
-       "text color" 0.643137 0.662745 0.631373 1
+       "text color" 1 0.643137 0.662745 0.631373
        "text valign" center
        position 0.021875 0.322581
        size 0.328125 0.387097
@@ -1247,7 +1945,7 @@ PanelWidgetClass Root {
       }
       TextWidgetClass SortedText {
        font "gui/fonts/etelkatextpro22"
-       "text color" 0.643137 0.662745 0.631373 1
+       "text color" 1 0.643137 0.662745 0.631373
        "text valign" center
        "text halign" center
        position 0.390625 0.322581
@@ -1261,7 +1959,7 @@ PanelWidgetClass Root {
       }
       TextWidgetClass RemainingText {
        font "gui/fonts/etelkatextpro22"
-       "text color" 0.45098 0.47451 0.443137 1
+       "text color" 1 0.45098 0.47451 0.443137
        "text valign" center
        "text halign" center
        position 0.640625 0.322581
@@ -1276,25 +1974,55 @@ PanelWidgetClass Root {
       PanelWidgetClass CancelButtonFrame {
        position 0.80625 0.209677
        size 0.171875 0.580645
-       color 0.32549 0.352941 0.313725 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass CancelButtonFrameBackground {
+        position 0 0
+        size 1 1
+        color 1 0.32549 0.352941 0.313725
+        image0 "JobsMod_Client/GUI/Textures/UiShell/toast_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass CancelButtonFrameBg {
          position 0.004545 0.027778
          size 0.990909 0.944444
-         color 0.160784 0.176471 0.156863 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass CancelButtonFrameBgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.160784 0.176471 0.156863
+          image0 "JobsMod_Client/GUI/Textures/UiShell/toast_panel.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         TextWidgetClass CancelButtonText {
          font "gui/fonts/metron-bold14"
-         "text color" 0.643137 0.662745 0.631373 1
+         "text color" 1 0.643137 0.662745 0.631373
          "text valign" center
          "text halign" center
          position 0 0
@@ -1324,26 +2052,56 @@ PanelWidgetClass Root {
   PanelWidgetClass ToastPanel {
    position 0.390625 0.196296
    size 0.21875 0.059259
-   color 0.32549 0.352941 0.313725 1
+   color 0 0 0 0
    hexactpos 0
    vexactpos 0
    hexactsize 0
    vexactsize 0
    visible 0
    {
+   ImageWidgetClass ToastPanelBackground {
+    position 0 0
+    size 1 1
+    color 1 0.32549 0.352941 0.313725
+    image0 "JobsMod_Client/GUI/Textures/UiShell/content_panel.paa"
+    mode blend
+    "src alpha" 1
+    "stretch mode" 1
+    hexactpos 0
+    vexactpos 0
+    hexactsize 0
+    vexactsize 0
+    ignorepointer 1
+   }
     PanelWidgetClass ToastPanelBg {
      position 0.002381 0.015625
      size 0.995238 0.96875
-     color 0.07451 0.082353 0.07451 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      ignorepointer 1
+     {
+     ImageWidgetClass ToastPanelBgBackground {
+      position 0 0
+      size 1 1
+      color 1 0.07451 0.082353 0.07451
+      image0 "JobsMod_Client/GUI/Textures/UiShell/content_panel.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
+     }
     }
     TextWidgetClass ToastTitle {
      font "gui/fonts/metron-bold14"
-     "text color" 0.639216 0.721569 0.466667 1
+     "text color" 1 0.639216 0.721569 0.466667
      "text valign" center
      "text halign" center
      position 0 0.1875
@@ -1357,7 +2115,7 @@ PanelWidgetClass Root {
     }
     TextWidgetClass ToastSub {
      font "gui/fonts/etelkatextpro22"
-     "text color" 0.643137 0.662745 0.631373 1
+     "text color" 1 0.643137 0.662745 0.631373
      "text valign" center
      "text halign" center
      position 0 0.59375
@@ -1384,34 +2142,80 @@ PanelWidgetClass Root {
     PanelWidgetClass ResultDim {
      position 0 0
      size 1 1
-     color 0.023529 0.027451 0.019608 1
-     hexactpos 0
-     vexactpos 0
-     hexactsize 0
-     vexactsize 0
-    }
-    PanelWidgetClass ResultPanel {
-     position 0.354167 0.333333
-     size 0.291667 0.333333
-     color 0.32549 0.352941 0.313725 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      {
+     ImageWidgetClass ResultDimBackground {
+      position 0 0
+      size 1 1
+      color 1 0.023529 0.027451 0.019608
+      image0 "JobsMod_Client/GUI/Textures/UiShell/dark_overlay.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
+     }
+    }
+    PanelWidgetClass ResultPanel {
+     position 0.354167 0.333333
+     size 0.291667 0.333333
+     color 0 0 0 0
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     {
+     ImageWidgetClass ResultPanelBackground {
+      position 0 0
+      size 1 1
+      color 1 0.32549 0.352941 0.313725
+      image0 "JobsMod_Client/GUI/Textures/UiShell/modal_panel.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
       PanelWidgetClass ResultPanelBg {
        position 0.001786 0.002778
        size 0.996429 0.994444
-       color 0.086275 0.094118 0.101961 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        ignorepointer 1
+       {
+       ImageWidgetClass ResultPanelBgBackground {
+        position 0 0
+        size 1 1
+        color 1 0.086275 0.094118 0.101961
+        image0 "JobsMod_Client/GUI/Textures/UiShell/modal_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
+       }
       }
       TextWidgetClass ResultTitle {
        font "gui/fonts/metron-bold14"
-       "text color" 0.929412 0.937255 0.917647 1
+       "text color" 1 0.929412 0.937255 0.917647
        "text valign" center
        position 0.057143 0.111111
        size 0.885714 0.111111
@@ -1425,16 +2229,32 @@ PanelWidgetClass Root {
       PanelWidgetClass ResultRule {
        position 0.057143 0.255556
        size 0.885714 0.002778
-       color 0.219608 0.239216 0.219608 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        ignorepointer 1
+       {
+       ImageWidgetClass ResultRuleBackground {
+        position 0 0
+        size 1 1
+        color 1 0.219608 0.239216 0.219608
+        image0 "JobsMod_Client/GUI/Textures/UiShell/modal_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
+       }
       }
       TextWidgetClass ResultBody {
        font "gui/fonts/etelkatextpro22"
-       "text color" 0.643137 0.662745 0.631373 1
+       "text color" 1 0.643137 0.662745 0.631373
        "text valign" center
        position 0.057143 0.294444
        size 0.885714 0.144444
@@ -1447,7 +2267,7 @@ PanelWidgetClass Root {
       }
       TextWidgetClass ResultScore {
        font "gui/fonts/metron-bold14"
-       "text color" 0.639216 0.721569 0.466667 1
+       "text color" 1 0.639216 0.721569 0.466667
        "text valign" center
        position 0.057143 0.461111
        size 0.885714 0.216667
@@ -1460,25 +2280,55 @@ PanelWidgetClass Root {
       PanelWidgetClass FinishButtonFrame {
        position 0.057143 0.727778
        size 0.885714 0.127778
-       color 0.639216 0.721569 0.466667 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass FinishButtonFrameBackground {
+        position 0 0
+        size 1 1
+        color 1 0.639216 0.721569 0.466667
+        image0 "JobsMod_Client/GUI/Textures/UiShell/toast_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass FinishButtonFrameBg {
          position 0.002016 0.021739
          size 0.995968 0.956522
-         color 0.160784 0.176471 0.156863 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass FinishButtonFrameBgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.160784 0.176471 0.156863
+          image0 "JobsMod_Client/GUI/Textures/UiShell/toast_panel.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         TextWidgetClass FinishButtonText {
          font "gui/fonts/metron-bold14"
-         "text color" 0.639216 0.721569 0.466667 1
+         "text color" 1 0.639216 0.721569 0.466667
          "text valign" center
          "text halign" center
          position 0 0
@@ -1518,34 +2368,80 @@ PanelWidgetClass Root {
     PanelWidgetClass ConfirmDim {
      position 0 0
      size 1 1
-     color 0.023529 0.027451 0.019608 1
-     hexactpos 0
-     vexactpos 0
-     hexactsize 0
-     vexactsize 0
-    }
-    PanelWidgetClass ConfirmPanel {
-     position 0.364583 0.407407
-     size 0.270833 0.185185
-     color 0.32549 0.352941 0.313725 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      {
+     ImageWidgetClass ConfirmDimBackground {
+      position 0 0
+      size 1 1
+      color 1 0.023529 0.027451 0.019608
+      image0 "JobsMod_Client/GUI/Textures/UiShell/dark_overlay.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
+     }
+    }
+    PanelWidgetClass ConfirmPanel {
+     position 0.364583 0.407407
+     size 0.270833 0.185185
+     color 0 0 0 0
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     {
+     ImageWidgetClass ConfirmPanelBackground {
+      position 0 0
+      size 1 1
+      color 1 0.32549 0.352941 0.313725
+      image0 "JobsMod_Client/GUI/Textures/UiShell/modal_panel.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
       PanelWidgetClass ConfirmPanelBg {
        position 0.001923 0.005
        size 0.996154 0.99
-       color 0.086275 0.094118 0.101961 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        ignorepointer 1
+       {
+       ImageWidgetClass ConfirmPanelBgBackground {
+        position 0 0
+        size 1 1
+        color 1 0.086275 0.094118 0.101961
+        image0 "JobsMod_Client/GUI/Textures/UiShell/modal_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
+       }
       }
       TextWidgetClass ConfirmTitle {
        font "gui/fonts/metron-bold14"
-       "text color" 0.929412 0.937255 0.917647 1
+       "text color" 1 0.929412 0.937255 0.917647
        "text valign" center
        position 0.065385 0.17
        size 0.869231 0.17
@@ -1558,7 +2454,7 @@ PanelWidgetClass Root {
       }
       TextWidgetClass ConfirmBody {
        font "gui/fonts/etelkatextpro22"
-       "text color" 0.643137 0.662745 0.631373 1
+       "text color" 1 0.643137 0.662745 0.631373
        "text valign" center
        position 0.065385 0.38
        size 0.869231 0.24
@@ -1572,25 +2468,55 @@ PanelWidgetClass Root {
       PanelWidgetClass ConfirmYesFrame {
        position 0.065385 0.69
        size 0.423077 0.21
-       color 0.662745 0.364706 0.364706 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass ConfirmYesFrameBackground {
+        position 0 0
+        size 1 1
+        color 1 0.662745 0.364706 0.364706
+        image0 "JobsMod_Client/GUI/Textures/UiShell/modal_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass ConfirmYesFrameBg {
          position 0.004545 0.02381
          size 0.990909 0.952381
-         color 0.160784 0.176471 0.156863 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass ConfirmYesFrameBgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.160784 0.176471 0.156863
+          image0 "JobsMod_Client/GUI/Textures/UiShell/modal_panel.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         TextWidgetClass ConfirmYesText {
          font "gui/fonts/metron-bold14"
-         "text color" 0.662745 0.364706 0.364706 1
+         "text color" 1 0.662745 0.364706 0.364706
          "text valign" center
          "text halign" center
          position 0 0
@@ -1616,25 +2542,55 @@ PanelWidgetClass Root {
       PanelWidgetClass ConfirmNoFrame {
        position 0.511538 0.69
        size 0.423077 0.21
-       color 0.32549 0.352941 0.313725 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass ConfirmNoFrameBackground {
+        position 0 0
+        size 1 1
+        color 1 0.32549 0.352941 0.313725
+        image0 "JobsMod_Client/GUI/Textures/UiShell/modal_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass ConfirmNoFrameBg {
          position 0.004545 0.02381
          size 0.990909 0.952381
-         color 0.160784 0.176471 0.156863 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass ConfirmNoFrameBgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.160784 0.176471 0.156863
+          image0 "JobsMod_Client/GUI/Textures/UiShell/modal_panel.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         TextWidgetClass ConfirmNoText {
          font "gui/fonts/metron-bold14"
-         "text color" 0.929412 0.937255 0.917647 1
+         "text color" 1 0.929412 0.937255 0.917647
          "text valign" center
          "text halign" center
          position 0 0
@@ -1664,22 +2620,52 @@ PanelWidgetClass Root {
   PanelWidgetClass DragGhost {
    position 0 0
    size 0.078125 0.111111
-   color 0.639216 0.721569 0.466667 1
+   color 0 0 0 0
    hexactpos 0
    vexactpos 0
    hexactsize 0
    vexactsize 0
    visible 0
    {
+   ImageWidgetClass DragGhostBackground {
+    position 0 0
+    size 1 1
+    color 1 0.639216 0.721569 0.466667
+    image0 "JobsMod_Client/GUI/Textures/UiShell/content_panel.paa"
+    mode blend
+    "src alpha" 1
+    "stretch mode" 1
+    hexactpos 0
+    vexactpos 0
+    hexactsize 0
+    vexactsize 0
+    ignorepointer 1
+   }
     PanelWidgetClass DragGhostBg {
      position 0.006667 0.008333
      size 0.986667 0.983333
-     color 0.07451 0.082353 0.07451 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      ignorepointer 1
+     {
+     ImageWidgetClass DragGhostBgBackground {
+      position 0 0
+      size 1 1
+      color 1 0.07451 0.082353 0.07451
+      image0 "JobsMod_Client/GUI/Textures/UiShell/content_panel.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
+     }
     }
     PanelWidgetClass DragGhostPreviewHost {
      position 0 0
@@ -1693,7 +2679,7 @@ PanelWidgetClass Root {
     }
     TextWidgetClass DragGhostFallback {
      font "gui/fonts/etelkatextpro22"
-     "text color" 0.45098 0.47451 0.443137 1
+     "text color" 1 0.45098 0.47451 0.443137
      "text valign" center
      "text halign" center
      position 0 0.366667

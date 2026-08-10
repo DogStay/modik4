@@ -10,43 +10,103 @@ PanelWidgetClass Root {
   PanelWidgetClass DarkOverlay {
    position 0 0
    size 1 1
-   color 0.023529 0.027451 0.019608 1
-   hexactpos 0
-   vexactpos 0
-   hexactsize 0
-   vexactsize 0
-  }
-  PanelWidgetClass MainPanel {
-   position 0.32 0.14
-   size 0.36 0.72
-   color 0.219608 0.239216 0.219608 1
+   color 0 0 0 0
    hexactpos 0
    vexactpos 0
    hexactsize 0
    vexactsize 0
    {
+   ImageWidgetClass DarkOverlayBackground {
+    position 0 0
+    size 1 1
+    color 1 0.023529 0.027451 0.019608
+    image0 "JobsMod_Client/GUI/Textures/UiShell/dark_overlay.paa"
+    mode blend
+    "src alpha" 1
+    "stretch mode" 1
+    hexactpos 0
+    vexactpos 0
+    hexactsize 0
+    vexactsize 0
+    ignorepointer 1
+   }
+   }
+  }
+  PanelWidgetClass MainPanel {
+   position 0.32 0.14
+   size 0.36 0.72
+   color 0 0 0 0
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   {
+   ImageWidgetClass MainPanelBackground {
+    position 0 0
+    size 1 1
+    color 1 0.219608 0.239216 0.219608
+    image0 "JobsMod_Client/GUI/Textures/UiShell/main_panel.paa"
+    mode blend
+    "src alpha" 1
+    "stretch mode" 1
+    hexactpos 0
+    vexactpos 0
+    hexactsize 0
+    vexactsize 0
+    ignorepointer 1
+   }
     PanelWidgetClass MainPanelBg {
      position 0.0015 0.001
      size 0.997 0.998
-     color 0.086275 0.094118 0.101961 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      ignorepointer 1
+     {
+     ImageWidgetClass MainPanelBgBackground {
+      position 0 0
+      size 1 1
+      color 1 0.086275 0.094118 0.101961
+      image0 "JobsMod_Client/GUI/Textures/UiShell/main_panel.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
+     }
     }
     PanelWidgetClass HeaderPanel {
      position 0 0
      size 1 0.135
-     color 0.109804 0.117647 0.109804 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      {
+     ImageWidgetClass HeaderPanelBackground {
+      position 0 0
+      size 1 1
+      color 1 0.109804 0.117647 0.109804
+      image0 "JobsMod_Client/GUI/Textures/UiShell/header.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
       TextWidgetClass NpcNameText {
        font "gui/fonts/metron-bold14"
-       "text color" 0.929412 0.937255 0.917647 1
+       "text color" 1 0.929412 0.937255 0.917647
        "text valign" center
        position 0.04 0.14
        size 0.92 0.38
@@ -59,7 +119,7 @@ PanelWidgetClass Root {
       }
       TextWidgetClass NpcDescText {
        font "gui/fonts/etelkatextpro22"
-       "text color" 0.45098 0.47451 0.443137 1
+       "text color" 1 0.45098 0.47451 0.443137
        "text valign" center
        position 0.04 0.56
        size 0.92 0.32
@@ -84,25 +144,55 @@ PanelWidgetClass Root {
       PanelWidgetClass JobRow0 {
        position 0.04 0
        size 0.92 0.155
-       color 0.219608 0.239216 0.219608 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass JobRow0Background {
+        position 0 0
+        size 1 1
+        color 1 0.219608 0.239216 0.219608
+        image0 "JobsMod_Client/GUI/Textures/UiShell/inner_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass JobRow0Bg {
          position 0.002 0.008
          size 0.996 0.984
-         color 0.07451 0.082353 0.07451 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass JobRow0BgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.07451 0.082353 0.07451
+          image0 "JobsMod_Client/GUI/Textures/UiShell/inner_panel.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         TextWidgetClass JobRow0Name {
          font "gui/fonts/metron-bold14"
-         "text color" 0.929412 0.937255 0.917647 1
+         "text color" 1 0.929412 0.937255 0.917647
          "text valign" center
          position 0.03 0.08
          size 0.94 0.32
@@ -115,7 +205,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow0Desc {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.643137 0.662745 0.631373 1
+         "text color" 1 0.643137 0.662745 0.631373
          "text valign" center
          position 0.03 0.4
          size 0.94 0.28
@@ -128,7 +218,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow0Status {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.639216 0.721569 0.466667 1
+         "text color" 1 0.639216 0.721569 0.466667
          "text valign" center
          position 0.03 0.66
          size 0.94 0.28
@@ -153,25 +243,55 @@ PanelWidgetClass Root {
       PanelWidgetClass JobRow1 {
        position 0.04 0.1666
        size 0.92 0.155
-       color 0.219608 0.239216 0.219608 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass JobRow1Background {
+        position 0 0
+        size 1 1
+        color 1 0.219608 0.239216 0.219608
+        image0 "JobsMod_Client/GUI/Textures/UiShell/inner_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass JobRow1Bg {
          position 0.002 0.008
          size 0.996 0.984
-         color 0.07451 0.082353 0.07451 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass JobRow1BgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.07451 0.082353 0.07451
+          image0 "JobsMod_Client/GUI/Textures/UiShell/inner_panel.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         TextWidgetClass JobRow1Name {
          font "gui/fonts/metron-bold14"
-         "text color" 0.929412 0.937255 0.917647 1
+         "text color" 1 0.929412 0.937255 0.917647
          "text valign" center
          position 0.03 0.08
          size 0.94 0.32
@@ -184,7 +304,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow1Desc {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.643137 0.662745 0.631373 1
+         "text color" 1 0.643137 0.662745 0.631373
          "text valign" center
          position 0.03 0.4
          size 0.94 0.28
@@ -197,7 +317,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow1Status {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.639216 0.721569 0.466667 1
+         "text color" 1 0.639216 0.721569 0.466667
          "text valign" center
          position 0.03 0.66
          size 0.94 0.28
@@ -222,25 +342,55 @@ PanelWidgetClass Root {
       PanelWidgetClass JobRow2 {
        position 0.04 0.3332
        size 0.92 0.155
-       color 0.219608 0.239216 0.219608 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass JobRow2Background {
+        position 0 0
+        size 1 1
+        color 1 0.219608 0.239216 0.219608
+        image0 "JobsMod_Client/GUI/Textures/UiShell/inner_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass JobRow2Bg {
          position 0.002 0.008
          size 0.996 0.984
-         color 0.07451 0.082353 0.07451 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass JobRow2BgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.07451 0.082353 0.07451
+          image0 "JobsMod_Client/GUI/Textures/UiShell/inner_panel.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         TextWidgetClass JobRow2Name {
          font "gui/fonts/metron-bold14"
-         "text color" 0.929412 0.937255 0.917647 1
+         "text color" 1 0.929412 0.937255 0.917647
          "text valign" center
          position 0.03 0.08
          size 0.94 0.32
@@ -253,7 +403,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow2Desc {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.643137 0.662745 0.631373 1
+         "text color" 1 0.643137 0.662745 0.631373
          "text valign" center
          position 0.03 0.4
          size 0.94 0.28
@@ -266,7 +416,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow2Status {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.639216 0.721569 0.466667 1
+         "text color" 1 0.639216 0.721569 0.466667
          "text valign" center
          position 0.03 0.66
          size 0.94 0.28
@@ -291,25 +441,55 @@ PanelWidgetClass Root {
       PanelWidgetClass JobRow3 {
        position 0.04 0.4998
        size 0.92 0.155
-       color 0.219608 0.239216 0.219608 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass JobRow3Background {
+        position 0 0
+        size 1 1
+        color 1 0.219608 0.239216 0.219608
+        image0 "JobsMod_Client/GUI/Textures/UiShell/inner_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass JobRow3Bg {
          position 0.002 0.008
          size 0.996 0.984
-         color 0.07451 0.082353 0.07451 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass JobRow3BgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.07451 0.082353 0.07451
+          image0 "JobsMod_Client/GUI/Textures/UiShell/inner_panel.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         TextWidgetClass JobRow3Name {
          font "gui/fonts/metron-bold14"
-         "text color" 0.929412 0.937255 0.917647 1
+         "text color" 1 0.929412 0.937255 0.917647
          "text valign" center
          position 0.03 0.08
          size 0.94 0.32
@@ -322,7 +502,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow3Desc {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.643137 0.662745 0.631373 1
+         "text color" 1 0.643137 0.662745 0.631373
          "text valign" center
          position 0.03 0.4
          size 0.94 0.28
@@ -335,7 +515,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow3Status {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.639216 0.721569 0.466667 1
+         "text color" 1 0.639216 0.721569 0.466667
          "text valign" center
          position 0.03 0.66
          size 0.94 0.28
@@ -360,25 +540,55 @@ PanelWidgetClass Root {
       PanelWidgetClass JobRow4 {
        position 0.04 0.6664
        size 0.92 0.155
-       color 0.219608 0.239216 0.219608 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass JobRow4Background {
+        position 0 0
+        size 1 1
+        color 1 0.219608 0.239216 0.219608
+        image0 "JobsMod_Client/GUI/Textures/UiShell/inner_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass JobRow4Bg {
          position 0.002 0.008
          size 0.996 0.984
-         color 0.07451 0.082353 0.07451 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass JobRow4BgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.07451 0.082353 0.07451
+          image0 "JobsMod_Client/GUI/Textures/UiShell/inner_panel.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         TextWidgetClass JobRow4Name {
          font "gui/fonts/metron-bold14"
-         "text color" 0.929412 0.937255 0.917647 1
+         "text color" 1 0.929412 0.937255 0.917647
          "text valign" center
          position 0.03 0.08
          size 0.94 0.32
@@ -391,7 +601,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow4Desc {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.643137 0.662745 0.631373 1
+         "text color" 1 0.643137 0.662745 0.631373
          "text valign" center
          position 0.03 0.4
          size 0.94 0.28
@@ -404,7 +614,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow4Status {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.639216 0.721569 0.466667 1
+         "text color" 1 0.639216 0.721569 0.466667
          "text valign" center
          position 0.03 0.66
          size 0.94 0.28
@@ -429,25 +639,55 @@ PanelWidgetClass Root {
       PanelWidgetClass JobRow5 {
        position 0.04 0.833
        size 0.92 0.155
-       color 0.219608 0.239216 0.219608 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass JobRow5Background {
+        position 0 0
+        size 1 1
+        color 1 0.219608 0.239216 0.219608
+        image0 "JobsMod_Client/GUI/Textures/UiShell/inner_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         PanelWidgetClass JobRow5Bg {
          position 0.002 0.008
          size 0.996 0.984
-         color 0.07451 0.082353 0.07451 1
+         color 0 0 0 0
          hexactpos 0
          vexactpos 0
          hexactsize 0
          vexactsize 0
          ignorepointer 1
+         {
+         ImageWidgetClass JobRow5BgBackground {
+          position 0 0
+          size 1 1
+          color 1 0.07451 0.082353 0.07451
+          image0 "JobsMod_Client/GUI/Textures/UiShell/inner_panel.paa"
+          mode blend
+          "src alpha" 1
+          "stretch mode" 1
+          hexactpos 0
+          vexactpos 0
+          hexactsize 0
+          vexactsize 0
+          ignorepointer 1
+         }
+         }
         }
         TextWidgetClass JobRow5Name {
          font "gui/fonts/metron-bold14"
-         "text color" 0.929412 0.937255 0.917647 1
+         "text color" 1 0.929412 0.937255 0.917647
          "text valign" center
          position 0.03 0.08
          size 0.94 0.32
@@ -460,7 +700,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow5Desc {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.643137 0.662745 0.631373 1
+         "text color" 1 0.643137 0.662745 0.631373
          "text valign" center
          position 0.03 0.4
          size 0.94 0.28
@@ -473,7 +713,7 @@ PanelWidgetClass Root {
         }
         TextWidgetClass JobRow5Status {
          font "gui/fonts/etelkatextpro22"
-         "text color" 0.639216 0.721569 0.466667 1
+         "text color" 1 0.639216 0.721569 0.466667
          "text valign" center
          position 0.03 0.66
          size 0.94 0.28
@@ -500,24 +740,52 @@ PanelWidgetClass Root {
     PanelWidgetClass FooterPanel {
      position 0 0.85
      size 1 0.15
-     color 0.094118 0.101961 0.094118 1
+     color 0 0 0 0
      hexactpos 0
      vexactpos 0
      hexactsize 0
      vexactsize 0
      {
+     ImageWidgetClass FooterPanelBackground {
+      position 0 0
+      size 1 1
+      color 1 0.094118 0.101961 0.094118
+      image0 "JobsMod_Client/GUI/Textures/UiShell/footer_panel.paa"
+      mode blend
+      "src alpha" 1
+      "stretch mode" 1
+      hexactpos 0
+      vexactpos 0
+      hexactsize 0
+      vexactsize 0
+      ignorepointer 1
+     }
       PanelWidgetClass HandInPanel {
        position 0.04 0.1
        size 0.92 0.36
-       color 0.160784 0.176471 0.156863 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass HandInPanelBackground {
+        position 0 0
+        size 1 1
+        color 1 0.160784 0.176471 0.156863
+        image0 "JobsMod_Client/GUI/Textures/UiShell/content_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         TextWidgetClass HandInText {
          font "gui/fonts/metron-bold14"
-         "text color" 0.639216 0.721569 0.466667 1
+         "text color" 1 0.639216 0.721569 0.466667
          "text valign" center
          "text halign" center
          position 0 0
@@ -543,15 +811,29 @@ PanelWidgetClass Root {
       PanelWidgetClass AbandonPanel {
        position 0.04 0.54
        size 0.44 0.36
-       color 0.160784 0.176471 0.156863 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass AbandonPanelBackground {
+        position 0 0
+        size 1 1
+        color 1 0.160784 0.176471 0.156863
+        image0 "JobsMod_Client/GUI/Textures/UiShell/content_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         TextWidgetClass AbandonText {
          font "gui/fonts/metron-bold14"
-         "text color" 0.662745 0.364706 0.364706 1
+         "text color" 1 0.662745 0.364706 0.364706
          "text valign" center
          "text halign" center
          position 0 0
@@ -577,15 +859,29 @@ PanelWidgetClass Root {
       PanelWidgetClass ClosePanel {
        position 0.52 0.54
        size 0.44 0.36
-       color 0.160784 0.176471 0.156863 1
+       color 0 0 0 0
        hexactpos 0
        vexactpos 0
        hexactsize 0
        vexactsize 0
        {
+       ImageWidgetClass ClosePanelBackground {
+        position 0 0
+        size 1 1
+        color 1 0.160784 0.176471 0.156863
+        image0 "JobsMod_Client/GUI/Textures/UiShell/content_panel.paa"
+        mode blend
+        "src alpha" 1
+        "stretch mode" 1
+        hexactpos 0
+        vexactpos 0
+        hexactsize 0
+        vexactsize 0
+        ignorepointer 1
+       }
         TextWidgetClass CloseText {
          font "gui/fonts/metron-bold14"
-         "text color" 0.643137 0.662745 0.631373 1
+         "text color" 1 0.643137 0.662745 0.631373
          "text valign" center
          "text halign" center
          position 0 0
