@@ -39,6 +39,13 @@ class JobsModConfig
 
 	static const string FILE_SETTINGS = ROOT_DIR + "/settings.json";
 
+	// Drop a file here and the server reloads the config on its next upkeep
+	// tick, then deletes it. A file rather than a command on purpose: it works
+	// from VPP's file manager, from FTP, from a hosting panel and from a script,
+	// none of which have to know anything about this mod. Whatever the admin
+	// already uses to edit the JSON can also ask for it to be applied.
+	static const string FILE_RELOAD = ROOT_DIR + "/reload";
+
 	protected static const int MIN_PILE_RESPAWN = 10;
 	protected static const int MIN_ASSIGNMENT_TIMEOUT = 60;
 	protected static const float MIN_AREA_RADIUS = 3.0;
@@ -140,6 +147,55 @@ class JobsModConfig
 			return area;
 
 		return null;
+	}
+
+	// =====================================================================
+	// Reloading
+	// =====================================================================
+	// Re-reads everything from disk into this same instance. Returns false and
+	// changes nothing when the new config would leave the server with no jobs
+	// or no employers — a half-saved file must not be able to empty a running
+	// server, and the admin gets the old config plus a line saying why.
+	bool Reload()
+	{
+		map<string, ref JobsModJobJson> jobsBefore = m_Jobs;
+		map<string, ref JobsModNpcJson> npcsBefore = m_Npcs;
+		ref JobsModSettingsJson settingsBefore = m_Settings;
+
+		m_Jobs = new map<string, ref JobsModJobJson>();
+		m_Npcs = new map<string, ref JobsModNpcJson>();
+
+		LoadSettings();
+		LoadJobs();
+		LoadNpcs();
+		ResolveCrossReferences();
+
+		if (m_Jobs.Count() == 0 || m_Npcs.Count() == 0)
+		{
+			JobsLog.Error("SERVER/CONFIG: перезагрузка отменена — в новой конфигурации нет работ или NPC. Осталась прежняя.");
+
+			m_Jobs = jobsBefore;
+			m_Npcs = npcsBefore;
+			m_Settings = settingsBefore;
+			return false;
+		}
+
+		JobsLog.s_DebugEnabled = m_Settings.debug_logging;
+		Report();
+		return true;
+	}
+
+	// True once, when an admin has asked for a reload. The file is removed here
+	// rather than after the reload so a reload that throws cannot put the
+	// server into a loop of reloading and throwing.
+	static bool ConsumeReloadRequest()
+	{
+		if (!FileExist(FILE_RELOAD))
+			return false;
+
+		DeleteFile(FILE_RELOAD);
+		JobsLog.Info("SERVER/CONFIG: получен запрос на перезагрузку конфигурации.");
+		return true;
 	}
 
 	// =====================================================================

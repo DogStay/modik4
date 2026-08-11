@@ -649,6 +649,35 @@ class JobsModJobService
 		return "осталось " + hours.ToString() + " ч " + rest.ToString() + " мин";
 	}
 
+	// Closes every held job at once. Used when the config underneath them has
+	// changed and their ids can no longer be trusted to mean what they did.
+	void DropAll(string note)
+	{
+		array<string> holders = new array<string>();
+
+		int i;
+		for (i = 0; i < m_Assignments.Count(); i++)
+			holders.Insert(m_Assignments.GetKey(i));
+
+		for (i = 0; i < holders.Count(); i++)
+		{
+			string playerId = holders.Get(i);
+			JobsModAssignment assignment = GetAssignment(playerId);
+			if (!assignment)
+				continue;
+
+			PlayerBase player = FindPlayerById(playerId);
+			PlayerIdentity identity = null;
+			if (player)
+				identity = player.GetIdentity();
+
+			EndAssignment(player, identity, assignment, note);
+		}
+
+		if (holders.Count() > 0)
+			JobsLog.Info("SERVER/JOBS: снято заданий при перезагрузке: " + holders.Count().ToString() + ".");
+	}
+
 	int GetActiveCount()
 	{
 		return m_Assignments.Count();

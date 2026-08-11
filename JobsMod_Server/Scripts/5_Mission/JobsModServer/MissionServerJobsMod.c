@@ -66,6 +66,10 @@ modded class MissionServer
 		// not by walking into a circle, so a stray parcel costs nothing for the
 		// few seconds it survives.
 		JobsModServerRuntime.GetMessengerService().Update();
+
+		// Checked on the slow timer with everything else: an admin who has just
+		// saved a file can wait the same fifteen seconds the expiry sweep does.
+		JobsModServerRuntime.CheckReloadRequest();
 	}
 
 	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity)

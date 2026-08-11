@@ -123,6 +123,64 @@ class JobsModServerRuntime
 		JobsLog.Info("SERVER: JobsMod остановлен.");
 	}
 
+	// =====================================================================
+	// Applying an edited config without a restart
+	// =====================================================================
+	// Everything the config describes is rebuilt: NPCs, trash points, lockers.
+	// Held jobs are closed rather than carried over, and that is deliberate —
+	// an assignment points at a job, a zone and a route by id, and after an
+	// edit any of the three may mean something else or nothing at all. Closing
+	// them costs the players their current job once, with a message saying so;
+	// keeping them risks paying out against a contract that no longer exists.
+	//
+	// Freight and contract kits go with the assignments, so nothing is left
+	// standing in the world with no job attached to it.
+	static bool ReloadConfig()
+	{
+		if (!s_Started || !s_Config)
+		{
+			JobsLog.Error("SERVER/CONFIG: перезагрузка невозможна — мод не запущен.");
+			return false;
+		}
+
+		if (!s_Config.Reload())
+			return false;
+
+		if (s_JobService)
+			s_JobService.DropAll("Конфигурация обновлена администратором.");
+
+		if (s_ZoneService)
+		{
+			s_ZoneService.DeleteAll();
+			s_ZoneService.SpawnAll();
+		}
+
+		if (s_NpcService)
+		{
+			s_NpcService.DeleteAll();
+			s_NpcService.SpawnAll();
+		}
+
+		if (s_LockerService)
+		{
+			s_LockerService.DeleteAll();
+			s_LockerService.SpawnAll();
+		}
+
+		JobsLog.Info("SERVER/CONFIG: конфигурация перезагружена, мир пересоздан.");
+		return true;
+	}
+
+	// Called from the mission's slow tick.
+	static void CheckReloadRequest()
+	{
+		if (!s_Started)
+			return;
+
+		if (JobsModConfig.ConsumeReloadRequest())
+			ReloadConfig();
+	}
+
 	static bool IsStarted()
 	{
 		return s_Started;
