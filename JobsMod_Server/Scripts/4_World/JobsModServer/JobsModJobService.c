@@ -604,13 +604,21 @@ class JobsModJobService
 		if (left < 0)
 			left = 0;
 
-		if (left >= 60)
-		{
-			int minutes = left / 60;
-			return "осталось " + minutes.ToString() + " мин";
-		}
+		if (left < 60)
+			return "осталось " + left.ToString() + " с";
 
-		return "осталось " + left.ToString() + " с";
+		int minutes = left / 60;
+
+		if (minutes < 60)
+			return "осталось " + minutes.ToString() + " мин";
+
+		int hours = minutes / 60;
+		int rest = minutes % 60;
+
+		if (rest == 0)
+			return "осталось " + hours.ToString() + " ч";
+
+		return "осталось " + hours.ToString() + " ч " + rest.ToString() + " мин";
 	}
 
 	int GetActiveCount()

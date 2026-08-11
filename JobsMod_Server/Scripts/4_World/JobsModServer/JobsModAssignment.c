@@ -180,13 +180,23 @@ class JobsModAssignment
 	// it ended up — on the ground, in a player's hands or in a tent.
 	void DeleteAllCargo()
 	{
+		int removed = 0;
+
 		for (int i = 0; i < m_Cargo.Count(); i++)
 		{
 			EntityAI cargo = m_Cargo.Get(i);
-			if (cargo)
-				GetGame().ObjectDelete(cargo);
+			if (!cargo)
+				continue;
+
+			// Delete() on the entity rather than ObjectDelete() on the world
+			// object: contract gear is normally worn or held, so what has to go
+			// is the inventory item, and the entity knows how to take itself out
+			// of whatever slot it is sitting in.
+			cargo.Delete();
+			removed++;
 		}
 
+		JobsLog.Debug("SERVER/JOBS: снято предметов задания: " + removed.ToString() + " из " + m_Cargo.Count().ToString() + ".");
 		m_Cargo.Clear();
 	}
 }

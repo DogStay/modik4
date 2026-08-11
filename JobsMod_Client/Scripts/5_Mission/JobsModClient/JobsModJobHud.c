@@ -81,12 +81,43 @@ class JobsModJobHud
 
 		m_Title.SetText(view.m_JobName);
 		m_Zone.SetText("Зона: " + view.m_ZoneName);
-		m_Progress.SetText(view.m_Progress.ToString() + " / " + view.m_Required.ToString());
+		// A guard shift is counted in seconds, and "120 / 900" is not a thing
+		// anyone reads as a quarter of an hour. Every other job counts things,
+		// where the plain numbers are exactly right.
+		if (view.m_Type == JobsModJobType.GUARD)
+			m_Progress.SetText(FormatDuration(view.m_Progress) + " / " + FormatDuration(view.m_Required));
+		else
+			m_Progress.SetText(view.m_Progress.ToString() + " / " + view.m_Required.ToString());
 		m_Hint.SetText(view.m_Hint);
 
 		m_BarFill.SetSize(view.GetFraction(), 1.0);
 
 		ApplyColours(view, timeslice);
+	}
+
+	// Seconds up to a minute, then minutes, then hours and minutes. Kept to
+	// integer arithmetic on purpose: a float through ToString() prints six
+	// decimal places, which is not a duration anyone can read.
+	static string FormatDuration(int seconds)
+	{
+		if (seconds < 0)
+			seconds = 0;
+
+		if (seconds < 60)
+			return seconds.ToString() + " с";
+
+		int minutes = seconds / 60;
+
+		if (minutes < 60)
+			return minutes.ToString() + " мин";
+
+		int hours = minutes / 60;
+		int rest = minutes % 60;
+
+		if (rest == 0)
+			return hours.ToString() + " ч";
+
+		return hours.ToString() + " ч " + rest.ToString() + " мин";
 	}
 
 	// A finished job is the one state the player has to act on, so it is the one

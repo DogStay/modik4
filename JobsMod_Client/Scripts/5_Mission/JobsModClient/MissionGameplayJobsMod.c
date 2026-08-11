@@ -71,6 +71,14 @@ modded class MissionGameplay
 	{
 		m_JobsModMenuOpen = open;
 
+		// The vanilla HUD too, not just ours. A full screen window with the
+		// stamina bar, the quickbar and the status icons still drawn over it is
+		// what "the whole HUD is still visible" meant, and no amount of hiding
+		// our own panel was ever going to address it.
+		Hud hud = GetHud();
+		if (hud)
+			hud.Show(!open);
+
 		if (!open)
 			return;
 
