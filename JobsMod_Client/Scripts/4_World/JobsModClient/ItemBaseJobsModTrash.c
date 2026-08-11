@@ -9,9 +9,32 @@ modded class ItemBase
 {
 	protected bool m_JobsModWorldTrash;
 
+	// The equipment locker rides on the same class for the same reason the NPC
+	// flag rides on PlayerBase: a client cannot tell a contract locker from any
+	// other cupboard, the class name is the admin's choice and so says nothing,
+	// and a flag that travels with the entity is right the moment the entity is
+	// visible. Lockers therefore have to be ItemBase-derived — every vanilla
+	// container is.
+	protected bool m_JobsModIsLocker;
+
 	void ItemBase()
 	{
 		RegisterNetSyncVariableBool("m_JobsModWorldTrash");
+		RegisterNetSyncVariableBool("m_JobsModIsLocker");
+	}
+
+	void JobsModSetLocker(bool value)
+	{
+		if (!GetGame().IsServer())
+			return;
+
+		m_JobsModIsLocker = value;
+		SetSynchDirty();
+	}
+
+	bool JobsModIsLocker()
+	{
+		return m_JobsModIsLocker;
 	}
 
 	void JobsModSetWorldTrash(bool value)

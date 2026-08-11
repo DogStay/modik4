@@ -100,6 +100,28 @@ class JobsModGuardPostJson
 	}
 }
 
+// A cupboard the contract gear is drawn from and returned to. The class is the
+// admin's choice, so any vanilla container works; it only has to be ItemBase
+// derived, which every container is.
+class JobsModLockerJson
+{
+	string id;
+	string name;
+	string position;
+	float rotation;
+
+	// Empty means the default wardrobe. Named here rather than fixed in code so
+	// a server can use whatever fits the room it stands in.
+	string class_name;
+
+	vector GetPosition()
+	{
+		vector parsed;
+		JobsModCoords.Parse(position, parsed);
+		return parsed;
+	}
+}
+
 // settings.json in full: the switches plus everything jobs and NPCs point at.
 class JobsModSettingsJson
 {
@@ -122,6 +144,7 @@ class JobsModSettingsJson
 	ref array<ref JobsModPilePointJson> pile_points;
 	ref array<ref JobsModLoaderAreaJson> loader_areas;
 	ref array<ref JobsModGuardPostJson> guard_posts;
+	ref array<ref JobsModLockerJson> equipment_lockers;
 }
 
 // One job an NPC can hand out.
@@ -183,6 +206,18 @@ class JobsModJobJson
 	ref array<string> collect_classes;
 	int collect_required;
 	string collect_label;
+
+	// Optional for every job type, guard included.
+	//
+	// Empty means the employer hands the kit over when the job is taken and
+	// takes it back when the job ends, which is how it worked before lockers
+	// existed. Naming a locker moves both halves there: the player draws the
+	// kit at the cupboard and has to return it before the job can be handed in.
+	//
+	// equipment_fine is what settles a kit that cannot be returned because it
+	// was lost. Zero means losing it costs nothing and the job simply closes.
+	string equipment_locker_id;
+	int equipment_fine;
 }
 
 // An employer standing in the world.

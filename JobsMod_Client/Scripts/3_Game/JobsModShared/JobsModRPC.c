@@ -174,6 +174,7 @@ class JobsModRejectReason
 	static const int WRONG_NPC = 17;
 	static const int PARCEL_MISSING = 18;
 	static const int NO_INVENTORY_SPACE = 19;
+	static const int KIT_NOT_RETURNED = 20;
 
 	static string GetText(int reason)
 	{
@@ -215,6 +216,8 @@ class JobsModRejectReason
 				return "Пакета при вас нет. Работа не выполнена.";
 			case NO_INVENTORY_SPACE:
 				return "Освободите место в инвентаре под пакет.";
+			case KIT_NOT_RETURNED:
+				return "Сначала сдайте снаряжение в шкафчик.";
 		}
 
 		return "Запрос отклонён.";

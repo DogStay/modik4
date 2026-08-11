@@ -40,6 +40,11 @@ class JobsModAssignment
 	// in this list is what gets deleted.
 	protected ref array<EntityAI> m_Cargo;
 
+	// Only meaningful for a job with a locker. Without one the kit is handed
+	// over with the job and there is nothing to draw or return.
+	protected bool m_KitIssued;
+	protected bool m_KitReturned;
+
 	void JobsModAssignment(int id, string playerId, string npcId, JobsModJobJson job)
 	{
 		m_Id = id;
@@ -79,6 +84,11 @@ class JobsModAssignment
 	int GetProgress() { return m_Progress; }
 	int GetStatus() { return m_Status; }
 	array<EntityAI> GetCargo() { return m_Cargo; }
+
+	bool IsKitIssued() { return m_KitIssued; }
+	bool IsKitReturned() { return m_KitReturned; }
+	void SetKitIssued(bool value) { m_KitIssued = value; }
+	void SetKitReturned(bool value) { m_KitReturned = value; }
 
 	bool IsActive() { return m_Status == JobsModJobStatus.ACTIVE; }
 	bool IsFinished() { return m_Status == JobsModJobStatus.READY_TO_HAND_IN; }

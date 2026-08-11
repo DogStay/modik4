@@ -44,6 +44,7 @@ modded class PlayerBase
 	{
 		super.SetActions(InputActionMap);
 		AddAction(ActionSortTrash, InputActionMap);
+		AddAction(ActionUseLocker, InputActionMap);
 	}
 
 	// PlayerBase targets use their dedicated remote-target action map. Vanilla

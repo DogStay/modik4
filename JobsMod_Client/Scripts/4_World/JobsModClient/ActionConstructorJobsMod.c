@@ -17,6 +17,9 @@ modded class ActionConstructor
         if (actions.Find(ActionTalkToNpc) == -1)
             actions.Insert(ActionTalkToNpc);
 
+        if (actions.Find(ActionUseLocker) == -1)
+            actions.Insert(ActionUseLocker);
+
         JobsLog.Info("WORLD/ACTIONS: JobsMod actions зарегистрированы: ActionSortTrash, ActionTalkToNpc.");
     }
 }

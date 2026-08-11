@@ -30,6 +30,7 @@ class JobsModConfigDefaults
 
 	static const string AREA_ELEKTRO = "loader_area_01";
 	static const string POST_ELEKTRO = "guard_post_01";
+	static const string LOCKER_ELEKTRO = "locker_01";
 
 	// The currency a fresh install pays in.
 	static const string DEFAULT_REWARD_CLASS = "MAODev_Money_Dollar1";
@@ -70,7 +71,22 @@ class JobsModConfigDefaults
 		settings.guard_posts.Insert(MakeGuardPost(POST_ELEKTRO, "Пост у склада", ZONE_ELEKTRO,
 			"10450 0 2250", 15.0));
 
+		settings.equipment_lockers = new array<ref JobsModLockerJson>();
+		settings.equipment_lockers.Insert(MakeLocker(LOCKER_ELEKTRO, "Шкафчик охраны",
+			"10455 0 2255", 0.0, "Wardrobe"));
+
 		return settings;
+	}
+
+	static JobsModLockerJson MakeLocker(string id, string name, string position, float rotation, string className)
+	{
+		JobsModLockerJson locker = new JobsModLockerJson();
+		locker.id = id;
+		locker.name = name;
+		locker.position = position;
+		locker.rotation = rotation;
+		locker.class_name = className;
+		return locker;
 	}
 
 	static JobsModGuardPostJson MakeGuardPost(string id, string name, string zoneId, string position, float radius)
@@ -153,6 +169,8 @@ class JobsModConfigDefaults
 		guard.equipment = new array<string>();
 		guard.equipment.Insert("PoliceCap");
 		guard.equipment.Insert("BaseballBat");
+		guard.equipment_locker_id = LOCKER_ELEKTRO;
+		guard.equipment_fine = 150;
 		guard.collect_classes = new array<string>();
 		jobs.Insert(guard);
 

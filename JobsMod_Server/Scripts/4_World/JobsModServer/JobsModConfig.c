@@ -62,6 +62,7 @@ class JobsModConfig
 	protected ref map<string, ref JobsModLoaderAreaJson> m_LoaderAreas;
 	protected ref map<string, ref JobsModGuardPostJson> m_GuardPosts;
 	protected ref array<ref JobsModPilePointJson> m_PilePoints;
+	protected ref array<ref JobsModLockerJson> m_Lockers;
 
 	protected ref map<string, ref JobsModJobJson> m_Jobs;
 	protected ref map<string, ref JobsModNpcJson> m_Npcs;
@@ -77,6 +78,7 @@ class JobsModConfig
 		m_LoaderAreas = new map<string, ref JobsModLoaderAreaJson>();
 		m_GuardPosts = new map<string, ref JobsModGuardPostJson>();
 		m_PilePoints = new array<ref JobsModPilePointJson>();
+		m_Lockers = new array<ref JobsModLockerJson>();
 		m_Jobs = new map<string, ref JobsModJobJson>();
 		m_Npcs = new map<string, ref JobsModNpcJson>();
 		m_ProfileWritable = true;
@@ -91,6 +93,7 @@ class JobsModConfig
 	string GetRewardClass() { return m_Settings.reward_class; }
 
 	array<ref JobsModPilePointJson> GetPilePoints() { return m_PilePoints; }
+	array<ref JobsModLockerJson> GetLockers() { return m_Lockers; }
 	map<string, ref JobsModNpcJson> GetNpcs() { return m_Npcs; }
 	map<string, ref JobsModJobJson> GetJobs() { return m_Jobs; }
 
@@ -270,6 +273,7 @@ class JobsModConfig
 
 		m_Zones.Clear();
 		m_PilePoints.Clear();
+		m_Lockers.Clear();
 		m_LoaderAreas.Clear();
 		m_GuardPosts.Clear();
 
@@ -308,11 +312,15 @@ class JobsModConfig
 		if (!m_Settings.guard_posts)
 			m_Settings.guard_posts = new array<ref JobsModGuardPostJson>();
 
+		if (!m_Settings.equipment_lockers)
+			m_Settings.equipment_lockers = new array<ref JobsModLockerJson>();
+
 		// Zones first: the other two are checked against them.
 		AcceptZones();
 		AcceptPilePoints();
 		AcceptLoaderAreas();
 		AcceptGuardPosts();
+		AcceptLockers();
 
 		WarnAboutOldLayout();
 	}
@@ -434,6 +442,29 @@ class JobsModConfig
 			}
 
 			m_LoaderAreas.Set(area.id, area);
+		}
+	}
+
+	protected void AcceptLockers()
+	{
+		for (int i = 0; i < m_Settings.equipment_lockers.Count(); i++)
+		{
+			JobsModLockerJson locker = m_Settings.equipment_lockers.Get(i);
+
+			if (!locker || locker.id == "")
+			{
+				JobsLog.Warning("SERVER/CONFIG: шкафчик #" + i.ToString() + " без id пропущен.");
+				continue;
+			}
+
+			vector where;
+			if (!JobsModCoords.Parse(locker.position, where))
+			{
+				JobsLog.Warning("SERVER/CONFIG: у шкафчика '" + locker.id + "' не разобрана position='" + locker.position + "', пропущен.");
+				continue;
+			}
+
+			m_Lockers.Insert(locker);
 		}
 	}
 
@@ -575,6 +606,19 @@ class JobsModConfig
 
 		EnsureJobLists(job);
 
+		if (job.equipment_fine < 0)
+			job.equipment_fine = 0;
+
+		// A job naming a cupboard that does not exist would leave the player
+		// unable to draw the kit and unable to hand the work in. Dropping the
+		// reference is better than dropping the job: the work still runs, the
+		// employer hands the kit over as before, and the log says why.
+		if (job.equipment_locker_id != "" && !HasLocker(job.equipment_locker_id))
+		{
+			JobsLog.Warning("SERVER/CONFIG: работа '" + job.id + "' ссылается на неизвестный шкафчик '" + job.equipment_locker_id + "' — снаряжение будет выдавать наниматель.");
+			job.equipment_locker_id = "";
+		}
+
 		if (type == JobsModJobType.SORTING)
 			return AcceptSortingJob(job);
 
@@ -634,6 +678,17 @@ class JobsModConfig
 
 		if (!job.collect_classes)
 			job.collect_classes = new array<string>();
+	}
+
+	protected bool HasLocker(string lockerId)
+	{
+		for (int i = 0; i < m_Lockers.Count(); i++)
+		{
+			if (m_Lockers.Get(i).id == lockerId)
+				return true;
+		}
+
+		return false;
 	}
 
 	protected bool AcceptCollectJob(JobsModJobJson job)

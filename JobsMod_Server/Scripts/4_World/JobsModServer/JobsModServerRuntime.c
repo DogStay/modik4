@@ -17,6 +17,7 @@ class JobsModServerRuntime
 	protected static ref JobsModMessengerService s_MessengerService;
 	protected static ref JobsModGuardService s_GuardService;
 	protected static ref JobsModCollectService s_CollectService;
+	protected static ref JobsModLockerService s_LockerService;
 	protected static ref JobsModJobService s_JobService;
 	protected static ref TrashZoneService s_ZoneService;
 	protected static ref SortingSessionService s_SessionService;
@@ -75,10 +76,15 @@ class JobsModServerRuntime
 		s_GuardService.SetJobService(s_JobService);
 		s_CollectService.SetJobService(s_JobService);
 
+		s_LockerService = new JobsModLockerService(s_Config);
+		s_LockerService.SetServices(s_JobService, s_GuardService);
+		s_LockerService.SpawnAll();
+
 		s_SessionService = new SortingSessionService(s_Config, s_ZoneService, s_JobService);
 
 		JobsModTrashActionBridge.GetOnSortRequested().Insert(OnSortRequested);
 		JobsModNpcActionBridge.GetOnTalkRequested().Insert(OnTalkRequested);
+		JobsModLockerActionBridge.GetOnLockerUsed().Insert(OnLockerUsed);
 
 		s_Started = true;
 		JobsLog.Info("SERVER: JobsMod запущен.");
@@ -91,6 +97,10 @@ class JobsModServerRuntime
 
 		JobsModTrashActionBridge.GetOnSortRequested().Remove(OnSortRequested);
 		JobsModNpcActionBridge.GetOnTalkRequested().Remove(OnTalkRequested);
+		JobsModLockerActionBridge.GetOnLockerUsed().Remove(OnLockerUsed);
+
+		if (s_LockerService)
+			s_LockerService.DeleteAll();
 
 		if (s_ZoneService)
 			s_ZoneService.DeleteAll();
@@ -103,6 +113,7 @@ class JobsModServerRuntime
 		s_MessengerService = null;
 		s_GuardService = null;
 		s_CollectService = null;
+		s_LockerService = null;
 		s_LoaderService = null;
 		s_ZoneService = null;
 		s_NpcService = null;
@@ -163,5 +174,13 @@ class JobsModServerRuntime
 			return;
 
 		s_JobService.HandleTalk(player, npc);
+	}
+
+	protected static void OnLockerUsed(PlayerBase player, Object locker)
+	{
+		if (!s_LockerService)
+			return;
+
+		s_LockerService.HandleUse(player, locker);
 	}
 }

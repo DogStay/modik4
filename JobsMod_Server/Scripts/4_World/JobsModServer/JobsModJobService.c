@@ -280,13 +280,19 @@ class JobsModJobService
 
 		// The kit is what the guard contract is: refusing the job when none of
 		// it fits is better than sending someone to stand a shift unequipped.
-		if (assignment.GetType() == JobsModJobType.GUARD)
+		// With a locker the employer hands nothing over: the player draws the
+		// kit at the cupboard and puts it back there. Without one this is the
+		// only chance to equip them, so a kit that will not fit refuses the job
+		// rather than starting a guard shift unequipped.
+		if (job.equipment_locker_id == "" && job.equipment.Count() > 0)
 		{
 			if (!m_Guard.IssueKit(player, assignment, job))
 			{
 				Reject(player, identity, JobsModRejectReason.NO_INVENTORY_SPACE);
 				return;
 			}
+
+			assignment.SetKitIssued(true);
 		}
 
 		m_Assignments.Set(playerId, assignment);
@@ -352,6 +358,13 @@ class JobsModJobService
 		if (assignment.GetType() == JobsModJobType.MESSENGER && !m_Messenger.HasParcel(player, assignment))
 		{
 			Reject(player, identity, JobsModRejectReason.PARCEL_MISSING);
+			return;
+		}
+
+		JobsModJobJson jobForKit = m_Config.GetJob(assignment.GetJobId());
+		if (jobForKit && jobForKit.equipment_locker_id != "" && assignment.IsKitIssued() && !assignment.IsKitReturned())
+		{
+			Reject(player, identity, JobsModRejectReason.KIT_NOT_RETURNED);
 			return;
 		}
 
@@ -586,6 +599,21 @@ class JobsModJobService
 		}
 	}
 
+	// A locker job before the kit is drawn, and after the work is done but
+	// before it is back. Both replace the ordinary hint, because in both cases
+	// the cupboard is the only thing standing between the player and the pay.
+	protected bool NeedsKit(JobsModAssignment assignment)
+	{
+		JobsModJobJson job = m_Config.GetJob(assignment.GetJobId());
+		return job && job.equipment_locker_id != "" && job.equipment.Count() > 0 && !assignment.IsKitIssued();
+	}
+
+	protected bool NeedsKitReturn(JobsModAssignment assignment)
+	{
+		JobsModJobJson job = m_Config.GetJob(assignment.GetJobId());
+		return job && job.equipment_locker_id != "" && assignment.IsKitIssued() && !assignment.IsKitReturned() && assignment.IsFinished();
+	}
+
 	// The job stores a class list; the player needs a name.
 	protected string GetCollectLabel(JobsModAssignment assignment)
 	{
@@ -746,6 +774,11 @@ class JobsModJobService
 				hint = "Оставайтесь на посту: " + FormatRemaining(assignment) + ".";
 			else if (assignment.GetType() == JobsModJobType.COLLECT)
 				hint = "Соберите: " + GetCollectLabel(assignment) + ".";
+
+			if (NeedsKit(assignment))
+				hint = "Получите снаряжение в шкафчике.";
+			else if (NeedsKitReturn(assignment))
+				hint = "Сдайте снаряжение в шкафчик.";
 			else
 				hint = "Разберите мусор в зоне: " + zoneName + ".";
 
