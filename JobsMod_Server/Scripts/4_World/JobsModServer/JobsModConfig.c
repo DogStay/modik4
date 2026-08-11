@@ -45,6 +45,7 @@ class JobsModConfig
 	// none of which have to know anything about this mod. Whatever the admin
 	// already uses to edit the JSON can also ask for it to be applied.
 	static const string FILE_RELOAD = ROOT_DIR + "/reload";
+	static const string FILE_README = ROOT_DIR + "/README.txt";
 
 	protected static const int MIN_PILE_RESPAWN = 10;
 	protected static const int MIN_ASSIGNMENT_TIMEOUT = 60;
@@ -242,6 +243,60 @@ class JobsModConfig
 		return true;
 	}
 
+	// Written next to the config it describes, because that is where an admin
+	// editing the JSON already is. The reload file in particular is invisible
+	// otherwise: nothing in the JSON hints that it exists.
+	protected void WriteReadme()
+	{
+		FileHandle file = OpenFile(FILE_README, FileMode.WRITE);
+		if (!file)
+			return;
+
+		FPrintln(file, "JobsMod — конфигурация сервера");
+		FPrintln(file, "");
+		FPrintln(file, "ПРИМЕНИТЬ ИЗМЕНЕНИЯ БЕЗ ПЕРЕЗАПУСКА");
+		FPrintln(file, "  Отредактируйте нужные .json, затем создайте в этой же папке");
+		FPrintln(file, "  пустой файл с именем: reload");
+		FPrintln(file, "  Сервер применит конфигурацию в течение ~15 секунд и удалит файл.");
+		FPrintln(file, "  Работает из файлового менеджера VPP, из FTP и из панели хостинга.");
+		FPrintln(file, "");
+		FPrintln(file, "  Что происходит при перезагрузке:");
+		FPrintln(file, "    - NPC, кучи мусора и шкафчики пересоздаются;");
+		FPrintln(file, "    - активные задания игроков закрываются с уведомлением;");
+		FPrintln(file, "    - если в новой конфигурации нет работ или NPC, она отклоняется");
+		FPrintln(file, "      и остаётся прежняя — смотрите строки [JobsMod] в RPT.");
+		FPrintln(file, "");
+		FPrintln(file, "ФАЙЛЫ");
+		FPrintln(file, "  settings.json   зоны, точки мусора, маршруты, посты охраны,");
+		FPrintln(file, "                  шкафчики, валюта наград");
+		FPrintln(file, "  Jobs/<id>.json  одна работа на файл; имя файла роли не играет,");
+		FPrintln(file, "                  важен id внутри");
+		FPrintln(file, "  NPC/<id>.json   один наниматель на файл");
+		FPrintln(file, "");
+		FPrintln(file, "  Удалить файл = удалить работу или NPC. Существующие файлы мод");
+		FPrintln(file, "  никогда не перезаписывает.");
+		FPrintln(file, "");
+		FPrintln(file, "КООРДИНАТЫ");
+		FPrintln(file, "  Одной строкой, в любом виде: \"6600 0 2500\", \"<6600, 0, 2500>\",");
+		FPrintln(file, "  \"6600, 0, 2500\". Высота 0 означает \"поставить на землю\".");
+		FPrintln(file, "  Можно вставлять вывод #position как есть.");
+		FPrintln(file, "");
+		FPrintln(file, "ТИПЫ РАБОТ");
+		FPrintln(file, "  sorting    piles_required");
+		FPrintln(file, "  loading    loader_area_id, cargos_required, cargo_class");
+		FPrintln(file, "  messenger  target_npc_id, package_class");
+		FPrintln(file, "  guard      guard_post_id, guard_seconds");
+		FPrintln(file, "  collect    collect_classes[], collect_required, collect_label");
+		FPrintln(file, "");
+		FPrintln(file, "СНАРЯЖЕНИЕ (для любой работы, всё опционально)");
+		FPrintln(file, "  equipment[]            что выдаётся под контракт");
+		FPrintln(file, "  equipment_locker_id    пусто = выдаёт наниматель и забирает сам;");
+		FPrintln(file, "                         указан = игрок берёт и сдаёт в шкафчике");
+		FPrintln(file, "  equipment_fine         0 = утерянное списывается без штрафа");
+
+		CloseFile(file);
+	}
+
 	protected void EnsureDirectories()
 	{
 		// The root has to exist before the engine will create anything under it,
@@ -296,6 +351,8 @@ class JobsModConfig
 		array<ref JobsModNpcJson> npcs = JobsModConfigDefaults.BuildNpcs();
 		for (i = 0; i < npcs.Count(); i++)
 			WriteNpc(npcs.Get(i));
+
+		WriteReadme();
 
 		if (m_ProfileWritable)
 		{
