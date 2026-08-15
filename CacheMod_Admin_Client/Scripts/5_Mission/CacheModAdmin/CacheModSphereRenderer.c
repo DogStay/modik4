@@ -153,7 +153,7 @@ class CacheModSphereRenderer
 		CacheModClientContext.GetOnAdminPointsChanged().Insert(Redraw);
 		s_Subscribed = true;
 
-		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(RefreshTick, REFRESH_INTERVAL_MS, true);
+		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(RefreshTick, REFRESH_INTERVAL_MS, true);
 	}
 
 	protected static void RefreshTick()

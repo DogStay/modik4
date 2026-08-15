@@ -125,7 +125,7 @@ class CacheModLootService
 		if (maxItems < minItems)
 			maxItems = minItems;
 
-		int drawCount = Math.RandomIntInclusive(minItems, maxItems);
+		int drawCount = CacheModRandom.GetInt(minItems, maxItems);
 		int spawned = 0;
 
 		for (int i = 0; i < drawCount; i++)
@@ -134,7 +134,7 @@ class CacheModLootService
 			if (!entry)
 				continue;
 
-			int count = Math.RandomIntInclusive(entry.min, entry.max);
+			int count = CacheModRandom.GetInt(entry.min, entry.max);
 
 			for (int c = 0; c < count; c++)
 			{
@@ -166,7 +166,7 @@ class CacheModLootService
 		if (total <= 0.0)
 			return null;
 
-		float roll = Math.RandomFloat(0.0, total);
+		float roll = CacheModRandom.GetPercent() * total / 100.0;
 		float running = 0.0;
 
 		for (int j = 0; j < tier.items.Count(); j++)
@@ -212,7 +212,7 @@ class CacheModLootService
 			if (!attachment)
 				continue;
 
-			float roll = Math.RandomFloat(0.0, 100.0);
+			float roll = CacheModRandom.GetPercent();
 			if (roll >= attachment.chance)
 				continue;
 

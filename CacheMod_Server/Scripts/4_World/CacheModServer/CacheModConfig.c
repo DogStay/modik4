@@ -230,7 +230,7 @@ class CacheModConfig
 				continue;
 			}
 
-			if (m_Tiers.Contains(tier.id))
+			if (GetTier(tier.id))
 			{
 				CacheLog.Warning(CacheLog.LOOT, "Тир '" + tier.id + "' объявлен дважды — вторая запись пропущена.");
 				continue;
@@ -350,7 +350,7 @@ class CacheModConfig
 			// A zone naming a tier nobody defined would silently pay out
 			// nothing. It is dropped instead, so the caches inside it fall back
 			// to default_tier and keep working.
-			if (!m_Tiers.Contains(zone.tier))
+			if (!GetTier(zone.tier))
 			{
 				CacheLog.Warning(CacheLog.ZONE, "Зона '" + zone.id + "' ссылается на несуществующий тир '" + zone.tier + "' и пропущена.");
 				continue;

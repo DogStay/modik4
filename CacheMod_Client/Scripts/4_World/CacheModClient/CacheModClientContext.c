@@ -69,7 +69,7 @@ class CacheModClientContext
 
 		// The vanilla notification strip is enough for the two things the mod
 		// ever has to say, and it costs no layout of our own.
-		NotificationSystem.AddNotificationExtended(6.0, "Тайник", text, "");
+		NotificationSystem.AddNotificationExtended(6.0, "ТАЙНИК", text);
 	}
 
 	static void HandleSettings(ParamsReadContext ctx)

@@ -27,22 +27,21 @@ class CacheModManager
 	protected ref CacheModLootService m_LootService;
 	protected ref CacheModChestService m_ChestService;
 
-	// Runtime state, one entry per loaded cache, keyed by id.
-	protected ref map<string, ref CacheModRuntime> m_Runtime;
-
-	// Reverse lookup from a live proxy back to its cache. The proxy carries the
-	// id too, but a map is what makes a forged or stale proxy — one belonging to
-	// a cache that has since been deleted — fail cleanly instead of matching by
-	// string against nothing.
-	protected ref map<string, CacheInteractionProxy> m_Proxies;
+	// Runtime state, one entry per loaded cache.
+	//
+	// A plain array rather than a map keyed by id, and deliberately so: the map
+	// API this build exposes is not the one every DayZ version exposes, while
+	// array iteration is the same everywhere. The cost is a linear scan of a
+	// few hundred short records when a search finishes, which is nothing next
+	// to what the search itself already did.
+	protected ref array<ref CacheModRuntime> m_Runtime;
 
 	void CacheModManager(CacheModConfig config, CacheModLootService lootService, CacheModChestService chestService)
 	{
 		m_Config = config;
 		m_LootService = lootService;
 		m_ChestService = chestService;
-		m_Runtime = new map<string, ref CacheModRuntime>();
-		m_Proxies = new map<string, CacheInteractionProxy>();
+		m_Runtime = new array<ref CacheModRuntime>();
 	}
 
 	// =====================================================================
@@ -62,7 +61,7 @@ class CacheModManager
 			CacheModRuntime runtime = new CacheModRuntime();
 			runtime.m_Data = data;
 
-			float roll = Math.RandomFloat(0.0, 100.0);
+			float roll = CacheModRandom.GetPercent();
 			runtime.m_Active = roll < data.spawn_chance;
 
 			string rollLine = "Ролл " + data.id;
@@ -71,7 +70,7 @@ class CacheModManager
 			rollLine = rollLine + " → " + GetActivationText(runtime.m_Active) + ".";
 			CacheLog.Info(CacheLog.ROOT, rollLine);
 
-			m_Runtime.Insert(data.id, runtime);
+			m_Runtime.Insert(runtime);
 
 			if (!runtime.m_Active)
 				continue;
@@ -94,18 +93,14 @@ class CacheModManager
 
 	void Stop()
 	{
-		array<string> ids = new array<string>();
-		m_Runtime.GetKeyArray(ids);
-
-		for (int i = 0; i < ids.Count(); i++)
+		for (int i = 0; i < m_Runtime.Count(); i++)
 		{
-			CacheModRuntime runtime = m_Runtime.Get(ids.Get(i));
+			CacheModRuntime runtime = m_Runtime.Get(i);
 			if (runtime)
 				DeleteProxy(runtime);
 		}
 
 		m_Runtime.Clear();
-		m_Proxies.Clear();
 	}
 
 	// =====================================================================
@@ -113,14 +108,11 @@ class CacheModManager
 	// =====================================================================
 	void Update()
 	{
-		array<string> ids = new array<string>();
-		m_Runtime.GetKeyArray(ids);
-
 		bool dirty = false;
 
-		for (int i = 0; i < ids.Count(); i++)
+		for (int i = 0; i < m_Runtime.Count(); i++)
 		{
-			CacheModRuntime runtime = m_Runtime.Get(ids.Get(i));
+			CacheModRuntime runtime = m_Runtime.Get(i);
 			if (!runtime || !runtime.m_Data)
 				continue;
 
@@ -214,7 +206,7 @@ class CacheModManager
 		// from the next restart onwards.
 		runtime.m_Active = true;
 
-		m_Runtime.Insert(data.id, runtime);
+		m_Runtime.Insert(runtime);
 		CreateProxy(runtime);
 
 		createdId = data.id;
@@ -227,11 +219,11 @@ class CacheModManager
 
 	bool DeleteCache(string cacheId)
 	{
-		CacheModRuntime runtime = m_Runtime.Get(cacheId);
-		if (runtime)
+		int index = FindRuntimeIndex(cacheId);
+		if (index >= 0)
 		{
-			DeleteProxy(runtime);
-			m_Runtime.Remove(cacheId);
+			DeleteProxy(m_Runtime.Get(index));
+			m_Runtime.Remove(index);
 		}
 
 		if (!m_Config.RemoveCache(cacheId))
@@ -250,7 +242,7 @@ class CacheModManager
 	// run's active set was decided when the server came up.
 	bool UpdateCache(string cacheId, float radius, int cacheType, string requiredTool, float spawnChance)
 	{
-		CacheModRuntime runtime = m_Runtime.Get(cacheId);
+		CacheModRuntime runtime = FindRuntime(cacheId);
 		if (!runtime || !runtime.m_Data)
 			return false;
 
@@ -292,7 +284,7 @@ class CacheModManager
 			return;
 
 		string cacheId = proxy.CacheModGetCacheId();
-		CacheModRuntime runtime = m_Runtime.Get(cacheId);
+		CacheModRuntime runtime = FindRuntime(cacheId);
 
 		if (!runtime || !runtime.m_Data)
 		{
@@ -387,15 +379,14 @@ class CacheModManager
 
 		vector position = data.GetPosition();
 
-		// ECE_CREATEPHYSICS gives the proxy the collision body the cursor
-		// raycast needs. The object must be networked — a local one would
-		// exist only on the server and no client could ever aim at it — so
-		// nothing here suppresses replication.
+		// Placed on the surface and given no lifetime, which is the same pair
+		// the rest of this codebase spawns world objects with. The object must
+		// stay networked — a local one would exist on the server alone and no
+		// client could ever aim at it — so nothing here suppresses replication.
 		//
-		// Keeping it out of persistence is the config's job instead: the class
-		// has no types.xml entry, so central economy neither counts nor saves
-		// it, and the manager rebuilds the whole set at every start.
-		int flags = ECE_CREATEPHYSICS;
+		// The geometry the cursor raycast hits comes from the crate model the
+		// class inherits and is there whether or not a rigid body was built.
+		int flags = ECE_PLACE_ON_SURFACE | ECE_NOLIFETIME;
 		Object created = GetGame().CreateObjectEx("CacheInteractionProxy", position, flags);
 
 		CacheInteractionProxy proxy = CacheInteractionProxy.Cast(created);
@@ -420,7 +411,6 @@ class CacheModManager
 		proxy.CacheModSetup(data.id, toolIndex, handsOnly);
 
 		runtime.m_Proxy = proxy;
-		m_Proxies.Set(data.id, proxy);
 
 		string proxyLine = "Proxy создан для " + data.id + " в " + position.ToString();
 		proxyLine = proxyLine + ", радиус " + data.radius.ToString();
@@ -439,7 +429,6 @@ class CacheModManager
 
 		GetGame().ObjectDelete(runtime.m_Proxy);
 		runtime.m_Proxy = null;
-		m_Proxies.Remove(cacheId);
 
 		CacheLog.Debug(CacheLog.INTERACTION, "Proxy удалён для " + cacheId + ".");
 	}
@@ -454,12 +443,9 @@ class CacheModManager
 		string packed = "";
 		int now = CacheModClock.GetUtcSeconds();
 
-		array<string> ids = new array<string>();
-		m_Runtime.GetKeyArray(ids);
-
-		for (int i = 0; i < ids.Count(); i++)
+		for (int i = 0; i < m_Runtime.Count(); i++)
 		{
-			CacheModRuntime runtime = m_Runtime.Get(ids.Get(i));
+			CacheModRuntime runtime = m_Runtime.Get(i);
 			if (!runtime || !runtime.m_Data)
 				continue;
 
@@ -498,6 +484,28 @@ class CacheModManager
 	// =====================================================================
 	// Helpers
 	// =====================================================================
+	protected CacheModRuntime FindRuntime(string cacheId)
+	{
+		int index = FindRuntimeIndex(cacheId);
+		if (index < 0)
+			return null;
+
+		return m_Runtime.Get(index);
+	}
+
+	protected int FindRuntimeIndex(string cacheId)
+	{
+		for (int i = 0; i < m_Runtime.Count(); i++)
+		{
+			CacheModRuntime runtime = m_Runtime.Get(i);
+
+			if (runtime && runtime.m_Data && runtime.m_Data.id == cacheId)
+				return i;
+		}
+
+		return -1;
+	}
+
 	protected bool HasRequiredTool(PlayerBase player, CacheModCacheJson data)
 	{
 		if (CacheModType.FromText(data.cache_type) != CacheModType.TOOL_REQUIRED)

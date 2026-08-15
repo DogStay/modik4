@@ -37,10 +37,15 @@ class ActionSearchCache extends ActionContinuousBase
 	// the stance shuffle at the start of the animation does not.
 	protected static const float MAX_DRIFT_METRES = 0.9;
 
-	// How far the character may turn, in degrees, before the search is called
-	// off. This is what stops a player spinning to face a threat mid-search and
-	// carrying on as if nothing happened.
-	protected static const float MAX_TURN_DEGREES = 55.0;
+	// How far the character may turn before the search is called off. This is
+	// what stops a player spinning to face a threat mid-search and carrying on
+	// as if nothing happened.
+	//
+	// It is written as the cosine of the angle rather than as the angle,
+	// because comparing dot products needs no trigonometry at all: two facings
+	// this far apart or less have a dot product of at least this. 0.57 is 55
+	// degrees.
+	protected static const float MIN_FACING_DOT = 0.57;
 
 	void ActionSearchCache()
 	{
@@ -163,10 +168,10 @@ class ActionSearchCache extends ActionContinuousBase
 		}
 
 		vector currentDirection = player.GetDirection();
-		float turn = GetAngleBetween(searchData.m_StartDirection, currentDirection);
-		if (turn > MAX_TURN_DEGREES)
+		float facing = GetFacingDot(searchData.m_StartDirection, currentDirection);
+		if (facing < MIN_FACING_DOT)
 		{
-			CacheLog.Debug(CacheLog.SEARCH, "Обыск прерван: игрок развернулся на " + turn.ToString() + "°.");
+			CacheLog.Debug(CacheLog.SEARCH, "Обыск прерван: игрок развернулся (dot " + facing.ToString() + ").");
 			return false;
 		}
 
@@ -244,10 +249,11 @@ class ActionSearchCache extends ActionContinuousBase
 		return false;
 	}
 
-	// Angle between two horizontal facings, in degrees. The vertical component
-	// is dropped on purpose: looking down at the ground is part of searching,
-	// turning away from it is not.
-	protected float GetAngleBetween(vector first, vector second)
+	// How closely two horizontal facings agree: 1 is the same direction, 0 is a
+	// right angle, -1 is the opposite way. The vertical component is dropped on
+	// purpose — looking down at the ground is part of searching, turning away
+	// from it is not.
+	protected float GetFacingDot(vector first, vector second)
 	{
 		vector flatFirst = first;
 		flatFirst[1] = 0;
@@ -257,15 +263,7 @@ class ActionSearchCache extends ActionContinuousBase
 		flatSecond[1] = 0;
 		flatSecond.Normalize();
 
-		float dot = vector.Dot(flatFirst, flatSecond);
-		if (dot > 1.0)
-			dot = 1.0;
-
-		if (dot < -1.0)
-			dot = -1.0;
-
-		float radians = Math.Acos(dot);
-		return radians * Math.RAD2DEG;
+		return vector.Dot(flatFirst, flatSecond);
 	}
 }
 
