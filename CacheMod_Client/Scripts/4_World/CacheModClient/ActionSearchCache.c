@@ -14,6 +14,22 @@
 // go, walking off, turning away, being interrupted — never reaches it, so no
 // path exists where an aborted search spawns a chest or marks a cache as found.
 
+// The progress component of one running search.
+//
+// CreateActionComponent lives on the callback, not on the action: there is a
+// single action object shared by everyone, and a callback per player actually
+// performing it. How long the search takes comes from the server config, which
+// each client is sent after connect — an admin changing search_duration_seconds
+// needs no client update.
+class ActionSearchCacheCB extends ActionContinuousBaseCB
+{
+	override void CreateActionComponent()
+	{
+		float duration = CacheModSearchTuning.GetDurationSeconds();
+		m_ActionData.m_ActionComponent = new CAContinuousTime(duration);
+	}
+}
+
 class ActionSearchCache extends ActionContinuousBase
 {
 	// How far the player may drift from where they started before the search is
@@ -28,6 +44,11 @@ class ActionSearchCache extends ActionContinuousBase
 
 	void ActionSearchCache()
 	{
+		// The callback is where the progress component lives: the engine builds
+		// one per running action, and the duration belongs to that instance
+		// rather than to the action object shared by every player.
+		m_CallbackClass = ActionSearchCacheCB;
+
 		// A ground-level digging animation: the character kneels and works with
 		// both hands at a spot in front of them. It is the vanilla motion for
 		// pulling something out of the earth, which is exactly what this is —
@@ -57,18 +78,18 @@ class ActionSearchCache extends ActionContinuousBase
 		m_ConditionTarget = new CCTCursor(CacheModRPC.MAX_CACHE_RADIUS);
 	}
 
-	override void CreateAndSetupActionCallback(ActionData action_data)
+	// Where the player stood and which way they faced when the search began.
+	// Both are compared against every tick to decide whether they are still
+	// doing the thing they started.
+	override void OnStart(ActionData action_data)
 	{
-		super.CreateAndSetupActionCallback(action_data);
+		super.OnStart(action_data);
 
-		// Where the player stood and which way they faced when the search
-		// began. Both are compared against every tick to decide whether they
-		// are still doing the thing they started.
-		CacheSearchActionData searchData = CacheSearchActionData.Cast(action_data);
-		if (!searchData)
+		if (!action_data || !action_data.m_Player)
 			return;
 
-		if (!action_data.m_Player)
+		CacheSearchActionData searchData = CacheSearchActionData.Cast(action_data);
+		if (!searchData)
 			return;
 
 		searchData.m_StartPosition = action_data.m_Player.GetPosition();
@@ -84,15 +105,6 @@ class ActionSearchCache extends ActionContinuousBase
 	override typename GetInputType()
 	{
 		return ContinuousInteractActionInput;
-	}
-
-	// How long a search takes comes from the server config and rides in on the
-	// proxy, so an admin who changes search_duration_seconds does not need the
-	// clients to be updated. Until a proxy has synchronised its value, the
-	// shared default is used.
-	override void CreateActionComponent()
-	{
-		m_ActionData.m_ActionComponent = new CAContinuousTime(CacheModSearchTuning.GetDurationSeconds());
 	}
 
 	override bool ActionCondition(PlayerBase player, ActionTarget target, ItemBase item)
