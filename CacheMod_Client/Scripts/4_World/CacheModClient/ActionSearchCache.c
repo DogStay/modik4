@@ -49,19 +49,26 @@ class ActionSearchCache extends ActionContinuousBase
 		// rather than to the action object shared by every player.
 		m_CallbackClass = ActionSearchCacheCB;
 
-		// A ground-level digging animation: the character kneels and works with
-		// both hands at a spot in front of them. It is the vanilla motion for
-		// pulling something out of the earth, which is exactly what this is —
-		// deliberately not the deploy motion and not the book-reading one.
-		m_CommandUID = DayZPlayerConstants.CMD_ACTIONFB_DIGUP;
+		// The looping hands-on interaction: the character works at something in
+		// front of them for as long as the action runs. It is deliberately not
+		// the deploy motion and not the book-reading one.
+		//
+		// This is the INTERACT pair of the one-shot command the JobsMod actions
+		// already use on this build, and that is why it is the one chosen: the
+		// full-body digging commands are named differently between game
+		// versions, and a constant that does not resolve costs the whole World
+		// module rather than just the animation. A server whose build has a
+		// digging loop can point m_CommandUID at it — nothing else in the
+		// action depends on which animation plays.
+		m_CommandUID = DayZPlayerConstants.CMD_ACTIONMOD_INTERACTLOOP;
 
-		// Full body: the engine takes the character over for the duration.
-		// Half-body would let the player keep walking and aiming through the
-		// animation, and the whole point is that searching costs them the
-		// ability to do anything else.
-		m_FullBody = true;
-
-		m_StanceMask = DayZPlayerConstants.STANCEMASK_CROUCH | DayZPlayerConstants.STANCEMASK_ERECT;
+		// Half body, because that is what an ACTIONMOD command is. Standing
+		// still is not enforced by the animation then, but it was never the
+		// animation's job: ActionConditionContinue below cancels the search the
+		// moment the player drifts 0.9 m or turns past 55 degrees, which is a
+		// stricter leash than a full-body animation gives and one that works
+		// the same on every build.
+		m_FullBody = false;
 
 		m_Text = "Обыскать";
 	}
