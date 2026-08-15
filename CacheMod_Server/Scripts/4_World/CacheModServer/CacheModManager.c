@@ -65,10 +65,11 @@ class CacheModManager
 			float roll = Math.RandomFloat(0.0, 100.0);
 			runtime.m_Active = roll < data.spawn_chance;
 
-			CacheLog.Info(CacheLog.ROOT, "Ролл " + data.id
-				+ ": шанс " + data.spawn_chance.ToString()
-				+ ", выпало " + roll.ToString()
-				+ " → " + GetActivationText(runtime.m_Active) + ".");
+			string rollLine = "Ролл " + data.id;
+			rollLine = rollLine + ": шанс " + data.spawn_chance.ToString();
+			rollLine = rollLine + ", выпало " + roll.ToString();
+			rollLine = rollLine + " → " + GetActivationText(runtime.m_Active) + ".";
+			CacheLog.Info(CacheLog.ROOT, rollLine);
 
 			m_Runtime.Insert(data.id, runtime);
 
@@ -86,8 +87,9 @@ class CacheModManager
 				CreateProxy(runtime);
 		}
 
-		CacheLog.Info(CacheLog.ROOT, "Активных тайников в этом запуске: " + activeCount.ToString()
-			+ " из " + caches.Count().ToString() + ".");
+		string startLine = "Активных тайников в этом запуске: " + activeCount.ToString();
+		startLine = startLine + " из " + caches.Count().ToString() + ".";
+		CacheLog.Info(CacheLog.ROOT, startLine);
 	}
 
 	void Stop()
@@ -177,8 +179,9 @@ class CacheModManager
 		float distance = vector.Distance(playerPosition, position);
 		if (distance > CacheModRPC.MAX_PLACEMENT_DISTANCE)
 		{
-			CacheLog.Warning(CacheLog.PLACEMENT, "Позиция от " + identity.GetPlainId()
-				+ " отклонена: " + distance.ToString() + " м от игрока.");
+			string rejectLine = "Позиция от " + identity.GetPlainId();
+			rejectLine = rejectLine + " отклонена: " + distance.ToString() + " м от игрока.";
+			CacheLog.Warning(CacheLog.PLACEMENT, rejectLine);
 			return false;
 		}
 
@@ -215,8 +218,9 @@ class CacheModManager
 		CreateProxy(runtime);
 
 		createdId = data.id;
-		CacheLog.Info(CacheLog.PLACEMENT, "Тайник " + data.id + " создан игроком " + identity.GetPlainId()
-			+ " в " + position.ToString() + ", радиус " + data.radius.ToString() + ".");
+		string createdLine = "Тайник " + data.id + " создан игроком " + identity.GetPlainId();
+		createdLine = createdLine + " в " + position.ToString() + ", радиус " + data.radius.ToString() + ".";
+		CacheLog.Info(CacheLog.PLACEMENT, createdLine);
 
 		return true;
 	}
@@ -330,8 +334,9 @@ class CacheModManager
 		float distance = vector.Distance(cachePosition, playerPosition);
 		if (distance > data.radius)
 		{
-			CacheLog.Info(CacheLog.SEARCH, "Обыск отклонён: игрок в " + distance.ToString()
-				+ " м при радиусе " + data.radius.ToString() + ".");
+			string farLine = "Обыск отклонён: игрок в " + distance.ToString();
+			farLine = farLine + " м при радиусе " + data.radius.ToString() + ".";
+			CacheLog.Info(CacheLog.SEARCH, farLine);
 			Notify(player, CacheModReject.TOO_FAR);
 			return;
 		}
@@ -353,8 +358,9 @@ class CacheModManager
 		DeleteProxy(runtime);
 		m_Config.SaveCaches();
 
-		CacheLog.Info(CacheLog.SEARCH, "Обыск " + cacheId + " завершён игроком " + GetPlayerId(player)
-			+ "; следующий респавн в " + data.next_respawn_time.ToString() + " UTC.");
+		string doneLine = "Обыск " + cacheId + " завершён игроком " + GetPlayerId(player);
+		doneLine = doneLine + "; следующий респавн в " + data.next_respawn_time.ToString() + " UTC.";
+		CacheLog.Info(CacheLog.SEARCH, doneLine);
 
 		string tierId = m_LootService.ResolveTier(cachePosition);
 		CacheLog.Info(CacheLog.LOOT, "Тайник " + cacheId + ": итоговый тир '" + tierId + "'.");
@@ -416,8 +422,10 @@ class CacheModManager
 		runtime.m_Proxy = proxy;
 		m_Proxies.Set(data.id, proxy);
 
-		CacheLog.Info(CacheLog.INTERACTION, "Proxy создан для " + data.id + " в " + position.ToString()
-			+ ", радиус " + data.radius.ToString() + ", инструмент '" + data.required_tool + "'.");
+		string proxyLine = "Proxy создан для " + data.id + " в " + position.ToString();
+		proxyLine = proxyLine + ", радиус " + data.radius.ToString();
+		proxyLine = proxyLine + ", инструмент '" + data.required_tool + "'.";
+		CacheLog.Info(CacheLog.INTERACTION, proxyLine);
 	}
 
 	protected void DeleteProxy(CacheModRuntime runtime)

@@ -144,8 +144,9 @@ class CacheModLootService
 			}
 		}
 
-		CacheLog.Info(CacheLog.LOOT, "Сгенерировано предметов: " + spawned.ToString()
-			+ " (розыгрышей " + drawCount.ToString() + ", тир '" + tierId + "').");
+		string summary = "Сгенерировано предметов: " + spawned.ToString();
+		summary = summary + " (розыгрышей " + drawCount.ToString() + ", тир '" + tierId + "').";
+		CacheLog.Info(CacheLog.LOOT, summary);
 	}
 
 	// Weight is relative, not a percentage: an entry of 20 against one of 10 is

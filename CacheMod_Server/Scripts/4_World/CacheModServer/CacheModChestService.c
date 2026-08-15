@@ -62,8 +62,9 @@ class CacheModChestService
 		record.m_ExpiresUtc = CacheModClock.GetUtcSeconds() + m_Config.GetChestLifetimeSeconds();
 		m_Chests.Insert(record);
 
-		CacheLog.Info(CacheLog.CHEST, "Сундук для " + cacheId + " создан в " + position.ToString()
-			+ ", исчезнет в " + record.m_ExpiresUtc.ToString() + " UTC.");
+		string spawnLine = "Сундук для " + cacheId + " создан в " + position.ToString();
+		spawnLine = spawnLine + ", исчезнет в " + record.m_ExpiresUtc.ToString() + " UTC.";
+		CacheLog.Info(CacheLog.CHEST, spawnLine);
 
 		return chest;
 	}

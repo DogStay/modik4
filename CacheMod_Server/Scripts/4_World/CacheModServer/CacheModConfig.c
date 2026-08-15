@@ -88,9 +88,10 @@ class CacheModConfig
 
 		CacheLog.s_DebugEnabled = m_Settings.debug_logging;
 
-		CacheLog.Info(CacheLog.ROOT, "Конфигурация загружена: точек " + m_Caches.Count().ToString()
-			+ ", зон " + m_Zones.Count().ToString()
-			+ ", тиров " + m_Tiers.Count().ToString() + ".");
+		string summary = "Конфигурация загружена: точек " + m_Caches.Count().ToString();
+		summary = summary + ", зон " + m_Zones.Count().ToString();
+		summary = summary + ", тиров " + m_Tiers.Count().ToString() + ".";
+		CacheLog.Info(CacheLog.ROOT, summary);
 
 		return true;
 	}
