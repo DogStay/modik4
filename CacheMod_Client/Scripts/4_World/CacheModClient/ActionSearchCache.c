@@ -63,8 +63,6 @@ class ActionSearchCache extends ActionContinuousBase
 
 		m_StanceMask = DayZPlayerConstants.STANCEMASK_CROUCH | DayZPlayerConstants.STANCEMASK_ERECT;
 
-		m_SpecialtyWeight = UASoftSkillsWeight.PRECISE_LOW;
-
 		m_Text = "Обыскать";
 	}
 
@@ -100,11 +98,6 @@ class ActionSearchCache extends ActionContinuousBase
 	{
 		CacheSearchActionData actionData = new CacheSearchActionData();
 		return actionData;
-	}
-
-	override typename GetInputType()
-	{
-		return ContinuousInteractActionInput;
 	}
 
 	override bool ActionCondition(PlayerBase player, ActionTarget target, ItemBase item)

@@ -26,11 +26,10 @@ class ActionCreateCachePoint extends ActionSingleUseBase
 		m_ConditionTarget = new CCTNone();
 	}
 
-	override typename GetInputType()
-	{
-		return DeployActionInput;
-	}
-
+	// No GetInputType override on purpose. ActionSingleUseBase already binds to
+	// the default use input, which is the same key the placement mode is
+	// confirmed with, and naming an input class by hand is how the last build
+	// broke: the set of input typenames differs between game versions.
 	override bool HasTarget()
 	{
 		return false;
