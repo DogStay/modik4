@@ -96,7 +96,22 @@ class CacheInteractionProxy extends ItemBase
 	// =====================================================================
 	// Refusing everything a normal item allows
 	// =====================================================================
+	// This is the same set of refusals the JobsMod items use, and no more: every
+	// one of these exists on ItemBase in this build. Damage is handled in the
+	// config instead, by giving the class a health pool nothing can chew
+	// through, because the "can this be hurt" hooks differ between versions and
+	// a wrong one costs the whole World module.
+	override bool IsTakeable()
+	{
+		return false;
+	}
+
 	override bool CanPutInCargo(EntityAI parent)
+	{
+		return false;
+	}
+
+	override bool CanRemoveFromCargo(EntityAI parent)
 	{
 		return false;
 	}
@@ -106,22 +121,17 @@ class CacheInteractionProxy extends ItemBase
 		return false;
 	}
 
-	override bool CanReceiveItemIntoCargo(EntityAI item)
+	override bool CanRemoveFromHands(EntityAI parent)
 	{
 		return false;
 	}
 
-	override bool IsTakeable()
+	override bool CanDetachAttachment(EntityAI parent)
 	{
 		return false;
 	}
 
-	override bool CanBeDamaged()
-	{
-		return false;
-	}
-
-	override bool IsHealthVisible()
+	override bool CanBeSplit()
 	{
 		return false;
 	}
@@ -129,13 +139,7 @@ class CacheInteractionProxy extends ItemBase
 	// Nothing about a proxy survives a restart on purpose: the manager rebuilds
 	// the whole set from caches.json after rolling spawn chances, and a proxy
 	// restored from storage would belong to a cache that may not be active this
-	// run — with no way for the manager to tell it apart from one it made.
-	//
-	// Two things enforce that together: the manager creates proxies with the
-	// non-persistent spawn flags, and the config gives the class no storage
-	// category, so the hive has nothing to write even if a flag were wrong.
-	override bool CanBeCombined(EntityAI other_item, bool reservation_check = true, bool stack_max_limit = false)
-	{
-		return false;
-	}
+	// run — with no way for the manager to tell it apart from one it made. The
+	// class has no types.xml entry, so central economy neither counts nor saves
+	// it.
 }
