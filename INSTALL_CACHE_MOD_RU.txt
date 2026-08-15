@@ -1,0 +1,114 @@
+CACHE MOD — УСТАНОВКА И ПЕРВЫЙ ЗАПУСК
+=====================================
+
+Мод состоит из четырёх PBO. Два обязательны, два — админские.
+
+  CacheMod_Client          обязателен, ставится клиентам И серверу
+  CacheMod_Server          обязателен, только -serverMod
+  CacheMod_Admin_Client    опционально, меню Cache Manager в VPP
+  CacheMod_Admin_Server    опционально, серверный бэкенд меню
+
+СБОРКА
+------
+Каждая папка репозитория собирается в одноимённый PBO. $PBOPREFIX$ уже лежит
+внутри и совпадает с dir в CfgMods и с путями в files[] — менять их нельзя,
+иначе скрипты не найдутся.
+
+  CacheMod_Client        -> @CacheMod/Addons/CacheMod_Client.pbo
+  CacheMod_Server        -> @CacheMod_Server/Addons/CacheMod_Server.pbo
+  CacheMod_Admin_Client  -> @CacheMod_Admin/Addons/CacheMod_Admin_Client.pbo
+  CacheMod_Admin_Server  -> @CacheMod_Admin_Server/Addons/CacheMod_Admin_Server.pbo
+
+ЗАПУСК
+------
+  -mod=@CF;@VPPAdminTools;@CacheMod;@CacheMod_Admin
+  -serverMod=@CacheMod_Server;@CacheMod_Admin_Server
+
+Без VPP мод тоже работает: не ставьте @CacheMod_Admin и @CacheMod_Admin_Server.
+Права на размещение тогда выдаются только через admins.json (см. ниже).
+
+ФАЙЛЫ КОНФИГУРАЦИИ
+------------------
+Создаются автоматически при первом запуске в $profile:CacheMod:
+
+  settings.json      длительность обыска, тир по умолчанию, респавн, сундук
+  caches.json        точки; сервер сам дописывает их при размещении книгой
+  loot_zones.json    сферические лут-зоны
+  loot_tiers.json    содержимое тиров
+  admins.json        Steam64 тех, кому разрешено размещать тайники
+
+Существующий файл никогда не перезаписывается при загрузке.
+
+ПРАВА
+-----
+Размещение тайника и просмотр списка точек разрешены, если выполнено ЛЮБОЕ из:
+
+  1. Steam64 игрока вписан в admins.json;
+  2. у игрока есть право VPP "MenuCacheManager".
+
+Steam64 сервер берёт только из PlayerIdentity соединения. То, что прислал
+клиент, для проверки прав не используется никогда.
+
+Права VPP, регистрируемые плагином:
+
+  MenuCacheManager
+  MenuCacheManager:View
+  MenuCacheManager:Edit
+  MenuCacheManager:Create
+  MenuCacheManager:Delete
+  MenuCacheManager:Reset
+  MenuCacheManager:Reload
+
+КАК РАЗМЕСТИТЬ ТАЙНИК
+---------------------
+  1. Выдайте себе CacheCreatorBook_Basic (или CacheCreatorBook_Tooled).
+  2. Возьмите книгу в руки.
+  3. Включите режим размещения (стандартная клавиша размещения объекта).
+  4. Наведите голограмму на нужное место.
+  5. F — «Разместить тайник».
+
+Книга остаётся в руках, на землю ничего не кладётся, книга не расходуется.
+Позиция берётся из Hologram.GetProjectionPosition(), вручную не считается.
+
+Тип точки задаёт книга: Basic -> BASIC, Tooled -> TOOL_REQUIRED. Конкретный
+инструмент для TOOL_REQUIRED выбирается потом в Cache Manager (поле
+ИНСТРУМЕНТ, classname из таблицы CacheModTools).
+
+РАДИУС
+------
+У тайника ровно один радиус — radius. Он же:
+
+  радиус админской сферы;
+  область, внутри которой должен стоять игрок;
+  дистанция, которую сервер проверяет при завершении обыска.
+
+Отдельных interaction_radius и search_radius нет и не будет.
+
+SPAWN CHANCE
+------------
+При каждом старте сервера КАЖДАЯ точка независимо роллит свой spawn_chance.
+Прокнула — точка ACTIVE, для неё создаётся невидимый proxy. Не прокнула —
+INACTIVE, точка остаётся в файле и обычному игроку недоступна до следующего
+рестарта. Фиксированного количества активных точек нет.
+
+Кулдаун после обыска нового ролла НЕ делает: точка возвращается в тот же
+активный набор текущего запуска.
+
+Изменение spawn_chance в меню сохраняется сразу и применяется со следующего
+рестарта — текущий набор активных точек уже разыгран.
+
+ГОРЯЧЕЕ РЕДАКТИРОВАНИЕ
+----------------------
+Кнопка ПЕРЕЧИТАТЬ в Cache Manager перечитывает loot_zones.json,
+loot_tiers.json и settings.json без рестарта. caches.json намеренно не
+перечитывается: таймеры респавна и набор активных точек живут только в памяти.
+
+ЛОГИ
+----
+Всё пишется в RPT с префиксами:
+
+  [CACHE_MOD] [CacheMod/Placement] [CacheMod/Search] [CacheMod/Interaction]
+  [CacheMod/Loot] [CacheMod/Zone] [CacheMod/Chest] [CacheMod/Respawn]
+  [CacheMod/Admin]
+
+Подробные строки включаются "debug_logging": true в settings.json.

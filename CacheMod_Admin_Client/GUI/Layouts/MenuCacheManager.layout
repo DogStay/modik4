@@ -1,0 +1,249 @@
+FrameWidgetClass rootFrame {
+ clipchildren 1
+ color 0 0 0 0
+ position 0 0
+ size 0.72 0.66
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ draggable 1
+ {
+  PanelWidgetClass Main {
+   visible 1
+   clipchildren 1
+   color 0.749 0.773 0.8 1
+   size 1 1
+   hexactpos 1 vexactpos 1 hexactsize 0 vexactsize 0
+   style VPPPanel
+   {
+    PanelWidgetClass HeaderTitle {
+     ignorepointer 1
+     color 0.031 0.035 0.039 0.92
+     position 0 0
+     size 1 0.082
+     hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+     style VPPFillRound
+     {
+      ImageWidgetClass WindowIcon {
+       ignorepointer 1
+       color 0.91 0.639 0.239 1
+       position 9 0
+       size 30 30
+       valign center_ref
+       hexactpos 1 vexactpos 1 hexactsize 1 vexactsize 1
+       image0 "set:dayz_gui_vpp image:vpp_icon_settings"
+       mode blend
+       "src alpha" 1
+       "stretch mode" stretch_w_h
+      }
+      TextWidgetClass Title {
+       ignorepointer 1
+       position 48 0
+       size 0.7 1
+       hexactpos 1 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text "Cache Manager — тайники"
+       "text halign" left
+       "text valign" center
+       color 0.85 0.87 0.89 1
+      }
+     }
+    }
+
+    PanelWidgetClass ListPanel {
+     clipchildren 1
+     color 1 1 1 1
+     position 0.012 0.10
+     size 0.42 0.80
+     hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+     style VPPPanel
+     {
+      TextWidgetClass ListHeader {
+       ignorepointer 1
+       position 0.02 0.015
+       size 0.96 0.07
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text "ID / СОСТОЯНИЕ / ШАНС / РАДИУС"
+       color 0.85 0.87 0.89 1
+      }
+      TextListboxWidgetClass RecordList {
+       ignorepointer 0
+       color 1 1 1 1
+       position 0.02 0.10
+       size 0.96 0.76
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPListbox
+      }
+      ButtonWidgetClass BtnRefresh {
+       ignorepointer 0
+       position 0.02 0.885
+       size 0.30 0.09
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "ОБНОВИТЬ"
+      }
+      ButtonWidgetClass BtnSpheres {
+       ignorepointer 0
+       position 0.35 0.885
+       size 0.30 0.09
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "СФЕРЫ"
+      }
+      ButtonWidgetClass BtnReload {
+       ignorepointer 0
+       position 0.68 0.885
+       size 0.30 0.09
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "ПЕРЕЧИТАТЬ"
+      }
+     }
+    }
+
+    PanelWidgetClass FormPanel {
+     clipchildren 1
+     color 1 1 1 1
+     position 0.445 0.10
+     size 0.543 0.80
+     hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+     style VPPPanel
+     {
+      TextWidgetClass RecordIdText {
+       ignorepointer 1
+       position 0.03 0.02
+       size 0.94 0.07
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text "Тайник не выбран"
+       color 0.85 0.87 0.89 1
+      }
+
+      TextWidgetClass LabelRadius {
+       ignorepointer 1
+       position 0.03 0.12
+       size 0.35 0.06
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text "RADIUS (м)"
+       color 0.78 0.80 0.82 1
+      }
+      EditBoxWidgetClass EditRadius {
+       ignorepointer 0
+       position 0.40 0.12
+       size 0.57 0.06
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPEditbox
+       text ""
+      }
+
+      TextWidgetClass LabelChance {
+       ignorepointer 1
+       position 0.03 0.21
+       size 0.35 0.06
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text "SPAWN CHANCE (%)"
+       color 0.78 0.80 0.82 1
+      }
+      EditBoxWidgetClass EditChance {
+       ignorepointer 0
+       position 0.40 0.21
+       size 0.57 0.06
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPEditbox
+       text ""
+      }
+
+      TextWidgetClass LabelTool {
+       ignorepointer 1
+       position 0.03 0.30
+       size 0.35 0.06
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text "ИНСТРУМЕНТ"
+       color 0.78 0.80 0.82 1
+      }
+      EditBoxWidgetClass EditTool {
+       ignorepointer 0
+       position 0.40 0.30
+       size 0.57 0.06
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPEditbox
+       text ""
+      }
+
+      TextWidgetClass LabelType {
+       ignorepointer 1
+       position 0.03 0.39
+       size 0.35 0.06
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text "ТИП"
+       color 0.78 0.80 0.82 1
+      }
+      ButtonWidgetClass BtnType {
+       ignorepointer 0
+       position 0.40 0.39
+       size 0.57 0.06
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "BASIC"
+      }
+
+      TextWidgetClass InfoText {
+       ignorepointer 1
+       position 0.03 0.50
+       size 0.94 0.24
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text ""
+       "text halign" left
+       color 0.78 0.80 0.82 1
+       multiline 1
+      }
+
+      TextWidgetClass StatusText {
+       ignorepointer 1
+       position 0.03 0.76
+       size 0.94 0.07
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text ""
+       color 0.91 0.639 0.239 1
+      }
+
+      ButtonWidgetClass BtnSave {
+       ignorepointer 0
+       position 0.03 0.885
+       size 0.30 0.09
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "СОХРАНИТЬ"
+      }
+      ButtonWidgetClass BtnTeleport {
+       ignorepointer 0
+       position 0.355 0.885
+       size 0.30 0.09
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "К ТОЧКЕ"
+      }
+      ButtonWidgetClass BtnDelete {
+       ignorepointer 0
+       position 0.68 0.885
+       size 0.29 0.09
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "УДАЛИТЬ"
+      }
+     }
+    }
+   }
+  }
+ }
+}
