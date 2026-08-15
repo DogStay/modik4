@@ -1,0 +1,27 @@
+JobsMod VPP Admin HOT static verification
+
+Layout widget names: 129
+Duplicate widget names: 0
+Layout braces: OK
+Client braces/parentheses: OK
+Server braces/parentheses: OK
+
+Hot save ReloadConfig hook: yes
+Double-click open: yes
+Current-position buttons: yes
+Copy-player outfit: yes
+CfgVehicles class selector: yes
+Create job/NPC/world records: yes
+VSendRPC calls: 0
+RPCManager.SendRPC calls: 0
+Numbered version markers: 0
+Maximum || per line: 2
+Maximum && per line: 1
+
+Client PBO entries: 5
+Client PBO size: 78765
+Client SHA256: 067c735979dd2b83a2b948fd834ad07ea5c23d46e5adc402bb68d1bb7ad3635d
+
+Server PBO entries: 4
+Server PBO size: 31194
+Server SHA256: b221974f01ec0562403f70debfd83615798e05841349e09b7d80ab2106ca3b33

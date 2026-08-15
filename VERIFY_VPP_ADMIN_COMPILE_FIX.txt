@@ -1,0 +1,19 @@
+JobsMod VPP Admin compile fix
+
+Inline AddPermissionType array: 0
+Explicit permission array: yes
+Permissions:
+- MenuJobsModAdmin
+- MenuJobsModAdmin:Save
+- MenuJobsModAdmin:Apply
+
+Changed server source:
+JobsMod_Admin_Server/Scripts/4_World/JobsModAdmin/JobsModAdminPlugin.c
+
+Changed client source: none
+Maximum || per line: 2
+Maximum && per line: 1
+
+Server PBO entries: 4
+Server PBO size: 24205
+Server PBO SHA256: 4c496f9e5613ddd306c255d3e956f9232afc5611af64f4f559138dd99a3bd618

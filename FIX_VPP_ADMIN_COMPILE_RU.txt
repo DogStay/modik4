@@ -1,0 +1,24 @@
+JobsMod VPP Admin — исправление World compile
+
+Ошибка:
+JobsMod_Admin_Server/Scripts/4_World/jobsmodadmin/jobsmodadminplugin.c(30):
+Expected ',' or ')', not a '}'
+
+Исправление:
+inline-массив permissions убран.
+
+Было:
+permissionManager.AddPermissionType({
+    PERMISSION_MENU,
+    PERMISSION_SAVE,
+    PERMISSION_APPLY
+});
+
+Стало:
+ref array<string> jobsModPermissions = new array<string>;
+jobsModPermissions.Insert(PERMISSION_MENU);
+jobsModPermissions.Insert(PERMISSION_SAVE);
+jobsModPermissions.Insert(PERMISSION_APPLY);
+permissionManager.AddPermissionType(jobsModPermissions);
+
+Формы, RPC, JobsMod runtime и client layout не изменялись.

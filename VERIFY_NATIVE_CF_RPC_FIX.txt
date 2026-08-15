@@ -1,0 +1,23 @@
+JobsMod VPP Admin native CF RPC verification
+
+VSendRPC calls: 0
+RPCManager.SendRPC calls: 0
+RPCManager.AddRPC registration: preserved
+Native CGame.RPC client send: yes
+Native CGame.RPC targeted server reply: yes
+CF RPC id used: 10042
+
+Client helper request calls: 10
+Server targeted reply call sites: 3
+
+Explicit VPP permission array: preserved
+Maximum || per line: 2
+Maximum && per line: 1
+
+Client PBO entries: 5
+Client PBO size: 55467
+Client PBO SHA256: add6b5fcf44d18d67b64e58b2a9527163e15c384abb110a9095e897e85caeb22
+
+Server PBO entries: 4
+Server PBO size: 24541
+Server PBO SHA256: a608af0edc3984c48eecc22849f6aa5dfa81b25e93ad10976c60548584bf5362

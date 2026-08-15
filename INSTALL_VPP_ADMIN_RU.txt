@@ -1,0 +1,51 @@
+JobsMod + VPP Admin Tools — админка на формах
+
+Админ больше не видит и не редактирует JSON напрямую.
+
+Вкладки:
+- ОБЩИЕ: респавн мусора, таймаут задания, debug logging, класс награды;
+- РАБОТЫ: список Jobs/*.json и форма выбранной работы;
+- NPC: список NPC/*.json и форма NPC;
+- МИР: зоны, точки мусора, маршруты грузчика, посты охраны, шкафчики.
+
+Работы:
+- ID показывается, но не редактируется: имя файла и id должны совпадать;
+- тип выбирается кнопками СОРТИРОВКА / ГРУЗЧИК / ПОСЫЛЬНЫЙ / ОХРАНА / СБОР;
+- показываются только параметры выбранного типа;
+- массивы снаряжения/классов редактируются списком: один classname на строку.
+
+NPC:
+- ID показывается, но не редактируется;
+- имя, описание, позиция, поворот, survivor classname и invulnerable — отдельные поля;
+- одежда и job id — по одной записи на строку.
+
+МИР:
+- [zone] редактирует название зоны;
+- [pile] редактирует название, zone id и X Y Z;
+- [loader] редактирует source/destination и радиусы;
+- [guard] редактирует позицию/радиус;
+- [locker] редактирует позицию, поворот и classname контейнера.
+
+СОХРАНИТЬ:
+- сервер загружает реальный JobsMod JSON data class;
+- меняет только поля формы;
+- создаёт backup в $profile:JobsMod/AdminBackups;
+- сохраняет через JobsModJsonFileIO.
+
+ПРИМЕНИТЬ:
+- вызывает JobsModServerRuntime.ReloadConfig();
+- активные JobsMod assignments закрываются согласно текущей серверной логике;
+- NPC, мусор и шкафчики пересоздаются.
+
+Permissions VPP:
+- MenuJobsModAdmin
+- MenuJobsModAdmin:Save
+- MenuJobsModAdmin:Apply
+
+Загрузка:
+1. JobsMod_Admin_Client.pbo — обычный -mod и серверу, и клиентам.
+2. JobsMod_Admin_Server.pbo — только серверу через -serverMod.
+3. JobsMod_Client и VPP Admin Tools уже должны быть в обычном -mod.
+4. JobsMod_Server должен быть в -serverMod.
+
+Внутри addon config нет numbered version markers.

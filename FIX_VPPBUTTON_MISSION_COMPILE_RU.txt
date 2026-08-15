@@ -1,0 +1,25 @@
+JobsMod VPP Admin — Mission compile fix
+
+Fresh error:
+JobsMod_Admin_Client/Scripts/5_Mission/jobsmodadmin/vppadminhudjobsmod.c(15):
+Expected ',' or ')', not a 'JobsMod: конфигурация работ, NPC и зон'
+
+Fix:
+VPPAdminHudJobsMod.c is now written in the exact compact pattern used by the
+official VPP external-module example:
+
+modded class VPPAdminHud
+{
+    override void DefineButtons()
+    {
+        super.DefineButtons();
+        InsertButton("MenuJobsModAdmin", "JobsMod",
+            "set:dayz_gui_vpp image:vpp_icon_settings",
+            "JobsMod configuration");
+    }
+};
+
+The actual source keeps InsertButton on one physical line.
+The modded class is terminated with `};`.
+The tooltip is ASCII-only.
+No form, RPC, permission or JobsMod runtime logic changed.

@@ -1,0 +1,20 @@
+JobsMod VPP Admin SendRPC verification
+
+VSendRPC calls remaining: 0
+SendRPC calls present: 13
+Changed files:
+- JobsMod_Admin_Client/Scripts/5_Mission/JobsModAdmin/MenuJobsModAdmin.c
+- JobsMod_Admin_Server/Scripts/4_World/JobsModAdmin/JobsModAdminPlugin.c
+
+Explicit VPP permission array: yes
+Numbered addon markers: 0
+Maximum || per line: 2
+Maximum && per line: 1
+
+Client PBO entries: 5
+Client PBO size: 55392
+Client PBO SHA256: 41ad74da739d00501fceac099cf0b3eb7106e6188c732c03501290b45703ba97
+
+Server PBO entries: 4
+Server PBO size: 24202
+Server PBO SHA256: faca5460720878d9222a65c3db851f8da3cfd2b0b207da409fe512c1ec4f6abf

@@ -1,0 +1,9 @@
+string.Format in JobsModAdminPlugin: 0
+VSendRPC: 0
+RPCManager.SendRPC: 0
+Explicit permission array: yes
+Maximum || per line: 2
+Maximum && per line: 1
+Server PBO entries: 4
+Server PBO size: 24600
+Server SHA256: d54cc070dc1d86dc92e798f92cc92eb97b94af3b27450ea787d161c2537fccce

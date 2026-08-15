@@ -1,0 +1,33 @@
+JobsMod VPP admin static verification
+
+Official VPP CfgPatches dependency: DZM_VPPAdminToolsScripts
+Numbered addon markers: 0
+CfgMods version fields: 0
+JobsModBuildInfo: 0
+PROTOCOL_VERSION: 0
+
+VPP button permission/type: MenuJobsModAdmin
+Submenu class: MenuJobsModAdmin
+Permissions:
+- MenuJobsModAdmin
+- MenuJobsModAdmin:Save
+- MenuJobsModAdmin:Apply
+
+Client references JobsModServerRuntime: 0
+Server ReloadConfig hook: yes
+
+Multiline editor GetText(out string): yes
+Layout braces: OK
+Invalid valign stretch: 0
+Required widgets: Header, BtnClose, FileList, JsonEditor,
+SelectedFileText, StatusText, BtnRefresh, BtnLoad, BtnSave, BtnApply
+Maximum || per script line: 0
+Maximum && per script line: 0
+
+Client PBO entries: 5
+Client PBO size: 18697
+Client PBO SHA256: 1700240b86651493aeb4a424399a22aff7dbefb1d600da55cf070c327ce13391
+
+Server PBO entries: 4
+Server PBO size: 8660
+Server PBO SHA256: e14704872c384e8d4e2152c1a453f714d78d5755dd1a2dada282f3951c3006db

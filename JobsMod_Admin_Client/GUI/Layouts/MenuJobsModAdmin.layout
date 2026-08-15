@@ -1,0 +1,1415 @@
+FrameWidgetClass rootFrame {
+ clipchildren 1
+ color 0 0 0 0
+ position 0 0
+ size 0.88 0.86
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ draggable 1
+ {
+  PanelWidgetClass Main {
+   visible 1
+   clipchildren 1
+   color 0.749 0.773 0.8 1
+   size 1 1
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   style VPPPanel
+   {
+    PanelWidgetClass HeaderTitle {
+     ignorepointer 1
+     color 0.031 0.035 0.039 0.92
+     position 0 0
+     size 1 0.064
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     style VPPFillRound
+     {
+      ImageWidgetClass WindowIcon {
+       ignorepointer 1
+       color 0.91 0.639 0.239 1
+       position 9 0
+       size 30 30
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       image0 "set:dayz_gui_vpp image:vpp_icon_settings"
+       mode blend
+       "src alpha" 1
+       "stretch mode" stretch_w_h
+      }
+      TextWidgetClass Title {
+       ignorepointer 1
+       position 48 0
+       size 0.6 1
+       hexactpos 1
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style None
+       text "JobsMod — администрирование"
+       font "gui/fonts/sdf_MetronLight72"
+       "bold text" 1
+       "exact text" 1
+       "exact text size" 19
+       "text valign" center
+      }
+      ButtonWidgetClass BtnClose {
+       ignorepointer 0
+       position 8 0
+       size 32 32
+       halign right_ref
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       style VPPButtonGhost
+       {
+        ImageWidgetClass ImageClose {
+         ignorepointer 1
+         color 0.7 0.72 0.74 1
+         size 30 30
+         halign center_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         image0 "set:vpp_icons image:x"
+         mode blend
+         "src alpha" 1
+         "stretch mode" stretch_w_h
+        }
+       }
+      }
+     }
+    }
+
+    PanelWidgetClass TabsPanel {
+     ignorepointer 1
+     color 0.035 0.039 0.043 0.95
+     position 0.01 0.074
+     size 0.98 0.058
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     style VPPFillRound
+     {
+      ButtonWidgetClass TabSettings { position 0.01 0.10 size 0.235 0.80 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "ОБЩИЕ" }
+      ButtonWidgetClass TabJobs { position 0.255 0.10 size 0.235 0.80 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "РАБОТЫ" }
+      ButtonWidgetClass TabNpcs { position 0.50 0.10 size 0.235 0.80 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "NPC" }
+      ButtonWidgetClass TabWorld { position 0.745 0.10 size 0.245 0.80 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "МИР" }
+     }
+    }
+
+    PanelWidgetClass ListPanel {
+     clipchildren 1
+     color 1 1 1 1
+     position 0.01 0.145
+     size 0.27 0.745
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     style VPPPanel
+     {
+      PanelWidgetClass ListHeader {
+       ignorepointer 1
+       color 0.039 0.043 0.047 0.92
+       position 0 0
+       size 1 0.07
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass ListHeaderText {
+         ignorepointer 1
+         position 0.035 0
+         size 0.93 1
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style None
+         text "ЗАПИСИ"
+         font "gui/fonts/sdf_MetronLight72"
+         "bold text" 1
+         "exact text" 1
+         "exact text size" 14
+         "text valign" center
+        }
+       }
+      }
+      TextListboxWidgetClass RecordList {
+       ignorepointer 0
+       color 1 1 1 1
+       position 0.02 0.085
+       size 0.96 0.79
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPListbox
+      }
+      ButtonWidgetClass BtnRefresh {
+       ignorepointer 0
+       position 0.02 0.89
+       size 0.30 0.085
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "ОБНОВИТЬ"
+      }
+      ButtonWidgetClass BtnLoad {
+       ignorepointer 0
+       position 0.35 0.89
+       size 0.30 0.085
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "ОТКРЫТЬ"
+      }
+      ButtonWidgetClass BtnCreate {
+       ignorepointer 0
+       position 0.68 0.89
+       size 0.30 0.085
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "СОЗДАТЬ"
+      }
+     }
+    }
+
+    PanelWidgetClass FormPanel {
+     clipchildren 1
+     color 1 1 1 1
+     position 0.29 0.145
+     size 0.70 0.745
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     style VPPPanel
+     {
+      PanelWidgetClass FormHeader {
+       ignorepointer 1
+       color 0.039 0.043 0.047 0.92
+       position 0 0
+       size 1 0.07
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass SectionTitle {
+         ignorepointer 1
+         position 0.02 0
+         size 0.52 1
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style None
+         text "ОБЩИЕ НАСТРОЙКИ"
+         font "gui/fonts/sdf_MetronLight72"
+         "bold text" 1
+         "exact text" 1
+         "exact text size" 14
+         "text valign" center
+        }
+        TextWidgetClass RecordIdText {
+         ignorepointer 1
+         color 0.91 0.639 0.239 1
+         position 0.55 0
+         size 0.43 1
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style None
+         text "—"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.91 0.639 0.239 1
+         "exact text" 1
+         "exact text size" 12
+         "text halign" right
+         "text valign" center
+        }
+       }
+      }
+
+      PanelWidgetClass DescriptionBlock {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.085
+       size 0.97 0.078
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass DescriptionLabel {
+         ignorepointer 1
+         position 0.012 0.08
+         size 0.22 0.84
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style None
+         text "Описание"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        MultilineEditBoxWidgetClass DescriptionEditor {
+         ignorepointer 0
+         position 0.24 0.08
+         size 0.745 0.84
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+       }
+      }
+
+      PanelWidgetClass JobTypeBlock {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.222
+       size 0.97 0.041
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass JobTypeText {
+         ignorepointer 1
+         position 0.012 0
+         size 0.20 1
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style None
+         text "Тип: sorting"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 11
+         "text valign" center
+        }
+        ButtonWidgetClass JobTypeSorting { ignorepointer 0 position 0.22 0.08 size 0.145 0.84 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "СОРТИРОВКА" }
+        ButtonWidgetClass JobTypeLoading { ignorepointer 0 position 0.37 0.08 size 0.14 0.84 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "ГРУЗЧИК" }
+        ButtonWidgetClass JobTypeMessenger { ignorepointer 0 position 0.515 0.08 size 0.15 0.84 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "ПОСЫЛЬНЫЙ" }
+        ButtonWidgetClass JobTypeGuard { ignorepointer 0 position 0.67 0.08 size 0.14 0.84 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "ОХРАНА" }
+        ButtonWidgetClass JobTypeCollect { ignorepointer 0 position 0.815 0.08 size 0.17 0.84 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "СБОР" }
+       }
+      }
+
+      PanelWidgetClass FieldRow0 {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.175
+       size 0.97 0.041
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass FieldLabel0 {
+         ignorepointer 1
+         position 0.012 0
+         size 0.41 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style None
+         text "Поле"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        EditBoxWidgetClass FieldEdit0 {
+         ignorepointer 0
+         color 1 1 1 1
+         position 0.43 0.08
+         size 0.37 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+        ButtonWidgetClass FieldAction0 {
+         visible 0
+         ignorepointer 0
+         position 0.815 0.08
+         size 0.17 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPButton
+         text "ВЫБРАТЬ"
+        }
+        CheckBoxWidgetClass FieldCheck0 {
+         visible 0
+         ignorepointer 0
+         position 0.43 0.11
+         size 24 24
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style Default
+        }
+       }
+      }
+      PanelWidgetClass FieldRow1 {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.222
+       size 0.97 0.041
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass FieldLabel1 {
+         ignorepointer 1
+         position 0.012 0
+         size 0.41 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style None
+         text "Поле"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        EditBoxWidgetClass FieldEdit1 {
+         ignorepointer 0
+         color 1 1 1 1
+         position 0.43 0.08
+         size 0.37 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+        ButtonWidgetClass FieldAction1 {
+         visible 0
+         ignorepointer 0
+         position 0.815 0.08
+         size 0.17 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPButton
+         text "ВЫБРАТЬ"
+        }
+        CheckBoxWidgetClass FieldCheck1 {
+         visible 0
+         ignorepointer 0
+         position 0.43 0.11
+         size 24 24
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style Default
+        }
+       }
+      }
+      PanelWidgetClass FieldRow2 {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.269
+       size 0.97 0.041
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass FieldLabel2 {
+         ignorepointer 1
+         position 0.012 0
+         size 0.41 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style None
+         text "Поле"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        EditBoxWidgetClass FieldEdit2 {
+         ignorepointer 0
+         color 1 1 1 1
+         position 0.43 0.08
+         size 0.37 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+        ButtonWidgetClass FieldAction2 {
+         visible 0
+         ignorepointer 0
+         position 0.815 0.08
+         size 0.17 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPButton
+         text "ВЫБРАТЬ"
+        }
+        CheckBoxWidgetClass FieldCheck2 {
+         visible 0
+         ignorepointer 0
+         position 0.43 0.11
+         size 24 24
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style Default
+        }
+       }
+      }
+      PanelWidgetClass FieldRow3 {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.316
+       size 0.97 0.041
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass FieldLabel3 {
+         ignorepointer 1
+         position 0.012 0
+         size 0.41 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style None
+         text "Поле"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        EditBoxWidgetClass FieldEdit3 {
+         ignorepointer 0
+         color 1 1 1 1
+         position 0.43 0.08
+         size 0.37 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+        ButtonWidgetClass FieldAction3 {
+         visible 0
+         ignorepointer 0
+         position 0.815 0.08
+         size 0.17 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPButton
+         text "ВЫБРАТЬ"
+        }
+        CheckBoxWidgetClass FieldCheck3 {
+         visible 0
+         ignorepointer 0
+         position 0.43 0.11
+         size 24 24
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style Default
+        }
+       }
+      }
+      PanelWidgetClass FieldRow4 {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.363
+       size 0.97 0.041
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass FieldLabel4 {
+         ignorepointer 1
+         position 0.012 0
+         size 0.41 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style None
+         text "Поле"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        EditBoxWidgetClass FieldEdit4 {
+         ignorepointer 0
+         color 1 1 1 1
+         position 0.43 0.08
+         size 0.37 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+        ButtonWidgetClass FieldAction4 {
+         visible 0
+         ignorepointer 0
+         position 0.815 0.08
+         size 0.17 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPButton
+         text "ВЫБРАТЬ"
+        }
+        CheckBoxWidgetClass FieldCheck4 {
+         visible 0
+         ignorepointer 0
+         position 0.43 0.11
+         size 24 24
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style Default
+        }
+       }
+      }
+      PanelWidgetClass FieldRow5 {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.410
+       size 0.97 0.041
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass FieldLabel5 {
+         ignorepointer 1
+         position 0.012 0
+         size 0.41 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style None
+         text "Поле"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        EditBoxWidgetClass FieldEdit5 {
+         ignorepointer 0
+         color 1 1 1 1
+         position 0.43 0.08
+         size 0.37 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+        ButtonWidgetClass FieldAction5 {
+         visible 0
+         ignorepointer 0
+         position 0.815 0.08
+         size 0.17 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPButton
+         text "ВЫБРАТЬ"
+        }
+        CheckBoxWidgetClass FieldCheck5 {
+         visible 0
+         ignorepointer 0
+         position 0.43 0.11
+         size 24 24
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style Default
+        }
+       }
+      }
+      PanelWidgetClass FieldRow6 {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.457
+       size 0.97 0.041
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass FieldLabel6 {
+         ignorepointer 1
+         position 0.012 0
+         size 0.41 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style None
+         text "Поле"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        EditBoxWidgetClass FieldEdit6 {
+         ignorepointer 0
+         color 1 1 1 1
+         position 0.43 0.08
+         size 0.37 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+        ButtonWidgetClass FieldAction6 {
+         visible 0
+         ignorepointer 0
+         position 0.815 0.08
+         size 0.17 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPButton
+         text "ВЫБРАТЬ"
+        }
+        CheckBoxWidgetClass FieldCheck6 {
+         visible 0
+         ignorepointer 0
+         position 0.43 0.11
+         size 24 24
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style Default
+        }
+       }
+      }
+      PanelWidgetClass FieldRow7 {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.504
+       size 0.97 0.041
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass FieldLabel7 {
+         ignorepointer 1
+         position 0.012 0
+         size 0.41 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style None
+         text "Поле"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        EditBoxWidgetClass FieldEdit7 {
+         ignorepointer 0
+         color 1 1 1 1
+         position 0.43 0.08
+         size 0.37 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+        ButtonWidgetClass FieldAction7 {
+         visible 0
+         ignorepointer 0
+         position 0.815 0.08
+         size 0.17 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPButton
+         text "ВЫБРАТЬ"
+        }
+        CheckBoxWidgetClass FieldCheck7 {
+         visible 0
+         ignorepointer 0
+         position 0.43 0.11
+         size 24 24
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style Default
+        }
+       }
+      }
+      PanelWidgetClass FieldRow8 {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.551
+       size 0.97 0.041
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass FieldLabel8 {
+         ignorepointer 1
+         position 0.012 0
+         size 0.41 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style None
+         text "Поле"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        EditBoxWidgetClass FieldEdit8 {
+         ignorepointer 0
+         color 1 1 1 1
+         position 0.43 0.08
+         size 0.37 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+        ButtonWidgetClass FieldAction8 {
+         visible 0
+         ignorepointer 0
+         position 0.815 0.08
+         size 0.17 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPButton
+         text "ВЫБРАТЬ"
+        }
+        CheckBoxWidgetClass FieldCheck8 {
+         visible 0
+         ignorepointer 0
+         position 0.43 0.11
+         size 24 24
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style Default
+        }
+       }
+      }
+      PanelWidgetClass FieldRow9 {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.598
+       size 0.97 0.041
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass FieldLabel9 {
+         ignorepointer 1
+         position 0.012 0
+         size 0.41 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style None
+         text "Поле"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        EditBoxWidgetClass FieldEdit9 {
+         ignorepointer 0
+         color 1 1 1 1
+         position 0.43 0.08
+         size 0.37 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+        ButtonWidgetClass FieldAction9 {
+         visible 0
+         ignorepointer 0
+         position 0.815 0.08
+         size 0.17 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPButton
+         text "ВЫБРАТЬ"
+        }
+        CheckBoxWidgetClass FieldCheck9 {
+         visible 0
+         ignorepointer 0
+         position 0.43 0.11
+         size 24 24
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style Default
+        }
+       }
+      }
+      PanelWidgetClass FieldRow10 {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.645
+       size 0.97 0.041
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass FieldLabel10 {
+         ignorepointer 1
+         position 0.012 0
+         size 0.41 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style None
+         text "Поле"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        EditBoxWidgetClass FieldEdit10 {
+         ignorepointer 0
+         color 1 1 1 1
+         position 0.43 0.08
+         size 0.37 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+        ButtonWidgetClass FieldAction10 {
+         visible 0
+         ignorepointer 0
+         position 0.815 0.08
+         size 0.17 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPButton
+         text "ВЫБРАТЬ"
+        }
+        CheckBoxWidgetClass FieldCheck10 {
+         visible 0
+         ignorepointer 0
+         position 0.43 0.11
+         size 24 24
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style Default
+        }
+       }
+      }
+      PanelWidgetClass FieldRow11 {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.692
+       size 0.97 0.041
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass FieldLabel11 {
+         ignorepointer 1
+         position 0.012 0
+         size 0.41 1
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style None
+         text "Поле"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 12
+         "text valign" center
+        }
+        EditBoxWidgetClass FieldEdit11 {
+         ignorepointer 0
+         color 1 1 1 1
+         position 0.43 0.08
+         size 0.37 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+        ButtonWidgetClass FieldAction11 {
+         visible 0
+         ignorepointer 0
+         position 0.815 0.08
+         size 0.17 0.84
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         style VPPButton
+         text "ВЫБРАТЬ"
+        }
+        CheckBoxWidgetClass FieldCheck11 {
+         visible 0
+         ignorepointer 0
+         position 0.43 0.11
+         size 24 24
+         hexactpos 0
+         vexactpos 0
+         hexactsize 1
+         vexactsize 1
+         style Default
+        }
+       }
+      }
+
+      PanelWidgetClass ListABlock {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.015 0.748
+       size 0.475 0.235
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass ListALabel {
+         ignorepointer 1
+         position 0.02 0.02
+         size 0.48 0.18
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style None
+         text "Список A"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 11
+        }
+        ButtonWidgetClass BtnListAClass {
+         visible 0
+         ignorepointer 0
+         position 0.52 0.02
+         size 0.22 0.18
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style VPPButton
+         text "КЛАСС"
+        }
+        ButtonWidgetClass BtnListACopyPlayer {
+         visible 0
+         ignorepointer 0
+         position 0.76 0.02
+         size 0.22 0.18
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style VPPButton
+         text "С МЕНЯ"
+        }
+        MultilineEditBoxWidgetClass ListAEditor {
+         ignorepointer 0
+         position 0.02 0.24
+         size 0.96 0.72
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+       }
+      }
+
+      PanelWidgetClass ListBBlock {
+       visible 0
+       ignorepointer 1
+       color 0.055 0.060 0.065 0.80
+       position 0.51 0.748
+       size 0.475 0.235
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPFillRound
+       {
+        TextWidgetClass ListBLabel {
+         ignorepointer 1
+         position 0.02 0.02
+         size 0.70 0.18
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style None
+         text "Список B"
+         font "gui/fonts/sdf_MetronLight72"
+         "text color" 0.72 0.74 0.76 1
+         "exact text" 1
+         "exact text size" 11
+        }
+        ButtonWidgetClass BtnListBClass {
+         visible 0
+         ignorepointer 0
+         position 0.76 0.02
+         size 0.22 0.18
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style VPPButton
+         text "КЛАСС"
+        }
+        MultilineEditBoxWidgetClass ListBEditor {
+         ignorepointer 0
+         position 0.02 0.24
+         size 0.96 0.72
+         hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+         style VPPInput
+         font "gui/fonts/sdf_MetronLight24"
+         text ""
+        }
+       }
+      }
+     }
+    }
+
+    PanelWidgetClass BottomBar {
+     ignorepointer 1
+     color 0.031 0.035 0.039 0.94
+     position 0.01 0.902
+     size 0.98 0.082
+     hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+     style VPPFillRound
+     {
+      TextWidgetClass StatusText {
+       ignorepointer 1
+       color 0.66 0.68 0.70 1
+       position 0.015 0
+       size 0.56 1
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text "Готово"
+       font "gui/fonts/sdf_MetronLight72"
+       "text color" 0.66 0.68 0.70 1
+       "exact text" 1
+       "exact text size" 12
+       "text valign" center
+      }
+      ButtonWidgetClass BtnSave {
+       ignorepointer 0
+       position 0.61 0.13
+       size 0.375 0.74
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "СОХРАНИТЬ И ПРИМЕНИТЬ"
+      }
+      ButtonWidgetClass BtnApply {
+       visible 0
+       ignorepointer 0
+       position 0.80 0.13
+       size 0.185 0.74
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "ПРИМЕНИТЬ"
+      }
+     }
+    }
+   }
+  }
+
+  PanelWidgetClass ClassSelectorOverlay {
+   visible 0
+   ignorepointer 0
+   color 0 0 0 0.72
+   position 0 0
+   size 1 1
+   hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+   {
+    PanelWidgetClass ClassSelectorPanel {
+     color 1 1 1 1
+     position 0 0
+     size 0.58 0.70
+     halign center_ref
+     valign center_ref
+     hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+     style VPPPanel
+     {
+      TextWidgetClass ClassSelectorTitle {
+       ignorepointer 1
+       position 0.03 0.02
+       size 0.94 0.07
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text "ВЫБОР CLASSNAME"
+       font "gui/fonts/sdf_MetronLight72"
+       "bold text" 1
+       "exact text" 1
+       "exact text size" 16
+       "text valign" center
+      }
+      EditBoxWidgetClass ClassSearchEdit {
+       ignorepointer 0
+       position 0.03 0.10
+       size 0.68 0.07
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPInput
+       font "gui/fonts/sdf_MetronLight24"
+       text ""
+      }
+      ButtonWidgetClass BtnClassSearch {
+       ignorepointer 0
+       position 0.73 0.10
+       size 0.24 0.07
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "НАЙТИ"
+      }
+      TextListboxWidgetClass ClassList {
+       ignorepointer 0
+       position 0.03 0.19
+       size 0.94 0.68
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPListbox
+      }
+      ButtonWidgetClass BtnClassUse {
+       ignorepointer 0
+       position 0.51 0.89
+       size 0.22 0.08
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "ВЫБРАТЬ"
+      }
+      ButtonWidgetClass BtnClassClose {
+       ignorepointer 0
+       position 0.75 0.89
+       size 0.22 0.08
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "ОТМЕНА"
+      }
+     }
+    }
+   }
+  }
+
+  PanelWidgetClass CreateOverlay {
+   visible 0
+   ignorepointer 0
+   color 0 0 0 0.72
+   position 0 0
+   size 1 1
+   hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+   {
+    PanelWidgetClass CreatePanel {
+     color 1 1 1 1
+     position 0 0
+     size 0.52 0.42
+     halign center_ref
+     valign center_ref
+     hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+     style VPPPanel
+     {
+      TextWidgetClass CreateTitle {
+       ignorepointer 1
+       position 0.04 0.04
+       size 0.92 0.12
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text "НОВАЯ ЗАПИСЬ"
+       font "gui/fonts/sdf_MetronLight72"
+       "bold text" 1
+       "exact text" 1
+       "exact text size" 16
+       "text valign" center
+      }
+      TextWidgetClass CreateIdLabel {
+       ignorepointer 1
+       position 0.04 0.19
+       size 0.22 0.10
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text "ID / имя файла"
+       font "gui/fonts/sdf_MetronLight72"
+       "exact text" 1
+       "exact text size" 12
+       "text valign" center
+      }
+      EditBoxWidgetClass CreateIdEdit {
+       ignorepointer 0
+       position 0.28 0.19
+       size 0.68 0.10
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPInput
+       font "gui/fonts/sdf_MetronLight24"
+       text ""
+      }
+      PanelWidgetClass CreateWorldTypeBlock {
+       visible 0
+       ignorepointer 1
+       position 0.04 0.34
+       size 0.92 0.18
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       {
+        ButtonWidgetClass CreateTypeZone { ignorepointer 0 position 0 0 size 0.19 1 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "ЗОНА" }
+        ButtonWidgetClass CreateTypePile { ignorepointer 0 position 0.205 0 size 0.19 1 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "МУСОР" }
+        ButtonWidgetClass CreateTypeLoader { ignorepointer 0 position 0.41 0 size 0.19 1 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "ГРУЗ" }
+        ButtonWidgetClass CreateTypeGuard { ignorepointer 0 position 0.615 0 size 0.18 1 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "ПОСТ" }
+        ButtonWidgetClass CreateTypeLocker { ignorepointer 0 position 0.81 0 size 0.19 1 hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0 style VPPButton text "ШКАФ" }
+       }
+      }
+      TextWidgetClass CreateTypeText {
+       ignorepointer 1
+       position 0.04 0.55
+       size 0.92 0.08
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style None
+       text ""
+       font "gui/fonts/sdf_MetronLight72"
+       "exact text" 1
+       "exact text size" 12
+       "text halign" center
+       "text valign" center
+      }
+      ButtonWidgetClass BtnCreateConfirm {
+       ignorepointer 0
+       position 0.50 0.76
+       size 0.22 0.13
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "СОЗДАТЬ"
+      }
+      ButtonWidgetClass BtnCreateCancel {
+       ignorepointer 0
+       position 0.74 0.76
+       size 0.22 0.13
+       hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+       style VPPButton
+       text "ОТМЕНА"
+      }
+     }
+    }
+   }
+  }
+
+  PanelWidgetClass Header {
+   ignorepointer 0
+   size 0.90 0.064
+   halign center_ref
+   hexactpos 0 vexactpos 0 hexactsize 0 vexactsize 0
+   draggable 1
+   style blank
+  }
+ }
+}

@@ -1,0 +1,24 @@
+JobsMod VPP admin — structured forms build
+
+Raw JSON editor: 0
+Tabs: ОБЩИЕ / РАБОТЫ / NPC / МИР
+Job type buttons: sorting / loading / messenger / guard / collect
+World record forms: zone / pile / loader / guard / locker
+Backup before save: yes
+Server typed IO: JobsModJsonFileIO
+Apply hook: JobsModServerRuntime.ReloadConfig()
+Numbered addon markers: 0
+JobsModBuildInfo: 0
+PROTOCOL_VERSION: 0
+Duplicate layout widget names: 0
+Layout widgets: 91
+Maximum || per script line: 2
+Maximum && per script line: 1
+
+Client PBO entries: 5
+Client PBO size: 55402
+Client SHA256: 522e84745c8f542eb73cc2df8d1e1cd9ec51aa963ed68acda93c7576e342ac38
+
+Server PBO entries: 4
+Server PBO size: 24066
+Server SHA256: 50b06fe45adeab8993561286f895837e5665e0374128467733aa48ee2a9e513a

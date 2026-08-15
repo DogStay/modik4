@@ -1,0 +1,9 @@
+JobsMod VPP Admin — backup timestamp compile fix
+
+Fresh error:
+JobsModAdminPlugin.c(199): Invalid statement ')'
+
+The failing code was the multi-argument string.Format used only to build a backup filename timestamp.
+
+It has been replaced by simple Enforce Script string concatenation.
+No RPC, permissions, form data, JobsMod gameplay, NPC, jobs, world objects or ReloadConfig logic changed.

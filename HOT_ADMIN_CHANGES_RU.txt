@@ -1,0 +1,12 @@
+JobsMod VPP Admin — HOT FORMS
+
+Добавлено:
+- Сохранение теперь сразу вызывает JobsModServerRuntime.ReloadConfig(); отдельный Apply не нужен.
+- Двойной клик по работе/NPC/объекту мира сразу открывает форму.
+- Кнопка МОЯ ПОЗ. вставляет текущие координаты администратора в координатные поля.
+- В NPC есть С МЕНЯ: копирует надетые Clothing/Bag_Base classname с администратора.
+- Поля classname открывают окно выбора из публичных CfgVehicles всех загруженных модов.
+- Для equipment/collect_classes classname добавляется из того же селектора.
+- Кнопка СОЗДАТЬ создаёт новые Jobs/<id>.json, NPC/<id>.json и world records zone/pile/loader/guard/locker.
+- Новые NPC и world points стартуют на текущей позиции администратора.
+- Версионные addon-marker'ы не добавлены.

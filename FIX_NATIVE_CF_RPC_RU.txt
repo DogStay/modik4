@@ -1,0 +1,24 @@
+JobsMod VPP Admin — native CF packet fix
+
+Fresh compile error:
+JobsModAdminPlugin.c(152): Expected ',' or ')', not a 'sender'
+
+The JobsMod admin integration no longer calls RPCManager.SendRPC or
+RPCManager.VSendRPC.
+
+Registration still uses CF:
+GetRPCManager().AddRPC(...)
+
+Transmission now uses the same packet layout as CF RPCManager itself:
+1. Param2<string,string>(modName, functionName)
+2. optional payload Param
+3. CGame.RPC with CF framework RPC id 10042
+
+Client -> server:
+GetGame().RPC(NULL, 10042, rpcData, true);
+
+Server -> one client:
+GetGame().RPC(NULL, 10042, rpcData, true, recipient);
+
+This removes the SendRPC/VSendRPC call-site conflict while preserving
+CF's registered callback dispatch and targeted server replies.

@@ -1,0 +1,23 @@
+JobsMod VPP Admin — RPC compatibility fix
+
+Observed server compile error:
+JobsModAdminPlugin.c(152): Expected ',' or ')', not a 'sender'
+
+The failing call was a five-argument VSendRPC(..., true, sender).
+
+Fix:
+All JobsMod admin integration calls were changed from VSendRPC(...) to the
+current Community Framework RPCManager API:
+
+GetRPCManager().SendRPC(
+    modName,
+    funcName,
+    params,
+    guaranteed,
+    sendToIdentity
+);
+
+The previous explicit permission-array fix is preserved.
+
+No JobsMod gameplay logic, form data schema, job mechanics, NPC mechanics,
+trash mechanics or server runtime code was changed.

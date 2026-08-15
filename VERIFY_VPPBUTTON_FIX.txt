@@ -1,0 +1,16 @@
+JobsMod VPP Admin VPP button verification
+
+InsertButton calls: 1
+InsertButton arguments: 4
+Button permission/type: MenuJobsModAdmin
+Submenu class: MenuJobsModAdmin
+Tooltip: ASCII only
+modded class terminator: };
+Server code changed: no
+
+Client PBO entries: 5
+Client PBO size: 55369
+Client PBO SHA256: cb6e6fa5e856bc4c07babc2e6a892a43ebd100c34dc42777926c0a004ec72073
+
+Server PBO SHA256 (unchanged STAMP_FIX):
+d54cc070dc1d86dc92e798f92cc92eb97b94af3b27450ea787d161c2537fccce
