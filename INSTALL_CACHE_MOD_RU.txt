@@ -112,3 +112,20 @@ loot_tiers.json и settings.json без рестарта. caches.json намер
   [CacheMod/Admin]
 
 Подробные строки включаются "debug_logging": true в settings.json.
+
+СБОРКА PBO БЕЗ ИНСТРУМЕНТОВ BOHEMIA
+-----------------------------------
+В репозитории лежит упаковщик tools/pack_pbo.py. Он пишет обычный PBO:
+заголовок с prefix из $PBOPREFIX$, файлы без сжатия, замыкающая SHA1.
+config.cpp не бинаризуется — движок читает его из PBO как текст.
+
+  python3 tools/pack_pbo.py CacheMod_Client       @CacheMod/Addons/CacheMod_Client.pbo
+  python3 tools/pack_pbo.py CacheMod_Server       @CacheMod_Server/Addons/CacheMod_Server.pbo
+  python3 tools/pack_pbo.py CacheMod_Admin_Client @CacheMod_Admin/Addons/CacheMod_Admin_Client.pbo
+  python3 tools/pack_pbo.py CacheMod_Admin_Server @CacheMod_Admin_Server/Addons/CacheMod_Admin_Server.pbo
+
+ПОДПИСИ
+-------
+PBO не подписаны: .bikey/.bisign делаются DSUtils от Bohemia. Сервер запустится
+с verifySignatures = 0. Для сервера с проверкой подписи подпишите файлы своим
+ключом обычным способом — содержимое PBO для этого менять не нужно.
