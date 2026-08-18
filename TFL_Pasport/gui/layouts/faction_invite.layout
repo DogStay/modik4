@@ -1,0 +1,46 @@
+WindowWidgetClass Root {
+ visible 1 position 0 0 size 1 1 priority 200
+ {
+  ImageWidgetClass Dim {
+   ignorepointer 1 color 0 0 0 0.66 position 0 0 size 1 1 priority 201
+   imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h
+  }
+  PanelWidgetClass InviteShell {
+   color 0 0 0 0 position 0.31 0.31 size 0.38 0.38 priority 205
+   {
+    ImageWidgetClass InviteBg {
+     ignorepointer 1 color 0.0431 0.0510 0.0353 1 position 0 0 size 1 1 priority 206
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass InviteTop {
+     ignorepointer 1 color 0.5608 0.6275 0.3882 1 position 0 0 size 1 0.012 priority 207
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h
+    }
+    TextWidgetClass Kicker {
+     ignorepointer 1 position 0.06 0.08 size 0.88 0.08 priority 210 text "TFL // ПРИГЛАШЕНИЕ ВО ФРАКЦИЮ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.56
+    }
+    TextWidgetClass FactionText {
+     ignorepointer 1 position 0.06 0.20 size 0.88 0.12 priority 210 text "ФРАКЦИЯ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.86 "text halign" center
+    }
+    TextWidgetClass InviterText {
+     ignorepointer 1 position 0.06 0.37 size 0.88 0.07 priority 210 text "ПРИГЛАСИЛ: -"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.54 "text halign" center
+    }
+    TextWidgetClass TimerText {
+     ignorepointer 1 position 0.06 0.48 size 0.88 0.06 priority 210 text "ПРИГЛАШЕНИЕ ДЕЙСТВУЕТ: 60 СЕК."
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.46 "text halign" center
+    }
+    ButtonWidgetClass BtnAccept {
+     color 0.16 0.22 0.10 1 position 0.08 0.68 size 0.38 0.14 priority 220 text "ПРИНЯТЬ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.62
+    }
+    ButtonWidgetClass BtnDecline {
+     color 0.24 0.10 0.08 1 position 0.54 0.68 size 0.38 0.14 priority 220 text "ОТКЛОНИТЬ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.92 0.73 0.61 1 text_proportion 0.62
+    }
+   }
+  }
+ }
+}

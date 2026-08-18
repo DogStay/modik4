@@ -1,0 +1,61 @@
+// TFL_TerritoryRewardPresetEditor.layout — rebuilt from scratch for the TFL
+// Interface Kit design pack. Mounted into TerritoryRewardHost when
+// ТЕРРИТОРИИ→НАГРАДЫ is selected. Preset list (left) + preset editor (right).
+WindowWidgetClass Root
+{
+ visible 1 position 0 0 size 1 1 priority 101
+ {
+  PanelWidgetClass Shell
+  {
+   visible 1 color 0 0 0 0 position 0 0 size 1 1 priority 100
+   {
+    ButtonWidgetClass BtnClose { color 0.0784 0.0902 0.0588 1 position 0.965 0.01 size 0.025 0.03 priority 120 text "X" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.6 }
+
+    ImageWidgetClass RewardPresetListBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0 0 size 0.281 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+    TextWidgetClass RewardPresetListTitle { ignorepointer 1 position 0.012 0.02 size 0.26 0.035 priority 114 text "ГОТОВЫЕ ПРЕСЕТЫ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.5 }
+    ScrollWidgetClass RewardPresetScroll { position 0.012 0.065 size 0.257 0.77 priority 115 { PanelWidgetClass RewardPresetList { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+    ButtonWidgetClass RewardPresetCreateButton { color 0.1059 0.1255 0.0824 1 position 0.012 0.85 size 0.257 0.06 priority 120 text "+ СОЗДАТЬ ПРЕСЕТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.4 }
+    ButtonWidgetClass RewardPresetAssignButton { color 0.1647 0.2078 0.1255 1 position 0.012 0.92 size 0.257 0.06 priority 120 text "НАЗНАЧИТЬ ЭТОЙ ТОЧКЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8588 0.9020 0.7059 1 text_proportion 0.4 }
+
+    ImageWidgetClass RewardEditorBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0.29 0 size 0.71 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+    PanelWidgetClass RewardEditorPanel
+    {
+     visible 1 color 0 0 0 0 position 0.29 0 size 0.71 1 priority 112
+     {
+      TextWidgetClass RewardEditorTitle { ignorepointer 1 position 0.02 0.015 size 0.5 0.03 priority 114 text "РЕДАКТОР ПРЕСЕТА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.48 }
+      TextWidgetClass RewardIdLabel { ignorepointer 1 position 0.02 0.06 size 0.2 0.025 priority 114 text "ID" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.4 }
+      EditBoxWidgetClass RewardPresetIdEdit { color 0.0588 0.0745 0.0431 1 position 0.02 0.09 size 0.23 0.045 priority 118 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 }
+      TextWidgetClass RewardNameLabel { ignorepointer 1 position 0.26 0.06 size 0.3 0.025 priority 114 text "НАЗВАНИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.4 }
+      EditBoxWidgetClass RewardPresetNameEdit { color 0.0588 0.0745 0.0431 1 position 0.26 0.09 size 0.72 0.045 priority 118 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 }
+
+      ImageWidgetClass RewardSearchBg { ignorepointer 1 color 0.0902 0.1059 0.0667 1 position 0.02 0.155 size 0.47 0.32 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass RewardSearchTitle { ignorepointer 1 position 0.035 0.165 size 0.4 0.03 priority 114 text "ДОБАВИТЬ ПРЕДМЕТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.42 }
+      EditBoxWidgetClass RewardSearchEdit { color 0.0588 0.0745 0.0431 1 position 0.035 0.205 size 0.31 0.045 priority 118 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 }
+      ButtonWidgetClass RewardSearchButton { color 0.1059 0.1255 0.0824 1 position 0.355 0.205 size 0.12 0.045 priority 120 text "НАЙТИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.42 }
+      ScrollWidgetClass RewardSearchResultsScroll { position 0.035 0.26 size 0.44 0.2 priority 115 { PanelWidgetClass RewardSearchResults { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+
+      ImageWidgetClass RewardPreviewBg { ignorepointer 1 color 0.0902 0.1059 0.0667 1 position 0.51 0.155 size 0.47 0.32 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass RewardItemTitle { ignorepointer 1 position 0.525 0.165 size 0.3 0.03 priority 114 text "ПРЕДМЕТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.42 }
+      ItemPreviewWidgetClass RewardPreview { position 0.525 0.205 size 0.13 0.2 priority 115 }
+      TextWidgetClass RewardSelectedItemName { ignorepointer 1 position 0.67 0.205 size 0.29 0.035 priority 114 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.42 }
+      TextWidgetClass RewardClassnameLabel { ignorepointer 1 position 0.67 0.25 size 0.2 0.025 priority 114 text "CLASSNAME" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.34 }
+      TextWidgetClass RewardSelectedClassname { ignorepointer 1 position 0.67 0.275 size 0.3 0.03 priority 114 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.34 }
+      TextWidgetClass RewardQtyLabel { ignorepointer 1 position 0.67 0.32 size 0.2 0.025 priority 114 text "КОЛИЧЕСТВО" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.34 }
+      EditBoxWidgetClass RewardQuantityEdit { color 0.0588 0.0745 0.0431 1 position 0.67 0.35 size 0.09 0.045 priority 118 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 "text halign" center }
+      ButtonWidgetClass RewardAddButton { color 0.1059 0.1255 0.0824 1 position 0.525 0.415 size 0.455 0.045 priority 120 text "+ ДОБАВИТЬ В ПРЕСЕТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.4 }
+
+      ImageWidgetClass RewardContentBg { ignorepointer 1 color 0.0902 0.1059 0.0667 1 position 0.02 0.49 size 0.96 0.35 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass RewardContentTitle { ignorepointer 1 position 0.035 0.5 size 0.4 0.03 priority 114 text "СОДЕРЖИМОЕ ПРЕСЕТА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.42 }
+      ScrollWidgetClass RewardContentScroll { position 0.035 0.54 size 0.93 0.29 priority 115 { PanelWidgetClass RewardContentList { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+
+      TextWidgetClass RewardPointLabel { ignorepointer 1 position 0.02 0.86 size 0.3 0.025 priority 114 text "ТЕКУЩАЯ ТОЧКА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.36 }
+      TextWidgetClass RewardPointName { ignorepointer 1 position 0.02 0.885 size 0.3 0.03 priority 114 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.4 }
+      ButtonWidgetClass RewardSaveButton { color 0.1647 0.2078 0.1255 1 position 0.35 0.90 size 0.22 0.06 priority 120 text "СОХРАНИТЬ ПРЕСЕТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8588 0.9020 0.7059 1 text_proportion 0.36 }
+      ButtonWidgetClass RewardDeleteButton { color 0.1137 0.0745 0.0627 1 position 0.585 0.90 size 0.17 0.06 priority 120 text "УДАЛИТЬ ПРЕСЕТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7529 0.5412 0.4863 1 text_proportion 0.32 }
+      ButtonWidgetClass RewardBackButton { color 0.1059 0.1255 0.0824 1 position 0.77 0.90 size 0.21 0.06 priority 120 text "← НАЗАД К ТОЧКАМ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.5569 0.4863 1 text_proportion 0.3 }
+     }
+    }
+   }
+  }
+ }
+}

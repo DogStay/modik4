@@ -1,0 +1,14 @@
+// TFL_TerritoryChainPointRow.layout — redesigned per TFL Interface Kit. One
+// row in the chain's ordered point list: index, name, owner, up/down/remove.
+PanelWidgetClass Row {
+ visible 1 color 0 0 0 0 position 0 0 size 1 0.14 priority 210
+ {
+  ButtonWidgetClass RowBtn { color 0 0 0 0 position 0 0 size 0.55 1 priority 212 text "" }
+  TextWidgetClass ChainPointIndex { ignorepointer 1 position 0.01 0.1 size 0.08 0.8 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.55 "text valign" center }
+  TextWidgetClass ChainPointName { ignorepointer 1 position 0.10 0.1 size 0.44 0.8 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.5 "text valign" center }
+  TextWidgetClass ChainPointOwner { ignorepointer 1 position 0.55 0.1 size 0.17 0.8 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.5569 0.4863 1 text_proportion 0.42 "text valign" center }
+  ButtonWidgetClass ChainPointUpButton { color 0.1059 0.1255 0.0824 1 position 0.73 0.08 size 0.08 0.84 priority 214 text "↑" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.5 }
+  ButtonWidgetClass ChainPointDownButton { color 0.1059 0.1255 0.0824 1 position 0.82 0.08 size 0.08 0.84 priority 214 text "↓" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.5 }
+  ButtonWidgetClass ChainPointRemoveButton { color 0.1137 0.0745 0.0627 1 position 0.91 0.08 size 0.08 0.84 priority 214 text "X" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7529 0.5412 0.4863 1 text_proportion 0.5 }
+ }
+}

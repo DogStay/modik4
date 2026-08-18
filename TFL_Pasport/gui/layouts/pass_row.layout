@@ -1,0 +1,174 @@
+PanelWidgetClass Row {
+ visible 1
+ clipchildren 0
+ inheritalpha 0
+ color 0.0000 0.0000 0.0000 0.0000
+ position 0.00000 0.00000
+ size 1.00000 0.08023
+ hexactpos 0
+ vexactpos 0
+ hexactsize 0
+ vexactsize 0
+ priority 175
+ {
+  ImageWidgetClass RowBg {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.1059 0.1294 0.0863 1.0000
+   position 0.00000 0.00000
+   size 1.00000 0.96429
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 176
+   imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+   mode blend
+   "src alpha" 1
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
+  }
+  ButtonWidgetClass RowBtn {
+   visible 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.0000 0.0000 0.0000 0.0000
+   position 0.00000 0.00000
+   size 1.00000 0.96429
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 177
+   text ""
+   font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+   "text color" 0.1412 0.1216 0.0784 1.0000
+   "text halign" left
+   "text valign" center
+  }
+  ImageWidgetClass RowMark {
+   visible 0
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.5608 0.6275 0.3882 1.0000
+   position 0.00000 0.00000
+   size 0.00533 0.96429
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 178
+   imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+   mode blend
+   "src alpha" 1
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
+  }
+  TextWidgetClass RowSerial {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.7255 0.7882 0.5412 1.0000
+   position 0.01867 0.17857
+   size 0.24000 0.60714
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 179
+   text ""
+   font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+   "text color" 0.7255 0.7882 0.5412 1.0000
+   "exact text" 0
+   text_proportion 0.588
+   "text halign" left
+   "text valign" center
+  }
+  TextWidgetClass RowName {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.8392 0.8902 0.6902 1.0000
+   position 0.25867 0.17857
+   size 0.45333 0.60714
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 180
+   text ""
+   font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+   "text color" 0.8392 0.8902 0.6902 1.0000
+   "exact text" 0
+   text_proportion 0.706
+   "text halign" left
+   "text valign" center
+  }
+  TextWidgetClass RowLic {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.5608 0.6275 0.3882 1.0000
+   position 0.71200 0.17857
+   size 0.17333 0.60714
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 181
+   text ""
+   font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+   "text color" 0.5608 0.6275 0.3882 1.0000
+   "exact text" 0
+   text_proportion 0.559
+   "text halign" left
+   "text valign" center
+  }
+  TextWidgetClass RowFlags {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.7882 0.7059 0.4784 1.0000
+   position 0.88533 0.17857
+   size 0.10133 0.60714
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 182
+   text ""
+   font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+   "text color" 0.7882 0.7059 0.4784 1.0000
+   "exact text" 0
+   text_proportion 0.588
+   "text halign" right
+   "text valign" center
+  }
+  ImageWidgetClass RowRule {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.2353 0.2902 0.1490 0.5000
+   position 0.01867 0.96429
+   size 0.96267 0.01786
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 183
+   imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+   mode blend
+   "src alpha" 1
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
+  }
+ }
+}

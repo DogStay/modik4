@@ -1,0 +1,40 @@
+// TFL_LaptopPermRow.layout
+// One toggleable permission line inside LaptopPermHost (faction_laptop_v2.layout, RolesPanel).
+// Same row pattern as faction_role_row.layout so the existing dynamic-row click routing
+// (WidgetInsideRow) works unchanged.
+PanelWidgetClass Row {
+ visible 1
+ color 0 0 0 0
+ position 0 0
+ size 1 0.09
+ priority 210
+ {
+  ImageWidgetClass RowBg {
+   ignorepointer 1
+   color 0.1059 0.1294 0.0863 1
+   position 0 0
+   size 1 0.9
+   priority 211
+   imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+   mode blend
+   "src alpha" 1
+   "stretch mode" stretch_w_h
+  }
+  ButtonWidgetClass RowBtn { color 0 0 0 0 position 0 0 size 1 0.9 priority 212 text "" }
+  ImageWidgetClass RowMark {
+   visible 0 ignorepointer 1 color 0.5608 0.6275 0.3882 1
+   position 0 0 size 0.008 0.9 priority 213
+   imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h
+  }
+  TextWidgetClass RowName {
+   ignorepointer 1 position 0.04 0.15 size 0.68 0.6 priority 214 text ""
+   font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1
+   text_proportion 0.5 "text valign" center
+  }
+  TextWidgetClass RowLevel {
+   ignorepointer 1 position 0.72 0.15 size 0.24 0.6 priority 214 text ""
+   font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1
+   text_proportion 0.5 "text halign" right "text valign" center
+  }
+ }
+}

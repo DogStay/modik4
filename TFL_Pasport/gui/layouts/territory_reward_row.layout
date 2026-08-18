@@ -1,0 +1,9 @@
+PanelWidgetClass Row {
+ visible 1 color 0 0 0 0 position 0 0 size 1 0.30 priority 210
+ {
+  ImageWidgetClass RowBg { ignorepointer 1 color 0.1059 0.1294 0.0863 1 position 0 0 size 1 0.94 priority 211 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+  ItemPreviewWidgetClass RewardPreview { ignorepointer 1 position 0.025 0.10 size 0.25 0.74 priority 213 }
+  TextWidgetClass RewardName { ignorepointer 1 position 0.31 0.14 size 0.65 0.30 priority 214 text "НАГРАДА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.50 }
+  TextWidgetClass RewardClass { ignorepointer 1 position 0.31 0.50 size 0.65 0.25 priority 214 text "classname" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.36 }
+ }
+}

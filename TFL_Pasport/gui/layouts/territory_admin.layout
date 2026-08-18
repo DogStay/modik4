@@ -1,0 +1,51 @@
+WindowWidgetClass Root
+{
+ visible 1
+ ignorepointer 0
+ position 0 0
+ size 1 1
+ {
+  ImageWidgetClass Dim { ignorepointer 1 position 0 0 size 1 1 color 0 0 0 0.55 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+  PanelWidgetClass Shell { position 0.06 0.06 size 0.88 0.88 {
+   ImageWidgetClass ShellBg { ignorepointer 1 position 0 0 size 1 1 color 0.035 0.05 0.035 0.97 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+   ImageWidgetClass Header { ignorepointer 1 position 0 0 size 1 0.075 color 0.18 0.24 0.12 1 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+   
+TextWidgetClass Title { position 0.025 0.017 size 0.7 0.04 text "ADMIN // КОНТРОЛЬ ТЕРРИТОРИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" color 0.92 0.94 0.84 1 }
+ButtonWidgetClass BtnClose { position 0.91 0.015 size 0.065 0.045 text "X" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+MapWidgetClass TerritoryMap { position 0.025 0.10 size 0.62 0.80 }
+PanelWidgetClass Editor { position 0.665 0.10 size 0.31 0.80 {
+ ImageWidgetClass EditorBg { ignorepointer 1 position 0 0 size 1 1 color 0.06 0.075 0.05 0.96 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+ TextListboxWidgetClass TerritoryList { position 0.04 0.03 size 0.92 0.20 font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style EditorListbox }
+ EditBoxWidgetClass TerritoryId { position 0.04 0.25 size 0.42 0.055 text "territory_id" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ EditBoxWidgetClass TerritoryName { position 0.49 0.25 size 0.47 0.055 text "Название" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ TextWidgetClass MapPoint { position 0.04 0.315 size 0.92 0.045 text "ТОЧКА: кликните по карте" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" color 0.68 0.75 0.55 1 }
+ ButtonWidgetClass BtnCreate { position 0.04 0.365 size 0.44 0.055 text "+ СОЗДАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ ButtonWidgetClass BtnDelete { position 0.52 0.365 size 0.44 0.055 text "УДАЛИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ EditBoxWidgetClass Radius { position 0.04 0.44 size 0.28 0.05 text "100" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ EditBoxWidgetClass MinPlayers { position 0.36 0.44 size 0.28 0.05 text "4" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ EditBoxWidgetClass CaptureMin { position 0.68 0.44 size 0.28 0.05 text "15" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ EditBoxWidgetClass PrepMin { position 0.04 0.505 size 0.28 0.05 text "30" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ EditBoxWidgetClass CooldownMin { position 0.36 0.505 size 0.28 0.05 text "360" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ EditBoxWidgetClass Participation { position 0.68 0.505 size 0.28 0.05 text "30" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ EditBoxWidgetClass StartHour { position 0.04 0.57 size 0.20 0.05 text "18" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ EditBoxWidgetClass EndHour { position 0.27 0.57 size 0.20 0.05 text "23" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ EditBoxWidgetClass DailyLimit { position 0.50 0.57 size 0.22 0.05 text "3" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ ButtonWidgetClass BtnSaveLimit { position 0.75 0.57 size 0.21 0.05 text "ЛИМИТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ ButtonWidgetClass Day1 { position 0.04 0.635 size 0.12 0.045 text "ПН" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ ButtonWidgetClass Day2 { position 0.17 0.635 size 0.12 0.045 text "ВТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ ButtonWidgetClass Day3 { position 0.30 0.635 size 0.12 0.045 text "СР" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ ButtonWidgetClass Day4 { position 0.43 0.635 size 0.12 0.045 text "ЧТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ ButtonWidgetClass Day5 { position 0.56 0.635 size 0.12 0.045 text "ПТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ ButtonWidgetClass Day6 { position 0.69 0.635 size 0.12 0.045 text "СБ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ ButtonWidgetClass Day7 { position 0.82 0.635 size 0.14 0.045 text "ВС" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ EditBoxWidgetClass RewardClass { position 0.04 0.70 size 0.58 0.05 text "classname" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ EditBoxWidgetClass RewardCount { position 0.65 0.70 size 0.14 0.05 text "1" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ ButtonWidgetClass BtnRewardAdd { position 0.82 0.70 size 0.14 0.05 text "+" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ TextListboxWidgetClass RewardList { position 0.04 0.765 size 0.61 0.13 font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style EditorListbox }
+ ButtonWidgetClass BtnRewardRemove { position 0.68 0.765 size 0.28 0.055 text "УДАЛИТЬ REWARD" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ ButtonWidgetClass BtnSave { position 0.68 0.835 size 0.28 0.055 text "СОХРАНИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+} }
+
+  } }
+ }
+}

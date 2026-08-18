@@ -1,0 +1,21 @@
+// TFL_TerritoryRequestCard.layout — rebuilt from scratch. Compact card for an
+// incoming ally-attack request; appears automatically without the leader
+// having to search for it.
+PanelWidgetClass TerritoryRequestCard
+{
+ visible 0 color 0.0784 0.0902 0.0588 1 position 0 0 size 0.208 0.34 priority 210
+ {
+  ImageWidgetClass RequestAccent { ignorepointer 1 color 0.7176 0.5490 0.2902 1 position 0 0 size 0.008 1 priority 211 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+  TextWidgetClass RequestKicker { ignorepointer 1 position 0.045 0.03 size 0.8 0.03 priority 214 text "TFL // ЗАПРОС" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7176 0.5490 0.2902 1 text_proportion 0.4 }
+  TextWidgetClass RequestTitle { ignorepointer 1 position 0.045 0.065 size 0.8 0.05 priority 214 text "СОВМЕСТНАЯ АТАКА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.5 }
+  ButtonWidgetClass RequestClose { color 0.0784 0.0902 0.0588 1 position 0.89 0.03 size 0.08 0.04 priority 215 text "X" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.6 }
+
+  TextWidgetClass RequestFactionLabel { ignorepointer 1 position 0.045 0.16 size 0.4 0.03 priority 214 text "ФРАКЦИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.36 }
+  TextWidgetClass TerritoryRequestFaction { ignorepointer 1 position 0.045 0.195 size 0.9 0.04 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.46 }
+  TextWidgetClass RequestTerrLabel { ignorepointer 1 position 0.045 0.26 size 0.4 0.03 priority 214 text "ТЕРРИТОРИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.36 }
+  TextWidgetClass TerritoryRequestTerritory { ignorepointer 1 position 0.045 0.295 size 0.9 0.04 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.46 }
+
+  ButtonWidgetClass TerritoryRequestAccept { color 0.1647 0.2078 0.1255 1 position 0.045 0.80 size 0.42 0.14 priority 220 text "ПРИНЯТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8588 0.9020 0.7059 1 text_proportion 0.42 }
+  ButtonWidgetClass TerritoryRequestDecline { color 0.1137 0.0745 0.0627 1 position 0.535 0.80 size 0.42 0.14 priority 220 text "ОТКЛОНИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7529 0.5412 0.4863 1 text_proportion 0.42 }
+ }
+}

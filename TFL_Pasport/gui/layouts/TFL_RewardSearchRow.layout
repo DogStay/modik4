@@ -1,0 +1,10 @@
+// TFL_RewardSearchRow.layout — redesigned per TFL Interface Kit. One item
+// search hit: RowName + RowMeta (classname).
+PanelWidgetClass Row {
+ visible 1 color 0 0 0 0 position 0 0 size 1 0.25 priority 210
+ {
+  ButtonWidgetClass RowBtn { color 0 0 0 0 position 0 0 size 1 1 priority 212 text "" }
+  TextWidgetClass RowName { ignorepointer 1 position 0.05 0.1 size 0.9 0.44 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.46 }
+  TextWidgetClass RowMeta { ignorepointer 1 position 0.05 0.56 size 0.9 0.38 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.4 }
+ }
+}

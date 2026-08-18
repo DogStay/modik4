@@ -1,0 +1,30 @@
+WindowWidgetClass Root
+{
+ visible 1
+ ignorepointer 0
+ position 0 0
+ size 1 1
+ {
+  ImageWidgetClass Dim { ignorepointer 1 position 0 0 size 1 1 color 0 0 0 0.55 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+  PanelWidgetClass Shell { position 0.06 0.06 size 0.88 0.88 {
+   ImageWidgetClass ShellBg { ignorepointer 1 position 0 0 size 1 1 color 0.035 0.05 0.035 0.97 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+   ImageWidgetClass Header { ignorepointer 1 position 0 0 size 1 0.075 color 0.18 0.24 0.12 1 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+   
+TextWidgetClass Title { position 0.025 0.017 size 0.65 0.04 text "ADMIN // ЛИЦЕНЗИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" color 0.92 0.94 0.84 1 }
+ButtonWidgetClass BtnClose { position 0.91 0.015 size 0.065 0.045 text "X" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+TextListboxWidgetClass LicenseList { position 0.025 0.12 size 0.31 0.66 font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style EditorListbox }
+EditBoxWidgetClass LicenseId { position 0.37 0.12 size 0.24 0.055 text "license_id" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+EditBoxWidgetClass LicenseName { position 0.63 0.12 size 0.34 0.055 text "Название" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+MultilineEditBoxWidgetClass LicenseDescription { position 0.37 0.19 size 0.60 0.16 text "Описание" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ButtonWidgetClass BtnActive { position 0.37 0.37 size 0.20 0.055 text "[X] АКТИВНА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ButtonWidgetClass BtnNew { position 0.59 0.37 size 0.18 0.055 text "НОВАЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ButtonWidgetClass BtnSave { position 0.79 0.37 size 0.18 0.055 text "СОХРАНИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+TextWidgetClass IssuersTitle { position 0.37 0.46 size 0.6 0.035 text "КТО МОЖЕТ ВЫДАВАТЬ // ВЫБЕРИТЕ ФРАКЦИЮ И ПЕРЕКЛЮЧИТЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" color 0.65 0.72 0.55 1 }
+TextListboxWidgetClass IssuerFactionList { position 0.37 0.51 size 0.60 0.26 font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style EditorListbox }
+ButtonWidgetClass BtnToggleFaction { position 0.37 0.79 size 0.37 0.06 text "РАЗРЕШИТЬ / ЗАПРЕТИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ButtonWidgetClass BtnDelete { position 0.76 0.79 size 0.21 0.06 text "УДАЛИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+TextWidgetClass Status { position 0.025 0.90 size 0.94 0.035 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" color 0.75 0.8 0.58 1 }
+
+  } }
+ }
+}

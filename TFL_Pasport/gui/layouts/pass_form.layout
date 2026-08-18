@@ -1,0 +1,779 @@
+WindowWidgetClass Root {
+ visible 1
+ clipchildren 0
+ inheritalpha 0
+ position 0.00000 0.00000
+ size 1.00000 1.00000
+ hexactpos 0
+ vexactpos 0
+ hexactsize 0
+ vexactsize 0
+ priority 189
+ style Default
+ {
+  ImageWidgetClass ScreenDim {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.0510 0.0431 0.0353 0.9000
+   position 0.00000 0.00000
+   size 1.00000 1.00000
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 90
+   imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+   mode blend
+   "src alpha" 1
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
+  }
+  PanelWidgetClass Shell {
+   visible 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.0000 0.0000 0.0000 0.0000
+   position 0.34375 0.18519
+   size 0.31250 0.64815
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 191
+   {
+    ImageWidgetClass ShellPaper {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 1.0000 1.0000 1.0000 1.0000
+     position 0.00000 0.00000
+     size 1.00000 1.00000
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 192
+     imageTexture "TFL_Pasport/gui/textures/pass_paper.paa"
+     mode blend
+     "src alpha" 1
+     "clamp mode" repeat
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass EdgeTop {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4863 0.2275 0.1647 0.9000
+     position 0.05000 0.03714
+     size 0.90000 0.00429
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 193
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    TextWidgetClass TitleText {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.1412 0.1216 0.0784 1.0000
+     position 0.05000 0.05714
+     size 0.90000 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 194
+     text "ОФОРМЛЕНИЕ ДОКУМЕНТА"
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.1412 0.1216 0.0784 1.0000
+     "exact text" 0
+     text_proportion 0.636
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass CountryText {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.05000 0.12286
+     size 0.90000 0.04571
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 195
+     text ""
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.594
+     "text halign" center
+     "text valign" center
+    }
+    MultilineTextWidgetClass HintText {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.06667 0.17714
+     size 0.86667 0.08571
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 196
+     text "Данные вносятся один раз. После выдачи документа исправить их нельзя."
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 1
+     "exact text size" 18
+     "text halign" left
+     "text valign" top
+    }
+    TextWidgetClass LblSurname {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.06667 0.28571
+     size 0.27500 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 197
+     text "ФАМИЛИЯ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.432
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass SurnameBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7216 0.6784 0.5490 0.5000
+     position 0.39333 0.28571
+     size 0.54000 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 198
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    EditBoxWidgetClass SurnameEdit {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.1412 0.1216 0.0784 1.0000
+     position 0.41000 0.29429
+     size 0.50667 0.04571
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 199
+     style Default
+     text ""
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.1412 0.1216 0.0784 1.0000
+     "exact text" 1
+     "exact text size" 21
+     "text halign" left
+    }
+    TextWidgetClass LblName {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.06667 0.36857
+     size 0.27500 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 200
+     text "ИМЯ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.432
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass NameBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7216 0.6784 0.5490 0.5000
+     position 0.39333 0.36857
+     size 0.54000 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 201
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    EditBoxWidgetClass NameEdit {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.1412 0.1216 0.0784 1.0000
+     position 0.41000 0.37714
+     size 0.50667 0.04571
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 202
+     style Default
+     text ""
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.1412 0.1216 0.0784 1.0000
+     "exact text" 1
+     "exact text size" 21
+     "text halign" left
+    }
+    TextWidgetClass LblPlace {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.06667 0.45143
+     size 0.27500 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 203
+     text "МЕСТО РОЖДЕНИЯ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.432
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass PlaceBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7216 0.6784 0.5490 0.5000
+     position 0.39333 0.45143
+     size 0.54000 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 204
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    EditBoxWidgetClass PlaceEdit {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.1412 0.1216 0.0784 1.0000
+     position 0.41000 0.46000
+     size 0.50667 0.04571
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 205
+     style Default
+     text ""
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.1412 0.1216 0.0784 1.0000
+     "exact text" 1
+     "exact text size" 21
+     "text halign" left
+    }
+    TextWidgetClass LblSex {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.06667 0.55143
+     size 0.27500 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 206
+     text "ПОЛ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.432
+     "text halign" left
+     "text valign" center
+    }
+    ButtonWidgetClass BtnSexM {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.1412 0.1216 0.0784 1.0000
+     position 0.39333 0.55143
+     size 0.26333 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 207
+     style EmptyHighlight
+     text "МУЖСКОЙ"
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.1412 0.1216 0.0784 1.0000
+     "exact text" 0
+     text_proportion 0.455
+     "text halign" center
+     "text valign" center
+    }
+    ButtonWidgetClass BtnSexF {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.1412 0.1216 0.0784 1.0000
+     position 0.67000 0.55143
+     size 0.26333 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 208
+     style EmptyHighlight
+     text "ЖЕНСКИЙ"
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.1412 0.1216 0.0784 1.0000
+     "exact text" 0
+     text_proportion 0.455
+     "text halign" center
+     "text valign" center
+    }
+    ImageWidgetClass SexMark {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4863 0.2275 0.1647 1.0000
+     position 0.39333 0.61714
+     size 0.26333 0.00429
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 209
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    TextWidgetClass LblBirth {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.06667 0.64571
+     size 0.27500 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 210
+     text "ДАТА РОЖДЕНИЯ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.432
+     "text halign" left
+     "text valign" center
+    }
+    ButtonWidgetClass BtnDayPrev {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.39333 0.64571
+     size 0.03667 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 211
+     style EmptyHighlight
+     text "<"
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.455
+     "text halign" center
+     "text valign" center
+    }
+    ImageWidgetClass DayBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7216 0.6784 0.5490 0.5000
+     position 0.43000 0.64571
+     size 0.08000 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 212
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    EditBoxWidgetClass DayEdit {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.1412 0.1216 0.0784 1.0000
+     position 0.44000 0.65429
+     size 0.06000 0.04571
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 213
+     style Default
+     text "1"
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.1412 0.1216 0.0784 1.0000
+     "exact text" 1
+     "exact text size" 21
+     "text halign" center
+    }
+    ButtonWidgetClass BtnDayNext {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.51000 0.64571
+     size 0.03667 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 214
+     style EmptyHighlight
+     text ">"
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.455
+     "text halign" center
+     "text valign" center
+    }
+    ButtonWidgetClass BtnMonthPrev {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.56333 0.64571
+     size 0.03667 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 215
+     style EmptyHighlight
+     text "<"
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.455
+     "text halign" center
+     "text valign" center
+    }
+    ImageWidgetClass MonthBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7216 0.6784 0.5490 0.5000
+     position 0.60000 0.64571
+     size 0.08000 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 216
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    EditBoxWidgetClass MonthEdit {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.1412 0.1216 0.0784 1.0000
+     position 0.61000 0.65429
+     size 0.06000 0.04571
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 217
+     style Default
+     text "1"
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.1412 0.1216 0.0784 1.0000
+     "exact text" 1
+     "exact text size" 21
+     "text halign" center
+    }
+    ButtonWidgetClass BtnMonthNext {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.68000 0.64571
+     size 0.03667 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 218
+     style EmptyHighlight
+     text ">"
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.455
+     "text halign" center
+     "text valign" center
+    }
+    ButtonWidgetClass BtnYearPrev {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.73333 0.64571
+     size 0.03667 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 219
+     style EmptyHighlight
+     text "<"
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.455
+     "text halign" center
+     "text valign" center
+    }
+    ImageWidgetClass YearBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7216 0.6784 0.5490 0.5000
+     position 0.77000 0.64571
+     size 0.12500 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 220
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    EditBoxWidgetClass YearEdit {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.1412 0.1216 0.0784 1.0000
+     position 0.78000 0.65429
+     size 0.10500 0.04571
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 221
+     style Default
+     text ""
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.1412 0.1216 0.0784 1.0000
+     "exact text" 1
+     "exact text size" 21
+     "text halign" center
+    }
+    ButtonWidgetClass BtnYearNext {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.89500 0.64571
+     size 0.03667 0.06286
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 222
+     style EmptyHighlight
+     text ">"
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.455
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass DateHint {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.5608 0.5137 0.3961 1.0000
+     position 0.39333 0.71429
+     size 0.33333 0.04000
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 223
+     text "день - месяц - год"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.5608 0.5137 0.3961 1.0000
+     "exact text" 0
+     text_proportion 0.607
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass AgeText {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.3882 0.3490 0.2471 1.0000
+     position 0.73333 0.71429
+     size 0.20000 0.04000
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 224
+     text ""
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.3882 0.3490 0.2471 1.0000
+     "exact text" 0
+     text_proportion 0.643
+     "text halign" right
+     "text valign" center
+    }
+    MultilineTextWidgetClass StatusText {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4863 0.2275 0.1647 1.0000
+     position 0.06667 0.77143
+     size 0.86667 0.10000
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 225
+     text ""
+     font "TFL_Pasport/gui/fonts/PTSerif-Regular"
+     "text color" 0.4863 0.2275 0.1647 1.0000
+     "exact text" 1
+     "exact text size" 19
+     "text halign" left
+     "text valign" top
+    }
+    ImageWidgetClass SubmitBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4863 0.2275 0.1647 0.1600
+     position 0.25000 0.88571
+     size 0.50000 0.07714
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 226
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ButtonWidgetClass BtnSubmit {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.1412 0.1216 0.0784 1.0000
+     position 0.25000 0.88571
+     size 0.50000 0.07714
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 227
+     style EmptyHighlight
+     text "ОФОРМИТЬ ДОКУМЕНТ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.1412 0.1216 0.0784 1.0000
+     "exact text" 0
+     text_proportion 0.444
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+ }
+}

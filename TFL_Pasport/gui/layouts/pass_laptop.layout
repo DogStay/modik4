@@ -1,0 +1,1533 @@
+WindowWidgetClass Root {
+ visible 1
+ clipchildren 0
+ inheritalpha 0
+ position 0.00000 0.00000
+ size 1.00000 1.00000
+ hexactpos 0
+ vexactpos 0
+ hexactsize 0
+ vexactsize 0
+ priority 101
+ style Default
+ {
+  ImageWidgetClass ScreenBase {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.0431 0.0510 0.0353 1.0000
+   position 0.00000 0.00000
+   size 1.00000 1.00000
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 89
+   imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+   mode blend
+   "src alpha" 1
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
+  }
+  ImageWidgetClass ScreenBg {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.0431 0.0510 0.0353 1.0000
+   position 0.00000 0.00000
+   size 1.00000 1.00000
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 103
+   imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+   mode blend
+   "src alpha" 1
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
+  }
+  PanelWidgetClass Shell {
+   visible 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.0000 0.0000 0.0000 0.0000
+   position 0.00000 0.00000
+   size 1.00000 1.00000
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 104
+   {
+    TextWidgetClass Kicker {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.02917 0.03889
+     size 0.46875 0.02778
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 105
+     text "TFL // ПАСПОРТНЫЙ СТОЛ - ТЕРМИНАЛ 04"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.633
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass TitleText {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.8392 0.8902 0.6902 1.0000
+     position 0.02917 0.07222
+     size 0.52083 0.04815
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 106
+     text "КАРТОТЕКА ПАСПОРТНОГО СТОЛА"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.8392 0.8902 0.6902 1.0000
+     "exact text" 0
+     text_proportion 0.846
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass OperatorText {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.48958 0.08333
+     size 0.29167 0.03148
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 107
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.618
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass ClockText {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7255 0.7882 0.5412 0.8500
+     position 0.78750 0.08333
+     size 0.09792 0.03148
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 108
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.7255 0.7882 0.5412 0.8500
+     "exact text" 0
+     text_proportion 0.618
+     "text halign" right
+     "text valign" center
+    }
+    ImageWidgetClass CloseBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 0.5500
+     position 0.89375 0.07778
+     size 0.07708 0.04630
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 109
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ButtonWidgetClass BtnClose {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.8392 0.8902 0.6902 1.0000
+     position 0.89375 0.07778
+     size 0.07708 0.04630
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 110
+     style EmptyHighlight
+     text "ЗАКРЫТЬ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.8392 0.8902 0.6902 1.0000
+     "exact text" 0
+     text_proportion 0.440
+     "text halign" center
+     "text valign" center
+    }
+    ImageWidgetClass SearchBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.0706 0.0902 0.0627 1.0000
+     position 0.02917 0.16852
+     size 0.31458 0.05185
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 111
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass SearchFrame {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.02917 0.21852
+     size 0.31458 0.00185
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 112
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    TextWidgetClass SearchCaret {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.5608 0.6275 0.3882 1.0000
+     position 0.03646 0.17778
+     size 0.01250 0.03333
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 113
+     text ">"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.5608 0.6275 0.3882 1.0000
+     "exact text" 0
+     text_proportion 0.611
+     "text halign" left
+     "text valign" center
+    }
+    EditBoxWidgetClass SearchEdit {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.8392 0.8902 0.6902 1.0000
+     position 0.05104 0.17778
+     size 0.28750 0.03333
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 114
+     style Default
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.8392 0.8902 0.6902 1.0000
+     "exact text" 1
+     "exact text size" 22
+     "text halign" left
+    }
+    ImageWidgetClass SearchBtnBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 0.5500
+     position 0.35000 0.16852
+     size 0.07604 0.05185
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 115
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ButtonWidgetClass BtnSearch {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.8392 0.8902 0.6902 1.0000
+     position 0.35000 0.16852
+     size 0.07604 0.05185
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 116
+     style EmptyHighlight
+     text "НАЙТИ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.8392 0.8902 0.6902 1.0000
+     "exact text" 0
+     text_proportion 0.429
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass ColSerial {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.03229 0.23889
+     size 0.09375 0.02778
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 117
+     text "СЕРИЯ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.567
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass ColOwner {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.12604 0.23889
+     size 0.18229 0.02778
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 118
+     text "ВЛАДЕЛЕЦ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.567
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass ColLic {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.30833 0.23889
+     size 0.06771 0.02778
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 119
+     text "ЛИЦЕНЗИЯ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.567
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass ColNotes {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.37604 0.23889
+     size 0.04688 0.02778
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 120
+     text "ЗАМЕТКИ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.567
+     "text halign" right
+     "text valign" center
+    }
+    ImageWidgetClass ListHeadLine {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.03229 0.26852
+     size 0.39062 0.00093
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 121
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass ListBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.0824 0.1020 0.0706 1.0000
+     position 0.02917 0.27407
+     size 0.39687 0.65370
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 122
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ScrollWidgetClass ListScroll {
+     visible 1
+     clipchildren 1
+     inheritalpha 0
+     color 0.0000 0.0000 0.0000 0.0000
+     position 0.03229 0.27778
+     size 0.39062 0.64630
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 123
+     {
+      PanelWidgetClass RowHost {
+       visible 1
+       clipchildren 0
+       inheritalpha 0
+       color 0.0000 0.0000 0.0000 0.0000
+       position 0.00000 0.00000
+       size 1.00000 1.00000
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       priority 124
+      }
+     }
+    }
+    TextWidgetClass ListFooter {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 0.8500
+     position 0.03229 0.93519
+     size 0.39062 0.02778
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 125
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 0.8500
+     "exact text" 0
+     text_proportion 0.567
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass CardBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.0706 0.0941 0.0588 1.0000
+     position 0.44167 0.16852
+     size 0.52917 0.79074
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 126
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass CardFrameT {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.44167 0.16852
+     size 0.52917 0.00185
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 127
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass CardFrameB {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.44167 0.95741
+     size 0.52917 0.00185
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 128
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass CardFrameL {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.44167 0.16852
+     size 0.00104 0.79074
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 129
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass CardFrameR {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.96979 0.16852
+     size 0.00104 0.79074
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 130
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass CardPhotoFrame {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.45729 0.26852
+     size 0.08958 0.21111
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 131
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    PanelWidgetClass CardPhotoBox {
+     visible 1
+     clipchildren 1
+     inheritalpha 0
+     color 0.0000 0.0000 0.0000 0.0000
+     position 0.45833 0.27037
+     size 0.08750 0.20741
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 132
+     {
+      ImageWidgetClass CardPhoto {
+       visible 1
+       ignorepointer 1
+       clipchildren 0
+       inheritalpha 0
+       color 1.0000 1.0000 1.0000 1.0000
+       position 0.00000 0.00000
+       size 1.00000 1.00000
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       priority 133
+       imageTexture "TFL_Pasport/gui/textures/pass_photo.edds"
+       mode blend
+       "src alpha" 1
+       "clamp mode" clamp
+       "stretch mode" stretch_w_h
+      }
+     }
+    }
+    TextWidgetClass CardName {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.8392 0.8902 0.6902 1.0000
+     position 0.45833 0.19444
+     size 0.33333 0.04630
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 134
+     text "Выберите документ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.8392 0.8902 0.6902 1.0000
+     "exact text" 0
+     text_proportion 0.680
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass CardSerial {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7255 0.7882 0.5412 1.0000
+     position 0.71875 0.20000
+     size 0.23542 0.03519
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 135
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.7255 0.7882 0.5412 1.0000
+     "exact text" 0
+     text_proportion 0.632
+     "text halign" right
+     "text valign" center
+    }
+    ImageWidgetClass CardLine {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.45833 0.24815
+     size 0.49583 0.00093
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 136
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    TextWidgetClass LblCallsign {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.56042 0.27037
+     size 0.18646 0.02407
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 137
+     text "ПОЗЫВНОЙ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.654
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass CardCallsign {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7255 0.7882 0.5412 1.0000
+     position 0.56042 0.29444
+     size 0.18646 0.03519
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 138
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.7255 0.7882 0.5412 1.0000
+     "exact text" 0
+     text_proportion 0.684
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass GridRule0 {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 0.6000
+     position 0.56042 0.33333
+     size 0.18646 0.00093
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 139
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    TextWidgetClass LblBirth {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.76771 0.27037
+     size 0.18646 0.02407
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 140
+     text "ДАТА РОЖДЕНИЯ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.654
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass CardBirth {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7255 0.7882 0.5412 1.0000
+     position 0.76771 0.29444
+     size 0.18646 0.03519
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 141
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.7255 0.7882 0.5412 1.0000
+     "exact text" 0
+     text_proportion 0.684
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass GridRule1 {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 0.6000
+     position 0.76771 0.33333
+     size 0.18646 0.00093
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 142
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    TextWidgetClass LblPlace {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.56042 0.34630
+     size 0.18646 0.02407
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 143
+     text "МЕСТО РОЖДЕНИЯ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.654
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass CardPlace {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7255 0.7882 0.5412 1.0000
+     position 0.56042 0.37037
+     size 0.18646 0.03519
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 144
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.7255 0.7882 0.5412 1.0000
+     "exact text" 0
+     text_proportion 0.684
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass GridRule2 {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 0.6000
+     position 0.56042 0.40926
+     size 0.18646 0.00093
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 145
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    TextWidgetClass LblNation {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.76771 0.34630
+     size 0.18646 0.02407
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 146
+     text "ГРАЖДАНСТВО"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.654
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass CardNation {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7255 0.7882 0.5412 1.0000
+     position 0.76771 0.37037
+     size 0.18646 0.03519
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 147
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.7255 0.7882 0.5412 1.0000
+     "exact text" 0
+     text_proportion 0.684
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass GridRule3 {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 0.6000
+     position 0.76771 0.40926
+     size 0.18646 0.00093
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 148
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    TextWidgetClass LblIssued {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.56042 0.42222
+     size 0.18646 0.02407
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 149
+     text "ДАТА ВЫДАЧИ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.654
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass CardIssued {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7255 0.7882 0.5412 1.0000
+     position 0.56042 0.44630
+     size 0.18646 0.03519
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 150
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.7255 0.7882 0.5412 1.0000
+     "exact text" 0
+     text_proportion 0.684
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass GridRule4 {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 0.6000
+     position 0.56042 0.48519
+     size 0.18646 0.00093
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 151
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    TextWidgetClass LblExpires {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.76771 0.42222
+     size 0.18646 0.02407
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 152
+     text "ДЕЙСТВИТЕЛЕН ДО"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.654
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass CardExpires {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7255 0.7882 0.5412 1.0000
+     position 0.76771 0.44630
+     size 0.18646 0.03519
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 153
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.7255 0.7882 0.5412 1.0000
+     "exact text" 0
+     text_proportion 0.684
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass GridRule5 {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 0.6000
+     position 0.76771 0.48519
+     size 0.18646 0.00093
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 154
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass LicBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.1020 0.1294 0.0745 1.0000
+     position 0.45833 0.50000
+     size 0.49583 0.07963
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 155
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass LicFrameT {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.45833 0.50000
+     size 0.49583 0.00093
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 156
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass LicFrameB {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.45833 0.57870
+     size 0.49583 0.00093
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 157
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass LicFrameL {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.45833 0.50000
+     size 0.00052 0.07963
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 158
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass LicFrameR {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.95365 0.50000
+     size 0.00052 0.07963
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 159
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    TextWidgetClass LicCaption {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.8392 0.8902 0.6902 1.0000
+     position 0.46771 0.51296
+     size 0.26042 0.02963
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 160
+     text "ЛИЦЕНЗИЯ НА ОРУЖИЕ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.8392 0.8902 0.6902 1.0000
+     "exact text" 0
+     text_proportion 0.688
+     "text halign" left
+     "text valign" center
+    }
+    TextWidgetClass LicState {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.46771 0.54444
+     size 0.26042 0.02593
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 161
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.679
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass LicBtnBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.5608 0.6275 0.3882 0.3000
+     position 0.76562 0.51481
+     size 0.17917 0.05000
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 162
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ButtonWidgetClass BtnLicense {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.8392 0.8902 0.6902 1.0000
+     position 0.76562 0.51481
+     size 0.17917 0.05000
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 163
+     style EmptyHighlight
+     text "ВЫДАТЬ ЛИЦЕНЗИЮ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.8392 0.8902 0.6902 1.0000
+     "exact text" 0
+     text_proportion 0.407
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass NotesCaption {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.45833 0.60556
+     size 0.49583 0.02593
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 164
+     text "СЛУЖЕБНЫЕ ЗАМЕТКИ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.607
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass NotesLine {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 0.6000
+     position 0.45833 0.63333
+     size 0.49583 0.00093
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 165
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ScrollWidgetClass NotesScroll {
+     visible 1
+     clipchildren 1
+     inheritalpha 0
+     color 0.0000 0.0000 0.0000 0.0000
+     position 0.45833 0.64444
+     size 0.49583 0.21667
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 166
+     {
+      PanelWidgetClass NoteHost {
+       visible 1
+       clipchildren 0
+       inheritalpha 0
+       color 0.0000 0.0000 0.0000 0.0000
+       position 0.00000 0.00000
+       size 1.00000 1.00000
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       priority 167
+      }
+     }
+    }
+    TextWidgetClass NotesEmpty {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.4314 0.4902 0.2902 1.0000
+     position 0.45833 0.64815
+     size 0.49583 0.02778
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 168
+     text "Заметок нет."
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.4314 0.4902 0.2902 1.0000
+     "exact text" 0
+     text_proportion 0.633
+     "text halign" left
+     "text valign" center
+    }
+    ImageWidgetClass NoteInputBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.0706 0.0902 0.0627 1.0000
+     position 0.45833 0.87778
+     size 0.38021 0.05185
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 169
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ImageWidgetClass NoteFrame {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 1.0000
+     position 0.45833 0.92778
+     size 0.38021 0.00185
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 170
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    EditBoxWidgetClass NoteEdit {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.8392 0.8902 0.6902 1.0000
+     position 0.46667 0.88704
+     size 0.36354 0.03333
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 171
+     style Default
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.8392 0.8902 0.6902 1.0000
+     "exact text" 1
+     "exact text size" 21
+     "text halign" left
+    }
+    ImageWidgetClass NoteBtnBg {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.2353 0.2902 0.1490 0.5500
+     position 0.85313 0.87778
+     size 0.10104 0.05185
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 172
+     imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+    }
+    ButtonWidgetClass BtnNote {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.8392 0.8902 0.6902 1.0000
+     position 0.85313 0.87778
+     size 0.10104 0.05185
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 173
+     style EmptyHighlight
+     text "ВНЕСТИ"
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.8392 0.8902 0.6902 1.0000
+     "exact text" 0
+     text_proportion 0.393
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass StatusText {
+     visible 1
+     ignorepointer 1
+     clipchildren 0
+     inheritalpha 0
+     color 0.7882 0.7059 0.4784 1.0000
+     position 0.45833 0.93704
+     size 0.49583 0.02593
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 174
+     text ""
+     font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+     "text color" 0.7882 0.7059 0.4784 1.0000
+     "exact text" 0
+     text_proportion 0.643
+     "text halign" left
+     "text valign" center
+    }
+    PanelWidgetClass LicenseManagePanel {
+     visible 0
+     clipchildren 1
+     inheritalpha 0
+     color 0 0 0 0
+     position 0.44167 0.16852
+     size 0.52917 0.79074
+     priority 220
+     {
+      ImageWidgetClass LicenseManageBg {
+       visible 1 ignorepointer 1 color 0.0706 0.0863 0.0588 1 position 0 0 size 1 1 priority 221
+       imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h
+      }
+      TextWidgetClass LicenseManageHeader {
+       visible 1 ignorepointer 1 position 0.030 0.025 size 0.42 0.055 priority 222
+       text "ЛИЦЕНЗИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+       "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.60 "text halign" left "text valign" center
+      }
+      TextWidgetClass LicenseManageHint {
+       visible 1 ignorepointer 1 position 0.45 0.034 size 0.34 0.035 priority 222
+       text "ВЫДАЧА // РАДИУС 3 М" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+       "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.34 "text halign" right "text valign" center
+      }
+      ButtonWidgetClass LicenseManageBack {
+       visible 1 color 0.1059 0.1294 0.0863 1 position 0.82 0.022 size 0.15 0.060 priority 223
+       text "НАЗАД" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+       "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.40
+      }
+
+      ImageWidgetClass LicenseManageListBg {
+       visible 1 ignorepointer 1 color 0.0863 0.1059 0.0706 1 position 0.025 0.105 size 0.385 0.845 priority 222
+       imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h
+      }
+      TextWidgetClass LicenseManageListHeader {
+       visible 1 ignorepointer 1 position 0.050 0.130 size 0.335 0.045 priority 224
+       text "СПИСОК ЛИЦЕНЗИЙ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+       "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.50
+      }
+      ScrollWidgetClass LicenseManageScroll {
+       visible 1 position 0.050 0.190 size 0.335 0.660 priority 224
+       {
+        PanelWidgetClass LicenseManageHost { color 0 0 0 0 position 0 0 size 1 1 priority 225 }
+       }
+      }
+      TextWidgetClass LicenseManageListFoot {
+       visible 1 ignorepointer 1 position 0.050 0.875 size 0.335 0.045 priority 224
+       text "ON = ВЫДАНА // - = НЕ ВЫДАНА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+       "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.29
+      }
+
+      ImageWidgetClass LicenseManageEditorBg {
+       visible 1 ignorepointer 1 color 0.0863 0.1059 0.0706 1 position 0.430 0.105 size 0.545 0.845 priority 222
+       imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h
+      }
+      TextWidgetClass LicenseManageTitle {
+       visible 1 ignorepointer 1 position 0.460 0.135 size 0.485 0.075 priority 225
+       text "ВЫБЕРИТЕ ЛИЦЕНЗИЮ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+       "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.48 "text halign" left "text valign" center
+      }
+      MultilineTextWidgetClass LicenseManageMeta {
+       visible 1 ignorepointer 1 position 0.460 0.235 size 0.485 0.170 priority 226
+       text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+       "text color" 0.7255 0.7882 0.5412 1 "exact text" 1 "exact text size" 15 "text halign" left "text valign" top
+      }
+      TextWidgetClass LicenseManageDescLabel {
+       visible 1 ignorepointer 1 position 0.460 0.420 size 0.30 0.035 priority 226
+       text "ОПИСАНИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+       "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.34
+      }
+      MultilineTextWidgetClass LicenseManageDescription {
+       visible 1 ignorepointer 1 position 0.460 0.465 size 0.485 0.180 priority 227
+       text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+       "text color" 0.5608 0.6275 0.3882 1 "exact text" 1 "exact text size" 15 "text halign" left "text valign" top
+      }
+      ButtonWidgetClass LicenseManageGrant {
+       visible 1 color 0.20 0.28 0.11 1 position 0.460 0.675 size 0.225 0.070 priority 228
+       text "ВЫДАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+       "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.42
+      }
+      ButtonWidgetClass LicenseManageRevoke {
+       visible 1 color 0.24 0.10 0.08 1 position 0.720 0.675 size 0.225 0.070 priority 229
+       text "ОТОЗВАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+       "text color" 0.92 0.73 0.61 1 text_proportion 0.38
+      }
+      TextWidgetClass LicenseManageStatus {
+       visible 1 ignorepointer 1 position 0.460 0.785 size 0.485 0.110 priority 230
+       text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+       "text color" 0.5608 0.6275 0.3882 1 "exact text" 1 "exact text size" 14 "text halign" left "text valign" top
+      }
+     }
+    }
+   }
+  }
+ }
+}

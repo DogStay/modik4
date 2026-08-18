@@ -1,0 +1,30 @@
+WindowWidgetClass Root
+{
+ visible 1
+ ignorepointer 0
+ position 0 0
+ size 1 1
+ {
+  ImageWidgetClass Dim { ignorepointer 1 position 0 0 size 1 1 color 0 0 0 0.55 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+  PanelWidgetClass Shell { position 0.06 0.06 size 0.88 0.88 {
+   ImageWidgetClass ShellBg { ignorepointer 1 position 0 0 size 1 1 color 0.035 0.05 0.035 0.97 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+   ImageWidgetClass Header { ignorepointer 1 position 0 0 size 1 0.075 color 0.18 0.24 0.12 1 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+   
+TextWidgetClass OfficeTitle { position 0.025 0.017 size 0.7 0.04 text "ПАСПОРТНЫЙ СТОЛ // ЛИЦЕНЗИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" color 0.92 0.94 0.84 1 }
+TextWidgetClass OfficeSub { position 0.025 0.09 size 0.92 0.035 text "ЛЮДИ РЯДОМ // РАДИУС 3 М" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" color 0.65 0.72 0.55 1 }
+ButtonWidgetClass BtnClose { position 0.91 0.015 size 0.065 0.045 text "X" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+TextListboxWidgetClass PeopleList { position 0.025 0.14 size 0.38 0.58 font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style EditorListbox }
+TextWidgetClass SelectedPerson { position 0.43 0.14 size 0.53 0.05 text "ВЫБЕРИТЕ ЧЕЛОВЕКА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" color 0.92 0.94 0.84 1 }
+TextWidgetClass SelectedSerial { position 0.43 0.195 size 0.53 0.035 text "PASSPORT: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" color 0.55 0.65 0.45 1 }
+TextWidgetClass LicensesHeader { position 0.43 0.25 size 0.53 0.035 text "ДОСТУПНЫЕ ЛИЦЕНЗИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" color 0.65 0.72 0.55 1 }
+TextListboxWidgetClass LicenseList { position 0.43 0.295 size 0.53 0.28 font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style EditorListbox }
+MultilineTextWidgetClass LicenseDescription { position 0.43 0.59 size 0.53 0.09 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" color 0.75 0.78 0.68 1 }
+ButtonWidgetClass BtnGrant { position 0.43 0.70 size 0.25 0.06 text "ВЫДАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+ButtonWidgetClass BtnRevoke { position 0.71 0.70 size 0.25 0.06 text "ОТОЗВАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+EditBoxWidgetClass NoteEdit { position 0.43 0.79 size 0.38 0.055 text "заметка в паспорт" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+ButtonWidgetClass BtnNote { position 0.83 0.79 size 0.13 0.055 text "ЗАПИСАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Editor }
+TextWidgetClass OfficeStatus { position 0.025 0.91 size 0.93 0.035 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" color 0.72 0.76 0.58 1 }
+
+  } }
+ }
+}

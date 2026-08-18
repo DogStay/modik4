@@ -1,0 +1,10 @@
+PanelWidgetClass Row {
+ visible 1 color 0 0 0 0 position 0 0 size 1 0.08 priority 210
+ {
+  ImageWidgetClass RowBg { ignorepointer 1 color 0.1059 0.1294 0.0863 1 position 0 0 size 1 0.94 priority 211 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+  ButtonWidgetClass RowBtn { color 0 0 0 0 position 0 0 size 1 0.94 priority 212 text "" }
+  ImageWidgetClass RowMark { visible 0 ignorepointer 1 color 0.5608 0.6275 0.3882 1 position 0 0 size 0.008 0.94 priority 213 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+  TextWidgetClass RowName { ignorepointer 1 position 0.025 0.08 size 0.95 0.46 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.52 "text valign" center }
+  TextWidgetClass RowSerial { ignorepointer 1 position 0.025 0.54 size 0.95 0.30 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.34 "text valign" center }
+ }
+}

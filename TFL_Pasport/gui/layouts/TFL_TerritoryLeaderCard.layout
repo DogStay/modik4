@@ -1,0 +1,40 @@
+// TFL_TerritoryLeaderCard.layout — rebuilt from scratch. Compact territory
+// intel card, created dynamically and positioned next to the clicked marker
+// by script (TFLTerritoryLeaderMenu.c / TFLFactionLaptopMenu.c).
+PanelWidgetClass TerritoryCard
+{
+ visible 0 color 0.0784 0.0902 0.0588 1 position 0 0 size 0.224 0.62 priority 200
+ {
+  ImageWidgetClass CardAccent { ignorepointer 1 color 0.6588 0.7255 0.4471 1 position 0 0 size 0.008 1 priority 201 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+  TextWidgetClass CardKicker { ignorepointer 1 position 0.04 0.02 size 0.8 0.03 priority 204 text "TFL // TERRITORY INTEL" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.5412 0.3725 1 text_proportion 0.42 }
+  TextWidgetClass TerritoryName { ignorepointer 1 position 0.04 0.055 size 0.8 0.045 priority 204 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.55 }
+  TextWidgetClass TerritoryOwner { ignorepointer 1 position 0.04 0.10 size 0.8 0.03 priority 204 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8471 0.8392 0.7686 1 text_proportion 0.45 }
+  ButtonWidgetClass TerritoryCardClose { color 0.0784 0.0902 0.0588 1 position 0.90 0.015 size 0.08 0.035 priority 205 text "X" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.6 }
+
+  TextWidgetClass StatusLabel { ignorepointer 1 position 0.04 0.145 size 0.4 0.025 priority 204 text "СТАТУС" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.36 }
+  TextWidgetClass TerritoryStatus { ignorepointer 1 position 0.04 0.175 size 0.9 0.035 priority 204 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8471 0.8392 0.7686 1 text_proportion 0.44 }
+  TextWidgetClass TerritoryStatusReason { ignorepointer 1 position 0.04 0.21 size 0.9 0.03 priority 204 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.5569 0.4863 1 text_proportion 0.34 }
+
+  TextWidgetClass ChainLabel { ignorepointer 1 position 0.04 0.255 size 0.4 0.025 priority 204 text "ЦЕПОЧКА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.36 }
+  TextWidgetClass TerritoryChainName { ignorepointer 1 position 0.04 0.285 size 0.9 0.035 priority 204 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.42 }
+  TextWidgetClass PosLabel { ignorepointer 1 position 0.04 0.325 size 0.28 0.025 priority 204 text "ПОЗИЦИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.32 }
+  TextWidgetClass TerritoryChainPosition { ignorepointer 1 position 0.04 0.352 size 0.28 0.03 priority 204 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8471 0.8392 0.7686 1 text_proportion 0.36 }
+  TextWidgetClass PrevLabel { ignorepointer 1 position 0.35 0.325 size 0.3 0.025 priority 204 text "ПРЕДЫДУЩАЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.32 }
+  TextWidgetClass TerritoryPrevious { ignorepointer 1 position 0.35 0.352 size 0.3 0.03 priority 204 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8471 0.8392 0.7686 1 text_proportion 0.36 }
+  TextWidgetClass NextLabel { ignorepointer 1 position 0.68 0.325 size 0.28 0.025 priority 204 text "СЛЕДУЮЩАЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.32 }
+  TextWidgetClass TerritoryNext { ignorepointer 1 position 0.68 0.352 size 0.28 0.03 priority 204 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8471 0.8392 0.7686 1 text_proportion 0.36 }
+
+  TextWidgetClass CaptureLabel { ignorepointer 1 position 0.04 0.40 size 0.4 0.025 priority 204 text "ЗАХВАТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.36 }
+  TextWidgetClass PlayersLabel { ignorepointer 1 position 0.04 0.43 size 0.28 0.022 priority 204 text "ИГРОКОВ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.3 }
+  TextWidgetClass TerritoryPlayers { ignorepointer 1 position 0.04 0.455 size 0.28 0.032 priority 204 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.4 }
+  TextWidgetClass PrepLabel { ignorepointer 1 position 0.35 0.43 size 0.28 0.022 priority 204 text "ПОДГОТОВКА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.3 }
+  TextWidgetClass TerritoryPrepareTime { ignorepointer 1 position 0.35 0.455 size 0.28 0.032 priority 204 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.4 }
+  TextWidgetClass CapLabel { ignorepointer 1 position 0.68 0.43 size 0.28 0.022 priority 204 text "ЗАХВАТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.3 }
+  TextWidgetClass TerritoryCaptureTime { ignorepointer 1 position 0.68 0.455 size 0.28 0.032 priority 204 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.4 }
+
+  TextWidgetClass RewardLabel { ignorepointer 1 position 0.04 0.51 size 0.4 0.025 priority 204 text "НАГРАДА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.36 }
+  ScrollWidgetClass TerritoryRewardScroll { position 0.04 0.545 size 0.9 0.18 priority 205 { PanelWidgetClass TerritoryRewardList { color 0 0 0 0 position 0 0 size 1 1 priority 206 } } }
+
+  ButtonWidgetClass TerritoryCaptureButton { color 0.1647 0.2078 0.1255 1 position 0.04 0.75 size 0.9 0.075 priority 210 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8588 0.9020 0.7059 1 text_proportion 0.45 }
+ }
+}

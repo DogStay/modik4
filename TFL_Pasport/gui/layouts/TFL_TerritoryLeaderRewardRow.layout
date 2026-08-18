@@ -1,0 +1,10 @@
+// TFL_TerritoryLeaderRewardRow.layout — redesigned per TFL Interface Kit.
+// One non-interactive line in the compact territory card's reward preview.
+PanelWidgetClass Row {
+ visible 1 color 0 0 0 0 position 0 0 size 1 0.32 priority 210
+ {
+  TextWidgetClass RewardName { ignorepointer 1 position 0 0.08 size 0.62 0.5 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8471 0.8392 0.7686 1 text_proportion 0.46 }
+  TextWidgetClass RewardClass { ignorepointer 1 position 0 0.56 size 0.62 0.36 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4353 0.4314 0.3686 1 text_proportion 0.34 }
+  TextWidgetClass RewardQty { ignorepointer 1 position 0.64 0.08 size 0.36 0.5 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.5 "text halign" right }
+ }
+}

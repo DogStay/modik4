@@ -1,0 +1,11 @@
+// faction_rank_row.layout — redesigned per TFL Interface Kit master prompt
+// (двухстрочные rank cards): RowName (rank title) over RowLevel (salary/level).
+PanelWidgetClass Row {
+ visible 1 color 0 0 0 0 position 0 0 size 1 0.15 priority 210
+ {
+  ImageWidgetClass RowMark { visible 0 ignorepointer 1 color 0.6588 0.7255 0.4471 1 position 0 0 size 0.006 1 priority 211 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+  ButtonWidgetClass RowBtn { color 0 0 0 0 position 0 0 size 1 1 priority 212 text "" }
+  TextWidgetClass RowName { ignorepointer 1 position 0.04 0.1 size 0.92 0.42 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.55 }
+  TextWidgetClass RowLevel { ignorepointer 1 position 0.04 0.54 size 0.92 0.4 priority 214 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.44 }
+ }
+}

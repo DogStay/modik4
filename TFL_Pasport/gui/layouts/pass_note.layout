@@ -1,0 +1,95 @@
+PanelWidgetClass Note {
+ visible 1
+ clipchildren 0
+ inheritalpha 0
+ color 0.0000 0.0000 0.0000 0.0000
+ position 0.00000 0.00000
+ size 1.00000 0.31624
+ hexactpos 0
+ vexactpos 0
+ hexactsize 0
+ vexactsize 0
+ priority 184
+ {
+  ImageWidgetClass NoteRowBg {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.0863 0.1098 0.0706 1.0000
+   position 0.00000 0.00000
+   size 1.00000 0.91892
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 185
+   imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+   mode blend
+   "src alpha" 1
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
+  }
+  ImageWidgetClass NoteAccent {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.5608 0.6275 0.3882 1.0000
+   position 0.00000 0.00000
+   size 0.00315 0.91892
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 186
+   imageTexture "TFL_Pasport/gui/textures/pass_white.edds"
+   mode blend
+   "src alpha" 1
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
+  }
+  TextWidgetClass NoteMeta {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.4314 0.4902 0.2902 1.0000
+   position 0.01681 0.10811
+   size 0.96639 0.29730
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 187
+   text ""
+   font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+   "text color" 0.4314 0.4902 0.2902 1.0000
+   "exact text" 1
+   "exact text size" 16
+   "text halign" left
+   "text valign" center
+  }
+  MultilineTextWidgetClass NoteBody {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   inheritalpha 0
+   color 0.7255 0.7882 0.5412 1.0000
+   position 0.01681 0.43243
+   size 0.96639 0.45946
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   priority 188
+   text ""
+   font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular"
+   "text color" 0.7255 0.7882 0.5412 1.0000
+   "exact text" 1
+   "exact text size" 18
+   "text halign" left
+   "text valign" top
+  }
+ }
+}

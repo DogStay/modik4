@@ -1,0 +1,15 @@
+// payment_toast_v2.layout — rebuilt from scratch for the TFL Interface Kit
+// design pack. Slides in from the right, does not block gameplay, and hides
+// itself after a few seconds (TFLPaymentToast.c).
+PanelWidgetClass PaymentNotificationPanel
+{
+ color 0.0784 0.0902 0.0588 1 position 1.02 0.157 size 0.208 0.2 priority 500
+ {
+  ImageWidgetClass PaymentNotificationBorder { ignorepointer 1 color 0.6588 0.7255 0.4471 1 position 0 0 size 0.008 1 priority 501 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+  TextWidgetClass PaymentNotificationKicker { ignorepointer 1 position 0.09 0.08 size 0.85 0.1 priority 502 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.5412 0.3725 1 text_proportion 0.42 }
+  TextWidgetClass PaymentNotificationTitle { ignorepointer 1 position 0.09 0.19 size 0.85 0.12 priority 502 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.5 }
+  TextWidgetClass PaymentNotificationAmount { ignorepointer 1 position 0.09 0.34 size 0.85 0.19 priority 502 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.55 }
+  TextWidgetClass PaymentNotificationSubLabel { ignorepointer 1 position 0.09 0.58 size 0.85 0.1 priority 502 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.36 }
+  TextWidgetClass PaymentNotificationSubtitle { ignorepointer 1 position 0.09 0.68 size 0.85 0.12 priority 502 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8471 0.8392 0.7686 1 text_proportion 0.42 }
+ }
+}

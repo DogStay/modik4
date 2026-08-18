@@ -1,0 +1,37 @@
+// territory_leader_v2.layout — rebuilt from scratch. Top-level leader map menu
+// (TFLTerritoryLeaderMenu.c). Map fills the work area; TerritoryCard and
+// TerritoryRequestCard are mounted dynamically and positioned by script.
+WindowWidgetClass Root
+{
+ visible 1 position 0 0 size 1 1 priority 101
+ {
+  ImageWidgetClass ScreenBase { ignorepointer 1 color 0.0392 0.0471 0.0314 1 position 0 0 size 1 1 priority 89 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+  PanelWidgetClass Shell
+  {
+   visible 1 color 0 0 0 0 position 0 0 size 1 1 priority 100
+   {
+    ImageWidgetClass HeaderBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0 0 size 1 0.0963 priority 105 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+    TextWidgetClass HeaderKicker { ignorepointer 1 position 0.021 0.018 size 0.4 0.03 priority 110 text "TFL // ЗАХВАТ ТЕРРИТОРИЙ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.5412 0.3725 1 text_proportion 0.55 }
+    TextWidgetClass HeaderTitle { ignorepointer 1 position 0.021 0.045 size 0.6 0.045 priority 110 text "ЗАХВАТ ТЕРРИТОРИЙ // ЛИДЕР ФРАКЦИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.55 }
+    TextWidgetClass FactionOperatorText { ignorepointer 1 position 0.62 0.055 size 0.28 0.03 priority 110 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.5569 0.4863 1 text_proportion 0.5 "text halign" right }
+    ButtonWidgetClass BtnClose { color 0.0784 0.0902 0.0588 1 position 0.955 0.02 size 0.03 0.05 priority 120 text "X" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.6 }
+
+    PanelWidgetClass MapArea
+    {
+     visible 1 color 0 0 0 0 position 0.021 0.115 size 0.958 0.865 priority 110
+     {
+      MapWidgetClass LeaderTerritoryMap { position 0 0 size 1 1 priority 111 }
+
+      ImageWidgetClass LeaderLegendBg { ignorepointer 1 color 0 0 0 0.55 position 0.01 0.86 size 0.19 0.12 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass LeaderLegendOwn { ignorepointer 1 position 0.018 0.875 size 0.17 0.028 priority 113 text "■ ВАША ФРАКЦИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.34 }
+      TextWidgetClass LeaderLegendEnemy { ignorepointer 1 position 0.018 0.905 size 0.17 0.028 priority 113 text "■ ПРОТИВНИК" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7176 0.5490 0.2902 1 text_proportion 0.34 }
+      TextWidgetClass LeaderLegendNeutral { ignorepointer 1 position 0.018 0.935 size 0.17 0.028 priority 113 text "■ НЕЙТРАЛЬНАЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.5569 0.4863 1 text_proportion 0.34 }
+
+      PanelWidgetClass LeaderCardHost { visible 0 color 0 0 0 0 position 0.4 0.28 size 0.26 0.5 priority 200 }
+      PanelWidgetClass LeaderRequestCardHost { visible 0 color 0 0 0 0 position 0.72 0.1 size 0.24 0.36 priority 210 }
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,393 @@
+WindowWidgetClass Root {
+ visible 1 position 0 0 size 1 1 priority 101
+ {
+  ImageWidgetClass ScreenBase {
+   ignorepointer 1 color 0.0353 0.0431 0.0314 1 position 0 0 size 1 1 priority 89
+   imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h
+  }
+  PanelWidgetClass Shell {
+   color 0 0 0 0 position 0 0 size 1 1 priority 104
+   {
+    TextWidgetClass Kicker { ignorepointer 1 position 0.025 0.022 size 0.62 0.026 priority 105 text "TFL // FACTION CONTROL // ADMIN" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.55 }
+    TextWidgetClass TitleText { ignorepointer 1 position 0.025 0.052 size 0.72 0.055 priority 106 text "АДМИНИСТРИРОВАНИЕ ФРАКЦИЙ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.78 }
+    TextWidgetClass OperatorText { ignorepointer 1 position 0.70 0.059 size 0.21 0.036 priority 106 text "ADMIN" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.50 "text halign" right }
+    ButtonWidgetClass BtnClose { color 0.15 0.17 0.11 1 position 0.94 0.036 size 0.035 0.052 priority 130 text "X" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.75 }
+    ImageWidgetClass HeaderRule { ignorepointer 1 color 0.2353 0.2902 0.149 0.8 position 0.025 0.112 size 0.95 0.002 priority 107 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+
+    PanelWidgetClass FactionSidebar {
+     visible 1 color 0 0 0 0 position 0.025 0.205 size 0.22 0.755 priority 108
+     {
+      ImageWidgetClass FactionsBg { ignorepointer 1 color 0.0706 0.0863 0.0588 1 position 0 0 size 1 1 priority 109 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass FactionsHeader { ignorepointer 1 position 0.06 0.025 size 0.88 0.045 priority 112 text "ФРАКЦИИ СЕРВЕРА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.50 }
+      ScrollWidgetClass FactionScroll { position 0.06 0.085 size 0.88 0.53 priority 114 { PanelWidgetClass FactionHost { color 0 0 0 0 position 0 0 size 1 1 priority 115 } } }
+      TextWidgetClass CreateHeader { ignorepointer 1 position 0.06 0.65 size 0.88 0.035 priority 112 text "+ НОВАЯ ФРАКЦИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.43 }
+      EditBoxWidgetClass NewFactionId { color 0.1059 0.1294 0.0863 1 position 0.06 0.70 size 0.88 0.065 priority 118 text "id_faction" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      EditBoxWidgetClass NewFactionName { color 0.1059 0.1294 0.0863 1 position 0.06 0.785 size 0.88 0.065 priority 118 text "Название" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      ButtonWidgetClass BtnCreateFaction { color 0.16 0.22 0.10 1 position 0.06 0.875 size 0.88 0.075 priority 120 text "СОЗДАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.48 }
+     }
+    }
+
+    ImageWidgetClass TabBarBg { ignorepointer 1 color 0.055 0.067 0.045 1 position 0.025 0.13 size 0.95 0.055 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+    ButtonWidgetClass BtnFactionTab { color 0.1059 0.1294 0.0863 1 position 0.025 0.13 size 0.13 0.055 priority 190 text "ФРАКЦИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.43 }
+    ButtonWidgetClass BtnMembersTab { color 0.055 0.067 0.045 1 position 0.158 0.13 size 0.13 0.055 priority 190 text "СОСТАВ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.43 }
+    ButtonWidgetClass BtnRolesTab { color 0.055 0.067 0.045 1 position 0.291 0.13 size 0.12 0.055 priority 190 text "РОЛИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.45 }
+    ButtonWidgetClass BtnRanksTab { color 0.055 0.067 0.045 1 position 0.414 0.13 size 0.13 0.055 priority 190 text "ЗВАНИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.41 }
+    ButtonWidgetClass BtnLicenses { color 0.055 0.067 0.045 1 position 0.547 0.13 size 0.15 0.055 priority 190 text "ЛИЦЕНЗИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.38 }
+    ButtonWidgetClass BtnTerritories { color 0.055 0.067 0.045 1 position 0.70 0.13 size 0.17 0.055 priority 190 text "ТЕРРИТОРИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.36 }
+
+
+    PanelWidgetClass FactionPanel {
+     color 0 0 0 0 position 0.255 0.205 size 0.72 0.755 priority 110
+     {
+      ImageWidgetClass FactionPanelBg { ignorepointer 1 color 0.047 0.057 0.039 1 position 0 0 size 1 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass SectionTitle { ignorepointer 1 position 0.025 0.025 size 0.55 0.05 priority 114 text "ПАРАМЕТРЫ ФРАКЦИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.52 }
+      TextWidgetClass SelectedIdText { ignorepointer 1 position 0.62 0.032 size 0.35 0.035 priority 114 text "ID: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.34 "text halign" right }
+
+      PanelWidgetClass FactionEditorFrame { color 0 0 0 0 position 0.02 0.085 size 0.96 0.885 priority 115
+       {
+        PanelWidgetClass FactionEditorHost { color 0 0 0 0 position 0 0 size 1 1 priority 116
+         {
+          TextWidgetClass NameLabel { ignorepointer 1 position 0.02 0.02 size 0.18 0.025 priority 118 text "НАЗВАНИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.32 }
+          EditBoxWidgetClass SelectedNameEdit { color 0.1059 0.1294 0.0863 1 position 0.02 0.055 size 0.35 0.045 priority 145 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+          TextWidgetClass ShortLabel { ignorepointer 1 position 0.39 0.02 size 0.16 0.025 priority 118 text "КОРОТКОЕ НАЗВАНИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.27 }
+          EditBoxWidgetClass SelectedShortEdit { color 0.1059 0.1294 0.0863 1 position 0.39 0.055 size 0.19 0.045 priority 145 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+          TextWidgetClass SideLabel { ignorepointer 1 position 0.60 0.02 size 0.16 0.025 priority 118 text "СТОРОНА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.31 }
+          ButtonWidgetClass BtnSide { color 0.1059 0.1294 0.0863 1 position 0.60 0.055 size 0.17 0.045 priority 150 text "СТОРОНА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.31 }
+          ButtonWidgetClass BtnSaveName { color 0.20 0.28 0.11 1 position 0.79 0.055 size 0.19 0.045 priority 150 text "СОХРАНИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.34 }
+
+          TextWidgetClass PlacementTitle { ignorepointer 1 position 0.02 0.145 size 0.50 0.035 priority 118 text "РАЗМЕЩЕНИЕ ФРАКЦИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.38 }
+          ImageWidgetClass SpawnBox { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.02 0.195 size 0.47 0.27 priority 118 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+          TextWidgetClass SpawnHeader { ignorepointer 1 position 0.04 0.215 size 0.42 0.03 priority 120 text "SPAWN // ТОЧНЫЙ XYZ + ОРИЕНТАЦИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.31 }
+          TextWidgetClass SpawnText { ignorepointer 1 position 0.04 0.255 size 0.42 0.035 priority 120 text "POS: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.31 }
+          TextWidgetClass SpawnRotText { ignorepointer 1 position 0.04 0.295 size 0.42 0.03 priority 120 text "ROT: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.28 }
+          SliderWidgetClass SpawnYawSlider { color 0.4314 0.4902 0.2902 1 position 0.04 0.345 size 0.25 0.025 priority 145 minimum 0 maximum 359 step 1 current 0 "fill in" 1 }
+          TextWidgetClass SpawnYawValue { ignorepointer 1 position 0.31 0.338 size 0.13 0.035 priority 146 text "YAW 0°" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.27 "text halign" right }
+          ButtonWidgetClass BtnSpawnHere { color 0.16 0.22 0.10 1 position 0.04 0.395 size 0.24 0.045 priority 150 text "МОЯ ПОЗИЦИЯ = SPAWN" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.27 }
+          ButtonWidgetClass BtnSpawnYawApply { color 0.1059 0.1294 0.0863 1 position 0.295 0.395 size 0.15 0.045 priority 150 text "ПРИМЕНИТЬ YAW" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.25 }
+          ButtonWidgetClass BtnSpawnClearPoints { visible 0 color 0.24 0.10 0.08 1 position 0.295 0.445 size 0.15 0.035 priority 150 text "ОЧИСТИТЬ ТОЧКИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.92 0.73 0.61 1 text_proportion 0.23 }
+
+          ImageWidgetClass LaptopBox { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.51 0.195 size 0.47 0.27 priority 118 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+          TextWidgetClass LaptopHeader { ignorepointer 1 position 0.53 0.215 size 0.42 0.03 priority 120 text "НОУТБУК // ТОЧНЫЙ XYZ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.31 }
+          TextWidgetClass LaptopText { ignorepointer 1 position 0.53 0.255 size 0.42 0.035 priority 120 text "POS: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.31 }
+          TextWidgetClass LaptopRotText { ignorepointer 1 position 0.53 0.295 size 0.42 0.03 priority 120 text "ROT: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.28 }
+          SliderWidgetClass LaptopYawSlider { color 0.4314 0.4902 0.2902 1 position 0.53 0.345 size 0.25 0.025 priority 145 minimum 0 maximum 359 step 1 current 0 "fill in" 1 }
+          TextWidgetClass LaptopYawValue { ignorepointer 1 position 0.80 0.338 size 0.13 0.035 priority 146 text "YAW 0°" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.27 "text halign" right }
+          ButtonWidgetClass BtnLaptopHere { color 0.16 0.22 0.10 1 position 0.53 0.395 size 0.17 0.045 priority 150 text "ПОСТАВИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.30 }
+          ButtonWidgetClass BtnLaptopYawApply { color 0.1059 0.1294 0.0863 1 position 0.715 0.395 size 0.11 0.045 priority 150 text "YAW" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.30 }
+          ButtonWidgetClass BtnChestHere { color 0.1059 0.1294 0.0863 1 position 0.84 0.395 size 0.11 0.045 priority 150 text "ЯЩИК" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.29 }
+
+          TextWidgetClass PresetTitle { ignorepointer 1 position 0.02 0.53 size 0.50 0.035 priority 118 text "SPAWN PRESET // СНАРЯЖЕНИЕ ФРАКЦИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.36 }
+          ImageWidgetClass PresetBox { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.02 0.58 size 0.96 0.42 priority 118 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+          TextWidgetClass PresetHeader { ignorepointer 1 position 0.04 0.60 size 0.40 0.03 priority 120 text "ПРЕДМЕТЫ ПРЕСЕТА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.31 }
+          ButtonWidgetClass BtnPresetClearInventory { color 0.1059 0.1294 0.0863 1 position 0.49 0.595 size 0.22 0.045 priority 150 text "[X] ОЧИЩАТЬ ИНВЕНТАРЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.27 }
+          ButtonWidgetClass BtnPresetMe { color 0.16 0.22 0.10 1 position 0.73 0.595 size 0.23 0.045 priority 150 text "СНЯТЬ ПРЕСЕТ С МЕНЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.26 }
+          ScrollWidgetClass PresetScroll { position 0.04 0.66 size 0.54 0.26 priority 145 { PanelWidgetClass PresetHost { color 0 0 0 0 position 0 0 size 1 1 priority 146 } } }
+          EditBoxWidgetClass PresetClassEdit { color 0.1059 0.1294 0.0863 1 position 0.61 0.67 size 0.35 0.045 priority 145 text "ClassName" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+          ButtonWidgetClass BtnPresetAdd { color 0.16 0.22 0.10 1 position 0.61 0.73 size 0.17 0.045 priority 150 text "+ ДОБАВИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.30 }
+          ButtonWidgetClass BtnPresetRemove { color 0.24 0.10 0.08 1 position 0.79 0.73 size 0.17 0.045 priority 150 text "- УДАЛИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.92 0.73 0.61 1 text_proportion 0.30 }
+          ButtonWidgetClass BtnPresetClear { color 0.24 0.10 0.08 1 position 0.61 0.79 size 0.35 0.045 priority 150 text "ОЧИСТИТЬ ПРЕСЕТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.92 0.73 0.61 1 text_proportion 0.30 }
+          TextWidgetClass FactionStatus { ignorepointer 1 position 0.61 0.86 size 0.35 0.055 priority 120 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.27 }
+         }
+        }
+       }
+      }
+     }
+    }
+
+    PanelWidgetClass MembersPanel {
+     visible 0 color 0 0 0 0 position 0.025 0.205 size 0.95 0.755 priority 110
+     {
+      ImageWidgetClass MembersPanelBg { ignorepointer 1 color 0.047 0.057 0.039 1 position 0 0 size 1 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass MembersTitle { ignorepointer 1 position 0.025 0.02 size 0.62 0.05 priority 114 text "СОСТАВ ФРАКЦИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.56 }
+      TextWidgetClass MembersSyncHint { ignorepointer 1 position 0.68 0.028 size 0.295 0.035 priority 114 text "LIVE SYNC // TFL PASSPORT" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.34 "text halign" right }
+
+      ImageWidgetClass CurrentMembersBg { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.025 0.085 size 0.585 0.88 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass CurrentMembersHeader { ignorepointer 1 position 0.045 0.105 size 0.545 0.045 priority 114 text "УЧАСТНИКИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.52 }
+      ScrollWidgetClass AdminMemberScroll { position 0.045 0.16 size 0.545 0.54 priority 115 { PanelWidgetClass AdminMemberHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+      TextWidgetClass AdminMemberName { ignorepointer 1 position 0.045 0.725 size 0.545 0.06 priority 114 text "ИГРОК НЕ ВЫБРАН" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.50 }
+      TextWidgetClass AdminMemberRole { ignorepointer 1 position 0.045 0.785 size 0.255 0.04 priority 114 text "РОЛЬ: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.37 }
+      TextWidgetClass AdminMemberRank { ignorepointer 1 position 0.315 0.785 size 0.275 0.04 priority 114 text "ЗВАНИЕ: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.37 }
+      TextWidgetClass AdminMemberUid { ignorepointer 1 position 0.045 0.83 size 0.545 0.035 priority 114 text "UID: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.30 }
+      ButtonWidgetClass AdminBtnPromote { color 0.12 0.17 0.08 1 position 0.045 0.885 size 0.16 0.055 priority 150 text "РОЛЬ +" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.36 }
+      ButtonWidgetClass AdminBtnDemote { color 0.12 0.17 0.08 1 position 0.215 0.885 size 0.16 0.055 priority 150 text "РОЛЬ -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.36 }
+      ButtonWidgetClass AdminBtnKick { color 0.24 0.10 0.08 1 position 0.385 0.885 size 0.205 0.055 priority 150 text "ИСКЛЮЧИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.92 0.73 0.61 1 text_proportion 0.34 }
+
+      ImageWidgetClass PassportPeopleBg { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.625 0.085 size 0.35 0.40 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass PassportPeopleHeader { ignorepointer 1 position 0.645 0.105 size 0.31 0.04 priority 114 text "ДОСТУПНЫЕ В ПАСПОРТНОЙ БАЗЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.40 }
+      TextWidgetClass PassportPeopleHint { ignorepointer 1 position 0.645 0.145 size 0.31 0.035 priority 114 text "НЕ СОСТОЯТ В ЭТОЙ ФРАКЦИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.32 }
+      ScrollWidgetClass AdminPeopleScroll { position 0.645 0.19 size 0.31 0.20 priority 115 { PanelWidgetClass AdminPeopleHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+      TextWidgetClass AdminSelectedPersonName { ignorepointer 1 position 0.645 0.405 size 0.31 0.035 priority 114 text "ВЫБРАНО: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.32 }
+      TextWidgetClass AdminSelectedPersonUid { ignorepointer 1 position 0.645 0.442 size 0.31 0.028 priority 114 text "UID: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.28 }
+
+      ImageWidgetClass AddMemberBg { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.625 0.505 size 0.35 0.46 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass AddMemberHeader { ignorepointer 1 position 0.645 0.525 size 0.31 0.04 priority 114 text "ДОБАВИТЬ В СОСТАВ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.46 }
+      TextWidgetClass AddRoleLabel { ignorepointer 1 position 0.645 0.58 size 0.31 0.03 priority 114 text "РОЛЬ ПРИ ДОБАВЛЕНИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.31 }
+      ButtonWidgetClass AdminBtnAddRolePrev { color 0.1059 0.1294 0.0863 1 position 0.645 0.62 size 0.055 0.05 priority 150 text "<" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.50 }
+      TextWidgetClass AdminAddRoleText { ignorepointer 1 position 0.71 0.625 size 0.18 0.04 priority 114 text "Рядовой" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.38 "text halign" center }
+      ButtonWidgetClass AdminBtnAddRoleNext { color 0.1059 0.1294 0.0863 1 position 0.90 0.62 size 0.055 0.05 priority 150 text ">" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.50 }
+      TextWidgetClass AddSelectedLabel { ignorepointer 1 position 0.645 0.69 size 0.31 0.03 priority 114 text "ИЗ ПАСПОРТНОЙ БАЗЫ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.30 }
+      TextWidgetClass AdminAddSelectedName { ignorepointer 1 position 0.645 0.725 size 0.31 0.04 priority 114 text "ИГРОК НЕ ВЫБРАН" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.36 }
+      ButtonWidgetClass AdminBtnAddSelected { color 0.16 0.22 0.10 1 position 0.645 0.77 size 0.31 0.05 priority 150 text "ДОБАВИТЬ ВЫБРАННОГО" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.32 }
+      ImageWidgetClass AddMemberRule { ignorepointer 1 color 0.2353 0.2902 0.149 0.8 position 0.645 0.835 size 0.31 0.002 priority 114 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass AddSteamLabel { ignorepointer 1 position 0.645 0.85 size 0.31 0.027 priority 114 text "БЕЗ ПАСПОРТА // STEAM ID" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.28 }
+      EditBoxWidgetClass AdminAddUidEdit { position 0.645 0.885 size 0.19 0.05 priority 145 text "76561198..." font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+      ButtonWidgetClass AdminBtnAddUid { color 0.16 0.22 0.10 1 position 0.845 0.885 size 0.11 0.05 priority 150 text "ДОБАВИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.30 }
+      TextWidgetClass AdminAddStatus { ignorepointer 1 position 0.645 0.94 size 0.31 0.022 priority 114 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.25 }
+     }
+    }
+
+    PanelWidgetClass RolesPanel {
+     visible 0 color 0 0 0 0 position 0.025 0.205 size 0.95 0.755 priority 110
+     {
+      ImageWidgetClass RolesPanelBg { ignorepointer 1 color 0.0706 0.0863 0.0588 1 position 0 0 size 1 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass RolesTitle { ignorepointer 1 position 0.025 0.025 size 0.45 0.05 priority 114 text "РОЛИ И ПРАВА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.60 }
+      ScrollWidgetClass AdminRoleScroll { position 0.025 0.10 size 0.35 0.72 priority 115 { PanelWidgetClass AdminRoleHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+      ButtonWidgetClass AdminBtnNewRole { color 0.16 0.22 0.10 1 position 0.025 0.85 size 0.35 0.07 priority 120 text "+ НОВАЯ РОЛЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.52 }
+      ImageWidgetClass RoleEditorBg { ignorepointer 1 color 0.0863 0.1059 0.0706 1 position 0.40 0.10 size 0.575 0.82 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass AdminRoleIdLabel { ignorepointer 1 position 0.43 0.14 size 0.18 0.035 priority 114 text "ID РОЛИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.43 }
+      EditBoxWidgetClass AdminRoleIdEdit { color 0.1059 0.1294 0.0863 1 position 0.43 0.185 size 0.22 0.055 priority 118 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      TextWidgetClass AdminRoleNameLabel { ignorepointer 1 position 0.68 0.14 size 0.22 0.035 priority 114 text "НАЗВАНИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.43 }
+      EditBoxWidgetClass AdminRoleNameEdit { color 0.1059 0.1294 0.0863 1 position 0.68 0.185 size 0.26 0.055 priority 118 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      TextWidgetClass AdminRoleLevelLabel { ignorepointer 1 position 0.43 0.265 size 0.18 0.035 priority 114 text "УРОВЕНЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.43 }
+      EditBoxWidgetClass AdminRoleLevelEdit { color 0.1059 0.1294 0.0863 1 position 0.43 0.305 size 0.18 0.055 priority 118 text "10" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      TextWidgetClass AdminPermHeader { ignorepointer 1 position 0.43 0.39 size 0.48 0.04 priority 114 text "РАЗРЕШЕНИЯ РОЛИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.52 }
+      ButtonWidgetClass AdminPermUseLaptop { color 0.1059 0.1294 0.0863 1 position 0.43 0.45 size 0.24 0.055 priority 120 text "[ ] НОУТБУК" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.40 }
+      ButtonWidgetClass AdminPermInvite { color 0.1059 0.1294 0.0863 1 position 0.70 0.45 size 0.24 0.055 priority 120 text "[ ] ПРИГЛАШАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.40 }
+      ButtonWidgetClass AdminPermKick { color 0.1059 0.1294 0.0863 1 position 0.43 0.52 size 0.24 0.055 priority 120 text "[ ] ИСКЛЮЧАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.40 }
+      ButtonWidgetClass AdminPermPromote { color 0.1059 0.1294 0.0863 1 position 0.70 0.52 size 0.24 0.055 priority 120 text "[ ] ПОВЫШАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.40 }
+      ButtonWidgetClass AdminPermDemote { color 0.1059 0.1294 0.0863 1 position 0.43 0.59 size 0.24 0.055 priority 120 text "[ ] ПОНИЖАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.40 }
+      ButtonWidgetClass AdminPermManageRoles { color 0.1059 0.1294 0.0863 1 position 0.70 0.59 size 0.24 0.055 priority 120 text "[ ] СОЗДАВАТЬ РОЛИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.38 }
+      ButtonWidgetClass AdminPermEditRights { color 0.1059 0.1294 0.0863 1 position 0.43 0.66 size 0.24 0.055 priority 120 text "[ ] ПРАВА РОЛЕЙ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.37 }
+      ButtonWidgetClass AdminPermIssueLicenses { color 0.1059 0.1294 0.0863 1 position 0.70 0.66 size 0.24 0.055 priority 120 text "[ ] ЛИЦЕНЗИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.39 }
+      ButtonWidgetClass AdminBtnSaveRole { color 0.20 0.28 0.11 1 position 0.43 0.77 size 0.51 0.07 priority 120 text "СОХРАНИТЬ РОЛЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.54 }
+      TextWidgetClass AdminRoleStatus { ignorepointer 1 position 0.43 0.86 size 0.51 0.045 priority 114 text "ADMIN может менять все роли. Spawn/preset сюда не относятся." font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.36 }
+     }
+    }
+
+    PanelWidgetClass RanksPanel {
+     visible 0 color 0 0 0 0 position 0.025 0.205 size 0.95 0.755 priority 110
+     {
+      ImageWidgetClass RanksPanelBg { ignorepointer 1 color 0.047 0.057 0.039 1 position 0 0 size 1 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass RanksTitle { ignorepointer 1 position 0.02 0.015 size 0.50 0.05 priority 114 text "ЗВАНИЯ // ПОЧАСОВАЯ ЗАРПЛАТА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.52 }
+      TextWidgetClass RanksHint { ignorepointer 1 position 0.62 0.022 size 0.36 0.035 priority 114 text "РОЛЬ = ПРАВА // ЗВАНИЕ = ОКЛАД" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.32 "text halign" right }
+
+      ImageWidgetClass RankListBg { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.02 0.08 size 0.30 0.89 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass RankListHeader { ignorepointer 1 position 0.04 0.10 size 0.26 0.04 priority 114 text "ЗВАНИЯ ФРАКЦИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.46 }
+      ScrollWidgetClass AdminRankScroll { position 0.04 0.15 size 0.26 0.69 priority 115 { PanelWidgetClass AdminRankHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+      ButtonWidgetClass AdminBtnNewRank { color 0.12 0.17 0.08 1 position 0.04 0.865 size 0.26 0.065 priority 150 text "+ НОВОЕ ЗВАНИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.38 }
+
+      ImageWidgetClass RankEditorBg { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.34 0.08 size 0.64 0.30 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass RankEditorHeader { ignorepointer 1 position 0.36 0.10 size 0.30 0.04 priority 114 text "РЕДАКТОР ЗВАНИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.46 }
+      TextWidgetClass RankIdLabel { ignorepointer 1 position 0.36 0.15 size 0.12 0.03 priority 114 text "ID ЗВАНИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.33 }
+      TextWidgetClass RankNameLabel { ignorepointer 1 position 0.50 0.15 size 0.19 0.03 priority 114 text "НАЗВАНИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.33 }
+      TextWidgetClass RankLevelLabel { ignorepointer 1 position 0.71 0.15 size 0.10 0.03 priority 114 text "УРОВЕНЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.33 }
+      TextWidgetClass RankSalaryLabel { ignorepointer 1 position 0.83 0.15 size 0.13 0.03 priority 114 text "ЗАРПЛАТА / ЧАС" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.30 }
+      EditBoxWidgetClass AdminRankIdEdit { position 0.36 0.19 size 0.12 0.052 priority 145 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+      EditBoxWidgetClass AdminRankNameEdit { position 0.50 0.19 size 0.19 0.052 priority 145 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+      EditBoxWidgetClass AdminRankLevelEdit { position 0.71 0.19 size 0.10 0.052 priority 145 text "10" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+      EditBoxWidgetClass AdminRankSalaryEdit { position 0.83 0.19 size 0.13 0.052 priority 145 text "0" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+      TextWidgetClass RankCurrencyLabel { ignorepointer 1 position 0.36 0.265 size 0.10 0.03 priority 114 text "ВАЛЮТА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.33 }
+      ButtonWidgetClass AdminRankCurrency { color 0.12 0.17 0.08 1 position 0.36 0.30 size 0.12 0.05 priority 150 text "RUB" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.38 }
+      ButtonWidgetClass AdminBtnSaveRank { color 0.20 0.28 0.11 1 position 0.67 0.30 size 0.17 0.05 priority 150 text "СОХРАНИТЬ ЗВАНИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.31 }
+      ButtonWidgetClass AdminBtnDeleteRank { color 0.24 0.10 0.08 1 position 0.85 0.30 size 0.11 0.05 priority 150 text "УДАЛИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.92 0.73 0.61 1 text_proportion 0.31 }
+
+      ImageWidgetClass RankAssignBg { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.34 0.40 size 0.64 0.34 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass RankAssignHeader { ignorepointer 1 position 0.36 0.42 size 0.40 0.04 priority 114 text "НАЗНАЧЕНИЕ ЗВАНИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.46 }
+      TextWidgetClass RankMemberListLabel { ignorepointer 1 position 0.36 0.47 size 0.22 0.03 priority 114 text "КОМУ НАЗНАЧИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.32 }
+      TextListboxWidgetClass RankMemberList { position 0.36 0.51 size 0.25 0.18 priority 145 font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" }
+      TextWidgetClass RankMemberText { ignorepointer 1 position 0.64 0.48 size 0.32 0.045 priority 114 text "ИГРОК: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.38 }
+      TextWidgetClass RankMemberCurrent { ignorepointer 1 position 0.64 0.535 size 0.32 0.045 priority 114 text "ТЕКУЩЕЕ ЗВАНИЕ: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.34 }
+      TextWidgetClass RankSelectedLabel { ignorepointer 1 position 0.64 0.59 size 0.32 0.035 priority 114 text "НОВОЕ ЗВАНИЕ = ВЫБРАНО СЛЕВА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.30 }
+      ButtonWidgetClass RankAssignSelected { color 0.20 0.28 0.11 1 position 0.64 0.64 size 0.32 0.055 priority 150 text "НАЗНАЧИТЬ ЗВАНИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.36 }
+
+      ImageWidgetClass SalarySettingsBg { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.34 0.76 size 0.64 0.21 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass SalaryHeader { ignorepointer 1 position 0.36 0.78 size 0.25 0.035 priority 114 text "БАНКОВСКИЕ ВЫПЛАТЫ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.40 }
+      ButtonWidgetClass SalaryEnabled { color 0.1059 0.1294 0.0863 1 position 0.36 0.835 size 0.11 0.05 priority 150 text "[X] ВЫПЛАТЫ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.30 }
+      EditBoxWidgetClass SalaryBankId { position 0.48 0.835 size 0.12 0.05 priority 145 text "global" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+      EditBoxWidgetClass SalaryCurrencyId { position 0.61 0.835 size 0.09 0.05 priority 145 text "RUB" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+      EditBoxWidgetClass SalaryIntervalMin { position 0.71 0.835 size 0.08 0.05 priority 145 text "60" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+      EditBoxWidgetClass SalaryGraceMin { position 0.80 0.835 size 0.08 0.05 priority 145 text "15" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+      ButtonWidgetClass SalarySaveSettings { color 0.20 0.28 0.11 1 position 0.89 0.835 size 0.07 0.05 priority 150 text "SAVE" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.28 }
+      TextWidgetClass SalaryBankLabel { ignorepointer 1 position 0.48 0.805 size 0.12 0.025 priority 114 text "СЧЁТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.27 }
+      TextWidgetClass SalaryCurrencyLabel { ignorepointer 1 position 0.61 0.805 size 0.09 0.025 priority 114 text "ВАЛЮТА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.27 }
+      TextWidgetClass SalaryIntervalLabel { ignorepointer 1 position 0.71 0.805 size 0.08 0.025 priority 114 text "ИНТЕРВАЛ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.24 }
+      TextWidgetClass SalaryGraceLabel { ignorepointer 1 position 0.80 0.805 size 0.08 0.025 priority 114 text "GRACE" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.25 }
+      TextWidgetClass SalaryStatus { ignorepointer 1 position 0.36 0.90 size 0.60 0.045 priority 114 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.28 }
+
+      PanelWidgetClass CivilianBenefitPanel { visible 0 color 0 0 0 0 position 0.34 0.08 size 0.64 0.89 priority 180
+       {
+        ImageWidgetClass CivilianBenefitBg { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0 0 size 1 1 priority 181 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+        TextWidgetClass CivilianBenefitHeader { ignorepointer 1 position 0.04 0.06 size 0.90 0.08 priority 184 text "ПОСОБИЕ ПО БЕЗРАБОТИЦЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.42 }
+        TextWidgetClass CivilianBenefitInfo { ignorepointer 1 position 0.04 0.17 size 0.90 0.12 priority 184 text "Гражданские не используют звания. Пособие автоматически получают игроки, не состоящие в обычной фракции." font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.30 }
+        ButtonWidgetClass CivilianBenefitEnabled { color 0.1059 0.1294 0.0863 1 position 0.04 0.36 size 0.20 0.09 priority 190 text "[X] ПОСОБИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.32 }
+        TextWidgetClass CivilianAmountLabel { ignorepointer 1 position 0.29 0.32 size 0.18 0.05 priority 184 text "СУММА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.30 }
+        EditBoxWidgetClass CivilianBenefitAmount { position 0.29 0.38 size 0.18 0.08 priority 188 text "0" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+        TextWidgetClass CivilianCurrencyLabel { ignorepointer 1 position 0.52 0.32 size 0.16 0.05 priority 184 text "ВАЛЮТА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.30 }
+        ButtonWidgetClass CivilianBenefitCurrency { color 0.16 0.22 0.10 1 position 0.52 0.38 size 0.16 0.08 priority 190 text "RUB" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.35 }
+        TextWidgetClass CivilianIntervalLabel { ignorepointer 1 position 0.73 0.32 size 0.20 0.05 priority 184 text "ИНТЕРВАЛ, МИН" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.28 }
+        EditBoxWidgetClass CivilianBenefitInterval { position 0.73 0.38 size 0.20 0.08 priority 188 text "60" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" style Default }
+        ButtonWidgetClass CivilianBenefitSave { color 0.20 0.28 0.11 1 position 0.04 0.56 size 0.89 0.09 priority 190 text "СОХРАНИТЬ ПОСОБИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.34 }
+        TextWidgetClass CivilianBenefitStatus { ignorepointer 1 position 0.04 0.70 size 0.89 0.10 priority 184 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.28 }
+       }
+      }
+     }
+    }
+
+    PanelWidgetClass LicensesPanel {
+     visible 0 color 0 0 0 0 position 0.025 0.205 size 0.95 0.755 priority 110
+     {
+      ImageWidgetClass LicensesPanelBg { ignorepointer 1 color 0.0706 0.0863 0.0588 1 position 0 0 size 1 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass LicensesTitle { ignorepointer 1 position 0.025 0.025 size 0.45 0.05 priority 114 text "ЛИЦЕНЗИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.60 }
+      TextWidgetClass LicensesHint { ignorepointer 1 position 0.50 0.032 size 0.47 0.035 priority 114 text "РЕДАКТОР // ИЗМЕНЕНИЯ СОХРАНЯЮТСЯ НА СЕРВЕРЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.34 "text halign" right }
+
+      ImageWidgetClass LicListBg { ignorepointer 1 color 0.0863 0.1059 0.0706 1 position 0.025 0.085 size 0.305 0.88 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass LicListHeader { ignorepointer 1 position 0.045 0.105 size 0.265 0.04 priority 114 text "СПИСОК ЛИЦЕНЗИЙ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.52 }
+      ScrollWidgetClass LicLicenseScroll { position 0.045 0.16 size 0.265 0.62 priority 115 { PanelWidgetClass LicLicenseHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+      ButtonWidgetClass LicBtnNew { color 0.16 0.22 0.10 1 position 0.045 0.81 size 0.265 0.06 priority 120 text "+ НОВАЯ ЛИЦЕНЗИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.42 }
+      TextWidgetClass LicStatus { ignorepointer 1 position 0.045 0.895 size 0.265 0.055 priority 114 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.31 }
+
+      ImageWidgetClass LicEditorBg { ignorepointer 1 color 0.0863 0.1059 0.0706 1 position 0.3475 0.085 size 0.6275 0.88 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass LicIdLabel { ignorepointer 1 position 0.37 0.115 size 0.16 0.035 priority 114 text "ID ЛИЦЕНЗИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.36 }
+      TextWidgetClass LicNameLabel { ignorepointer 1 position 0.61 0.115 size 0.32 0.035 priority 114 text "НАЗВАНИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.36 }
+      EditBoxWidgetClass LicLicenseId { color 0.1059 0.1294 0.0863 1 position 0.37 0.155 size 0.22 0.055 priority 118 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      EditBoxWidgetClass LicLicenseName { color 0.1059 0.1294 0.0863 1 position 0.61 0.155 size 0.34 0.055 priority 118 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      TextWidgetClass LicDescLabel { ignorepointer 1 position 0.37 0.23 size 0.30 0.035 priority 114 text "ОПИСАНИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4314 0.4902 0.2902 1 text_proportion 0.36 }
+      MultilineEditBoxWidgetClass LicLicenseDescription { color 0.1059 0.1294 0.0863 1 position 0.37 0.27 size 0.58 0.14 priority 118 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      ButtonWidgetClass LicBtnActive { color 0.1059 0.1294 0.0863 1 position 0.37 0.43 size 0.18 0.055 priority 120 text "[X] АКТИВНА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.37 }
+      ButtonWidgetClass LicBtnSave { color 0.20 0.28 0.11 1 position 0.57 0.43 size 0.20 0.055 priority 120 text "СОХРАНИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.40 }
+      ButtonWidgetClass LicBtnDelete { color 0.24 0.10 0.08 1 position 0.79 0.43 size 0.16 0.055 priority 120 text "УДАЛИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.92 0.73 0.61 1 text_proportion 0.38 }
+
+      TextWidgetClass LicIssuersHeader { ignorepointer 1 position 0.37 0.515 size 0.58 0.04 priority 114 text "КТО МОЖЕТ ВЫДАВАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.48 }
+      ScrollWidgetClass LicIssuerScroll { position 0.37 0.57 size 0.58 0.25 priority 115 { PanelWidgetClass LicIssuerHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+      ButtonWidgetClass LicBtnToggleFaction { color 0.16 0.22 0.10 1 position 0.37 0.845 size 0.58 0.065 priority 120 text "РАЗРЕШИТЬ / ЗАПРЕТИТЬ ВЫДАЧУ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.38 }
+     }
+    }
+
+    PanelWidgetClass TerritoriesPanel {
+     visible 0 color 0 0 0 0 position 0.025 0.205 size 0.95 0.755 priority 110
+     {
+      ImageWidgetClass TerritoriesPanelBg { ignorepointer 1 color 0.047 0.057 0.039 1 position 0 0 size 1 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass TerritoriesTitle { ignorepointer 1 position 0.018 0.015 size 0.39 0.045 priority 114 text "ТЕРРИТОРИИ // РЕДАКТОР ТОЧКИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.48 }
+      TextWidgetClass TerritoriesHint { ignorepointer 1 position 0.64 0.02 size 0.34 0.035 priority 114 text "КЛИК ПО МАРКЕРУ = ВЫБОР ТОЧКИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.34 "text halign" right }
+      ButtonWidgetClass TerrBtnChainEditor { color 0.08 0.10 0.065 1 position 0.018 0.065 size 0.12 0.047 priority 190 text "ЦЕПОЧКИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.35 }
+      ButtonWidgetClass TerrBtnRewardEditor { color 0.08 0.10 0.065 1 position 0.145 0.065 size 0.12 0.047 priority 190 text "НАГРАДЫ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.35 }
+
+      ImageWidgetClass TerrMapBg { ignorepointer 1 color 0.055 0.067 0.045 1 position 0.245 0.10 size 0.435 0.88 priority 112 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      MapWidgetClass TerrMap { position 0.255 0.12 size 0.415 0.84 priority 115 }
+      ButtonWidgetClass TerrMapChainClick { visible 0 color 0 0 0 0 position 0.255 0.12 size 0.415 0.84 priority 225 text "" }
+
+      PanelWidgetClass TerrPointMode { visible 1 color 0 0 0 0 position 0 0 size 1 1 priority 113
+       {
+        ImageWidgetClass TerrListBg { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.01 0.10 size 0.22 0.88 priority 114 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+        TextWidgetClass TerrListHeader { ignorepointer 1 position 0.025 0.12 size 0.19 0.04 priority 116 text "ТОЧКИ ТЕРРИТОРИЙ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.40 }
+        ScrollWidgetClass TerrListScroll { position 0.025 0.17 size 0.19 0.74 priority 117 { PanelWidgetClass TerrListHost { color 0 0 0 0 position 0 0 size 1 1 priority 118 } } }
+
+        ImageWidgetClass TerrEditorBg { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.69 0.10 size 0.30 0.88 priority 114 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+        TextWidgetClass TerrEditorTitle { ignorepointer 1 position 0.71 0.12 size 0.26 0.04 priority 116 text "РЕДАКТОР ТОЧКИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.40 }
+        EditBoxWidgetClass TerrId { color 0.1059 0.1294 0.0863 1 position 0.71 0.17 size 0.105 0.055 priority 118 text "id" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+        EditBoxWidgetClass TerrName { color 0.1059 0.1294 0.0863 1 position 0.825 0.17 size 0.145 0.055 priority 118 text "Название" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+        TextWidgetClass TerrMapPoint { ignorepointer 1 position 0.71 0.235 size 0.26 0.04 priority 116 text "ТОЧКА: кликните по карте" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.34 }
+        ButtonWidgetClass TerrBtnCreate { color 0.16 0.22 0.10 1 position 0.71 0.28 size 0.12 0.055 priority 120 text "+ СОЗДАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.32 }
+        ButtonWidgetClass TerrBtnDelete { color 0.24 0.10 0.08 1 position 0.84 0.28 size 0.13 0.055 priority 120 text "УДАЛИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.92 0.73 0.61 1 text_proportion 0.34 }
+
+        TextWidgetClass TerrRadiusLabel { ignorepointer 1 position 0.71 0.355 size 0.075 0.032 priority 116 text "РАДИУС, М" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.34 }
+        TextWidgetClass TerrMinLabel { ignorepointer 1 position 0.795 0.355 size 0.075 0.032 priority 116 text "МИН. ИГР." font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.34 }
+        TextWidgetClass TerrCaptureLabel { ignorepointer 1 position 0.88 0.355 size 0.09 0.032 priority 116 text "ЗАХВАТ, МИН" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.31 }
+        EditBoxWidgetClass TerrRadius { color 0.1059 0.1294 0.0863 1 position 0.71 0.39 size 0.075 0.052 priority 118 text "100" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+        EditBoxWidgetClass TerrMinPlayers { color 0.1059 0.1294 0.0863 1 position 0.795 0.39 size 0.075 0.052 priority 118 text "4" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+        EditBoxWidgetClass TerrCaptureMin { color 0.1059 0.1294 0.0863 1 position 0.88 0.39 size 0.09 0.052 priority 118 text "60" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+        TextWidgetClass TerrPrepLabel { ignorepointer 1 position 0.71 0.455 size 0.075 0.032 priority 116 text "ПОДГОТОВКА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.31 }
+        TextWidgetClass TerrCooldownLabel { ignorepointer 1 position 0.795 0.455 size 0.075 0.032 priority 116 text "КУЛДАУН" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.34 }
+        TextWidgetClass TerrParticipationLabel { ignorepointer 1 position 0.88 0.455 size 0.09 0.032 priority 116 text "УЧАСТИЕ %" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.31 }
+        EditBoxWidgetClass TerrPrepMin { color 0.1059 0.1294 0.0863 1 position 0.71 0.49 size 0.075 0.052 priority 118 text "30" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+        EditBoxWidgetClass TerrCooldownMin { color 0.1059 0.1294 0.0863 1 position 0.795 0.49 size 0.075 0.052 priority 118 text "360" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+        EditBoxWidgetClass TerrParticipation { color 0.1059 0.1294 0.0863 1 position 0.88 0.49 size 0.09 0.052 priority 118 text "30" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+        TextWidgetClass TerrStartLabel { ignorepointer 1 position 0.71 0.555 size 0.07 0.032 priority 116 text "СТАРТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.34 }
+        TextWidgetClass TerrEndLabel { ignorepointer 1 position 0.79 0.555 size 0.07 0.032 priority 116 text "КОНЕЦ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.34 }
+        TextWidgetClass TerrLimitLabel { ignorepointer 1 position 0.87 0.555 size 0.10 0.032 priority 116 text "ЛИМИТ / ДЕНЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.31 }
+        EditBoxWidgetClass TerrStartHour { color 0.1059 0.1294 0.0863 1 position 0.71 0.59 size 0.07 0.052 priority 118 text "18" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+        EditBoxWidgetClass TerrEndHour { color 0.1059 0.1294 0.0863 1 position 0.79 0.59 size 0.07 0.052 priority 118 text "23" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+        EditBoxWidgetClass TerrDailyLimit { color 0.1059 0.1294 0.0863 1 position 0.87 0.59 size 0.045 0.052 priority 118 text "3" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+        ButtonWidgetClass TerrBtnSaveLimit { color 0.16 0.22 0.10 1 position 0.925 0.59 size 0.045 0.052 priority 120 text "OK" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.34 }
+        ButtonWidgetClass TerrBtnDirectCapture { color 0.1059 0.1294 0.0863 1 position 0.71 0.66 size 0.26 0.052 priority 120 text "[ ] ПРЯМОЙ ЗАХВАТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.33 }
+        TextWidgetClass TerrChainSummary { ignorepointer 1 position 0.71 0.72 size 0.26 0.07 priority 116 text "ЦЕПОЧКА: НЕ НАЗНАЧЕНА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.33 }
+        ButtonWidgetClass TerrDay1 { color 0.1059 0.1294 0.0863 1 position 0.71 0.80 size 0.032 0.045 priority 120 text "ПН" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.28 }
+        ButtonWidgetClass TerrDay2 { color 0.1059 0.1294 0.0863 1 position 0.748 0.80 size 0.032 0.045 priority 120 text "ВТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.28 }
+        ButtonWidgetClass TerrDay3 { color 0.1059 0.1294 0.0863 1 position 0.786 0.80 size 0.032 0.045 priority 120 text "СР" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.28 }
+        ButtonWidgetClass TerrDay4 { color 0.1059 0.1294 0.0863 1 position 0.824 0.80 size 0.032 0.045 priority 120 text "ЧТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.28 }
+        ButtonWidgetClass TerrDay5 { color 0.1059 0.1294 0.0863 1 position 0.862 0.80 size 0.032 0.045 priority 120 text "ПТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.28 }
+        ButtonWidgetClass TerrDay6 { color 0.1059 0.1294 0.0863 1 position 0.900 0.80 size 0.032 0.045 priority 120 text "СБ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.28 }
+        ButtonWidgetClass TerrDay7 { color 0.1059 0.1294 0.0863 1 position 0.938 0.80 size 0.032 0.045 priority 120 text "ВС" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.28 }
+        ButtonWidgetClass TerrBtnSave { color 0.20 0.28 0.11 1 position 0.71 0.875 size 0.26 0.07 priority 120 text "СОХРАНИТЬ ТОЧКУ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.36 }
+       }
+      }
+     }
+    }
+
+
+
+    PanelWidgetClass TerrRewardPresetPanel {
+     visible 0 color 0 0 0 0 position 0.035 0.285 size 0.93 0.662 priority 230
+     {
+      ImageWidgetClass RewardPresetBg { ignorepointer 1 color 0.047 0.057 0.039 0.995 position 0 0 size 1 1 priority 231 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      ImageWidgetClass RewardPresetAccent { ignorepointer 1 color 0.58 0.68 0.31 1 position 0 0 size 0.004 1 priority 232 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass RewardPresetTitle { ignorepointer 1 position 0.02 0.025 size 0.62 0.055 priority 234 text "TFL // ПРЕСЕТЫ НАГРАД" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.46 }
+      ButtonWidgetClass RewardPresetClose { color 0.08 0.10 0.065 1 position 0.82 0.025 size 0.16 0.055 priority 250 text "← НАЗАД К ТОЧКАМ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.30 }
+
+      ImageWidgetClass RewardListPane { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.02 0.105 size 0.27 0.85 priority 233 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass RewardPresetListLabel { ignorepointer 1 position 0.04 0.13 size 0.23 0.05 priority 234 text "ГОТОВЫЕ ПРЕСЕТЫ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.40 }
+      TextListboxWidgetClass RewardPresetList { position 0.04 0.19 size 0.23 0.49 priority 240 font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" }
+      ButtonWidgetClass RewardPresetNew { color 0.12 0.17 0.08 1 position 0.04 0.705 size 0.23 0.065 priority 250 text "+ СОЗДАТЬ ПРЕСЕТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.34 }
+      ButtonWidgetClass RewardPresetAssign { color 0.20 0.28 0.11 1 position 0.04 0.79 size 0.23 0.065 priority 250 text "НАЗНАЧИТЬ ЭТОЙ ТОЧКЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.29 }
+      TextWidgetClass RewardPresetStatus { ignorepointer 1 position 0.04 0.88 size 0.23 0.06 priority 244 text "ТЕКУЩАЯ ТОЧКА // НАГРАДА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.31 }
+
+      ImageWidgetClass RewardEditPane { ignorepointer 1 color 0.0745 0.0902 0.0627 1 position 0.31 0.105 size 0.67 0.85 priority 233 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass RewardPresetEditorLabel { ignorepointer 1 position 0.33 0.13 size 0.25 0.05 priority 234 text "РЕДАКТОР ПРЕСЕТА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.40 }
+      EditBoxWidgetClass RewardPresetId { color 0.1059 0.1294 0.0863 1 position 0.33 0.19 size 0.20 0.06 priority 240 text "id" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      EditBoxWidgetClass RewardPresetName { color 0.1059 0.1294 0.0863 1 position 0.545 0.19 size 0.27 0.06 priority 240 text "Название" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      ButtonWidgetClass RewardPresetSave { color 0.20 0.28 0.11 1 position 0.83 0.19 size 0.13 0.06 priority 250 text "СОХРАНИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.31 }
+
+      EditBoxWidgetClass RewardItemSearch { color 0.1059 0.1294 0.0863 1 position 0.33 0.285 size 0.36 0.06 priority 240 text "Поиск по названию / classname" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      ButtonWidgetClass RewardItemSearchBtn { color 0.12 0.17 0.08 1 position 0.705 0.285 size 0.11 0.06 priority 250 text "НАЙТИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.34 }
+      ButtonWidgetClass RewardPresetDelete { color 0.24 0.10 0.08 1 position 0.83 0.285 size 0.13 0.06 priority 250 text "УДАЛИТЬ ПРЕСЕТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.92 0.73 0.61 1 text_proportion 0.27 }
+      TextListboxWidgetClass RewardSearchResults { position 0.33 0.365 size 0.36 0.22 priority 240 font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" }
+      ItemPreviewWidgetClass RewardItemPreview { position 0.705 0.365 size 0.16 0.22 priority 240 }
+      TextWidgetClass RewardItemPreviewName { ignorepointer 1 position 0.875 0.365 size 0.085 0.06 priority 244 text "ПРЕДМЕТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.30 }
+      EditBoxWidgetClass RewardItemClass { color 0.1059 0.1294 0.0863 1 position 0.705 0.605 size 0.16 0.06 priority 240 text "classname" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      EditBoxWidgetClass RewardItemCount { color 0.1059 0.1294 0.0863 1 position 0.875 0.605 size 0.085 0.06 priority 240 text "1" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      ButtonWidgetClass RewardItemAdd { color 0.12 0.17 0.08 1 position 0.705 0.68 size 0.255 0.06 priority 250 text "+ ДОБАВИТЬ В ПРЕСЕТ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.31 }
+      TextWidgetClass RewardItemsLabel { ignorepointer 1 position 0.33 0.62 size 0.34 0.045 priority 244 text "СОДЕРЖИМОЕ ПРЕСЕТА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.36 }
+      TextListboxWidgetClass RewardPresetItems { position 0.33 0.675 size 0.34 0.20 priority 240 font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" }
+      ButtonWidgetClass RewardItemRemove { color 0.24 0.10 0.08 1 position 0.33 0.89 size 0.34 0.05 priority 250 text "УДАЛИТЬ ВЫБРАННУЮ ПОЗИЦИЮ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.92 0.73 0.61 1 text_proportion 0.28 }
+     }
+    }
+
+    PanelWidgetClass TerrChainPanel {
+     visible 0 color 0 0 0 0 position 0.61 0.285 size 0.365 0.662 priority 230
+     {
+      ImageWidgetClass ChainBg { ignorepointer 1 color 0.047 0.057 0.039 0.995 position 0 0 size 1 1 priority 231 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      ImageWidgetClass ChainAccent { ignorepointer 1 color 0.58 0.68 0.31 1 position 0 0 size 0.009 1 priority 232 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
+      TextWidgetClass ChainTitle { ignorepointer 1 position 0.045 0.03 size 0.66 0.05 priority 234 text "TFL // РЕДАКТОР ЦЕПОЧКИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.38 }
+      ButtonWidgetClass ChainClose { color 0.08 0.10 0.065 1 position 0.72 0.03 size 0.24 0.055 priority 250 text "← К ТОЧКАМ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.27 }
+      TextWidgetClass ChainListLabel { ignorepointer 1 position 0.045 0.11 size 0.50 0.04 priority 234 text "ЦЕПОЧКИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.34 }
+      ButtonWidgetClass ChainNew { color 0.12 0.17 0.08 1 position 0.64 0.10 size 0.32 0.055 priority 250 text "+ НОВАЯ ЦЕПОЧКА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.26 }
+      TextListboxWidgetClass ChainList { position 0.045 0.16 size 0.915 0.16 priority 240 font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" }
+      EditBoxWidgetClass ChainId { color 0.1059 0.1294 0.0863 1 position 0.045 0.345 size 0.30 0.06 priority 240 text "front_id" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      EditBoxWidgetClass ChainName { color 0.1059 0.1294 0.0863 1 position 0.365 0.345 size 0.595 0.06 priority 240 text "Название цепочки" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 style Default }
+      ButtonWidgetClass ChainSideA { color 0.12 0.17 0.08 1 position 0.045 0.425 size 0.44 0.06 priority 250 text "ВХОД A: ВС РФ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.29 }
+      ButtonWidgetClass ChainSideB { color 0.12 0.17 0.08 1 position 0.52 0.425 size 0.44 0.06 priority 250 text "ВХОД B: ТЕРРОРИСТЫ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.26 }
+      TextWidgetClass ChainPathLabel { ignorepointer 1 position 0.045 0.51 size 0.915 0.035 priority 244 text "НАПРАВЛЕНИЕ ФРОНТА // A → B // B → A" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.6275 0.3882 1 text_proportion 0.30 }
+      TextWidgetClass ChainPath { ignorepointer 1 position 0.045 0.55 size 0.915 0.075 priority 244 text "КЛИКАЙТЕ ТОЧКИ НА КАРТЕ ПО ПОРЯДКУ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.28 }
+      TextListboxWidgetClass ChainPointList { position 0.045 0.64 size 0.915 0.16 priority 240 font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" }
+      ButtonWidgetClass ChainPointUp { color 0.12 0.17 0.08 1 position 0.045 0.815 size 0.18 0.055 priority 250 text "↑ ВЫШЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.28 }
+      ButtonWidgetClass ChainPointDown { color 0.12 0.17 0.08 1 position 0.24 0.815 size 0.18 0.055 priority 250 text "↓ НИЖЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.28 }
+      ButtonWidgetClass ChainPointRemove { color 0.24 0.10 0.08 1 position 0.435 0.815 size 0.23 0.055 priority 250 text "X УБРАТЬ ТОЧКУ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.92 0.73 0.61 1 text_proportion 0.25 }
+      ButtonWidgetClass ChainSave { color 0.20 0.28 0.11 1 position 0.68 0.815 size 0.28 0.055 priority 250 text "СОХРАНИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.29 }
+      ButtonWidgetClass ChainDelete { color 0.24 0.10 0.08 1 position 0.045 0.895 size 0.915 0.055 priority 250 text "УДАЛИТЬ ЦЕПОЧКУ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.92 0.73 0.61 1 text_proportion 0.30 }
+     }
+    }
+
+   }
+  }
+ }
+}
