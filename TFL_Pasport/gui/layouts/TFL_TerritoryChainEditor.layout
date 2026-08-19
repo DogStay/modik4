@@ -49,7 +49,7 @@ WindowWidgetClass Root
       TextWidgetClass ChainBackwardText { ignorepointer 1 position 0.305 0.47 size 0.63 0.05 priority 114 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.7255 0.5412 1 text_proportion 0.32 }
 
       TextWidgetClass ChainPointsLabel { ignorepointer 1 position 0.02 0.51 size 0.4 0.03 priority 114 text "ПОРЯДОК ТОЧЕК" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.45 }
-      ScrollWidgetClass ChainPointScroll { position 0.02 0.55 size 0.93 0.29 priority 115 { PanelWidgetClass ChainPointList { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+      ScrollWidgetClass ChainPointScroll { position 0.02 0.55 size 0.93 0.29 priority 115 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 { PanelWidgetClass ChainPointList { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
       TextWidgetClass ChainPointsHint { ignorepointer 1 position 0.02 0.85 size 0.93 0.03 priority 114 text "ДОБАВЛЯЙТЕ ТОЧКИ КЛИКОМ ПО МАРКЕРАМ НА КАРТЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.5569 0.4863 1 text_proportion 0.36 }
 
       ButtonWidgetClass ChainSaveButton { color 0.1647 0.2078 0.1255 1 position 0.02 0.90 size 0.45 0.06 priority 120 text "СОХРАНИТЬ ЦЕПОЧКУ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8588 0.9020 0.7059 1 text_proportion 0.42 }

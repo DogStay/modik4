@@ -46,7 +46,7 @@ WindowWidgetClass Root
        {
         ImageWidgetClass FactionListBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0 0 size 1 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
         TextWidgetClass FactionListTitle { ignorepointer 1 position 0.0577 0.02 size 0.9135 0.04 priority 114 text "ФРАКЦИИ СЕРВЕРА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.5 }
-        ScrollWidgetClass FactionScroll { position 0.0577 0.075 size 0.8846 0.66 priority 115 { PanelWidgetClass FactionHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+        ScrollWidgetClass FactionScroll { position 0.0577 0.075 size 0.8846 0.66 priority 115 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 { PanelWidgetClass FactionHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
         TextWidgetClass FactionNewHint { ignorepointer 1 position 0.0577 0.75 size 0.8846 0.03 priority 114 text "+ НОВАЯ ФРАКЦИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4353 0.4314 0.3686 1 text_proportion 0.42 }
         EditBoxWidgetClass NewFactionId { color 0.0588 0.0745 0.0431 1 position 0.0577 0.79 size 0.8846 0.045 priority 118 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 }
         EditBoxWidgetClass NewFactionName { color 0.0588 0.0745 0.0431 1 position 0.0577 0.845 size 0.8846 0.045 priority 118 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 }
@@ -87,7 +87,7 @@ WindowWidgetClass Root
 
       // --- пресет снаряжения фракции --------------------------------------
       TextWidgetClass PresetTitle { ignorepointer 1 position 0.232 0.605 size 0.36 0.035 priority 114 text "ПРЕСЕТ СНАРЯЖЕНИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.5 }
-      ScrollWidgetClass PresetScroll { position 0.232 0.645 size 0.36 0.23 priority 145 { PanelWidgetClass PresetHost { color 0 0 0 0 position 0 0 size 1 1 priority 146 } } }
+      ScrollWidgetClass PresetScroll { position 0.232 0.645 size 0.36 0.23 priority 145 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 { PanelWidgetClass PresetHost { color 0 0 0 0 position 0 0 size 1 1 priority 146 } } }
       EditBoxWidgetClass PresetClassEdit { color 0.0588 0.0745 0.0431 1 position 0.615 0.645 size 0.373 0.05 priority 145 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 }
       ButtonWidgetClass BtnPresetAdd { color 0.1059 0.1255 0.0824 1 position 0.615 0.705 size 0.18 0.05 priority 150 text "+ ДОБАВИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.42 }
       ButtonWidgetClass BtnPresetRemove { color 0.1137 0.0745 0.0627 1 position 0.805 0.705 size 0.183 0.05 priority 150 text "- УДАЛИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7529 0.5412 0.4863 1 text_proportion 0.42 }
@@ -109,7 +109,7 @@ WindowWidgetClass Root
      {
       ImageWidgetClass MembersListBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0 0 size 0.6 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
       TextWidgetClass MembersListTitle { ignorepointer 1 position 0.012 0.02 size 0.5 0.035 priority 114 text "УЧАСТНИКИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.5 }
-      ScrollWidgetClass AdminMemberScroll { position 0.012 0.065 size 0.576 0.92 priority 115 { PanelWidgetClass AdminMemberHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+      ScrollWidgetClass AdminMemberScroll { position 0.012 0.065 size 0.576 0.92 priority 115 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 { PanelWidgetClass AdminMemberHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
 
       ImageWidgetClass MemberEditorBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0.615 0 size 0.385 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
       TextWidgetClass MemberEditorTitle { ignorepointer 1 position 0.627 0.02 size 0.3 0.035 priority 114 text "УЧАСТНИК" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.5 }
@@ -127,7 +127,7 @@ WindowWidgetClass Root
 
       // --- добавление человека во фракцию ---------------------------------
       TextWidgetClass AdminAddTitle { ignorepointer 1 position 0.627 0.525 size 0.35 0.032 priority 114 text "ДОБАВИТЬ ВО ФРАКЦИЮ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.48 }
-      ScrollWidgetClass AdminPeopleScroll { position 0.627 0.560 size 0.35 0.13 priority 115 { PanelWidgetClass AdminPeopleHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+      ScrollWidgetClass AdminPeopleScroll { position 0.627 0.560 size 0.35 0.13 priority 115 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 { PanelWidgetClass AdminPeopleHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
       TextWidgetClass AdminSelectedPersonName { ignorepointer 1 position 0.627 0.700 size 0.35 0.028 priority 114 text "ВЫБРАНО: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8471 0.8392 0.7686 1 text_proportion 0.42 }
       TextWidgetClass AdminSelectedPersonUid { ignorepointer 1 position 0.627 0.730 size 0.35 0.024 priority 114 text "UID: -" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.3647 0.4 0.2784 1 text_proportion 0.38 }
       ButtonWidgetClass AdminBtnAddRolePrev { color 0.1059 0.1255 0.0824 1 position 0.627 0.762 size 0.05 0.042 priority 150 text "<" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.5 }
@@ -150,7 +150,7 @@ WindowWidgetClass Root
      {
       ImageWidgetClass RolesListBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0 0 size 0.208 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
       TextWidgetClass RolesListTitle { ignorepointer 1 position 0.012 0.02 size 0.19 0.04 priority 114 text "РОЛИ И ПРАВА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.5 }
-      ScrollWidgetClass AdminRoleScroll { position 0.012 0.075 size 0.184 0.83 priority 115 { PanelWidgetClass AdminRoleHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+      ScrollWidgetClass AdminRoleScroll { position 0.012 0.075 size 0.184 0.83 priority 115 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 { PanelWidgetClass AdminRoleHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
       ButtonWidgetClass AdminBtnNewRole { color 0.1059 0.1255 0.0824 1 position 0.012 0.915 size 0.184 0.055 priority 120 text "+ НОВАЯ РОЛЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.45 }
 
       ImageWidgetClass RoleEditorBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0.22 0 size 0.78 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
@@ -194,7 +194,7 @@ WindowWidgetClass Root
        {
         ImageWidgetClass RankListBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0 0 size 0.312 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
         TextWidgetClass RankListTitle { ignorepointer 1 position 0.012 0.02 size 0.29 0.05 priority 114 text "ЗВАНИЯ ФРАКЦИИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.5 }
-        ScrollWidgetClass RankList { position 0.012 0.10 size 0.288 0.78 priority 115 { PanelWidgetClass RankHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+        ScrollWidgetClass RankList { position 0.012 0.10 size 0.288 0.78 priority 115 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 { PanelWidgetClass RankHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
         ButtonWidgetClass RankCreateButton { color 0.1059 0.1255 0.0824 1 position 0.012 0.90 size 0.288 0.07 priority 120 text "+ НОВОЕ ЗВАНИЕ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.45 }
 
         ImageWidgetClass RankEditorBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0.324 0 size 0.676 0.42 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
@@ -271,7 +271,7 @@ WindowWidgetClass Root
      {
       ImageWidgetClass LicListBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0 0 size 0.208 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
       TextWidgetClass LicListTitle { ignorepointer 1 position 0.012 0.02 size 0.19 0.04 priority 114 text "СПИСОК ЛИЦЕНЗИЙ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.5 }
-      ScrollWidgetClass LicLicenseScroll { position 0.012 0.075 size 0.184 0.83 priority 115 { PanelWidgetClass LicLicenseHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+      ScrollWidgetClass LicLicenseScroll { position 0.012 0.075 size 0.184 0.83 priority 115 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 { PanelWidgetClass LicLicenseHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
       ButtonWidgetClass LicBtnNew { color 0.1059 0.1255 0.0824 1 position 0.012 0.915 size 0.184 0.055 priority 120 text "+ НОВАЯ ЛИЦЕНЗИЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.4 }
 
       ImageWidgetClass LicEditorBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0.22 0 size 0.78 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
@@ -284,7 +284,7 @@ WindowWidgetClass Root
       MultilineEditBoxWidgetClass LicLicenseDescription { color 0.0588 0.0745 0.0431 1 position 0.232 0.24 size 0.758 0.09 priority 118 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8471 0.8392 0.7686 1 }
       ButtonWidgetClass LicBtnActive { color 0.0588 0.0745 0.0431 1 position 0.232 0.35 size 0.2 0.055 priority 120 text "[X] АКТИВНА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8471 0.8392 0.7686 1 text_proportion 0.42 }
       TextWidgetClass LicIssuerTitle { ignorepointer 1 position 0.232 0.43 size 0.4 0.035 priority 114 text "КТО МОЖЕТ ВЫДАВАТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.5 }
-      ScrollWidgetClass LicIssuerScroll { position 0.232 0.475 size 0.758 0.36 priority 115 { PanelWidgetClass LicIssuerHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+      ScrollWidgetClass LicIssuerScroll { position 0.232 0.475 size 0.758 0.36 priority 115 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 { PanelWidgetClass LicIssuerHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
       ButtonWidgetClass LicBtnToggleFaction { color 0.1059 0.1255 0.0824 1 position 0.232 0.845 size 0.45 0.055 priority 120 text "РАЗРЕШИТЬ / ЗАПРЕТИТЬ ВЫДАЧУ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.36 }
       TextWidgetClass LicStatus { ignorepointer 1 position 0.70 0.855 size 0.29 0.04 priority 114 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.5569 0.4863 1 text_proportion 0.34 "text halign" right }
       ButtonWidgetClass LicBtnSave { color 0.1647 0.2078 0.1255 1 position 0.232 0.915 size 0.55 0.06 priority 120 text "СОХРАНИТЬ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8588 0.9020 0.7059 1 text_proportion 0.5 }
@@ -302,6 +302,9 @@ WindowWidgetClass Root
       ButtonWidgetClass ModeBtnPoints { color 0.1647 0.2078 0.1255 1 position 0 0 size 0.11 0.04 priority 120 text "ТОЧКИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8588 0.9020 0.7059 1 text_proportion 0.48 }
       ButtonWidgetClass ModeBtnChains { color 0.0549 0.0667 0.0353 1 position 0.12 0 size 0.11 0.04 priority 120 text "ЦЕПОЧКИ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.48 }
       ButtonWidgetClass ModeBtnRewards { color 0.0549 0.0667 0.0353 1 position 0.24 0 size 0.11 0.04 priority 120 text "НАГРАДЫ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.6588 0.7255 0.4471 1 text_proportion 0.48 }
+      // Ответ сервера для вкладки ТЕРРИТОРИИ: без неё отказ на этой вкладке
+      // было негде показать, и кнопки выглядели как молчащие.
+      TextWidgetClass TerritoryStatus { ignorepointer 1 position 0.45 0.005 size 0.55 0.032 priority 114 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.5569 0.4863 1 text_proportion 0.4 "text halign" right }
 
       PanelWidgetClass TerritoryPointsHost
       {
@@ -309,7 +312,7 @@ WindowWidgetClass Root
        {
         ImageWidgetClass TerrListBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0 0 size 0.208 1 priority 111 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
         TextWidgetClass TerrListTitle { ignorepointer 1 position 0.012 0.02 size 0.19 0.035 priority 114 text "ТОЧКИ ТЕРРИТОРИЙ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7255 0.7882 0.5412 1 text_proportion 0.45 }
-        ScrollWidgetClass TerritoryList { position 0.012 0.07 size 0.184 0.82 priority 115 { PanelWidgetClass TerritoryHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
+        ScrollWidgetClass TerritoryList { position 0.012 0.07 size 0.184 0.82 priority 115 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 { PanelWidgetClass TerritoryHost { color 0 0 0 0 position 0 0 size 1 1 priority 116 } } }
         ButtonWidgetClass TerritoryCreateButton { color 0.1059 0.1255 0.0824 1 position 0.012 0.905 size 0.184 0.065 priority 120 text "+ СОЗДАТЬ ТОЧКУ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7882 0.8392 0.6118 1 text_proportion 0.38 }
 
         MapWidgetClass TerritoryMap { position 0.22 0.01 size 0.535 0.98 priority 112 }
@@ -349,11 +352,13 @@ WindowWidgetClass Root
        }
       }
 
-      // Хосты остаются видимыми: скрипт создаёт внутрь них редакторы цепочек и
-      // наград и показывает/прячет сами редакторы (m_ChainPanel/m_RewardPresetPanel),
-      // а хост не трогает. Скрытый родитель погасил бы показанный редактор.
-      PanelWidgetClass TerritoryChainHost { visible 1 color 0 0 0 0 position 0 0 size 1 1 priority 130 }
-      PanelWidgetClass TerritoryRewardHost { visible 1 color 0 0 0 0 position 0 0 size 1 1 priority 130 }
+      // Три хоста режима занимают одну и ту же область под кнопками
+      // ТОЧКИ/ЦЕПОЧКИ/НАГРАДЫ и взаимно исключают друг друга: скрипт
+      // (TerrSetPointMode/TerrSetChainMode/TerrSetRewardMode) показывает ровно
+      // один и гасит два других. Область начинается с 0.055, чтобы не накрыть
+      // сами кнопки режима, иначе переключиться обратно было бы нечем.
+      PanelWidgetClass TerritoryChainHost { visible 0 color 0 0 0 0 position 0 0.055 size 1 0.945 priority 110 }
+      PanelWidgetClass TerritoryRewardHost { visible 0 color 0 0 0 0 position 0 0.055 size 1 0.945 priority 110 }
      }
     }
    }

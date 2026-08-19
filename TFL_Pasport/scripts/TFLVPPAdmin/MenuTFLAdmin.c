@@ -59,6 +59,16 @@ class MenuTFLAdmin extends AdminHudSubMenu
     protected ButtonWidget m_BtnPresetClear;
     protected TextWidget m_FactionStatus;
 
+    // Какая вкладка сейчас открыта — чтобы ответ сервера попал именно на неё.
+    protected static const int TAB_FACTION     = 0;
+    protected static const int TAB_MEMBERS     = 1;
+    protected static const int TAB_ROLES       = 2;
+    protected static const int TAB_RANKS       = 3;
+    protected static const int TAB_LICENSES    = 4;
+    protected static const int TAB_TERRITORIES = 5;
+    protected int m_ActiveTab = TAB_FACTION;
+    protected TextWidget m_TerrStatus;
+
     protected Widget m_AdminMemberHost;
     protected ScrollWidget m_AdminMemberScroll;
     protected TextWidget m_AdminMemberName;
@@ -354,15 +364,23 @@ class MenuTFLAdmin extends AdminHudSubMenu
         }
     }
 
-    protected void SetStatusEverywhere(string text)
+    // Ответ сервера показываем на той вкладке, где админ сейчас находится:
+    // на чужой вкладке он невидим, и отказ выглядит как молчащая кнопка.
+    protected void SetStatus(string text)
     {
-        if (m_FactionStatus) m_FactionStatus.SetText(text);
-        if (m_AdminAddStatus) m_AdminAddStatus.SetText(text);
-        if (m_AdminRoleStatus) m_AdminRoleStatus.SetText(text);
-        if (m_SalaryStatus) m_SalaryStatus.SetText(text);
-        if (m_CivilianBenefitStatus) m_CivilianBenefitStatus.SetText(text);
-        if (m_LicStatus) m_LicStatus.SetText(text);
-        if (m_RewardPresetStatus) m_RewardPresetStatus.SetText(text);
+        TextWidget target;
+        switch (m_ActiveTab)
+        {
+            case TAB_MEMBERS:     target = m_AdminAddStatus; break;
+            case TAB_ROLES:       target = m_AdminRoleStatus; break;
+            case TAB_RANKS:       target = m_SalaryStatus; break;
+            case TAB_LICENSES:    target = m_LicStatus; break;
+            case TAB_TERRITORIES: target = m_TerrStatus; break;
+            default:              target = m_FactionStatus; break;
+        }
+        // Если у вкладки своей строки статуса нет, текст не должен пропасть.
+        if (!target) target = m_FactionStatus;
+        if (target) target.SetText(text);
     }
 
     void OnVPPMessage(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target)
@@ -376,7 +394,7 @@ class MenuTFLAdmin extends AdminHudSubMenu
         // (например, нет права MenuTFLAdmin:Write). Раньше он попадал только в
         // статус вкладки ФРАКЦИЯ, поэтому на любой другой вкладке отказ выглядел
         // как «кнопка вообще ничего не делает». Пишем во все строки статуса.
-        SetStatusEverywhere(packet.param1);
+        SetStatus(packet.param1);
         Print("[TFL/VPP] " + packet.param1);
     }
 
@@ -601,6 +619,7 @@ class MenuTFLAdmin extends AdminHudSubMenu
         m_ModeBtnPoints = ButtonWidget.Cast(M_SUB_WIDGET.FindAnyWidget("ModeBtnPoints"));
         m_ModeBtnChains = ButtonWidget.Cast(M_SUB_WIDGET.FindAnyWidget("ModeBtnChains"));
         m_ModeBtnRewards = ButtonWidget.Cast(M_SUB_WIDGET.FindAnyWidget("ModeBtnRewards"));
+        m_TerrStatus = TextWidget.Cast(M_SUB_WIDGET.FindAnyWidget("TerritoryStatus"));
         m_TerritoryChainHost = M_SUB_WIDGET.FindAnyWidget("TerritoryChainHost");
         m_TerritoryRewardHost = M_SUB_WIDGET.FindAnyWidget("TerritoryRewardHost");
         m_TerrMap = MapWidget.Cast(M_SUB_WIDGET.FindAnyWidget("TerritoryMap"));
@@ -745,54 +764,64 @@ class MenuTFLAdmin extends AdminHudSubMenu
         if (m_LicensesPanel) m_LicensesPanel.Show(false);
         if (m_TerritoriesPanel) m_TerritoriesPanel.Show(false);
         if (m_FactionSidebar) m_FactionSidebar.Show(false);
+        // Гасим редакторы вместе с их хостами: иначе видимый хост режима
+        // переживёт уход на другую вкладку и накроет её собой.
         if (m_RewardPresetPanel) m_RewardPresetPanel.Show(false);
+        if (m_TerritoryRewardHost) m_TerritoryRewardHost.Show(false);
         if (m_ChainPanel) m_ChainPanel.Show(false);
+        if (m_TerritoryChainHost) m_TerritoryChainHost.Show(false);
         m_ChainEditMode = false;
     }
 
     // ТЕРРИТОРИИ has three modes (ТОЧКИ / ЦЕПОЧКИ / НАГРАДЫ) sharing one
     // TerritoriesPanel; only one of the three host panels is visible at a time.
+    //
+    // Каждый режим — это пара «хост + его содержимое». Показывать содержимое,
+    // не показав хост, бесполезно: скрытый родитель гасит показанного ребёнка,
+    // и вкладка выглядит пустой. Поэтому режимы переключаются только здесь, и
+    // всегда обеими половинами сразу.
+    protected void TerrApplyMode(bool points, bool chains, bool rewards)
+    {
+        if (m_TerrPointMode) m_TerrPointMode.Show(points);
+
+        if (m_TerritoryChainHost) m_TerritoryChainHost.Show(chains);
+        if (m_ChainPanel) m_ChainPanel.Show(chains);
+
+        if (m_TerritoryRewardHost) m_TerritoryRewardHost.Show(rewards);
+        if (m_RewardPresetPanel) m_RewardPresetPanel.Show(rewards);
+
+        if (m_ModeBtnPoints) m_ModeBtnPoints.SetColor(points ? ARGB(255, 42, 53, 32) : ARGB(255, 14, 17, 9));
+        if (m_ModeBtnChains) m_ModeBtnChains.SetColor(chains ? ARGB(255, 42, 53, 32) : ARGB(255, 14, 17, 9));
+        if (m_ModeBtnRewards) m_ModeBtnRewards.SetColor(rewards ? ARGB(255, 42, 53, 32) : ARGB(255, 14, 17, 9));
+    }
+
     protected void TerrSetPointMode()
     {
         m_ChainEditMode = false;
-        if (m_RewardPresetPanel) m_RewardPresetPanel.Show(false);
-        if (m_ChainPanel) m_ChainPanel.Show(false);
         if (m_TerritoriesPanel) m_TerritoriesPanel.Show(true);
-        if (m_TerrPointMode) m_TerrPointMode.Show(true);
+        TerrApplyMode(true, false, false);
         if (m_TerrMap) m_TerrMap.Show(true);
-        if (m_ModeBtnPoints) m_ModeBtnPoints.SetColor(ARGB(255, 42, 53, 32));
-        if (m_ModeBtnChains) m_ModeBtnChains.SetColor(ARGB(255, 14, 17, 9));
-        if (m_ModeBtnRewards) m_ModeBtnRewards.SetColor(ARGB(255, 14, 17, 9));
     }
 
     protected void TerrSetChainMode()
     {
         m_ChainEditMode = true;
-        if (m_RewardPresetPanel) m_RewardPresetPanel.Show(false);
         if (m_TerritoriesPanel) m_TerritoriesPanel.Show(true);
-        if (m_TerrPointMode) m_TerrPointMode.Show(false);
-        if (m_ChainPanel) m_ChainPanel.Show(true);
-        if (m_ModeBtnPoints) m_ModeBtnPoints.SetColor(ARGB(255, 14, 17, 9));
-        if (m_ModeBtnChains) m_ModeBtnChains.SetColor(ARGB(255, 42, 53, 32));
-        if (m_ModeBtnRewards) m_ModeBtnRewards.SetColor(ARGB(255, 14, 17, 9));
+        TerrApplyMode(false, true, false);
         TerrInitMapWidget(m_ChainMap);
     }
 
     protected void TerrSetRewardMode()
     {
         m_ChainEditMode = false;
-        if (m_ChainPanel) m_ChainPanel.Show(false);
         if (m_TerritoriesPanel) m_TerritoriesPanel.Show(true);
-        if (m_TerrPointMode) m_TerrPointMode.Show(false);
-        if (m_RewardPresetPanel) m_RewardPresetPanel.Show(true);
-        if (m_ModeBtnPoints) m_ModeBtnPoints.SetColor(ARGB(255, 14, 17, 9));
-        if (m_ModeBtnChains) m_ModeBtnChains.SetColor(ARGB(255, 14, 17, 9));
-        if (m_ModeBtnRewards) m_ModeBtnRewards.SetColor(ARGB(255, 42, 53, 32));
+        TerrApplyMode(false, false, true);
     }
 
     protected void ShowFactionTab()
     {
         HideAllTabs();
+        m_ActiveTab = TAB_FACTION;
         SetScreenTitle("АДМИНИСТРИРОВАНИЕ ФРАКЦИИ");
         if (m_FactionSidebar) m_FactionSidebar.Show(true);
         if (m_FactionPanel) m_FactionPanel.Show(true);
@@ -801,6 +830,7 @@ class MenuTFLAdmin extends AdminHudSubMenu
     protected void ShowMembersTab()
     {
         HideAllTabs();
+        m_ActiveTab = TAB_MEMBERS;
         SetScreenTitle("СОСТАВ");
         if (m_MembersPanel)
             m_MembersPanel.Show(true);
@@ -809,6 +839,7 @@ class MenuTFLAdmin extends AdminHudSubMenu
     protected void ShowRolesTab()
     {
         HideAllTabs();
+        m_ActiveTab = TAB_ROLES;
         SetScreenTitle("РОЛИ И ПРАВА");
         if (m_RolesPanel)
             m_RolesPanel.Show(true);
@@ -817,6 +848,7 @@ class MenuTFLAdmin extends AdminHudSubMenu
     protected void ShowRanksTab()
     {
         HideAllTabs();
+        m_ActiveTab = TAB_RANKS;
         SetScreenTitle("ЗВАНИЯ И ОКЛАДЫ");
         if (m_RanksPanel)
             m_RanksPanel.Show(true);
@@ -828,6 +860,7 @@ class MenuTFLAdmin extends AdminHudSubMenu
     protected void ShowLicensesTab()
     {
         HideAllTabs();
+        m_ActiveTab = TAB_LICENSES;
         SetScreenTitle("ЛИЦЕНЗИИ");
         if (m_LicensesPanel)
             m_LicensesPanel.Show(true);
@@ -837,6 +870,7 @@ class MenuTFLAdmin extends AdminHudSubMenu
     protected void ShowTerritoriesTab()
     {
         HideAllTabs();
+        m_ActiveTab = TAB_TERRITORIES;
         SetScreenTitle("ТЕРРИТОРИИ");
         if (m_TerritoriesPanel) m_TerritoriesPanel.Show(true);
         TerrSetPointMode();

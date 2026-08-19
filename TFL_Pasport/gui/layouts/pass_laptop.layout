@@ -438,8 +438,7 @@ WindowWidgetClass Root {
      vexactpos 0
      hexactsize 0
      vexactsize 0
-     priority 123
-     {
+     priority 123 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 {
       PanelWidgetClass RowHost {
        visible 1
        clipchildren 0
@@ -1279,8 +1278,7 @@ WindowWidgetClass Root {
      vexactpos 0
      hexactsize 0
      vexactsize 0
-     priority 166
-     {
+     priority 166 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 {
       PanelWidgetClass NoteHost {
        visible 1
        clipchildren 0
@@ -1475,8 +1473,7 @@ WindowWidgetClass Root {
        "text color" 0.8392 0.8902 0.6902 1 text_proportion 0.50
       }
       ScrollWidgetClass LicenseManageScroll {
-       visible 1 position 0.050 0.190 size 0.335 0.660 priority 224
-       {
+       visible 1 position 0.050 0.190 size 0.335 0.660 priority 224 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 {
         PanelWidgetClass LicenseManageHost { color 0 0 0 0 position 0 0 size 1 1 priority 225 }
        }
       }

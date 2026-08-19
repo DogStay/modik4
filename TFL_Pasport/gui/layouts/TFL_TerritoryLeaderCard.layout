@@ -33,7 +33,7 @@ PanelWidgetClass TerritoryCard
   TextWidgetClass TerritoryCaptureTime { ignorepointer 1 position 0.68 0.455 size 0.28 0.032 priority 204 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.4 }
 
   TextWidgetClass RewardLabel { ignorepointer 1 position 0.04 0.51 size 0.4 0.025 priority 204 text "НАГРАДА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.4980 0.4941 0.4235 1 text_proportion 0.36 }
-  ScrollWidgetClass TerritoryRewardScroll { position 0.04 0.545 size 0.9 0.18 priority 205 { PanelWidgetClass TerritoryRewardList { color 0 0 0 0 position 0 0 size 1 1 priority 206 } } }
+  ScrollWidgetClass TerritoryRewardScroll { position 0.04 0.545 size 0.9 0.18 priority 205 ignorepointer 0 clipchildren 1 style blank "Scrollbar V" 1 { PanelWidgetClass TerritoryRewardList { color 0 0 0 0 position 0 0 size 1 1 priority 206 } } }
 
   ButtonWidgetClass TerritoryCaptureButton { color 0.1647 0.2078 0.1255 1 position 0.04 0.75 size 0.9 0.075 priority 210 text "" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.8588 0.9020 0.7059 1 text_proportion 0.45 }
  }
