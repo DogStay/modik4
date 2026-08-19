@@ -92,13 +92,48 @@ def check_invisible_buttons():
     return found
 
 
+# ---------------------------------------------------------------------------
+# EnforceScript не поддерживает часть привычного C-подобного синтаксиса.
+# Такой код молча уходит в PBO и падает только при старте сервера строкой
+# "Broken expression (missing ';'?)", поэтому ловим его здесь.
+
+TERNARY = re.compile(r"\?[^?:;\n]{1,80}:")
+
+
+def strip_noise(text):
+    """Убирает строки и комментарии, чтобы не ловить ?: внутри них."""
+    text = re.sub(r'"(?:[^"\\]|\\.)*"', '""', text)
+    text = re.sub(r"/\*.*?\*/", "", text, flags=re.S)
+    text = re.sub(r"//[^\n]*", "", text)
+    return text
+
+
+def check_enforce_syntax():
+    """Тернарный оператор ?: — EnforceScript его не понимает."""
+    found = 0
+    for root, _dirs, files in os.walk(SCRIPTS):
+        for name in sorted(files):
+            if not name.endswith(".c"):
+                continue
+            path = os.path.join(root, name)
+            for num, line in enumerate(strip_noise(read(path)).split("\n"), 1):
+                if TERNARY.search(line):
+                    rel = os.path.relpath(path, HERE)
+                    print(f"### {rel}:{num}: тернарный ?: — EnforceScript не поддерживает")
+                    print(f"      {line.strip()[:100]}")
+                    found += 1
+    return found
+
+
 def main():
     missing = check_contract()
     invisible = check_invisible_buttons()
+    syntax = check_enforce_syntax()
     print()
     print(f"имён без виджета в раскладке: {missing}")
     print(f"кнопок с подписью и альфой 0: {invisible}")
-    return 1 if (missing or invisible) else 0
+    print(f"конструкций, чуждых EnforceScript: {syntax}")
+    return 1 if (missing or invisible or syntax) else 0
 
 
 if __name__ == "__main__":

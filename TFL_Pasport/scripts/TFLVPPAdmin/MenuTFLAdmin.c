@@ -368,16 +368,12 @@ class MenuTFLAdmin extends AdminHudSubMenu
     // на чужой вкладке он невидим, и отказ выглядит как молчащая кнопка.
     protected void SetStatus(string text)
     {
-        TextWidget target;
-        switch (m_ActiveTab)
-        {
-            case TAB_MEMBERS:     target = m_AdminAddStatus; break;
-            case TAB_ROLES:       target = m_AdminRoleStatus; break;
-            case TAB_RANKS:       target = m_SalaryStatus; break;
-            case TAB_LICENSES:    target = m_LicStatus; break;
-            case TAB_TERRITORIES: target = m_TerrStatus; break;
-            default:              target = m_FactionStatus; break;
-        }
+        TextWidget target = m_FactionStatus;
+        if (m_ActiveTab == TAB_MEMBERS) target = m_AdminAddStatus;
+        else if (m_ActiveTab == TAB_ROLES) target = m_AdminRoleStatus;
+        else if (m_ActiveTab == TAB_RANKS) target = m_SalaryStatus;
+        else if (m_ActiveTab == TAB_LICENSES) target = m_LicStatus;
+        else if (m_ActiveTab == TAB_TERRITORIES) target = m_TerrStatus;
         // Если у вкладки своей строки статуса нет, текст не должен пропасть.
         if (!target) target = m_FactionStatus;
         if (target) target.SetText(text);
@@ -790,9 +786,23 @@ class MenuTFLAdmin extends AdminHudSubMenu
         if (m_TerritoryRewardHost) m_TerritoryRewardHost.Show(rewards);
         if (m_RewardPresetPanel) m_RewardPresetPanel.Show(rewards);
 
-        if (m_ModeBtnPoints) m_ModeBtnPoints.SetColor(points ? ARGB(255, 42, 53, 32) : ARGB(255, 14, 17, 9));
-        if (m_ModeBtnChains) m_ModeBtnChains.SetColor(chains ? ARGB(255, 42, 53, 32) : ARGB(255, 14, 17, 9));
-        if (m_ModeBtnRewards) m_ModeBtnRewards.SetColor(rewards ? ARGB(255, 42, 53, 32) : ARGB(255, 14, 17, 9));
+        int active = ARGB(255, 42, 53, 32);
+        int idle = ARGB(255, 14, 17, 9);
+        if (m_ModeBtnPoints)
+        {
+            if (points) m_ModeBtnPoints.SetColor(active);
+            else m_ModeBtnPoints.SetColor(idle);
+        }
+        if (m_ModeBtnChains)
+        {
+            if (chains) m_ModeBtnChains.SetColor(active);
+            else m_ModeBtnChains.SetColor(idle);
+        }
+        if (m_ModeBtnRewards)
+        {
+            if (rewards) m_ModeBtnRewards.SetColor(active);
+            else m_ModeBtnRewards.SetColor(idle);
+        }
     }
 
     protected void TerrSetPointMode()
