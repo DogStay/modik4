@@ -172,16 +172,64 @@ class TFLVPPAdminPlugin extends PluginBase
         SendPanel(sender, player, request.param1);
     }
 
+    // Команда приходит кусками (см. SendCommand на клиенте): целиком её JSON не
+    // помещается в строку RPC-параметра и портится по дороге. Копим куски по
+    // отправителю и выполняем, когда пришёл последний.
+    protected ref map<string, string> m_CommandBuffer = new map<string, string>;
+
     void Command(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target)
     {
         if (type != CallType.Server || !sender)
             return;
-        Param2<int, string> packet;
+        Param4<int, int, int, string> packet;
         if (!ctx.Read(packet) || !packet)
             return;
-        if (packet.param1 < TFLFactionCommand.ADMIN_SELECT || packet.param1 > TFLFactionCommand.ADMIN_TERRITORY_SET_REWARD_PRESET)
+
+        int command = packet.param1;
+        int index = packet.param2;
+        int total = packet.param3;
+
+        if (command < TFLFactionCommand.ADMIN_SELECT || command > TFLFactionCommand.ADMIN_TERRITORY_SET_REWARD_PRESET)
             return;
-        if (packet.param1 == TFLFactionCommand.ADMIN_SELECT)
+        if (total <= 0 || index < 0 || index >= total)
+            return;
+
+        // Права проверяем на первом куске: иначе чужой клиент мог бы копить
+        // в буфере сервера что угодно, ни разу не пройдя проверку.
+        if (index == 0)
+        {
+            if (command == TFLFactionCommand.ADMIN_SELECT)
+            {
+                if (!TFL_CanAdminRead(sender)) return;
+            }
+            else if (!TFL_CanAdminWrite(sender))
+            {
+                Message(sender, "TFL: нет прав на изменение — нужно право MenuTFLAdmin:Write в VPPAdminTools (Super Admin имеет его автоматически).");
+                return;
+            }
+        }
+
+        string senderId = sender.GetPlainId();
+        string buffered = "";
+        if (index == 0)
+            m_CommandBuffer.Set(senderId, packet.param4);
+        else
+        {
+            if (!m_CommandBuffer.Find(senderId, buffered))
+                return;
+            m_CommandBuffer.Set(senderId, buffered + packet.param4);
+        }
+
+        if (index < total - 1)
+            return;
+
+        string assembled = "";
+        m_CommandBuffer.Find(senderId, assembled);
+        m_CommandBuffer.Remove(senderId);
+
+        // Повторная проверка перед самим выполнением: между первым и последним
+        // куском права могли отозвать.
+        if (command == TFLFactionCommand.ADMIN_SELECT)
         {
             if (!TFL_CanAdminRead(sender)) return;
         }
@@ -192,11 +240,11 @@ class TFLVPPAdminPlugin extends PluginBase
         }
 
         ref TFLFactionCommandDto dto = new TFLFactionCommandDto();
-        if (packet.param2 != "")
+        if (assembled != "")
         {
             TFLFactionCommandDto loaded;
             string err;
-            if (!JsonFileLoader<TFLFactionCommandDto>.LoadData(packet.param2, loaded, err) || !loaded)
+            if (!JsonFileLoader<TFLFactionCommandDto>.LoadData(assembled, loaded, err) || !loaded)
             {
                 Message(sender, "TFL: команда не разобрана.");
                 Print("[TFL/VPP] command parse failed: " + err);
@@ -209,7 +257,7 @@ class TFLVPPAdminPlugin extends PluginBase
         if (!player)
             return;
 
-        TFLFactionManager.Get().HandleVPPAdminCommand(player, packet.param1, dto);
+        TFLFactionManager.Get().HandleVPPAdminCommand(player, command, dto);
         SendPanel(sender, player, "");
     }
 }

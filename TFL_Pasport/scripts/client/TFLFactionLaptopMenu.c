@@ -849,7 +849,9 @@ class TFLFactionLaptopMenu extends UIScriptedMenu
 
     protected void LeaderTerrPositionCard(TFLTerritoryDto territory)
     {
-        LeaderTerrPositionWidget(m_LeaderTerrCardHost, territory, 0.225, 0.62);
+        // Карточка живёт фиксированной колонкой справа (позиция задана в
+        // раскладке), а не всплывает у маркера: у маркера она загораживала
+        // карту и упиралась в края экрана.
     }
 
     protected void LeaderTerrOpenCard()
@@ -1105,7 +1107,6 @@ class TFLFactionLaptopMenu extends UIScriptedMenu
         if (m_LeaderTerrRequestTerritory) m_LeaderTerrRequestTerritory.SetText(requestTerritory.name);
         if (m_LeaderTerrRequestHost) m_LeaderTerrRequestHost.Show(true);
         m_LeaderTerrRequestCard.Show(true);
-        LeaderTerrPositionWidget(m_LeaderTerrRequestHost, requestTerritory, 0.208, 0.34);
     }
 
     protected void LeaderTerrRefreshCard()

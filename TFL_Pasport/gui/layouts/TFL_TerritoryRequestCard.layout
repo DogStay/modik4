@@ -5,6 +5,9 @@ PanelWidgetClass TerritoryRequestCard
 {
  visible 0 color 0.0784 0.0902 0.0588 1 position 0 0 size 1 1 priority 210
  {
+  // Тот же случай, что и у карточки территории: сплошной фон в Enfusion
+  // рисуется ImageWidget с pass_white.edds, а не цветом самой панели.
+  ImageWidgetClass RequestBg { ignorepointer 1 color 0.0784 0.0902 0.0588 1 position 0 0 size 1 1 priority 209 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
   ImageWidgetClass RequestAccent { ignorepointer 1 color 0.7176 0.5490 0.2902 1 position 0 0 size 0.008 1 priority 211 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
   TextWidgetClass RequestKicker { ignorepointer 1 position 0.045 0.03 size 0.8 0.03 priority 214 text "TFL // ЗАПРОС" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7176 0.5490 0.2902 1 text_proportion 0.4 }
   TextWidgetClass RequestTitle { ignorepointer 1 position 0.045 0.065 size 0.8 0.05 priority 214 text "СОВМЕСТНАЯ АТАКА" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.9020 0.8941 0.8235 1 text_proportion 0.5 }

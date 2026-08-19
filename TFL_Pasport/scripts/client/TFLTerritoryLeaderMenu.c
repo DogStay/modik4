@@ -390,7 +390,9 @@ class TFLTerritoryLeaderMenu extends UIScriptedMenu
         if (m_CaptureTime) m_CaptureTime.SetText(TimeShort(territory.capture_seconds));
         BuildRewards(territory);
         RefreshAction(territory);
-        PositionWidgetAtMarker(m_CardHost, territory, 0.225, 0.62);
+        // Карточка живёт фиксированной колонкой справа (позиция задана в
+        // раскладке), а не всплывает у маркера: у маркера она загораживала
+        // карту и упиралась в края экрана.
     }
 
     protected void RefreshRequest()
@@ -418,7 +420,6 @@ class TFLTerritoryLeaderMenu extends UIScriptedMenu
         if (m_RequestTerritory) m_RequestTerritory.SetText(requestTerritory.name);
         if (m_RequestHost) m_RequestHost.Show(true);
         m_RequestCard.Show(true);
-        PositionWidgetAtMarker(m_RequestHost, requestTerritory, 0.208, 0.34);
     }
 
     protected void AutoOpenUrgent()

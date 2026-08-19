@@ -332,7 +332,24 @@ class MenuTFLAdmin extends AdminHudSubMenu
             Print("[TFL/VPP] command serialization failed: " + err);
             return;
         }
-        SendVPP("Command", new Param2<int, string>(command, payload));
+
+        // JSON команды — около килобайта даже у «пустого» DTO, а строка в
+        // RPC-параметре DayZ столько не переживает: сервер получал испорченную
+        // строку и валился в ctx.Read с "String CORRUPTED", поэтому не
+        // сохранялось вообще ничего. Режем на такие же куски, какими сервер уже
+        // шлёт панель в обратную сторону, и собираем обратно на той стороне.
+        int chunkSize = TFLPassLimits.CHUNK;
+        int len = payload.Length();
+        int total = len / chunkSize;
+        if ((len % chunkSize) != 0) total = total + 1;
+        if (total <= 0) total = 1;
+        for (int i = 0; i < total; i++)
+        {
+            int from = i * chunkSize;
+            int take = chunkSize;
+            if (from + take > len) take = len - from;
+            SendVPP("Command", new Param4<int, int, int, string>(command, i, total, payload.Substring(from, take)));
+        }
     }
 
     void OnVPPPanelChunk(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target)
