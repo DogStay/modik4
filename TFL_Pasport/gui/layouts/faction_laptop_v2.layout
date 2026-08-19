@@ -108,8 +108,8 @@ WindowWidgetClass Root
       TextWidgetClass LeaderLegendEnemy { ignorepointer 1 position 0.018 0.905 size 0.17 0.028 priority 113 text "■ ПРОТИВНИК" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7176 0.5490 0.2902 1 text_proportion 0.34 }
       TextWidgetClass LeaderLegendNeutral { ignorepointer 1 position 0.018 0.935 size 0.17 0.028 priority 113 text "■ НЕЙТРАЛЬНАЯ" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.5608 0.5569 0.4863 1 text_proportion 0.34 }
 
-      PanelWidgetClass LaptopCardHost { visible 0 color 0 0 0 0 position 0.4 0.28 size 0.26 0.5 priority 200 }
-      PanelWidgetClass LaptopRequestCardHost { visible 0 color 0 0 0 0 position 0.72 0.1 size 0.24 0.36 priority 210 }
+      PanelWidgetClass LaptopCardHost { visible 0 color 0 0 0 0 position 0.4 0.28 size 0.225 0.62 priority 200 }
+      PanelWidgetClass LaptopRequestCardHost { visible 0 color 0 0 0 0 position 0.72 0.1 size 0.208 0.34 priority 210 }
      }
     }
    }

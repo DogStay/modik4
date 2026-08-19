@@ -354,6 +354,17 @@ class MenuTFLAdmin extends AdminHudSubMenu
         }
     }
 
+    protected void SetStatusEverywhere(string text)
+    {
+        if (m_FactionStatus) m_FactionStatus.SetText(text);
+        if (m_AdminAddStatus) m_AdminAddStatus.SetText(text);
+        if (m_AdminRoleStatus) m_AdminRoleStatus.SetText(text);
+        if (m_SalaryStatus) m_SalaryStatus.SetText(text);
+        if (m_CivilianBenefitStatus) m_CivilianBenefitStatus.SetText(text);
+        if (m_LicStatus) m_LicStatus.SetText(text);
+        if (m_RewardPresetStatus) m_RewardPresetStatus.SetText(text);
+    }
+
     void OnVPPMessage(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target)
     {
         if (type != CallType.Client)
@@ -361,8 +372,11 @@ class MenuTFLAdmin extends AdminHudSubMenu
         Param1<string> packet;
         if (!ctx.Read(packet) || !packet)
             return;
-        if (m_FactionStatus)
-            m_FactionStatus.SetText(packet.param1);
+        // Ответ сервера — единственное объяснение, почему команда не прошла
+        // (например, нет права MenuTFLAdmin:Write). Раньше он попадал только в
+        // статус вкладки ФРАКЦИЯ, поэтому на любой другой вкладке отказ выглядел
+        // как «кнопка вообще ничего не делает». Пишем во все строки статуса.
+        SetStatusEverywhere(packet.param1);
         Print("[TFL/VPP] " + packet.param1);
     }
 

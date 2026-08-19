@@ -349,8 +349,11 @@ WindowWidgetClass Root
        }
       }
 
-      PanelWidgetClass TerritoryChainHost { visible 0 color 0 0 0 0 position 0 0 size 1 1 priority 130 }
-      PanelWidgetClass TerritoryRewardHost { visible 0 color 0 0 0 0 position 0 0 size 1 1 priority 130 }
+      // Хосты остаются видимыми: скрипт создаёт внутрь них редакторы цепочек и
+      // наград и показывает/прячет сами редакторы (m_ChainPanel/m_RewardPresetPanel),
+      // а хост не трогает. Скрытый родитель погасил бы показанный редактор.
+      PanelWidgetClass TerritoryChainHost { visible 1 color 0 0 0 0 position 0 0 size 1 1 priority 130 }
+      PanelWidgetClass TerritoryRewardHost { visible 1 color 0 0 0 0 position 0 0 size 1 1 priority 130 }
      }
     }
    }

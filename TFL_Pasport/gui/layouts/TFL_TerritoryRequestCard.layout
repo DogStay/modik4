@@ -3,7 +3,7 @@
 // having to search for it.
 PanelWidgetClass TerritoryRequestCard
 {
- visible 0 color 0.0784 0.0902 0.0588 1 position 0 0 size 0.208 0.34 priority 210
+ visible 0 color 0.0784 0.0902 0.0588 1 position 0 0 size 1 1 priority 210
  {
   ImageWidgetClass RequestAccent { ignorepointer 1 color 0.7176 0.5490 0.2902 1 position 0 0 size 0.008 1 priority 211 imageTexture "TFL_Pasport/gui/textures/pass_white.edds" mode blend "src alpha" 1 "stretch mode" stretch_w_h }
   TextWidgetClass RequestKicker { ignorepointer 1 position 0.045 0.03 size 0.8 0.03 priority 214 text "TFL // ЗАПРОС" font "TFL_Pasport/gui/fonts/IBMPlexMonio-Regular" "text color" 0.7176 0.5490 0.2902 1 text_proportion 0.4 }
